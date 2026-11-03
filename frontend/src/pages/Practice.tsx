@@ -604,7 +604,7 @@ export function Practice({ review = false }: { review?: boolean }) {
             <div className="form-columns">
               <label>
                 题型
-                <select name="type" defaultValue={draft?.type || 'single'}>
+                <select name="type" aria-label="题型" defaultValue={draft?.type || 'single'}>
                   {['single', 'multiple', 'true_false', 'fill', 'short', 'step'].map((t) => (
                     <option value={t} key={t}>
                       {typeLabels[t]}
