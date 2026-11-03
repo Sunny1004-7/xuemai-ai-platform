@@ -55,6 +55,7 @@ def edit_question(question_id:int,body:QuestionBody,user=Depends(teacher_user)):
         row=db.execute("SELECT * FROM questions WHERE id=?",(question_id,)).fetchone()
         if not row: raise HTTPException(404,"题目不存在")
         require_teacher_course(db,user,row["course_id"])
+        if body.course_id!=row["course_id"]:raise HTTPException(422,"题目不可跨课程移动，请在目标课程新建题目")
         require_teacher_course(db,user,body.course_id)
         check_knowledge(db,body.course_id,body.knowledge_id)
         validate_question(body)

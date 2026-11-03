@@ -121,6 +121,8 @@ def delete_knowledge(knowledge_id:int,user=Depends(teacher_user)):
         row=db.execute("SELECT * FROM knowledge_points WHERE id=?",(knowledge_id,)).fetchone()
         if not row: raise HTTPException(404,"知识点不存在")
         require_teacher_course(db,user,row["course_id"])
+        if db.execute("SELECT 1 FROM questions WHERE knowledge_id=? LIMIT 1",(knowledge_id,)).fetchone():
+            raise HTTPException(409,"知识点仍关联习题，请先调整题库，避免破坏作业与学习记录")
         db.execute("DELETE FROM knowledge_points WHERE id=?",(knowledge_id,))
         return {"ok":True}
 
