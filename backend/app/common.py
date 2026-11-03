@@ -16,7 +16,10 @@ def course_rows(db,user):
     result=[]
     for row in rows:
         item=dict(row)
-        val=db.execute("SELECT AVG(m.value) FROM mastery m JOIN knowledge_points k ON m.knowledge_id=k.id WHERE m.student_id=? AND k.course_id=?",(user["id"],row["id"])).fetchone()[0]
+        if user["role"]=="teacher":
+            val=db.execute("SELECT AVG(COALESCE(m.value,.2)) FROM knowledge_points k CROSS JOIN (SELECT DISTINCT cm.student_id FROM class_members cm JOIN classes cl ON cm.class_id=cl.id WHERE cl.course_id=?) students LEFT JOIN mastery m ON m.knowledge_id=k.id AND m.student_id=students.student_id WHERE k.course_id=?",(row["id"],row["id"])).fetchone()[0]
+        else:
+            val=db.execute("SELECT AVG(COALESCE(m.value,.2)) FROM knowledge_points k LEFT JOIN mastery m ON m.knowledge_id=k.id AND m.student_id=? WHERE k.course_id=?",(user["id"],row["id"])).fetchone()[0]
         item["progress"]=round((val or 0)*100)
         result.append(item)
     return result

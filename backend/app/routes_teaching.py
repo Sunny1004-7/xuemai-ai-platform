@@ -61,6 +61,42 @@ def add_member(class_id:int,body:MemberBody,user=Depends(teacher_user)):
         return {"ok":True}
 
 
+class ClassPatch(BaseModel):
+    name:str=Field(min_length=1,max_length=100)
+
+
+@router.patch("/classes/{class_id}")
+def edit_class(class_id:int,body:ClassPatch,user=Depends(teacher_user)):
+    with get_db() as db:
+        row=db.execute("SELECT * FROM classes WHERE id=?",(class_id,)).fetchone()
+        if not row:raise HTTPException(404,"班级不存在")
+        require_teacher_course(db,user,row["course_id"])
+        db.execute("UPDATE classes SET name=? WHERE id=?",(body.name,class_id))
+        return dict(row)|{"name":body.name}
+
+
+@router.delete("/classes/{class_id}")
+def delete_class(class_id:int,user=Depends(teacher_user)):
+    with get_db() as db:
+        row=db.execute("SELECT * FROM classes WHERE id=?",(class_id,)).fetchone()
+        if not row:raise HTTPException(404,"班级不存在")
+        require_teacher_course(db,user,row["course_id"])
+        if db.execute("SELECT 1 FROM assignments WHERE class_id=? LIMIT 1",(class_id,)).fetchone():raise HTTPException(409,"班级已有发布任务，删除会改变任务访问范围，请保留班级")
+        db.execute("DELETE FROM classes WHERE id=?",(class_id,))
+        return {"ok":True}
+
+
+@router.delete("/classes/{class_id}/members/{student_id}")
+def remove_member(class_id:int,student_id:int,user=Depends(teacher_user)):
+    with get_db() as db:
+        row=db.execute("SELECT * FROM classes WHERE id=?",(class_id,)).fetchone()
+        if not row:raise HTTPException(404,"班级不存在")
+        require_teacher_course(db,user,row["course_id"])
+        cur=db.execute("DELETE FROM class_members WHERE class_id=? AND student_id=?",(class_id,student_id))
+        if cur.rowcount==0:raise HTTPException(404,"该学生不在此班级")
+        return {"ok":True}
+
+
 def analytics_data(db,user,course_id):
     require_teacher_course(db,user,course_id)
     students=[]
@@ -90,7 +126,8 @@ def dashboard(user=Depends(current_user)):
         courses=course_rows(db,user)
         course_ids=[c["id"] for c in courses]
         tasks=[assignment_item(db,user,r) for r in db.execute("SELECT * FROM assignments ORDER BY id DESC") if r["course_id"] in course_ids and assignment_visible(db,user,r)]
-        query="SELECT e.*,k.title knowledge_title FROM learning_events e LEFT JOIN knowledge_points k ON k.id=e.knowledge_id WHERE e.student_id=? ORDER BY e.id DESC LIMIT 8"
+        query="SELECT e.*,k.title knowledge_title,u.name student_name FROM learning_events e LEFT JOIN knowledge_points k ON k.id=e.knowledge_id JOIN users u ON u.id=e.student_id WHERE e.student_id=? ORDER BY e.id DESC LIMIT 8"
+        if user["role"]=="teacher":query="SELECT e.*,k.title knowledge_title,u.name student_name FROM learning_events e JOIN courses c ON c.id=e.course_id LEFT JOIN knowledge_points k ON k.id=e.knowledge_id JOIN users u ON u.id=e.student_id WHERE c.teacher_id=? ORDER BY e.id DESC LIMIT 8"
         recent=[json_fields(r,["payload"]) for r in db.execute(query,(user["id"],))]
         minutes=0
         for r in db.execute("SELECT payload FROM learning_events WHERE student_id=? AND kind='video_progress'",(user["id"],)):
@@ -103,9 +140,7 @@ def dashboard(user=Depends(current_user)):
         recs=[]
         if user["role"]=="teacher":
             stats["students"]=db.execute("SELECT COUNT(DISTINCT m.student_id) FROM class_members m JOIN classes cl ON cl.id=m.class_id JOIN courses c ON c.id=cl.course_id WHERE c.teacher_id=?",(user["id"],)).fetchone()[0]
-            if courses:
-                analysis=analytics_data(db,user,courses[0]["id"])
-                stats["mastery"]=analysis["summary"]["average_mastery"]
+            stats["mastery"]=round(sum(c["progress"] for c in courses)/len(courses)) if courses else 0
         else:
             for course in courses:recs.extend(recommendations(db,user,course["id"]))
         return {"user":user,"stats":stats,"courses":courses,"recommendations":sorted(recs,key=lambda r:-r["priority"])[:6],"assignments":tasks,"recent_events":recent,"weekly_activity":activity,"synthetic_data":True}

@@ -57,7 +57,7 @@ def seed(db):
     db.executemany("INSERT INTO class_members VALUES(?,?)", [(1,2),(1,3),(2,2),(2,3)])
     db.executemany("INSERT INTO chapters(id,course_id,title,position) VALUES(?,?,?,?)", [(1,1,"线性结构",1),(2,1,"树与图",2),(3,1,"排序与查找",3),(4,2,"程序基础",1)])
     nodes=[(1,1,1,"数组与链表","数组通过连续空间实现随机访问，链表通过指针连接节点。",30,140),(2,1,1,"栈与队列","栈后进先出，队列先进先出。栈适合回溯，队列适合广度优先搜索。",250,60),(3,1,1,"递归与分治","递归需要终止条件与递归推进；分治将问题拆成独立子问题。",250,240),(4,1,2,"二叉树","每个节点最多两个孩子；前中后序遍历采用不同访问时机。",470,60),(5,1,2,"图的遍历","BFS使用队列按层探索；DFS使用栈或递归深入探索。",690,100),(6,1,3,"冒泡排序","相邻元素比较交换，每一轮将未排序部分最大元素移动到末尾。",470,270),(7,1,3,"快速排序","选定枢轴后划分区间，递归排序；平均 O(n log n)。",690,290),(8,1,3,"二分查找","有序序列上折半缩小查找区间，时间复杂度 O(log n)。",910,200),(9,2,4,"变量与类型","Python变量绑定对象；整数、字符串和列表具有不同语义。",50,100),(10,2,4,"循环与条件","使用条件与循环组织程序控制流。",300,100)]
-    db.executemany("INSERT INTO knowledge_points VALUES(?,?,?,?,?,?,?)",nodes)
+    db.executemany("INSERT INTO knowledge_points(id,course_id,chapter_id,title,description,x,y) VALUES(?,?,?,?,?,?,?)",nodes)
     db.executemany("INSERT INTO knowledge_edges(course_id,source,target) VALUES(?,?,?)", [(1,1,2),(1,1,3),(1,2,4),(1,2,5),(1,3,6),(1,3,7),(1,6,8),(1,7,8),(2,9,10)])
     for n in nodes:
         db.execute("INSERT INTO resources(course_id,knowledge_id,title,kind,content) VALUES(?,?,?,?,?)", (n[1],n[0],n[3]+"学习讲义","document",n[4]+"\n学习目标：理解定义、手工追踪执行步骤，并使用程序验证。\n合成教学素材，由项目开发时编写。"))
