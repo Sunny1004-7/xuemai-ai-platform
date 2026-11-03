@@ -18,11 +18,13 @@ def recommendations(db,user,course_id):
         weak=[p for p in prereqs if mastery_value(db,user["id"],p["id"])<.5]
         if value>=.85 and not wrong:
             continue
-        kind="review" if wrong else ("video" if value<.45 else "practice")
+        video=db.execute("SELECT id FROM resources WHERE knowledge_id=? AND kind='video' ORDER BY id LIMIT 1",(node["id"],)).fetchone()
+        kind="review" if wrong else ("video" if value<.45 and video else "practice")
         reason=(f"有 {wrong} 道未订正错题，先辨析错误再独立复测。" if wrong else f"当前掌握度 {round(value*100)}%，用{'片段学习后检查' if kind=='video' else '独立练习'}补充学习证据。")
         if weak:
             reason+="先修知识“"+weak[0]["title"]+"”尚需巩固。"
-        result.append({"id":f"{kind}-{node['id']}","knowledge_id":node["id"],"title":node["title"],"reason":reason,"kind":kind,"href":f"/{'review' if wrong else 'learn' if kind=='video' else 'practice'}?knowledge_id={node['id']}","priority":round((1-value)*100+wrong*30+len(weak)*8),"mastery":round(value*100),"prerequisite_ids":[p["id"] for p in weak]})
+        href=f"/review?knowledge={node['id']}" if wrong else f"/video?resource={video['id']}&knowledge={node['id']}" if kind=="video" else f"/practice?knowledge={node['id']}"
+        result.append({"id":f"{kind}-{node['id']}","course_id":course_id,"knowledge_id":node["id"],"title":node["title"],"reason":reason,"kind":kind,"href":href,"priority":round((1-value)*100+wrong*30+len(weak)*8),"mastery":round(value*100),"prerequisite_ids":[p["id"] for p in weak]})
     return sorted(result,key=lambda r:-r["priority"])
 
 

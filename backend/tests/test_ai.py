@@ -177,11 +177,14 @@ def test_smoke_reservation_enforces_hard_limit_and_stops_on_failure(monkeypatch,
     from scripts import ai_smoke
     monkeypatch.setattr(ai_smoke, "LEDGER", tmp_path / "ledger.json")
     for _ in range(5):
-        ai_smoke.reserve("connectivity")
+        number = ai_smoke.reserve("connectivity")
+        ai_smoke.finish(number, "ok")
     with pytest.raises(SystemExit, match="硬上限"):
         ai_smoke.reserve("stream")
     record = json.loads(ai_smoke.LEDGER.read_text(encoding="utf-8"))
     assert len(record["calls"]) == 5
-    ai_smoke.finish(1, "failed", code="quota")
+    monkeypatch.setattr(ai_smoke, "LEDGER", tmp_path / "failed-ledger.json")
+    number = ai_smoke.reserve("connectivity")
+    ai_smoke.finish(number, "failed", code="quota")
     with pytest.raises(SystemExit, match="停止真实联调"):
         ai_smoke.reserve("structured")
