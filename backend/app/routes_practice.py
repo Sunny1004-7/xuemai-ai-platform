@@ -39,28 +39,62 @@ def create_question(body:QuestionBody,user=Depends(teacher_user)):
 
 
 def validate_question(body):
-    if body.type in ("single","true_false") and (len(body.options)<2 or body.answer not in body.options):
+    from .learning import normalize
+    if any(not option.strip() for option in body.options) or len({normalize(o) for o in body.options})!=len(body.options):raise HTTPException(422,"题目选项必须非空且互不重复")
+    if body.type in ("single","true_false") and (not isinstance(body.answer,str) or len(body.options)<2 or body.answer not in body.options):
         raise HTTPException(422,"选项题需至少两个选项，答案必须属于选项")
-    if body.type=="multiple" and (not isinstance(body.answer,list) or not body.answer or not set(body.answer)<=set(body.options)):
+    if body.type=="true_false" and len(body.options)!=2:raise HTTPException(422,"判断题必须恰好包含两个选项")
+    if body.type=="multiple" and (len(body.options)<2 or not isinstance(body.answer,list) or not body.answer or len(set(body.answer))!=len(body.answer) or not set(body.answer)<=set(body.options)):
         raise HTTPException(422,"多选题答案必须是非空的选项数组")
+    if body.type in ("fill","short","step") and (not isinstance(body.answer,str) or not body.answer.strip()):raise HTTPException(422,"填空与主观题需要非空的参考答案")
+    if body.type in ("short","step"):
+        if not body.rubric:
+            body.rubric={"criteria":[{"name":"核心概念与结论","points":40},{"name":"推理与步骤","points":40},{"name":"边界与表达","points":20}],"total":100}
+        criteria=body.rubric.get("criteria")
+        if not isinstance(criteria,list) or not criteria or any(not isinstance(c,dict) or not isinstance(c.get("name"),str) or not c["name"].strip() or not isinstance(c.get("points"),(int,float)) or isinstance(c.get("points"),bool) or not 0<c["points"]<=100 for c in criteria) or abs(sum(c["points"] for c in criteria)-100)>.001:raise HTTPException(422,"主观题量规需包含名称和分值，合计100分")
+        body.rubric["total"]=100
 
 
 def question_values(body):
     return (body.course_id,body.knowledge_id,body.type,body.title,json.dumps(body.options,ensure_ascii=False),json.dumps(body.answer,ensure_ascii=False),body.explanation,body.difficulty,json.dumps(body.hints,ensure_ascii=False),json.dumps(body.rubric,ensure_ascii=False),body.status)
 
 
+class QuestionPatch(BaseModel):
+    course_id:int|None=None
+    knowledge_id:int|None=None
+    type:str|None=Field(default=None,pattern="^(single|multiple|true_false|fill|short|step)$")
+    title:str|None=Field(default=None,min_length=1,max_length=4000)
+    options:list[str]|None=Field(default=None,max_length=10)
+    answer:str|list[str]|None=None
+    explanation:str|None=Field(default=None,max_length=6000)
+    difficulty:int|None=Field(default=None,ge=1,le=3)
+    hints:list[str]|None=Field(default=None,max_length=6)
+    rubric:dict|None=None
+    status:str|None=Field(default=None,pattern="^(draft|approved)$")
+
+
 @router.patch("/questions/{question_id}")
-def edit_question(question_id:int,body:QuestionBody,user=Depends(teacher_user)):
+def edit_question(question_id:int,body:QuestionPatch,user=Depends(teacher_user)):
     with get_db() as db:
         row=db.execute("SELECT * FROM questions WHERE id=?",(question_id,)).fetchone()
         if not row: raise HTTPException(404,"题目不存在")
         require_teacher_course(db,user,row["course_id"])
+        changes=body.model_dump(exclude_unset=True)
+        if any(v is None for v in changes.values()):raise HTTPException(422,"题目字段不能置空")
+        body=QuestionBody(**(public_question(row,user)|changes))
         if body.course_id!=row["course_id"]:raise HTTPException(422,"题目不可跨课程移动，请在目标课程新建题目")
         require_teacher_course(db,user,body.course_id)
         check_knowledge(db,body.course_id,body.knowledge_id)
         validate_question(body)
+        assigned=any(question_id in json.loads(a[0]) for a in db.execute("SELECT question_ids FROM assignments WHERE course_id=?",(body.course_id,)))
+        attempted=bool(db.execute("SELECT 1 FROM attempts WHERE question_id=? LIMIT 1",(question_id,)).fetchone())
+        if assigned or attempted:
+            old=public_question(row,user)
+            locked=("knowledge_id","type","options","answer")
+            if any(getattr(body,k)!=old[k] for k in locked):raise HTTPException(409,"题目已有作业或学习记录，题型、答案和知识点请通过新建变式调整")
+        if assigned and body.status!="approved":raise HTTPException(409,"题目已用于发布作业，不能撤回为草稿")
         db.execute("UPDATE questions SET course_id=?,knowledge_id=?,type=?,title=?,options=?,answer=?,explanation=?,difficulty=?,hints=?,rubric=?,status=? WHERE id=?",question_values(body)+(question_id,))
-        return {"id":question_id,"ok":True}
+        return public_question(db.execute("SELECT * FROM questions WHERE id=?",(question_id,)).fetchone(),user)
 
 
 @router.delete("/questions/{question_id}")
