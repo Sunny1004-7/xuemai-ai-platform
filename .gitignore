@@ -1,0 +1,27 @@
+# 密钥、凭据：首个提交前即排除
+.env
+.env.*
+!.env.example
+deepseek官方api.txt
+*api_key*
+*credentials*
+*.pem
+*.key
+.venv/
+node_modules/
+dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+data/
+logs/
+*.log
+test-results/
+playwright-report/
+.local/
+.DS_Store
+Thumbs.db
+大赛官方资料/
+最终参赛提交材料/
