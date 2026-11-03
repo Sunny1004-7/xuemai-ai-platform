@@ -26,7 +26,7 @@ def build():
     filters.append(''.join(voices)+f'amix=inputs={len(scenes)}:duration=longest:normalize=0[aout]')
     command+=['-filter_complex',';'.join(filters),'-map','0:v','-map','[aout]','-c:v','copy','-c:a','aac','-b:a','128k','-t','395','-movflags','+faststart',str(target)]
     subprocess.run(command,check=True)
-    probe=subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(),'-hide_banner','-i',str(target)],capture_output=True,text=True,encoding='utf-8',errors='replace')
+    probe=subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(),'-hide_banner','-i',str(target),'-f','null','-'],capture_output=True,text=True,encoding='utf-8',errors='replace',check=True)
     record={'output':target.name,'planned_seconds':395,'resolution':'1920x1080','development_record_replay_seconds':135,'narration':'Microsoft Huihui Desktop，离线合成语音','real_api_calls_during_recording':0,'inspection':probe.stderr}
     (ROOT/'最终参赛提交材料/视频验收记录.json').write_text(json.dumps(record,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({k:v for k,v in record.items() if k!='inspection'},ensure_ascii=False))
