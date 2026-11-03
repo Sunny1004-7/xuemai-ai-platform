@@ -797,7 +797,7 @@ export function Analytics() {
           [Users, '课程学生', summary.student_count || 0],
           [Target, '平均掌握度', `${percent(summary.average_mastery)}%`],
           [ClipboardList, '累计作答', summary.attempt_count || 0],
-          [CheckCheck, '独立正确率', `${percent(summary.accuracy)}%`],
+          [CheckCheck, '客观题正确率', `${percent(summary.accuracy)}%`],
         ].map(([Icon, label, value], i) => {
           const I = Icon as typeof Users
           return (

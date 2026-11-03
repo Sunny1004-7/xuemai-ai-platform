@@ -4,7 +4,11 @@
 
 当前为0.1教学闭环验证版，87项后端测试、11项真实浏览器测试和算法验证通过。[技术文档PDF](docs/deliverables/xuemai-technical-report.pdf)与[交付版本](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)提供源码包和6分35秒1080p演示。所有中文阶段提交与开发证据随仓库保留。
 
+![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
+
 ## 本机 10 分钟复现路径
+
+Windows浏览器自动验收使用已安装的Google Chrome；Linux持续集成使用Playwright Chromium。
 
 环境：Windows 10/11，Python 3.13，Node.js 20.18+，npm，Git。开发机实际使用 Python 3.13、Node 20.18、npm 10.8；使用 Vite 6 保持兼容。首次依赖下载受网络影响，不保证所有网络环境在 10 分钟内完成。
 
