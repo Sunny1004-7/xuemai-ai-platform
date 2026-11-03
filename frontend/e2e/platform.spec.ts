@@ -14,7 +14,7 @@ test('教师发布作业，学生真实提交，教师查看结果与学情', as
   const student = await browser.newContext()
   const tp = await teacher.newPage()
   const sp = await student.newPage()
-  for (const page of [tp, sp]) page.on('pageerror', e => errors.push(e.message))
+  for (const page of [tp, sp]) page.on('pageerror', (e) => errors.push(e.message))
   await login(tp, 'teacher')
   await tp.getByRole('link', { name: '题库与作业', exact: true }).click()
   await tp.getByRole('button', { name: '发布作业', exact: true }).click()
@@ -40,7 +40,8 @@ test('教师发布作业，学生真实提交，教师查看结果与学情', as
   await tp.getByRole('link', { name: '学情与分层', exact: true }).click()
   await expect(tp.locator('main')).toContainText('掌握')
   expect(errors).toEqual([])
-  await teacher.close(); await student.close()
+  await teacher.close()
+  await student.close()
 })
 
 test('知识图谱定位视频、真实播放、时间戳笔记持久化', async ({ page }) => {
@@ -48,10 +49,19 @@ test('知识图谱定位视频、真实播放、时间戳笔记持久化', async
   await page.goto('/video?t=10')
   const video = page.locator('video')
   await expect(video).toBeVisible()
-  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState)).toBeGreaterThanOrEqual(1)
-  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime)).toBeGreaterThanOrEqual(9)
-  await video.evaluate((v: HTMLVideoElement) => { v.muted = true; return v.play() })
-  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime)).toBeGreaterThan(10)
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState))
+    .toBeGreaterThanOrEqual(1)
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime))
+    .toBeGreaterThanOrEqual(9)
+  await video.evaluate((v: HTMLVideoElement) => {
+    v.muted = true
+    return v.play()
+  })
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime))
+    .toBeGreaterThan(10)
   await video.evaluate((v: HTMLVideoElement) => v.pause())
   await page.getByRole('button', { name: /我的笔记/ }).click()
   const note = `视频定位笔记${Date.now()}`
@@ -65,7 +75,7 @@ test('知识图谱定位视频、真实播放、时间戳笔记持久化', async
 
 test('双端主要页面无崩溃，窄屏无横向溢出', async ({ page }) => {
   const errors: string[] = []
-  page.on('pageerror', e => errors.push(e.message))
+  page.on('pageerror', (e) => errors.push(e.message))
   await login(page, 'student1')
   for (const route of ['/graph', '/courses', '/review', '/experiments', '/classroom', '/tutor']) {
     await page.goto(route)
@@ -75,7 +85,9 @@ test('双端主要页面无崩溃，窄屏无横向溢出', async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
   await expect(page.locator('main h1')).toBeVisible()
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy()
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).toBeTruthy()
   await page.screenshot({ path: 'test-results/student-mobile.png', fullPage: true })
   await page.setViewportSize({ width: 1440, height: 960 })
   await page.screenshot({ path: 'test-results/student-dashboard.png', fullPage: true })
