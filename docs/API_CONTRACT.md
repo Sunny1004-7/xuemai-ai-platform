@@ -28,3 +28,24 @@
 - `GET /classroom?course_id=1` → `[{id,course_id,title,prompt,kind,active,responses:[...]}]`；`POST /classroom {course_id,title,prompt,kind?}`；`POST /classroom/{id}/responses {answer}`；`PATCH /classroom/{id} {active}`。
 
 视频种子资源 URL `/media/sorting-demo.mp4`，字幕、知识点时间轴与 checkpoint_question_id 存 metadata。AI 接口由 AI 模块约定并补充。
+
+## 持久化编辑与个人计划扩展
+
+- `PATCH /courses/{id}` 支持部分更新 `{title?,description?,code?,color?}`；重复课程代码409。
+- 章节创建增加 `objectives:string[]`。`PATCH /chapters/{id} {title?,position?,objectives?}`；`DELETE /chapters/{id}` 保留知识点，将章节点关联置空。
+- 知识点创建/修改增加 `objectives:string[]`，课程详情及图谱节点返回相同数组。`PATCH /knowledge/{id}` 是部分更新，可改位置坐标、目标、说明和章节；传 `prerequisite_ids:number[]` 原子替换入边，形成环路时422且全部回滚。
+- `PATCH /classes/{id} {name}`；`DELETE /classes/{id}/members/{student_id}`；`DELETE /classes/{id}`。班级已有发布任务返回409，防止删除后任务变成整个课程可见。
+- `PATCH /questions/{id}` 是部分更新；审核通过 `{status:'approved'}`，未审核 `{status:'draft'}`。学生列表不包含草稿且不能提交草稿。已用于作业或已有学习记录的题目禁止更改答案、题型、选项、知识点（409），请新建变式；已发作业题目不能撤回草稿。
+- 题目选项必须非空且唯一；判断题恰好两项，多选答案非空、不重复且属于选项；填空/简答参考答案非空。简答默认提供100分量规，显式量规 criteria 必须为 `[{name,points}]` 且合计100。
+- `PATCH /resources/{id}` 是部分更新。私有上传视频返回 `/api/resources/{id}/file`，须 Bearer 授权读取 Blob；只有本地合成演示视频公开。资源列表 metadata.resume_position 为当前学生上次保存的位置。
+
+### 学生个人目标和计划
+
+以下接口只向学生本人开放；教师403，另一学生无法读取或修改（404）。目标/计划与当前课程和知识点统一关联，跨课关系422。
+
+- `GET /goals?course_id=1` → 数组；`POST /goals {course_id,title,description?,target_date?:'YYYY-MM-DD'|null,daily_minutes?:5..240,knowledge_ids?:number[],status?:'active'|'completed'|'paused'}` → 保存后的目标（含id/student_id/时间）。
+- `PATCH /goals/{id}` 除 course_id 外支持部分更新；日期可置空；`DELETE /goals/{id}` 保留已有计划但解除 goal_id。
+- `GET /plans?course_id=1` → 持久化计划数组；`POST /plans {course_id,title,description?,goal_id?,knowledge_id?,kind?:'practice'|'video'|'review'|'experiment'|'reading',scheduled_date?:'YYYY-MM-DD'|null,estimated_minutes?:1..240,status?:'planned'|'completed'|'skipped'}`。
+- `PATCH /plans/{id}` 除 course_id 外支持部分更新；`DELETE /plans/{id}`。
+- `GET /plan?course_id=1` → `{goals,items,recommendations,explanation}`。活动目标关联的知识点在动态推荐中增加优先级，并明确解释来自哪个个人目标。
+- 标记计划完成只记录 `plan_completed` 自报事件，包含 `affects_mastery:false`，不把勾选完成当成独立掌握。真实掌握度仍由作答、提示、复测和教师主观复核证据更新。

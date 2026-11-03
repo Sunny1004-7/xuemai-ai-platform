@@ -229,4 +229,7 @@ def test_dashboard_reports_actual_data(client):
     dash=client.get("/api/dashboard",headers=student).json()
     assert dash["stats"]["courses"]==2 and dash["synthetic_data"]
     assert dash["recommendations"] and dash["assignments"]
-    assert client.get("/api/dashboard",headers=teacher).json()["stats"]["students"]==2
+    teacher_dash=client.get("/api/dashboard",headers=teacher).json()
+    assert teacher_dash["stats"]["students"]==2
+    assert teacher_dash["recent_events"][0]["student_name"]=="陈星河"
+    assert teacher_dash["courses"][0]["progress"]>0

@@ -11,6 +11,7 @@ def mastery_value(db, student_id, knowledge_id):
 def recommendations(db,user,course_id):
     nodes=db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)).fetchall()
     result=[]
+    goals=db.execute("SELECT title,knowledge_ids FROM learning_goals WHERE student_id=? AND course_id=? AND status='active' ORDER BY id DESC",(user["id"],course_id)).fetchall()
     for node in nodes:
         value=mastery_value(db,user["id"],node["id"])
         wrong=db.execute("SELECT COUNT(*) FROM mistakes m JOIN questions q ON m.question_id=q.id WHERE m.student_id=? AND q.knowledge_id=? AND m.corrected=0",(user["id"],node["id"])).fetchone()[0]
@@ -23,8 +24,10 @@ def recommendations(db,user,course_id):
         reason=(f"有 {wrong} 道未订正错题，先辨析错误再独立复测。" if wrong else f"当前掌握度 {round(value*100)}%，用{'片段学习后检查' if kind=='video' else '独立练习'}补充学习证据。")
         if weak:
             reason+="先修知识“"+weak[0]["title"]+"”尚需巩固。"
+        related_goal=next((g for g in goals if node["id"] in json.loads(g["knowledge_ids"])),None)
+        if related_goal:reason+="这也对应你的目标“"+related_goal["title"]+"”。"
         href=f"/review?knowledge={node['id']}" if wrong else f"/video?resource={video['id']}&knowledge={node['id']}" if kind=="video" else f"/practice?knowledge={node['id']}"
-        result.append({"id":f"{kind}-{node['id']}","course_id":course_id,"knowledge_id":node["id"],"title":node["title"],"reason":reason,"kind":kind,"href":href,"priority":round((1-value)*100+wrong*30+len(weak)*8),"mastery":round(value*100),"prerequisite_ids":[p["id"] for p in weak]})
+        result.append({"id":f"{kind}-{node['id']}","course_id":course_id,"knowledge_id":node["id"],"title":node["title"],"reason":reason,"kind":kind,"href":href,"priority":round((1-value)*100+wrong*30+len(weak)*8+(12 if related_goal else 0)),"mastery":round(value*100),"prerequisite_ids":[p["id"] for p in weak]})
     return sorted(result,key=lambda r:-r["priority"])
 
 
