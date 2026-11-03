@@ -139,6 +139,7 @@ async def parse_sse(lines: AsyncIterator[str]) -> AsyncIterator[dict]:
         if item.get("error"):
             raise AIError("AI 流式响应中断，请稍后重试", 502, "stream_error")
         yield item
+    raise AIError("AI 流式连接提前关闭，回答尚未完成，请重新提问", 502, "stream_interrupted")
 
 
 class AIService:
@@ -202,7 +203,9 @@ class AIService:
         except httpx.HTTPError as error:
             raise AIError("无法连接 AI 服务，请检查网络后重试", 502, "network") from error
         finally:
-            log_usage(self.config, "json" if json_mode else "chat", self.last_usage or safe_usage(None, messages, content),
+            if not self.last_usage:
+                self.last_usage = safe_usage(None, messages, content)
+            log_usage(self.config, "json" if json_mode else "chat", self.last_usage,
                       status, time.monotonic() - started)
 
     async def stream(self, messages: list[dict], *, user_key: str = "system", mock_content: str = "",
@@ -213,6 +216,7 @@ class AIService:
         content = ""
         usage = None
         status = "error"
+        finish_reason = None
         try:
             if self.config.mode == "mock":
                 answer = mock_content or "先确定问题的输入，再用一个小例子逐步验证。你认为第一步应该做什么？"
@@ -232,7 +236,12 @@ class AIService:
                             if item.get("usage"):
                                 usage = item["usage"]
                             choices = item.get("choices") or []
+                            if not isinstance(choices, list):
+                                raise AIError("AI 流式响应格式异常", 502, "invalid_response")
                             if choices:
+                                if not isinstance(choices[0], dict) or not isinstance(choices[0].get("delta", {}), dict):
+                                    raise AIError("AI 流式响应格式异常", 502, "invalid_response")
+                                finish_reason = choices[0].get("finish_reason") or finish_reason
                                 fragment = choices[0].get("delta", {}).get("content") or ""
                                 if not isinstance(fragment, str):
                                     raise AIError("AI 流式文本格式异常", 502, "invalid_response")
@@ -242,11 +251,15 @@ class AIService:
                 if not content.strip():
                     raise AIError("AI 未返回有效回答，请缩小问题范围后再试", 502, "empty_response")
                 self.last_usage = safe_usage(usage, messages, content)
+                if finish_reason == "length":
+                    raise AIError("回答达到输出长度上限，尚未完整结束；请缩小问题范围后继续", 502, "truncated")
             status = "ok"
         except httpx.TimeoutException as error:
             raise AIError("AI 响应超时，已保留提问，可稍后重试", 504, "timeout") from error
         except httpx.HTTPError as error:
             raise AIError("AI 网络连接中断，可稍后重新提问", 502, "network") from error
         finally:
-            log_usage(self.config, "stream", self.last_usage or safe_usage(usage, messages, content),
+            if not self.last_usage:
+                self.last_usage = safe_usage(usage, messages, content)
+            log_usage(self.config, "stream", self.last_usage,
                       status, time.monotonic() - started)
