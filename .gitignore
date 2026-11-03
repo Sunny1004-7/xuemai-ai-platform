@@ -10,6 +10,7 @@ deepseek官方api.txt
 .venv/
 node_modules/
 dist/
+*.tsbuildinfo
 __pycache__/
 *.py[cod]
 .pytest_cache/
