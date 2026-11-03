@@ -1,0 +1,5 @@
+# 可选：重建原创媒体、技术PDF和演示旁白合成；应用启动无需安装。
+pillow==13.0.0
+imageio-ffmpeg==0.8.0
+reportlab==5.1.0
+pypdf==6.21.4
