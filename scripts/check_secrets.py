@@ -5,10 +5,25 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SECRET_PATTERN = re.compile(rb'sk-[A-Za-z0-9_-]{24,}|gh[pousr]_[A-Za-z0-9_]{24,}|github_pat_[A-Za-z0-9_]{24,}')
 
 
 def main():
     staged = '--staged' in sys.argv
+    if '--history' in sys.argv:
+        objects = subprocess.check_output(['git','rev-list','--objects','--all'],cwd=ROOT).decode('utf-8').splitlines()
+        checked = 0
+        for entry in objects:
+            oid, _, name = entry.partition(' ')
+            kind = subprocess.check_output(['git','cat-file','-t',oid],cwd=ROOT).strip()
+            if kind != b'blob': continue
+            content = subprocess.check_output(['git','cat-file','blob',oid],cwd=ROOT)
+            if SECRET_PATTERN.search(content):
+                print('历史敏感信息检查失败（仅对象与文件名）：',oid,name)
+                return 1
+            checked += 1
+        print(f'历史敏感信息检查通过：{checked} 个文件对象；未输出任何密钥。')
+        return 0
     args = ['git', 'diff', '--cached', '--name-only', '--diff-filter=ACM', '-z'] if staged else ['git', 'ls-files', '-z']
     names = subprocess.check_output(args, cwd=ROOT).decode('utf-8').split('\0')
     # 读取本地密钥只用于等值扫描，绝不打印或写入扫描报告。
@@ -27,7 +42,7 @@ def main():
             if not path.is_file():
                 continue
             content = path.read_bytes()
-        if re.search(rb'sk-[A-Za-z0-9_-]{24,}', content) or (secret and secret.group().encode() in content):
+        if SECRET_PATTERN.search(content) or (secret and secret.group().encode() in content):
             failures.append(name)
     if failures:
         print('敏感信息检查失败（仅列文件名）：', ', '.join(failures))
