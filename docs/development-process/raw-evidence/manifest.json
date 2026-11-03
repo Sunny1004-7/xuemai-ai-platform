@@ -1,0 +1,59 @@
+{
+  "title": "学脉本次开发的可见原始记录筛选快照",
+  "exported_at": "2026-11-03T07:01:35.824678+00:00",
+  "scope": "仅四个显式指定的本次会话；可见消息、三类协作工具元数据/可读回执、实际收到的公开消息正文、测试命令与退出码",
+  "authorship": "user_message 为用户发言或界面答复；协作记录为 Codex 自主分工，不改写为人工追问；仅在存储含公开明文时导出正文",
+  "redaction": "仅脱敏凭据、一次性认证码、个人邮箱和本机绝对路径；相同继承内容去重；原始行号用于本机核验",
+  "excluded": "系统与开发者消息、内部非公开内容、终端原始输出、工具任意数据和其他会话均未导出",
+  "evidence_status": "自动导出未取得加密协作正文；独立附录已从本聊天可见协作卡片逐字转存核心功能 Prompt 与回复。两类来源分别标注，独立转存不等同完整自动原始导出，建议保留原始界面截图交叉核对。",
+  "features": {
+    "graph": "知识图谱与资源联动",
+    "practice": "练习、作业与学习推荐",
+    "ai": "DeepSeek 辅导与检索"
+  },
+  "sources": [
+    {
+      "source": "root",
+      "source_file": "rollout-2026-11-03T14-37-42-01a1a020-bc08-7da2-9bac-6a75a1ee93c6.jsonl",
+      "exported_records": 59
+    },
+    {
+      "source": "backend",
+      "source_file": "rollout-2026-11-03T14-39-18-01a1a022-3487-7d13-b5a2-42532d801d2e.jsonl",
+      "exported_records": 33
+    },
+    {
+      "source": "frontend",
+      "source_file": "rollout-2026-11-03T14-39-31-01a1a022-6510-74b3-b83f-aa44139dca1d.jsonl",
+      "exported_records": 20
+    },
+    {
+      "source": "ai",
+      "source_file": "rollout-2026-11-03T14-39-40-01a1a022-87d6-70f2-9065-a473638ccff7.jsonl",
+      "exported_records": 37
+    }
+  ],
+  "redaction_counts": {
+    "opaque_content_omitted": 0,
+    "credential_or_auth_code": 0,
+    "personal_or_project_absolute_path": 0,
+    "personal_email": 0
+  },
+  "visible_card_appendix_available": true,
+  "record_counts": {
+    "user_message": 2,
+    "assistant_message": 17,
+    "ai_collaboration_metadata": 95,
+    "ai_collaboration_result": 3,
+    "test_command": 27,
+    "ai_collaboration_received": 5
+  },
+  "output_sha256": {
+    "ai-chain.json": "db28c9a681fbcc50645dc58c906056ffa3735d284f3f48d98316ab7070f31088",
+    "graph-chain.json": "9166e938c41a5cfbc20bd314c952983e2a4232aad7c1cfdc1db93e9fc14ed0a4",
+    "index.html": "a03f42b1aa462b5801f24ec9221f1ca9ed8660b78bfb765430e5bef67fd5e43e",
+    "practice-chain.json": "0ca936ba44c5339d344f0e0edc57c60e0ed79ccb65b6eb586b7fb9d8a528b5a8",
+    "README.md": "862772073d6ad45a7182db703c3b7946995ff0681c3209cfd2b819d9e5802c24",
+    "visible-records.json": "7584ac08fd9edd9bff43e14c2a696461e8e7da454856c33a398aa27dac878f51"
+  }
+}
