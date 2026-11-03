@@ -292,7 +292,7 @@ async def chat(request: ChatInput, user: User):
             saved = True
             yield sse("done", {"conversation_id": conversation_id, "usage": service.last_usage,
                                "status": "complete",
-                               "next_action": f"/practice?course_id={request.course_id}" + (f"&question_id={request.question_id}" if request.question_id else "")})
+                               "next_action": f"/practice?course_id={request.course_id}" + (f"&knowledge={request.knowledge_point_id}" if request.knowledge_point_id else "") + (f"&question={request.question_id}" if request.question_id else "")})
         except AIError as error:
             yield sse("error", {"message": str(error), "code": error.code, "partial": bool(content), "retryable": error.code not in {"quota", "authentication", "not_configured"}})
         finally:
