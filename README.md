@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前为0.1教学闭环验证版，87项后端业务测试、14项审阅工具测试、11项真实浏览器测试和算法验证通过。[技术文档PDF](docs/deliverables/xuemai-technical-report.pdf)与[交付版本](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)提供源码包和6分35秒1080p演示。所有中文阶段提交与开发证据随仓库保留。
+当前主分支为0.2：宋瓷青绿学生端、茶烟米褐教师端、六主题30节点课程、时间折减证据模型、间隔复习与结构化辅导。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分钟1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[本轮验证](docs/VALIDATION.md)和[改版对照](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版，不替代当前主分支。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
@@ -10,7 +10,7 @@
 
 在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。新启动的后端使用本地Mock。
 
-审阅地址为 http://127.0.0.1:5173 。账号student1、student2和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
+审阅地址为 http://127.0.0.1:5173 。账号student1和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
 
 ## 每轮完整审阅包
 
@@ -21,7 +21,7 @@ node frontend/scripts/capture-review.mjs docs/rounds/本轮记录.md
 .venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/本轮记录.md --base-ref 本轮起始提交 --screenshots 交付审阅包/界面截图_年月日_时分秒
 ```
 
-将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×1000桌面和390×844手机窄屏，覆盖登录页、学生端11个模块视图和教师端8个模块视图。长页面、长弹窗保存分段图，另拍关键表单、题型、操作结果、AI引用和异常反馈。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
+将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×1000、1366×768、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端11个模块视图和教师端8个模块视图。长页面、长弹窗保存分段图，另拍关键表单、题型、操作结果、AI引用和异常反馈。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
 
 截图使用本轮生产构建和独立合成演示数据，AI为本地Mock，真实API调用0次。隔离服务占用8002和5176端口，任务结束自动关闭，截图前会检查端口空闲。首次需完成环境安装，Windows使用已安装的Chrome，Linux需安装Playwright Chromium。
 
@@ -48,7 +48,6 @@ cd xuemai-ai-platform
 |---|---|---|
 | 教师 林知远 | teacher | Xuemai123! |
 | 学生 陈星河 | student1 | Xuemai123! |
-| 学生 许沐晴 | student2 | Xuemai123! |
 
 所有预置账号、掌握度、学习记录和班级均为**合成演示数据**。初始班级邀请码 XM2026；第二课程 Python 程序设计邀请码 PY2026。学生通过课程班级取得访问权限。
 
@@ -100,7 +99,7 @@ npx playwright install chromium
 
 后端测试使用隔离临时数据库；端到端使用独立端口和演示数据库，不访问真实 AI。测试报告和截图生成在忽略的本机目录，核实结果后把不含敏感信息的必要证据存入 docs。
 
-数据库默认 `data/xuemai.db`，启动自动迁移及首次种子初始化。不要在已有真实数据上删除数据库以“修复”；演示重置请另选 `DATABASE_PATH` 创建新库。视频已随源码提供，重新生成需额外安装 `pillow imageio-ffmpeg` 后执行 `scripts/generate_demo_video.py`。
+数据库默认 `data/xuemai.db`，启动自动迁移及首次种子初始化。不要在已有真实数据上删除数据库以“修复”；演示重置请另选 `DATABASE_PATH` 创建新库。三个原创教学片段已随源码提供，重建素材安装 `scripts/media-requirements.txt` 后执行 `scripts/generate_teaching_clips.py`。正式文档与系统演示的生成方式见[材料说明](docs/TECHNICAL_REPORT.md)和[演示分镜](docs/demo/讲解稿与分镜.md)。
 
 ## 使用边界与赛事证据
 

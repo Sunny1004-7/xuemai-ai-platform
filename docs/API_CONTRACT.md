@@ -1,6 +1,6 @@
 # 前后端接口约定
 
-所有路径以 `/api` 开头；除登录与 health 外需 `Authorization: Bearer <token>`。错误 `{detail: 中文说明}`。所有列表接口直接返回数组；dashboard、graph、analytics 返回对象。种子账号 teacher / student1 / student2，密码 `Xuemai123!`；数据是合成演示数据。
+所有路径以 `/api` 开头；除登录与 health 外需 `Authorization: Bearer <token>`。错误 `{detail: 中文说明}`。所有列表接口直接返回数组；dashboard、graph、analytics 返回对象。默认体验账号 teacher / student1，密码 `Xuemai123!`；数据是合成演示数据。旧student2停用，保留历史记录。
 
 - `POST /auth/login {username,password}` → `{token,user:{id,name,role,username}}`。
 - `GET /auth/me` → user；`POST /auth/logout`。
@@ -49,3 +49,16 @@
 - `PATCH /plans/{id}` 除 course_id 外支持部分更新；`DELETE /plans/{id}`。
 - `GET /plan?course_id=1` → `{goals,items,recommendations,explanation}`。活动目标关联的知识点在动态推荐中增加优先级，并明确解释来自哪个个人目标。
 - 标记计划完成只记录 `plan_completed` 自报事件，包含 `affects_mastery:false`，不把勾选完成当成独立掌握。真实掌握度仍由作答、提示、复测和教师主观复核证据更新。
+
+## 0.2学习证据与教学跟踪扩展
+
+- 图谱节点附`evidence`，包含`value,alpha,beta,effective_count,lower,upper,sufficiency,retention,days_since_evidence,model`。`value`取0至1，节点`mastery`为百分数；区间是近似表达，不能当作预测准确率。
+- 题目新增`skill`与`diagnostic_map`。技能使用concept/procedure/reasoning/transfer；诊断映射只向任课教师返回。已被作答或作业引用的核心题目内容继续受变更约束。
+- `POST /attempts`与错题复测返回`evidence`和`review_schedule`。证据计算参数保存在`evidence_updates.details`；调度包含`interval_days,ease,repetitions,last_quality,next_due,updated_at`。
+- `GET /review-schedule?course_id=1`返回学生本人的全部复习调度，附题名、知识点和是否到期的`due`。
+- 动态推荐增加`evidence`与`steps`。步骤携带可进入的学习对象和原因，先修缺口排在目标练习之前，无可评分题目时不生成空练习入口。
+- `GET /analytics/evidence?course_id=1&student_id=...&knowledge_id=...`返回任课教师可见的最多50条证据，包括作答、提示、复核状态、前后值、权重、质量和参数。
+- 发布作业时保存目标学生的状态基线；`GET /assignments/{id}/results`在学生结果中附`comparison`，每项包含`knowledge_id,title,baseline,current,delta,new_evidence,evidence`。`new_evidence`为当前有效证据量相对基线的净差，经过时间折减后可能减少。
+- 课堂列表的`responses`对学生只返回本人回答，提交后与重新进入页面时均可回看；教师可见课程内全部回答。
+
+辅导结构化动作、理解检查与版本引用详见[AI接口](AI_API.md)。

@@ -12,6 +12,15 @@
 
 chat 为 SSE：meta 含 conversation_id/mode/citations；delta 含 content；done 含 usage/next_action；error 含中文 message/code/retryable。引用含 id/resource_id/title/excerpt/url。
 
+## 0.2结构化动作与理解检查
+
+完整回答的`done.teaching`和会话历史中每条消息的`teaching`保存策略与动作。动作类型由模型在后端提供的候选中选择，后端映射到当前课程的概念对照、视频、实验或检查题；不直接执行模型输出的URL或对象编号。候选选择无效时回落到受支持的教学安排。
+
+- `POST /api/ai/checks/{check_id}/answer {answer,hints_used?}`：学生本人提交已关联的检查题，复用作答评分、学习证据与复习调度，另返回`next_action:{title,href}`。正确进入间隔复测，仍有困难进入先修与概念对照。重复提交409，非本人或不可访问的对象404。
+- `GET /api/ai/checks/{check_id}`：返回`{result:null|{correct,score,explanation,evidence,review_schedule}}`，用于重新打开历史时恢复结果。
+
+资源引用增加版本信息。上传、编辑、删除时写入索引变更，检索消费变更并保留资源版本；未变内容不会在每次辅导时重建。检索结果和学习状态仍受用户与课程权限限制。
+
 generate 输出 `{mode,kind,draft:true,review_status:'pending_teacher_review',result,citations,usage}`。
 question result 可编辑后保存题库；lesson result 可编辑后保存资料；rubric 分数仅建议，必须教师复核。Mock 量规分数是演示样例，不能用于真实评分。
 
