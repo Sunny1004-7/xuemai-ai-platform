@@ -1,0 +1,43 @@
+{
+  "scope": "round3-validation",
+  "requests": 4,
+  "automatic_retries": 0,
+  "results": [
+    {
+      "case": "协作辅导",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1224,
+        "completion_tokens": 187,
+        "estimated": false
+      }
+    },
+    {
+      "case": "智能出题",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 791,
+        "completion_tokens": 166,
+        "estimated": false
+      }
+    },
+    {
+      "case": "辅助备课",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 810,
+        "completion_tokens": 217,
+        "estimated": false
+      }
+    },
+    {
+      "case": "量规评阅",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 919,
+        "completion_tokens": 154,
+        "estimated": false
+      }
+    }
+  ]
+}
