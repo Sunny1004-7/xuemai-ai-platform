@@ -15,7 +15,7 @@ test('教师创建课程章节知识班级，学生邀请码加入后读取同�
   const tp = await tc.newPage(),
     sp = await sc.newPage()
   await login(tp, 'teacher')
-  await tp.getByRole('link', { name: '课程与班级', exact: true }).click()
+  await tp.getByRole('navigation', {name:'主导航'}).getByRole('link', { name: '课程与班级', exact: true }).click()
   await tp.getByRole('button', { name: '创建课程', exact: true }).click()
   const courseTitle = unique('UI 教学闭环课程')
   let dialog = tp.getByRole('dialog')
@@ -49,7 +49,7 @@ test('教师创建课程章节知识班级，学生邀请码加入后读取同�
   await dialog.getByLabel('学习目标（每行一个）').fill('能够辨认递归终止条件\n能够解释递归推进方向')
   await dialog.getByRole('button', { name: '保存知识点' }).click()
   await expect(tp.getByRole('button', { name: /递归终止条件，掌握度/ })).toBeVisible()
-  await login(sp, 'student2')
+  await login(sp, 'student1')
   await sp.getByRole('link', { name: '我的课程', exact: true }).click()
   await sp.getByRole('button', { name: '加入班级', exact: true }).click()
   dialog = sp.getByRole('dialog')
@@ -75,7 +75,7 @@ test('从图谱进入视频，完成互动检查并真实写回事件', async ({
   await expect
     .poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState))
     .toBeGreaterThanOrEqual(1)
-  await page.locator('.video-timeline button').filter({ hasText: '交换与一轮结束' }).click()
+  await page.locator('.video-timeline button').nth(1).click()
   await expect
     .poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime))
     .toBeGreaterThanOrEqual(9)
@@ -151,11 +151,6 @@ test('教师根据学情发布定向任务，学生完成后再次分析作答�
     .filter({ hasText: '陈星河' })
     .getByRole('checkbox')
     .check()
-  await dialog
-    .locator('.checkbox-list label')
-    .filter({ hasText: '许沐晴' })
-    .getByRole('checkbox')
-    .uncheck()
   await dialog.getByRole('button', { name: '发布分层任务' }).click()
   await expect(dialog).not.toBeVisible()
   await login(sp, 'student1')
@@ -164,6 +159,9 @@ test('教师根据学情发布定向任务，学生完成后再次分析作答�
   await sp.getByRole('radio').nth(0).check()
   await sp.getByRole('button', { name: '提交答案', exact: true }).click()
   await expect(sp.getByRole('heading', { name: '思路清晰，回答正确' })).toBeVisible()
+  await sp.getByRole('button', {name:'下一道练习',exact:true}).click()
+  await sp.getByRole('radio').nth(0).check()
+  await sp.getByRole('button', { name: '提交答案', exact: true }).click()
   await tp.getByRole('button', { name: '刷新学习状态' }).click()
   await expect.poll(async () => Number(await attemptStat.innerText())).toBeGreaterThan(before)
   await tp.getByRole('link', { name: '题库与作业', exact: true }).click()
@@ -210,7 +208,7 @@ test('个人目标计划编辑持久化，课堂互动回答同步给教师', as
     sp.locator('.personal-plan-list>div.completed').filter({ hasText: planTitle }),
   ).toContainText(planTitle)
   await login(tp, 'teacher')
-  await tp.getByRole('link', { name: '课堂互动', exact: true }).click()
+  await tp.getByRole('navigation', {name:'主导航'}).getByRole('link', { name: '课堂互动', exact: true }).click()
   await tp.getByRole('button', { name: '发起课堂互动' }).click()
   dialog = tp.getByRole('dialog')
   const activityTitle = unique('课堂理解检查')

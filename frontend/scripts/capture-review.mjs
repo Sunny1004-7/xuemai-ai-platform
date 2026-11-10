@@ -288,6 +288,20 @@ async function details(page, module, fixture) {
       case 'graph':
         await page.getByRole('button', { name: /冒泡排序，掌握度/ }).click()
         await capture('focused', '选中知识点与资源联动')
+        await page.getByLabel('定位知识点').fill('快速排序')
+        await capture('searched','搜索定位知识点')
+        await page.getByLabel('定位知识点').fill('')
+        await page.getByRole('button', {name:'邻近知识',exact:true}).click()
+        await capture('neighbors','邻近节点聚焦')
+        await page.getByRole('button', {name:'先修链',exact:true}).click()
+        await capture('ancestors','先修链展开')
+        await page.getByRole('button', {name:'全图',exact:true}).click()
+        const node=page.getByRole('button',{name:/快速排序，掌握度/})
+        const box=await node.boundingBox()
+        if(!box) throw new Error('图谱节点不可拖动')
+        await page.mouse.move(box.x+box.width/2,box.y+box.height/2)
+        await page.mouse.down(); await page.mouse.move(box.x+box.width/2+55,box.y+box.height/2+20,{steps:8}); await page.mouse.up()
+        await capture('dragged','节点拖动后的布局')
         break
       case 'practice':
         await question(page, 1)
@@ -332,7 +346,16 @@ async function details(page, module, fixture) {
         await page.getByRole('button', { name: '发送', exact: true }).click()
         await expect(page.locator('.message-sources > span').first()).toBeVisible()
         await expect(page.getByRole('button', { name: '停止生成', exact: true })).toHaveCount(0)
+        await expect(page.getByRole('button',{name:'提交理解检查',exact:true})).toBeVisible()
+        await page.locator('.chat-messages').evaluate(el => {el.scrollTop=0})
+        await capture('conversation-start','辅导对话开头与课程上下文')
+        await page.locator('.chat-messages').evaluate(el => {el.scrollTop=el.scrollHeight})
         await capture('conversation', 'Mock流式辅导与课程引用')
+        await capture('understanding-check','辅导后的结构化动作与理解检查')
+        await page.locator('.understanding-check input').first().check()
+        await page.getByRole('button',{name:'提交理解检查',exact:true}).click()
+        await expect(page.locator('.understanding-check [role="status"]')).toBeVisible()
+        await capture('check-result','实际理解检查评分与下一教学动作')
         await page.getByRole('button', { name: '对话历史', exact: true }).click()
         await capture('history', '可恢复的辅导历史')
         await page.route('**/api/ai/chat', (route) =>
@@ -463,6 +486,11 @@ async function details(page, module, fixture) {
       await modal('编辑字幕与检查点', 'timeline-editor', '字幕、知识片段和互动时间轴完整表单')
       break
     case 'analytics':
+      await page.getByRole('button',{name:'查看证据',exact:true}).first().click()
+      await dialog(page,'learning-evidence','学生作答证据与参数下钻')
+      await close(page)
+      await page.locator('.assignment-row').first().getByRole('button',{name:'查看结果',exact:true}).click()
+      await capture('intervention-results','教学任务完成与证据状态对照')
       await page.getByRole('button', { name: '分层任务', exact: true }).first().click()
       await dialog(page, 'targeted-task', '分层任务发布与目标学生')
       await close(page)
@@ -599,6 +627,10 @@ try {
       })
     }
     await full(page, 'full', `${module.label} · 桌面全页`)
+    for (const viewport of ['desktop_compact','desktop_wide']) {
+      await page.setViewportSize(plan[viewport])
+      await full(page,'full',`${module.label} · ${plan[viewport].width}px全页`,viewport)
+    }
     await page.setViewportSize(plan.mobile)
     await settle(page)
     await full(page, 'full', `${module.label} · 手机窄屏全页`, 'mobile')
@@ -621,7 +653,7 @@ try {
       cwd: root,
       encoding: 'utf8',
     }).stdout.trim(),
-    viewports: { desktop: plan.desktop, mobile: plan.mobile },
+    viewports: Object.fromEntries(Object.entries(plan).filter(([key]) => key !== "modules")),
     modules: plan.modules,
     files,
     page_errors: failures,

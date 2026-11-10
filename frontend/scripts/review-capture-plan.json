@@ -1,6 +1,12 @@
 {
-  "desktop": { "width": 1440, "height": 1000 },
-  "mobile": { "width": 390, "height": 844 },
+  "desktop": {
+    "width": 1440,
+    "height": 1000
+  },
+  "mobile": {
+    "width": 390,
+    "height": 844
+  },
   "modules": [
     {
       "id": "login",
@@ -8,7 +14,9 @@
       "label": "登录页",
       "route": "/",
       "navigation": false,
-      "details": ["login-error"]
+      "details": [
+        "login-error"
+      ]
     },
     {
       "id": "dashboard",
@@ -24,7 +32,11 @@
       "label": "目标与计划",
       "route": "/plan",
       "navigation": true,
-      "details": ["goal-form", "plan-form", "populated"]
+      "details": [
+        "goal-form",
+        "plan-form",
+        "populated"
+      ]
     },
     {
       "id": "courses",
@@ -32,7 +44,9 @@
       "label": "我的课程",
       "route": "/courses",
       "navigation": true,
-      "details": ["join"]
+      "details": [
+        "join"
+      ]
     },
     {
       "id": "graph",
@@ -40,7 +54,13 @@
       "label": "知识图谱",
       "route": "/graph?knowledge=6",
       "navigation": true,
-      "details": ["focused"]
+      "details": [
+        "focused",
+        "searched",
+        "neighbors",
+        "ancestors",
+        "dragged"
+      ]
     },
     {
       "id": "practice",
@@ -66,7 +86,14 @@
       "label": "AI学习伙伴",
       "route": "/tutor?knowledge=2&question=1",
       "navigation": true,
-      "details": ["conversation", "history", "service-error"]
+      "details": [
+        "conversation",
+        "history",
+        "service-error",
+        "understanding-check",
+        "check-result",
+        "conversation-start"
+      ]
     },
     {
       "id": "review",
@@ -74,7 +101,9 @@
       "label": "错题与复习",
       "route": "/review",
       "navigation": true,
-      "details": ["correction"]
+      "details": [
+        "correction"
+      ]
     },
     {
       "id": "experiments",
@@ -82,7 +111,13 @@
       "label": "交互实验室",
       "route": "/experiments",
       "navigation": true,
-      "details": ["sort-running", "stack", "queue", "tree", "bfs"]
+      "details": [
+        "sort-running",
+        "stack",
+        "queue",
+        "tree",
+        "bfs"
+      ]
     },
     {
       "id": "classroom",
@@ -90,7 +125,9 @@
       "label": "课堂互动",
       "route": "/classroom",
       "navigation": true,
-      "details": ["submitted"]
+      "details": [
+        "submitted"
+      ]
     },
     {
       "id": "video",
@@ -98,7 +135,11 @@
       "label": "课程视频",
       "route": "/video?resource=100&t=10",
       "navigation": false,
-      "details": ["subtitle-search", "notes", "checkpoint"]
+      "details": [
+        "subtitle-search",
+        "notes",
+        "checkpoint"
+      ]
     },
     {
       "id": "resources",
@@ -106,7 +147,9 @@
       "label": "课程资料",
       "route": "/resources",
       "navigation": false,
-      "details": ["document"]
+      "details": [
+        "document"
+      ]
     },
     {
       "id": "dashboard",
@@ -122,7 +165,13 @@
       "label": "课程与班级",
       "route": "/manage",
       "navigation": true,
-      "details": ["course-form", "course-edit", "chapter-form", "class-form", "member-form"]
+      "details": [
+        "course-form",
+        "course-edit",
+        "chapter-form",
+        "class-form",
+        "member-form"
+      ]
     },
     {
       "id": "graph",
@@ -130,7 +179,11 @@
       "label": "图谱编辑器",
       "route": "/graph?knowledge=6",
       "navigation": true,
-      "details": ["node-form", "node-edit", "prerequisites"]
+      "details": [
+        "node-form",
+        "node-edit",
+        "prerequisites"
+      ]
     },
     {
       "id": "resources",
@@ -138,7 +191,13 @@
       "label": "AI备课与资料",
       "route": "/resources",
       "navigation": true,
-      "details": ["upload", "resource-edit", "lesson-intent", "lesson-draft", "document"]
+      "details": [
+        "upload",
+        "resource-edit",
+        "lesson-intent",
+        "lesson-draft",
+        "document"
+      ]
     },
     {
       "id": "practice",
@@ -146,7 +205,12 @@
       "label": "题库与作业",
       "route": "/practice",
       "navigation": true,
-      "details": ["question-edit", "question-copy", "assignment-form", "assignment-results"]
+      "details": [
+        "question-edit",
+        "question-copy",
+        "assignment-form",
+        "assignment-results"
+      ]
     },
     {
       "id": "video",
@@ -154,7 +218,9 @@
       "label": "视频教学",
       "route": "/video?resource=100",
       "navigation": true,
-      "details": ["timeline-editor"]
+      "details": [
+        "timeline-editor"
+      ]
     },
     {
       "id": "analytics",
@@ -162,7 +228,13 @@
       "label": "学情与分层",
       "route": "/analytics",
       "navigation": true,
-      "details": ["targeted-task", "subjective-review", "rubric-advice"]
+      "details": [
+        "targeted-task",
+        "subjective-review",
+        "rubric-advice",
+        "learning-evidence",
+        "intervention-results"
+      ]
     },
     {
       "id": "classroom",
@@ -170,7 +242,18 @@
       "label": "课堂互动",
       "route": "/classroom",
       "navigation": true,
-      "details": ["activity-form", "responses"]
+      "details": [
+        "activity-form",
+        "responses"
+      ]
     }
-  ]
+  ],
+  "desktop_compact": {
+    "width": 1366,
+    "height": 768
+  },
+  "desktop_wide": {
+    "width": 1920,
+    "height": 1080
+  }
 }
