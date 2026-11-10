@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import {
   ArrowRight,
   BookOpen,
@@ -12,6 +12,8 @@ import {
   Send,
   Sparkles,
 } from 'lucide-react'
+import { RichText } from '../components/RichText'
+import { TeachingActions } from '../components/TeachingActions'
 import { api, getSession, useApi } from '../api'
 import type { Row } from '../api'
 import { Button, LoadState, Panel, Pill, Title, useApp } from '../ui'
@@ -23,10 +25,11 @@ type Message = {
   mode?: string
   error?: boolean
   status?: string
+  teaching?: Row
 }
 export function Tutor() {
   const { courseId, user, notify } = useApp()
-  const [params] = useSearchParams()
+  const [params, setParams] = useSearchParams()
   const knowledgeId = Number(params.get('knowledge')) || undefined
   const questionId = Number(params.get('question')) || undefined
   const videoTimestamp = params.has('t') ? Number(params.get('t')) : undefined
@@ -56,6 +59,15 @@ export function Tutor() {
     if (busy) return
     try {
       const conversation = await api<Row>(`/ai/conversations/${id}`)
+      const context = conversation.context || {}
+      const next = new URLSearchParams()
+      next.set('course', String(context.course_id || courseId))
+      if (context.knowledge_point_id) next.set('knowledge', String(context.knowledge_point_id))
+      if (context.question_id) next.set('question', String(context.question_id))
+      if (context.resource_id) next.set('resource', String(context.resource_id))
+      if (context.video_timestamp !== null && context.video_timestamp !== undefined)
+        next.set('t', String(context.video_timestamp))
+      setParams(next, { replace: true })
       setMessages(conversation.messages || [])
       setConversationId(id)
       setCitations(conversation.messages?.flatMap((m: Row) => m.citations || []).slice(-5) || [])
@@ -128,6 +140,9 @@ export function Tutor() {
               ),
             )
           if (event === 'done') {
+            setMessages((v) =>
+              v.map((m, i) => (i === v.length - 1 ? { ...m, teaching: data.teaching } : m)),
+            )
             completed = true
             setConversationId(data.conversation_id)
           }
@@ -180,7 +195,7 @@ export function Tutor() {
   return (
     <>
       <Title
-        title="陪你想明白的学习伙伴"
+        title="AI 辅导"
         subtitle="带着课程上下文，一步步解释、追问与理解；所有建议都需要你主动思考"
         action={
           <Button variant="secondary" onClick={() => setSideOpen(!sideOpen)}>
@@ -219,19 +234,6 @@ export function Tutor() {
           {!history.loading && !history.data.length ? (
             <p className="mini-text muted">你的课程对话会保存在这里，随时可以接续。</p>
           ) : null}
-          <div className="tutor-mode">
-            <span className="status-dot" />
-            <div>
-              <strong>
-                {status.data.mode === 'real' ? 'DeepSeek 实时辅导' : '本地 Mock 演示'}
-              </strong>
-              <p>
-                {status.data.mode === 'real'
-                  ? status.data.model
-                  : '使用固定示例回复，不消耗 API 额度'}
-              </p>
-            </div>
-          </div>
         </aside>
         <Panel className="chat-panel">
           <div className="chat-context">
@@ -258,12 +260,7 @@ export function Tutor() {
                 <div className="ai-welcome-icon">
                   <Sparkles size={33} />
                 </div>
-                <h2>有些知识，聊着就清楚了。</h2>
-                <p>
-                  告诉我你困惑的地方。我会结合课程资料，
-                  <br />
-                  陪你从「不太明白」走向「我能解释」。
-                </p>
+                <h2>{currentKnowledge?.title || '从一个问题开始'}</h2>
                 <div className="starter-prompts">
                   {[
                     knowledgeId
@@ -299,18 +296,20 @@ export function Tutor() {
                       <Pill tone="amber">回答未完成，可继续追问</Pill>
                     ) : null}
                     <div className="message-content">
-                      {m.content ||
-                        (busy ? (
-                          <span className="thinking">
-                            <i />
-                            <i />
-                            <i />
-                            正在结合课程内容思考
-                          </span>
-                        ) : (
-                          '对话已停止。你可以继续追问。'
-                        ))}
+                      {m.content ? (
+                        <RichText>{m.content}</RichText>
+                      ) : busy ? (
+                        <span className="thinking">
+                          <i />
+                          <i />
+                          <i />
+                          正在结合课程内容思考
+                        </span>
+                      ) : (
+                        '对话已停止。你可以继续追问。'
+                      )}
                     </div>
+                    {m.teaching ? <TeachingActions teaching={m.teaching} /> : null}
                     {m.citations?.length ? (
                       <div className="message-sources">
                         {m.citations.map((c, n) => (
@@ -369,10 +368,7 @@ export function Tutor() {
               )}
             </div>
           </form>
-          <p className="ai-disclosure">
-            AI 的解释可能存在偏差，请结合课程资料核对。
-            {status.data.mode !== 'real' ? '当前为本地演示，回复不来自真实模型。' : ''}
-          </p>
+          <p className="ai-disclosure">回答供学习参考，可对照课程资料核对。</p>
         </Panel>
         <aside className="context-aside">
           <Panel title="这次对话的知识依据" caption="只检索你有权限访问的课程内容">
@@ -381,7 +377,12 @@ export function Tutor() {
                 <div className="citation-card" key={c.id || i}>
                   <Pill tone="blue">资料 {i + 1}</Pill>
                   <h3>{c.title}</h3>
-                  <p>{c.excerpt}</p>
+                  <p>
+                    {String(c.excerpt || '')
+                      .replace(/^#+\s*/gm, '')
+                      .slice(0, 180)}
+                    {String(c.excerpt || '').length > 180 ? '…' : ''}
+                  </p>
                   {c.url ? (
                     <a href={c.url} target="_blank" rel="noreferrer">
                       查看来源
@@ -396,21 +397,6 @@ export function Tutor() {
                 <p>提问后，会在这里显示检索到的资料依据与课程片段。</p>
               </div>
             )}
-          </Panel>
-          <Panel title="理解，比得到答案更重要">
-            <ul className="learning-tips">
-              <li>说出你已经知道了什么。</li>
-              <li>指出哪一步开始不确定。</li>
-              <li>试着用自己的话复述。</li>
-              <li>回到练习中独立检验。</li>
-            </ul>
-            <Link
-              to={knowledgeId ? `/practice?knowledge=${knowledgeId}` : '/practice'}
-              className="text-link"
-            >
-              做一次理解检查
-              <ArrowRight size={15} />
-            </Link>
           </Panel>
         </aside>
       </div>

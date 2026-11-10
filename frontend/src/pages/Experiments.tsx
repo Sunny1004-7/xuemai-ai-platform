@@ -27,7 +27,11 @@ export function Experiments() {
   const { courseId, notify } = useApp()
   const [params] = useSearchParams()
   const graph = useApi<Row>(`/courses/${courseId}/graph`, { nodes: [] })
-  const [mode, setMode] = useState('sort')
+  const [mode, setMode] = useState(
+    ['sort', 'tree', 'bfs', 'stack', 'queue'].includes(params.get('mode') || '')
+      ? params.get('mode')!
+      : 'sort',
+  )
   const [raw, setRaw] = useState('36, 18, 52, 24, 9, 43')
   const [values, setValues] = useState([36, 18, 52, 24, 9, 43])
   const [step, setStep] = useState(0)
@@ -167,7 +171,7 @@ export function Experiments() {
   return (
     <>
       <Title
-        title="让抽象算法，在手边发生"
+        title="交互实验"
         subtitle="改一组数据，预测下一步，在真实程序状态里理解运行机制"
         action={
           <Button onClick={save} disabled={saving}>

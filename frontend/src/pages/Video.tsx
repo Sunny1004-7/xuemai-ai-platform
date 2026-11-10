@@ -189,7 +189,7 @@ export function VideoPage() {
   return (
     <>
       <Title
-        title={teacher ? '让视频教学，有互动也有反馈' : '沿着课程，把知识学扎实'}
+        title="视频学习"
         subtitle={
           teacher
             ? '维护视频字幕、知识时间轴与随堂检查，跟踪学习过程'

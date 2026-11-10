@@ -115,7 +115,7 @@ export function LearningPlan() {
   return (
     <>
       <Title
-        title="按自己的节奏，走好每一步"
+        title="目标与计划"
         subtitle="设定个人目标，把可解释的学习建议放进日常安排"
         action={
           <div className="button-row">

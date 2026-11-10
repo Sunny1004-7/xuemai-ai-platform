@@ -16,7 +16,18 @@ import {
 } from 'lucide-react'
 import { api, patch, percent, post, useApi } from '../api'
 import type { Row } from '../api'
-import { Button, Empty, LoadState, Modal, Panel, Pill, Title, typeLabels, useApp } from '../ui'
+import {
+  Button,
+  Empty,
+  LoadState,
+  Modal,
+  Panel,
+  Pill,
+  Title,
+  dateLabel,
+  typeLabels,
+  useApp,
+} from '../ui'
 
 export function Practice({ review = false }: { review?: boolean }) {
   const { user, courseId, notify } = useApp()
@@ -31,6 +42,7 @@ export function Practice({ review = false }: { review?: boolean }) {
       : `/questions?course_id=${courseId}${knowledgeId ? `&knowledge_id=${knowledgeId}` : ''}${type ? `&type=${type}` : ''}`,
     [],
   )
+  const schedule = useApi<Row[]>(review ? `/review-schedule?course_id=${courseId}` : null, [])
   const assignment = useApi<Row>(assignmentId ? `/assignments/${assignmentId}` : null, {})
   const assignments = useApi<Row[]>(`/assignments?course_id=${courseId}`, [])
   const graph = useApi<Row>(`/courses/${courseId}/graph`, { nodes: [] })
@@ -83,6 +95,7 @@ export function Practice({ review = false }: { review?: boolean }) {
             : '已记录错因，接下来一起理清思路',
       )
       assignments.reload()
+      schedule.reload()
     } catch (e) {
       notify((e as Error).message, true)
     } finally {
@@ -131,6 +144,8 @@ export function Practice({ review = false }: { review?: boolean }) {
         explanation: f.get('explanation'),
         hints: [String(f.get('hint') || '回忆知识点的定义，再逐项判断。')],
         status: f.get('status') || 'approved',
+        skill: f.get('skill') || 'concept',
+        diagnostic_map: draft?.diagnostic_map || {},
       }
       if (draft?.edit_existing) await patch(`/questions/${draft.id}`, body)
       else await post('/questions', body)
@@ -163,13 +178,7 @@ export function Practice({ review = false }: { review?: boolean }) {
   return (
     <>
       <Title
-        title={
-          teacher
-            ? '让每一道练习，都有教学目的'
-            : review
-              ? '把错题，变成下一次理解'
-              : '在练习中，发现真正的掌握'
-        }
+        title={teacher ? '题库与作业' : review ? '错题与复习' : '智能练习'}
         subtitle={
           teacher
             ? '维护题库、审核 AI 草稿，为班级发布有针对性的任务'
@@ -345,6 +354,25 @@ export function Practice({ review = false }: { review?: boolean }) {
           </div>
         </div>
       ) : null}
+      {review && !teacher ? (
+        <Panel title="复习安排">
+          <div className="review-schedule">
+            {schedule.data.map((item) => (
+              <Link
+                key={item.question_id}
+                className={item.due ? 'due' : ''}
+                to={`/review?course=${courseId}&question=${item.question_id}`}
+              >
+                <strong>{item.knowledge_title}</strong>
+                <span>{item.due ? '已到期' : dateLabel(item.next_due)}</span>
+                <small>
+                  间隔 {item.interval_days} 天 · 质量 {item.last_quality}/5
+                </small>
+              </Link>
+            ))}
+          </div>
+        </Panel>
+      ) : null}
       {!teacher && q ? (
         <div className="practice-layout">
           <Panel className="question-workspace">
@@ -405,6 +433,20 @@ export function Practice({ review = false }: { review?: boolean }) {
                   )}
                   {result.error_type ? <Pill tone="amber">{result.error_type}</Pill> : null}
                 </div>
+                {result.evidence ? (
+                  <p className="evidence-summary">
+                    {result.evidence.sufficiency} · 有效证据{' '}
+                    {Number(result.evidence.effective_count).toFixed(1)} · 估计区间{' '}
+                    {Math.round(result.evidence.lower * 100)}%–
+                    {Math.round(result.evidence.upper * 100)}%
+                  </p>
+                ) : null}
+                {result.review_schedule ? (
+                  <p>
+                    下次复习：{dateLabel(result.review_schedule.next_due)} · 间隔{' '}
+                    {result.review_schedule.interval_days} 天
+                  </p>
+                ) : null}
                 {result.answer ? (
                   <p>
                     <strong>参考答案：</strong>
@@ -445,7 +487,9 @@ export function Practice({ review = false }: { review?: boolean }) {
                 <ChevronLeft size={16} />
                 上一题
               </Button>
-              <span>独立作答，才是理解的开始</span>
+              <span>
+                {index + 1} / {list.length}
+              </span>
               <Button
                 variant="ghost small"
                 disabled={index >= list.length - 1}
@@ -593,6 +637,15 @@ export function Practice({ review = false }: { review?: boolean }) {
               <Pill tone="amber">待审核草稿 · 请核对知识与参考答案后保存</Pill>
             ) : null}
             <label>
+              所测技能
+              <select name="skill" defaultValue={draft?.skill || 'concept'}>
+                <option value="concept">概念理解</option>
+                <option value="procedure">程序步骤</option>
+                <option value="reasoning">逻辑推理</option>
+                <option value="transfer">迁移应用</option>
+              </select>
+            </label>
+            <label>
               题目内容
               <textarea
                 required
@@ -739,7 +792,7 @@ export function AnswerInput({
     </label>
   )
 }
-function AssignmentRow({ assignment }: { assignment: Row }) {
+export function AssignmentRow({ assignment }: { assignment: Row }) {
   const [open, setOpen] = useState(false)
   const result = useApi<Row[]>(open ? `/assignments/${assignment.id}/results` : null, [])
   return (
@@ -761,6 +814,17 @@ function AssignmentRow({ assignment }: { assignment: Row }) {
               <span>{r.name || r.student_name}</span>
               <Pill>{r.completed ? '已完成' : '待完成'}</Pill>
               <strong>{r.score ?? '—'}</strong>
+              {r.comparison?.length ? (
+                <div className="intervention-comparison">
+                  {r.comparison.map((c: Row) => (
+                    <p key={c.knowledge_id}>
+                      {c.title}：发布时 {c.baseline}% → 当前 {c.current}%（{c.delta > 0 ? '+' : ''}
+                      {c.delta}） · 新增有效证据 {c.new_evidence}
+                    </p>
+                  ))}
+                  <small>状态对照，尚不能据此证明教学效果。</small>
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
