@@ -1,6 +1,14 @@
-import { StrictMode, useEffect, useState } from 'react'
+import { StrictMode, Suspense, lazy, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import {
+  BrowserRouter,
+  NavLink,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom'
 import {
   Activity,
   ArrowRight,
@@ -26,14 +34,20 @@ import {
 import { api, getSession, post, saveSession, useApi } from './api'
 import type { Row } from './api'
 import { AppContext, Button, Pill } from './ui'
-import { LearningPlan } from './pages/Plan'
-import { Dashboard, Courses } from './pages/Dashboard'
-import { Graph } from './pages/Graph'
-import { Practice } from './pages/Practice'
-import { Tutor } from './pages/Tutor'
-import { VideoPage } from './pages/Video'
-import { Experiments } from './pages/Experiments'
-import { Management, Resources, Analytics, Classroom } from './pages/Teacher'
+const LearningPlan = lazy(() => import('./pages/Plan').then((m) => ({ default: m.LearningPlan })))
+const Dashboard = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Dashboard })))
+const Courses = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Courses })))
+const Graph = lazy(() => import('./pages/Graph').then((m) => ({ default: m.Graph })))
+const Practice = lazy(() => import('./pages/Practice').then((m) => ({ default: m.Practice })))
+const Tutor = lazy(() => import('./pages/Tutor').then((m) => ({ default: m.Tutor })))
+const VideoPage = lazy(() => import('./pages/Video').then((m) => ({ default: m.VideoPage })))
+const Experiments = lazy(() =>
+  import('./pages/Experiments').then((m) => ({ default: m.Experiments })),
+)
+const Management = lazy(() => import('./pages/Management').then((m) => ({ default: m.Management })))
+const Resources = lazy(() => import('./pages/Resources').then((m) => ({ default: m.Resources })))
+const Analytics = lazy(() => import('./pages/Analytics').then((m) => ({ default: m.Analytics })))
+const Classroom = lazy(() => import('./pages/Classroom').then((m) => ({ default: m.Classroom })))
 import './styles.css'
 
 function Login({ onLogin }: { onLogin: () => void }) {
@@ -55,8 +69,8 @@ function Login({ onLogin }: { onLogin: () => void }) {
     }
   }
   return (
-    <div className="login-page">
-      <div className="login-story">
+    <div className="login-page" data-role={username === 'teacher' ? 'teacher' : 'student'}>
+      <section className="login-story">
         <div className="brand">
           <span className="brand-symbol">
             <Activity size={27} />
@@ -66,50 +80,40 @@ function Login({ onLogin }: { onLogin: () => void }) {
           </span>
         </div>
         <div className="login-copy">
-          <Pill>为每一种学习节奏而设计</Pill>
           <h1>
-            每一次理解，
+            知识相连
             <br />
-            都连接下一次成长。
+            教学相知
           </h1>
-          <p>
-            把知识串成脉络，让学习有迹可循。
-            <br />
-            在课程、练习与对话之间，找到适合你的下一步。
-          </p>
-          <div className="login-network" aria-hidden="true">
-            <svg viewBox="0 0 580 270">
-              <path d="M40 140L155 65L280 140L405 65L535 140M155 65L155 215L280 140L405 215L535 140" />
-              <g>
-                <circle cx="40" cy="140" r="12" />
-                <circle cx="155" cy="65" r="22" />
-                <circle cx="155" cy="215" r="13" />
-                <circle cx="280" cy="140" r="30" />
-                <circle cx="405" cy="65" r="16" />
-                <circle cx="405" cy="215" r="20" />
-                <circle cx="535" cy="140" r="13" />
+          <p>个性化学习与教学平台</p>
+          <svg className="entry-network" viewBox="0 0 560 340" aria-label="从基础到应用的知识网络">
+            <path d="M75 175C140 175 120 75 210 75S300 175 320 175S390 85 480 85M75 175C150 175 120 275 210 275S290 175 320 175S390 275 480 275" />
+            {[
+              [75, 175, '基础'],
+              [210, 75, '理解'],
+              [210, 275, '实践'],
+              [320, 175, '连接'],
+              [480, 85, '应用'],
+              [480, 275, '迁移'],
+            ].map(([x, y, label]) => (
+              <g key={label} transform={`translate(${x},${y})`}>
+                <circle r={label === '连接' ? 45 : 34} />
+                <text textAnchor="middle" dy=".35em">
+                  {label}
+                </text>
               </g>
-              <text x="155" y="25">
-                理解概念
-              </text>
-              <text x="280" y="201">
-                连接知识
-              </text>
-              <text x="405" y="260">
-                迁移应用
-              </text>
-            </svg>
-          </div>
+            ))}
+          </svg>
         </div>
-        <div className="login-foot">学生学习与教师教学，共用一条成长脉络。</div>
-      </div>
+        <div className="login-foot">数据结构与算法 · Python程序设计</div>
+      </section>
       <div className="login-side">
         <form className="login-form" onSubmit={login}>
           <span className="welcome-icon">
             <GraduationCap size={30} />
           </span>
-          <h2>欢迎回到学脉</h2>
-          <p>继续你的学习与教学旅程</p>
+          <h2>登录学脉</h2>
+          <p>选择身份，进入你的工作区</p>
           <label htmlFor="username">账号</label>
           <input
             id="username"
@@ -137,12 +141,11 @@ function Login({ onLogin }: { onLogin: () => void }) {
             <ArrowRight size={18} />
           </Button>
           <div className="demo-logins">
-            <span>使用合成演示账号</span>
+            <span>体验账号 · 合成教学样例</span>
             <div>
               {[
-                ['student1', '学生 · 陈星河'],
-                ['student2', '学生 · 许沐晴'],
-                ['teacher', '教师 · 林知远'],
+                ['student1', '体验学生端'],
+                ['teacher', '体验教师端'],
               ].map(([id, label]) => (
                 <button
                   key={id}
@@ -188,12 +191,50 @@ const teacherNav = [
 ] as const
 function Shell({ logout }: { logout: () => void }) {
   const user = getSession()!.user
-  const [courseId, setCourseId] = useState(1)
+  const [courseId, setCourseId] = useState(
+    () =>
+      Number(
+        new URLSearchParams(window.location.search).get('course') ||
+          new URLSearchParams(window.location.search).get('course_id') ||
+          sessionStorage.getItem(`xuemai-course-${user.id}`),
+      ) || 1,
+  )
   const [toast, setToast] = useState<{ text: string; error?: boolean } | null>(null)
   const [collapsed, setCollapsed] = useState(false)
   const courses = useApi<Row[]>('/courses', [])
   const status = useApi<Row>('/ai/status', {})
   const location = useLocation()
+  const navigate = useNavigate()
+  function changeCourse(id: number) {
+    setCourseId(id)
+    sessionStorage.setItem(`xuemai-course-${user.id}`, String(id))
+    const query = new URLSearchParams(location.search)
+    for (const key of [
+      'course_id',
+      'knowledge',
+      'question',
+      'resource',
+      'resource_id',
+      'assignment',
+      't',
+      'conversation',
+    ])
+      query.delete(key)
+    query.set('course', String(id))
+    navigate({ pathname: location.pathname, search: query.toString() }, { replace: true })
+  }
+  useEffect(() => {
+    if (!courses.data.length) return
+    const query = new URLSearchParams(location.search)
+    const requested = Number(query.get('course') || query.get('course_id'))
+    const id = courses.data.some((c) => c.id === requested)
+      ? requested
+      : courses.data.some((c) => c.id === courseId)
+        ? courseId
+        : courses.data[0].id
+    if (id !== courseId) setCourseId(id)
+    sessionStorage.setItem(`xuemai-course-${user.id}`, String(id))
+  }, [courses.data, location.search])
   const nav = user.role === 'teacher' ? teacherNav : studentNav
   const current = nav.find((x) => x[0] === location.pathname)?.[1] || '课程学习'
   useEffect(() => {
@@ -208,9 +249,14 @@ function Shell({ logout }: { logout: () => void }) {
   }, [courses.reload])
   return (
     <AppContext.Provider
-      value={{ user, courseId, setCourseId, notify: (text, error) => setToast({ text, error }) }}
+      value={{
+        user,
+        courseId,
+        setCourseId: changeCourse,
+        notify: (text, error) => setToast({ text, error }),
+      }}
     >
-      <div className={`app-shell ${collapsed ? 'nav-collapsed' : ''}`}>
+      <div data-role={user.role} className={`app-shell ${collapsed ? 'nav-collapsed' : ''}`}>
         <aside className="sidebar">
           <a className="brand" href="/">
             <span className="brand-symbol">
@@ -234,10 +280,6 @@ function Shell({ logout }: { logout: () => void }) {
             ))}
           </nav>
           <div className="sidebar-bottom">
-            <div className="sidebar-note">
-              <span className="status-dot" />
-              让每一次努力被看见<p>基于学习证据，陪伴持续成长</p>
-            </div>
             <button className="profile" onClick={logout} title="退出登录">
               <span className="avatar">{user.name.slice(0, 1)}</span>
               <span>
@@ -268,7 +310,7 @@ function Shell({ logout }: { logout: () => void }) {
                 <select
                   aria-label="切换当前课程"
                   value={courseId}
-                  onChange={(e) => setCourseId(Number(e.target.value))}
+                  onChange={(e) => changeCourse(Number(e.target.value))}
                 >
                   {courses.data.map((c) => (
                     <option value={c.id} key={c.id}>
@@ -295,26 +337,24 @@ function Shell({ logout }: { logout: () => void }) {
             </div>
           </header>
           <main className="workspace" key={user.id}>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/courses" element={<Courses />} />
-              <Route path="/plan" element={<LearningPlan />} />
-              <Route path="/graph" element={<Graph />} />
-              <Route path="/practice" element={<Practice />} />
-              <Route path="/review" element={<Practice review />} />
-              <Route path="/tutor" element={<Tutor />} />
-              <Route path="/video" element={<VideoPage />} />
-              <Route path="/experiments" element={<Experiments />} />
-              <Route path="/manage" element={<Management />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/classroom" element={<Classroom />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-            <footer className="workspace-footer">
-              <span>学脉 XueMai</span>
-              <span>演示环境 · 所有预置学习记录为合成数据</span>
-            </footer>
+            <Suspense fallback={<div className="loading">正在加载…</div>}>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/plan" element={<LearningPlan />} />
+                <Route path="/graph" element={<Graph />} />
+                <Route path="/practice" element={<Practice />} />
+                <Route path="/review" element={<Practice review />} />
+                <Route path="/tutor" element={<Tutor />} />
+                <Route path="/video" element={<VideoPage />} />
+                <Route path="/experiments" element={<Experiments />} />
+                <Route path="/manage" element={<Management />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/classroom" element={<Classroom />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
           </main>
         </div>
         {toast ? (

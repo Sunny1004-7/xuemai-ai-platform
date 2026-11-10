@@ -1,403 +1,276 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  ArrowRight,
-  BookOpen,
-  CheckCheck,
-  Clock3,
-  Flame,
-  GraduationCap,
-  Layers3,
-  Network,
-  Play,
-  Plus,
-  Sparkles,
-  Target,
-  TrendingUp,
-} from 'lucide-react'
+import { ArrowRight, Plus } from 'lucide-react'
 import { post, percent, useApi } from '../api'
 import type { Row } from '../api'
-import {
-  Button,
-  Empty,
-  Go,
-  LoadState,
-  Modal,
-  Panel,
-  Pill,
-  Progress,
-  Title,
-  useApp,
-  dateLabel,
-} from '../ui'
+import { Button, Empty, LoadState, Modal, Pill, Progress, Title, useApp, dateLabel } from '../ui'
 
 function CourseArt({ variant = 0 }: { variant?: number }) {
   return (
-    <div className={`course-art art-${variant % 3}`} aria-hidden="true">
-      {variant % 2 === 0 ? (
-        <svg viewBox="0 0 260 130">
-          <path d="M35 75L90 30L145 78L210 35M90 30V110L145 78L210 110V35" />
-          <g>
-            <circle cx="35" cy="75" r="13" />
-            <circle cx="90" cy="30" r="17" />
-            <circle cx="90" cy="110" r="10" />
-            <circle cx="145" cy="78" r="21" />
-            <circle cx="210" cy="35" r="13" />
-            <circle cx="210" cy="110" r="11" />
-          </g>
-        </svg>
-      ) : (
-        <svg viewBox="0 0 260 130">
-          <path d="M75 33L45 65L75 97M185 33L215 65L185 97M146 24L115 106" />
-          <rect x="20" y="12" width="220" height="108" rx="12" />
-        </svg>
-      )}
-    </div>
-  )
-}
-export function MiniGraph() {
-  return (
-    <svg className="mini-graph" viewBox="0 0 500 170" aria-label="知识学习路径示意">
-      <defs>
-        <linearGradient id="line" x1="0" x2="1">
-          <stop stopColor="#7ac9b7" />
-          <stop offset="1" stopColor="#8192db" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M45 88L145 38L250 88L355 38L455 88M145 38V138L250 88L355 138L455 88"
-        fill="none"
-        stroke="url(#line)"
-        strokeWidth="2"
-      />
-      <g fill="#fff" stroke="#70b9a5" strokeWidth="2">
+    <div className={`course-art art-${variant % 2}`} aria-hidden="true">
+      <svg viewBox="0 0 260 110">
+        <path
+          d="M25 70Q75 0 130 55T235 35M25 70Q85 110 130 55T235 85"
+          fill="none"
+          stroke="currentColor"
+        />
         {[
-          [45, 88],
-          [145, 38],
-          [145, 138],
-          [250, 88],
-          [355, 38],
-          [355, 138],
-          [455, 88],
+          [25, 70],
+          [80, 32],
+          [130, 55],
+          [185, 47],
+          [235, 35],
         ].map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r={i === 3 ? 22 : 12} />
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r={i === 2 ? 16 : 8}
+            fill="var(--surface-raised)"
+            stroke="currentColor"
+          />
         ))}
-      </g>
-      <circle cx="250" cy="88" r="9" fill="#19907c" />
-      <g fill="#497569" fontSize="12" textAnchor="middle">
-        <text x="45" y="121">
-          线性结构
-        </text>
-        <text x="145" y="18">
-          栈与队列
-        </text>
-        <text x="250" y="132">
-          树的遍历
-        </text>
-        <text x="355" y="18">
-          图与搜索
-        </text>
-        <text x="455" y="121">
-          算法应用
-        </text>
-      </g>
-    </svg>
+      </svg>
+    </div>
   )
 }
 export function Dashboard() {
   const { user, courseId, setCourseId } = useApp()
   const query = useApi<Row>('/dashboard', {})
-  const d = query.data
-  const s = d.stats || {}
-  const courses = d.courses || []
-  const recommendations: Row[] = d.recommendations || []
-  const assignments: Row[] = d.assignments || []
   const teacher = user.role === 'teacher'
-  const date = new Date().toLocaleDateString('zh-CN', {
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  })
+  const analysis = useApi<Row>(teacher ? `/analytics?course_id=${courseId}` : '', {})
+  const attempts = useApi<Row[]>(teacher ? `/attempts?course_id=${courseId}` : '', [])
+  const d = query.data
+  const recommendations: Row[] = d.recommendations || []
+  const tasks: Row[] = d.assignments || []
+  const next = recommendations[0]
+  const courses: Row[] = d.courses || []
+  const pending = attempts.data.filter((a) => a.review_status === 'pending_review')
+  const weak: Row[] = (analysis.data.knowledge || [])
+    .filter((k: Row) => k.weak_students.length)
+    .slice(0, 5)
+  const open = (r: Row) => {
+    if (r.course_id) setCourseId(r.course_id)
+  }
   return (
     <>
-      <Title
-        title={teacher ? `${user.name}，教学从了解开始` : `${user.name}，今天也向前一步`}
-        subtitle={`${date}　·　${teacher ? '从学习证据发现问题，把分析变成教学行动' : '不必一次学会所有知识，先把下一步走扎实'}`}
-        action={
-          <Pill tone="green">
-            <span className="status-dot" />
-            你的成长正在发生
-          </Pill>
-        }
-      />
+      <Title title={teacher ? '教学工作台' : '学习概览'} />
       <LoadState {...query} retry={query.reload} />
-      {!query.loading && !query.error ? (
-        <>
-          <div className="overview-grid">
-            <section className="learning-hero">
-              <div className="hero-copy">
-                <div className="hero-tag">
-                  <Network size={16} />
-                  {teacher ? '教学与学习，沿着脉络连接' : '你的下一段学习旅程'}
-                </div>
-                <h2>
-                  {teacher
-                    ? '看见每位学生的学习路径'
-                    : recommendations[0]?.title || '把零散知识，连成自己的体系'}
-                </h2>
-                <p>
-                  {teacher
-                    ? '结合知识掌握、作答与错因，为学生安排合适的巩固任务。'
-                    : recommendations[0]?.reason ||
-                      '从先修知识出发，在理解、练习和应用之间，建立真正属于你的知识连接。'}
-                </p>
-                <Link
-                  className="button"
-                  onClick={() => {
-                    if (recommendations[0]?.course_id) setCourseId(recommendations[0].course_id)
-                  }}
-                  to={teacher ? '/analytics' : recommendations[0]?.href || '/graph'}
-                >
-                  {teacher ? '查看班级学情' : '开始今日学习'}
-                  <ArrowRight size={17} />
-                </Link>
-              </div>
-              <MiniGraph />
-            </section>
-            <section className="daily-focus">
-              <div className="focus-icon">
-                <Target size={23} />
-              </div>
+      {teacher ? (
+        <div className="teacher-desk">
+          <div>
+            <section className="teacher-command">
               <div>
-                <span>{teacher ? '教学关注' : '今日学习节奏'}</span>
-                <h3>{teacher ? '从共性错因出发' : '每天一点，慢慢连接'}</h3>
+                <h2>{courses.find((c) => c.id === courseId)?.title || '当前课程'}</h2>
+                <p className="muted">
+                  {analysis.data.summary?.student_count || 0} 位学生 ·{' '}
+                  {tasks.filter((t) => t.course_id === courseId).length} 项教学任务
+                </p>
               </div>
-              <p>
-                {teacher
-                  ? '发布分层任务后，可从分析页继续查看学生的复测变化。'
-                  : `${recommendations.length} 项个性化建议，${assignments.filter((a) => !a.completed).length} 项待完成任务。每项安排都能查看推荐理由。`}
-              </p>
-              <Go to={teacher ? '/classroom' : '/practice'}>
-                {teacher ? '发起课堂互动' : '查看学习任务'}
-              </Go>
+              <Link className="button" to="/practice">
+                发布作业
+                <ArrowRight size={16} />
+              </Link>
+            </section>
+            <div className="teacher-shortcuts">
+              <Link className="button secondary" to="/manage">
+                课程与班级
+              </Link>
+              <Link className="button secondary" to="/resources">
+                备课与资料
+              </Link>
+              <Link className="button secondary" to="/graph">
+                编辑知识网络
+              </Link>
+              <Link className="button secondary" to="/classroom">
+                课堂互动
+              </Link>
+            </div>
+            <section className="desk-section">
+              <header>
+                <h2>需要关注的知识</h2>
+                <Link to="/analytics">查看证据</Link>
+              </header>
+              <table className="teacher-ledger">
+                <thead>
+                  <tr>
+                    <th>知识点</th>
+                    <th>需关注</th>
+                    <th>掌握估计</th>
+                    <th>教学行动</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {weak.map((k) => (
+                    <tr key={k.id}>
+                      <td>{k.title}</td>
+                      <td>{k.weak_students.length} 人</td>
+                      <td>{percent(k.average_mastery)}%</td>
+                      <td>
+                        <Link to={`/analytics?knowledge=${k.id}`}>查看与安排</Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!weak.length ? <Empty>暂无需要关注的知识点</Empty> : null}
+            </section>
+            <section className="desk-section">
+              <header>
+                <h2>课程</h2>
+                <Link to="/manage">管理</Link>
+              </header>
+              <div className="course-shelf">
+                {courses.map((c) => (
+                  <Link to="/manage" key={c.id} onClick={() => setCourseId(c.id)}>
+                    <small>{c.code}</small>
+                    <strong>{c.title}</strong>
+                    <span>{c.knowledge_count} 个知识点</span>
+                    <Progress value={percent(c.progress)} />
+                  </Link>
+                ))}
+              </div>
             </section>
           </div>
-          <div className="stats-row">
-            {(teacher
-              ? [
-                  [GraduationCap, '授课学生', s.students || 0, '与课程关联的学习者'],
-                  [BookOpen, '教学课程', s.courses || 0, '有序组织每一次教学'],
-                  [
-                    CheckCheck,
-                    '已发布任务',
-                    s.assignments || assignments.length,
-                    '作业与分层学习安排',
-                  ],
-                  [TrendingUp, '平均掌握度', `${percent(s.mastery)}%`, '基于独立作答等证据'],
-                ]
-              : [
-                  [Clock3, '累计学习', `${s.study_minutes || 0} 分钟`, '每一段投入都有记录'],
-                  [BookOpen, '在学课程', s.courses || courses.length, '连接不同的知识领域'],
-                  [CheckCheck, '已完成任务', s.completed_tasks || 0, '理解来自每一次实践'],
-                  [Flame, '学习足迹', `${s.streak || 0} 天`, '保持自己的学习节奏'],
-                ]
-            ).map(([Icon, label, value, caption], i) => {
-              const I = Icon as typeof BookOpen
-              return (
-                <div className="stat" key={i}>
-                  <span className={`stat-icon stat-${i}`}>
-                    <I size={20} />
-                  </span>
+          <aside className="desk-side">
+            <h2>
+              待复核 <span>{pending.length}</span>
+            </h2>
+            {pending.slice(0, 3).map((a) => (
+              <Link className="desk-task" to="/analytics" key={a.id}>
+                <strong>
+                  {a.student_name} · {a.title}
+                </strong>
+                <small>主观作答 · 等待复核</small>
+              </Link>
+            ))}
+            {!pending.length ? <p className="muted">当前作答已处理</p> : null}
+            <section className="desk-section">
+              <header>
+                <h2>近期学习</h2>
+              </header>
+              {(d.recent_events || []).slice(0, 5).map((e: Row) => (
+                <div className="compact-evidence" key={e.id}>
                   <div>
-                    <span>{label as string}</span>
-                    <strong>{value as string}</strong>
-                    <small>{caption as string}</small>
+                    <strong>{e.student_name}</strong>
+                    <p>{e.knowledge_title || '课程活动'}</p>
                   </div>
+                  <small>{dateLabel(e.created_at)}</small>
                 </div>
-              )
-            })}
-          </div>
-          <div className="dashboard-columns">
-            <div>
-              <Panel
-                title={teacher ? '正在教授的课程' : '继续学习'}
-                caption={
-                  teacher ? '课程内容、班级与学习状态统一管理' : '沿着已有的进度，接上上次的思考'
-                }
-                action={<Go to={teacher ? '/manage' : '/courses'}>全部课程</Go>}
+              ))}
+            </section>
+            <Link className="button secondary" to="/analytics">
+              跟踪教学任务
+            </Link>
+          </aside>
+        </div>
+      ) : (
+        <div className="study-desk">
+          <div>
+            <section className="next-study">
+              <div className="study-meta">
+                <span>
+                  {new Date().toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })}
+                </span>
+                <span>下一项学习</span>
+                {next ? <span>预计 {next.estimated_minutes || 15} 分钟</span> : null}
+              </div>
+              <h2>{next?.title || '开始课程学习'}</h2>
+              <p>{next?.reason || '选择知识点，完成一次练习，建立你的学习起点。'}</p>
+              <Link
+                className="button"
+                onClick={() => next && open(next)}
+                to={next?.href || '/graph'}
               >
-                <div className="course-grid">
-                  {courses.slice(0, 2).map((c: Row, i: number) => (
-                    <Link
-                      key={c.id}
-                      to={teacher ? '/manage' : '/video'}
-                      className="course-card"
-                      onClick={() => setCourseId(c.id)}
-                    >
-                      <CourseArt variant={i} />
-                      <div className="course-info">
-                        <div className="course-meta">
-                          <Pill tone={i ? 'purple' : 'blue'}>{c.code || '专业课程'}</Pill>
-                          <span>{c.knowledge_count || 0} 个知识点</span>
-                        </div>
-                        <h3>{c.title}</h3>
-                        <p>{c.description}</p>
-                        <div className="progress-label">
-                          <span>{teacher ? c.teacher_name || user.name : '学习掌握进度'}</span>
-                          <strong>{percent(c.progress)}%</strong>
-                        </div>
-                        <Progress value={percent(c.progress)} />
-                        <div className="course-bottom">
-                          <span>
-                            <BookOpen size={13} />
-                            {c.teacher_name || '课程教师'}
-                          </span>
-                          <span>
-                            {teacher ? '管理课程' : '继续学习'}
-                            <ArrowRight size={14} />
-                          </span>
-                        </div>
-                      </div>
+                开始今日学习
+                <ArrowRight size={17} />
+              </Link>
+              {next?.steps ? (
+                <div className="study-sequence">
+                  {next.steps.map((step: Row, i: number) => (
+                    <Link key={i} to={step.href} onClick={() => open(next)}>
+                      {step.title}
                     </Link>
                   ))}
                 </div>
-                {!courses.length ? <Empty>创建或加入课程，开始连接知识。</Empty> : null}
-              </Panel>
-              <Panel
-                title={teacher ? '近期学习动态' : '为你安排的学习路线'}
-                caption={
-                  teacher
-                    ? '掌握变化来自真实作答与学习事件'
-                    : '结合先修关系与最近表现，每一步都有依据'
-                }
-                action={
-                  <Go to={teacher ? '/analytics' : '/graph'}>
-                    {teacher ? '查看分析' : '探索图谱'}
-                  </Go>
-                }
-              >
-                {teacher ? (
-                  <div className="activity-list">
-                    {(d.recent_events || []).slice(0, 5).map((e: Row, i: number) => (
-                      <div key={e.id || i}>
-                        <span className="activity-dot" />
-                        <div>
-                          <strong>{e.student_name || e.user_name || '课程学习活动'}</strong>
-                          <p>
-                            {e.kind === 'attempt'
-                              ? '完成了一次知识练习'
-                              : e.kind || e.title || '记录了新的学习证据'}
-                          </p>
-                        </div>
-                        <small>{dateLabel(e.created_at)}</small>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="route-list">
-                    {recommendations.slice(0, 4).map((r, i) => (
-                      <Link
-                        to={r.href || '/practice'}
-                        className="route-item"
-                        key={r.id || i}
-                        onClick={() => {
-                          if (r.course_id) setCourseId(r.course_id)
-                        }}
-                      >
-                        <span className={`route-marker ${i === 0 ? 'active' : ''}`}>
-                          {i === 0 ? <Play size={13} /> : <CheckCheck size={15} />}
-                        </span>
-                        <div>
-                          <div>
-                            <h3>{r.title}</h3>
-                            <Pill tone={r.kind === 'review' ? 'amber' : 'green'}>
-                              {r.kind === 'review'
-                                ? '巩固复习'
-                                : r.kind === 'video'
-                                  ? '课程学习'
-                                  : '针对练习'}
-                            </Pill>
-                          </div>
-                          <p>{r.reason}</p>
-                        </div>
-                        <ArrowRight size={17} />
-                      </Link>
-                    ))}
-                    {!recommendations.length ? (
-                      <Empty>完成一次练习后，这里会更新适合你的安排。</Empty>
-                    ) : null}
-                  </div>
-                )}
-              </Panel>
-            </div>
-            <div className="dashboard-aside">
-              <Panel
-                title={teacher ? '任务追踪' : '待办学习任务'}
-                action={<Pill>{assignments.filter((a) => !a.completed).length}</Pill>}
-              >
-                <div className="task-list">
-                  {assignments.slice(0, 4).map((a, i) => (
-                    <Link to={`/practice?assignment=${a.id}`} key={a.id} className="task-item">
-                      <span className={`task-icon ${a.completed ? 'done' : ''}`}>
-                        {a.completed ? <CheckCheck size={17} /> : <ClipboardIcon />}
-                      </span>
-                      <div>
-                        <h3>{a.title}</h3>
-                        <small>
-                          {a.completed
-                            ? '已完成 · 可以再次巩固'
-                            : `${a.question_ids?.length || 0} 道题 · ${a.due_at ? dateLabel(a.due_at) : '自主安排时间'}`}
-                        </small>
-                        <Pill tone={a.completed ? 'green' : i ? 'neutral' : 'amber'}>
-                          {a.completed ? '已完成' : '待完成'}
-                        </Pill>
-                      </div>
-                    </Link>
-                  ))}
-                  {!assignments.length ? <Empty>暂时没有待办任务。</Empty> : null}
-                </div>
-              </Panel>
-              <Panel title="本周学习足迹" caption="学习事件按天汇总">
-                <div className="week-chart">
-                  {(d.weekly_activity?.length
-                    ? d.weekly_activity
-                    : Array.from({ length: 7 }, (_, i) => ({
-                        day: ['一', '二', '三', '四', '五', '六', '日'][i],
-                        count: 0,
-                      }))
-                  ).map((v: Row, i: number) => (
-                    <div key={i}>
-                      <span
-                        className="week-bar"
-                        style={{
-                          height: `${Math.min(95, 8 + Number(v.count || v.value || 0) * 7)}px`,
-                        }}
-                        title={`${v.count || 0} 次活动`}
-                      />
-                      <small>{v.day?.slice(-2) || v.date?.slice(-2) || i + 1}</small>
-                    </div>
-                  ))}
-                </div>
-                <div className="chart-note">
-                  <span className="status-dot" />
-                  每次练习、观看与实验都会留下足迹
-                </div>
-              </Panel>
-              <section className="ai-invitation">
-                <Sparkles size={23} />
-                <h3>卡住的时候，聊一聊</h3>
-                <p>带着当前知识点提问，学习伙伴会陪你一步步理清思路。</p>
-                <Go to={`/tutor?course=${courseId}`}>开始对话</Go>
-              </section>
-            </div>
+              ) : null}
+            </section>
+            <section className="desk-section">
+              <header>
+                <h2>我的课程</h2>
+                <Link to="/courses">全部课程</Link>
+              </header>
+              <div className="course-shelf">
+                {courses.map((c, i) => (
+                  <Link key={c.id} to="/graph" onClick={() => setCourseId(c.id)}>
+                    <CourseArt variant={i} />
+                    <strong>{c.title}</strong>
+                    <small>
+                      {c.knowledge_count} 个知识点 · 掌握估计 {percent(c.progress)}%
+                    </small>
+                    <Progress value={percent(c.progress)} />
+                  </Link>
+                ))}
+              </div>
+            </section>
+            <section className="desk-section">
+              <header>
+                <h2>接下来</h2>
+                <Link to="/plan">学习计划</Link>
+              </header>
+              {recommendations.slice(1, 4).map((r) => (
+                <Link className="desk-task" key={r.id} to={r.href} onClick={() => open(r)}>
+                  <strong>{r.title}</strong>
+                  <small>{r.reason}</small>
+                </Link>
+              ))}
+            </section>
           </div>
-        </>
-      ) : null}
+          <aside className="desk-side">
+            <h2>课程任务</h2>
+            {tasks.slice(0, 4).map((t) => (
+              <Link
+                to={`/practice?assignment=${t.id}`}
+                onClick={() => open(t)}
+                className="desk-task"
+                key={t.id}
+              >
+                <strong>{t.title}</strong>
+                <small>
+                  {t.question_ids?.length} 道题 ·{' '}
+                  {t.completed ? '已完成' : t.due_at ? dateLabel(t.due_at) : '待完成'}
+                </small>
+              </Link>
+            ))}
+            {!tasks.length ? (
+              <Link className="desk-task" to="/practice">
+                选择一次自主练习
+              </Link>
+            ) : null}
+            <section className="desk-section">
+              <header>
+                <h2>最近学习</h2>
+              </header>
+              {(d.recent_events || []).slice(0, 4).map((e: Row) => (
+                <Link
+                  to={e.knowledge_id ? `/graph?knowledge=${e.knowledge_id}` : '/graph'}
+                  onClick={() => open(e)}
+                  className="desk-task"
+                  key={e.id}
+                >
+                  <strong>{e.knowledge_title || '课程活动'}</strong>
+                  <small>{dateLabel(e.created_at)}</small>
+                </Link>
+              ))}
+            </section>
+            <Link className="button secondary" to="/tutor">
+              打开学习伙伴
+            </Link>
+          </aside>
+        </div>
+      )}
     </>
   )
-}
-function ClipboardIcon() {
-  return <Layers3 size={17} />
 }
 
 export function Courses() {
