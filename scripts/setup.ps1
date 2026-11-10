@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $env:PYTHONIOENCODING = 'utf-8'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 foreach ($setupPort in @(8000,5173,5174,5175)) {
