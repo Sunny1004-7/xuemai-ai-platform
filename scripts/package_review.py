@@ -110,7 +110,8 @@ def build_review_package(
         status = git_output(root, 'status', '--short')
         history = git_output(root, 'log', '--date=iso-strict', '--format=%H %ad %s')
         if base_ref:
-            patch = git_output(root, 'diff', '--binary', base_ref, '--', '.', ':(exclude)交付审阅包')
+            # 审阅补丁必须包含原始二进制，不能依赖本机PDF转换器或外部diff程序。
+            patch = git_output(root, 'diff', '--no-ext-diff', '--no-textconv', '--binary', base_ref, '--', '.', ':(exclude)交付审阅包')
 
     guide = (
         '# 学脉完整审阅包\n\n'

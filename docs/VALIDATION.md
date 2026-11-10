@@ -6,7 +6,7 @@
 
 | 项目 | 实际结果 |
 |---|---|
-| 后端完整回归 | `.venv/Scripts/python.exe -m pytest backend/tests -q`：116 passed，1 warning，53.37秒 |
+| 后端完整回归 | `.venv/Scripts/python.exe -m pytest backend/tests -q`：116 passed，1 warning，最终打包修正后32.37秒 |
 | 浏览器完整回归 | `npm run test:e2e`：14 passed，53.4秒 |
 | TypeScript与生产构建 | 严格编译及Vite构建通过，最新截图前重新执行 |
 | 算法实验 | 110组排序输入、4个边界样本、步骤不变量、BFS和BST检查通过 |
@@ -34,6 +34,8 @@
 功能和材料基线cf4a369cb9389172164a8db8c40eb09d4393a80d已在远端核实一致。[GitHub Linux Actions 42831905907](https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/42831905907)成功完成全部流程。普通Git HTTPS连接超时后，通过官方Git数据API传送原始对象，逐项核对本地SHA，保持作者、时间、正文与历史不变，再非强制快进main。
 
 已跟踪171文件与304个历史文件对象的秘密扫描通过。Windows PowerShell 5.1解析七个脚本全部成功；本机审阅服务重启与复用通过。正式PDF与视频在仓库和交付目录的副本逐字节一致，核心文档相对链接检查通过。
+
+最终打包在本机发现Git PDF转换器astextplain缺失。隔离仓库配置同类缺失转换器后先复现失败，补丁命令改为不使用外部差异与文本转换器，再次14项工具回归通过（2.01秒），并验证二进制补丁可反向应用。此修复只涉及交付工具和相应测试，界面截图仍与当前业务源码一致。
 
 ---
 

@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import subprocess
 import zipfile
 import zlib
 
@@ -71,12 +72,20 @@ def test_complete_review_archive_keeps_current_materials_and_filters_local_artif
     ]
     for name in keep + omit:
         make_file(tmp_path, name)
-    # This fixture is a directory tree, so Git metadata is intentionally absent.
     (tmp_path / '.git/config').unlink()
     (tmp_path / '.git').rmdir()
+    # 模拟开发机的PDF转换配置缺少外部程序；补丁仍应保存原始二进制。
+    subprocess.run(['git', 'init', '-q'], cwd=tmp_path, check=True)
+    subprocess.run(['git', 'config', 'diff.reviewpdf.textconv', 'xuemai-missing-pdf-helper'], cwd=tmp_path, check=True)
+    make_file(tmp_path, '.gitattributes', b'*.pdf diff=reviewpdf\n')
+    make_file(tmp_path, 'docs/report.pdf', b'%PDF-1.4\0baseline')
+    subprocess.run(['git', 'add', '.gitattributes', 'docs/report.pdf'], cwd=tmp_path, check=True)
+    subprocess.run(['git', '-c', 'user.name=审阅测试', '-c', 'user.email=review@example.invalid', 'commit', '-qm', '建立隔离审阅测试基线'], cwd=tmp_path, check=True)
+    base = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=tmp_path, text=True).strip()
+    make_file(tmp_path, 'docs/report.pdf', b'%PDF-1.4\0updated')
     at = datetime(2026, 11, 10, 15, 20, 30, tzinfo=BEIJING)
     screenshots = make_screenshots(tmp_path)
-    output = build_review_package(tmp_path, Path('docs/rounds/current.md'), timestamp=at, screenshots=screenshots)
+    output = build_review_package(tmp_path, Path('docs/rounds/current.md'), base_ref=base, timestamp=at, screenshots=screenshots)
     assert output.name == '学脉XueMai_完整审阅包_20261110_152030.zip'
     with zipfile.ZipFile(output) as archive:
         assert archive.testzip() is None
@@ -90,6 +99,8 @@ def test_complete_review_archive_keeps_current_materials_and_filters_local_artif
         assert manifest['screenshots']['images'] == 3
         assert '界面截图/public/login/mobile_full.png' in names
         assert '界面截图/截图总览.html' in names
+        assert b'GIT binary patch' in archive.read('本轮修改.patch')
+        subprocess.run(['git', 'apply', '--reverse', '--check', '-'], input=archive.read('本轮修改.patch'), cwd=tmp_path, check=True)
         for entry in manifest['files']:
             assert hashlib.sha256(archive.read(entry['path'])).hexdigest() == entry['sha256']
 
