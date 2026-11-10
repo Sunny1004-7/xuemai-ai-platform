@@ -1,0 +1,58 @@
+[
+  {
+    "usage": "学生正文",
+    "foreground": "#263A37",
+    "background": "#F1F0E8",
+    "ratio": 10.54,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "学生辅助文字",
+    "foreground": "#52665F",
+    "background": "#F1F0E8",
+    "ratio": 5.36,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "学生主按钮",
+    "foreground": "#FFFFFF",
+    "background": "#2E6A67",
+    "ratio": 6.22,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "教师正文",
+    "foreground": "#352D29",
+    "background": "#F5EEE4",
+    "ratio": 11.7,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "教师辅助文字",
+    "foreground": "#695A50",
+    "background": "#F5EEE4",
+    "ratio": 5.74,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "教师主按钮",
+    "foreground": "#FFFFFF",
+    "background": "#7E6554",
+    "ratio": 5.42,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "学生柱图数值",
+    "foreground": "#263A37",
+    "background": "#A9C8BE",
+    "ratio": 6.71,
+    "passes_normal_text": true
+  },
+  {
+    "usage": "教师柱图数值",
+    "foreground": "#352D29",
+    "background": "#D4B79D",
+    "ratio": 7.1,
+    "passes_normal_text": true
+  }
+]

@@ -1068,7 +1068,7 @@
   min-height: 20px;
   border-radius: 7px 7px 3px 3px;
   position: relative;
-  color: var(--surface-raised);
+  color: var(--text-primary);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -1092,6 +1092,7 @@
 }
 .sort-bar.sorted {
   background: var(--text-muted);
+  color: var(--surface-raised);
 }
 .algorithm-explanation {
   display: flex;

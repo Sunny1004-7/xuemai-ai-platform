@@ -443,7 +443,7 @@ function TreeStage({ snapshot, bfs }: { snapshot: Snapshot; bfs: boolean }) {
             y1={positions[a].y}
             x2={positions[b].x}
             y2={positions[b].y}
-            stroke="#bdcada"
+            stroke="var(--border)"
             strokeWidth={2}
           />
         ) : null,
@@ -463,7 +463,7 @@ function TreeStage({ snapshot, bfs }: { snapshot: Snapshot; bfs: boolean }) {
         ) : null,
       )}
       {bfs && snapshot.visited?.length ? (
-        <text x="360" y="365" textAnchor="middle" fill="#4c647c" fontSize={14}>
+        <text x="360" y="365" textAnchor="middle" fill="var(--text-muted)" fontSize={14}>
           已访问：{snapshot.visited.map((n) => String.fromCharCode(65 + n)).join(' → ')}
         </text>
       ) : null}
