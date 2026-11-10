@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$ScenesPath = "",
     [string]$VoiceName = "",
     [ValidateRange(-5, 5)][int]$Rate = 0,

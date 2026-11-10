@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 & .\.venv\Scripts\python.exe scripts/check_secrets.py
 if ($LASTEXITCODE -ne 0) { throw '密钥扫描未通过，停止推送' }

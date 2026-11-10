@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $env:PYTHONIOENCODING = 'utf-8'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $env:AI_MODE = 'mock'
