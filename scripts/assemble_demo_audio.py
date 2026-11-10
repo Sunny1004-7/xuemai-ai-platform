@@ -24,7 +24,7 @@ def inspect_output(target, segments):
     if segments[-1]['start']+segments[-1]['duration']>420:raise RuntimeError('配音超过片长')
     record={'output':target.name,'duration_seconds':420,'resolution':'1920x1080','fps':24,
             'video_codec':'H.264','audio_codec':'AAC','full_decode_passed':True,
-            'development_record_replay_seconds':130,'development_records_date':'2026-11-03',
+            'development_record_replay_seconds':130,'development_records_dates':['2026-11-03','2026-11-10'],
             'narration':'晓晓中文神经合成语音','narration_segments':len(segments),
             'narration_timeline_no_overlap':True,'audio_mean_db':mean,'audio_peak_db':peak,
             'audio_auditory_review':'未进行人工听审，已验证音轨非静音、分句时间轴和完整解码',
@@ -53,7 +53,9 @@ def build():
         subprocess.run(command,check=True);groups.append(output)
     command=[FFMPEG,'-y','-loglevel','error']
     for group in groups:command+=['-i',str(group)]
-    command+=['-filter_complex',f'amix=inputs={len(groups)}:normalize=0,apad,atrim=duration=420[out]','-map','[out]',str(local/'complete.wav')]
+    # 有界补齐并在输出侧再次限制时长，避免空白尾音成为无限音源。
+    command+=['-filter_complex',f'amix=inputs={len(groups)}:normalize=0,apad=whole_dur=420,atrim=duration=420[out]',
+              '-map','[out]','-ar','24000','-t','420',str(local/'complete.wav')]
     subprocess.run(command,check=True)
     srt=(ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8')
     ass=['[Script Info]','ScriptType: v4.00+','PlayResX: 1920','PlayResY: 1080','[V4+ Styles]',

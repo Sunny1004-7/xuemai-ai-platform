@@ -7,34 +7,18 @@
   "audio_codec": "AAC",
   "full_decode_passed": true,
   "development_record_replay_seconds": 130,
-  "development_records_date": "2026-11-03",
+  "development_records_dates": [
+    "2026-11-03",
+    "2026-11-10"
+  ],
   "narration": "晓晓中文神经合成语音",
-  "narration_segments": 52,
+  "narration_segments": 53,
   "narration_timeline_no_overlap": true,
-  "audio_mean_db": -21.2,
+  "audio_mean_db": -21.1,
   "audio_peak_db": -0.5,
   "audio_auditory_review": "未进行人工听审，已验证音轨非静音、分句时间轴和完整解码",
   "subtitles_burned_in": true,
-  "subtitle_entries": 71,
+  "subtitle_entries": 74,
   "real_api_calls_during_recording": 0,
-  "sha256": "22da68d8e7612e04065b3601785c272964ce48c1e61c417748e7b4f257a5e692",
-  "visual_keyframes_reviewed_seconds": [
-    3,
-    17,
-    30,
-    59,
-    89,
-    128,
-    163,
-    191,
-    219,
-    236,
-    254,
-    270,
-    290,
-    325,
-    360,
-    390,
-    414
-  ]
+  "sha256": "3ff8b04c38acfacb69ee170497ad04087a3ef0ceb208a3ca84a17ddee2bb027a"
 }

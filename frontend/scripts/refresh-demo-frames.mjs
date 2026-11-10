@@ -12,7 +12,7 @@ if(data.quick)throw new Error('不能使用快速预演帧')
 const b=await chromium.launch({channel:'chrome',headless:true});const p=await b.newPage({viewport:{width:1920,height:1080}})
 const inserts=[]
 try{
- await p.goto('http://127.0.0.1:5175');await p.getByRole('button',{name:'体验学生端',exact:true}).click();await p.getByRole('button',{name:'进入学脉',exact:true}).click();await p.getByRole('navigation',{name:'主导航'}).waitFor()
+ await p.goto('http://127.0.0.1:5175');await p.getByRole('button',{name:'学生端',exact:true}).click();await p.getByRole('button',{name:'进入学脉',exact:true}).click();await p.getByRole('navigation',{name:'主导航'}).waitFor()
  await p.goto('http://127.0.0.1:5175/experiments');await p.locator('.sort-bar').first().waitFor()
  for(let i=0;i<6;i++){
   if(i)await p.getByRole('button',{name:'下一步',exact:true}).click()

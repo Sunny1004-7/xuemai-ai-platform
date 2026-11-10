@@ -77,9 +77,7 @@ async function login(username) {
   await page.getByRole('navigation', { name: '主导航' }).waitFor()
 }
 
-await page.setContent(
-  `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#f1f0e8;color:#263a37;font-family:'Microsoft YaHei',sans-serif"><main style="padding:170px 150px"><p style="font-size:25px;letter-spacing:4px">师生双端 AI 个性化智慧教育平台</p><h1 style="font:100px SimSun;margin:65px 0 45px">学脉 XueMai</h1><svg width="1250" height="140"><path d="M50 70 Q200 0 350 70 T650 70 T950 70 L1200 70" fill="none" stroke="#a9c8be" stroke-width="2"/>${[50, 350, 650, 950, 1200].map((x, i) => `<circle cx="${x}" cy="70" r="29" fill="#fdfcf8" stroke="#2e6a67" stroke-width="2"/>`).join('')}</svg><p style="font-size:28px;line-height:1.9">课程知识　·　学习证据　·　教学行动</p><p style="font-size:21px;color:#52665f;margin-top:65px">本机系统操作与已发生开发记录回放<br>合成教学样例 · 本地示例辅导 · 合成配音</p></main></body></html>`,
-)
+await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round3-replay.html')).href + '#intro')
 const capture = (async () => {
   while (recording) {
     const tick = Date.now()
@@ -103,14 +101,18 @@ try {
   await login('student1')
   await scene(25, '学习工作台', '')
   await scene(45, '知识图谱', '', () => page.goto(`${base}/graph`))
-  await until(56)
+  await until(52)
+  await page.getByRole('button', { name: /线性结构，展开章节/ }).click()
+  await until(59)
   await page.getByLabel('定位知识点').fill('快速排序')
-  await until(64)
+  await until(65)
+  await page.getByRole('button', { name: '全屏查看', exact: true }).click()
+  await until(70)
   await page.getByRole('button', { name: '先修链', exact: true }).click()
-  await until(72)
-  await page.getByRole('button', { name: '全图', exact: true }).click()
-  await until(78)
+  await until(76)
   await page.getByRole('button', { name: '放大图谱', exact: true }).click()
+  await until(81)
+  await page.keyboard.press('Escape')
   await scene(85, '视频学习', '', async () => {
     await page.goto(`${base}/video?t=1`)
     const v = page.locator('video')
@@ -143,6 +145,7 @@ try {
   await page.getByLabel('输入学习问题').fill('请对照解释栈与队列，再检查我的理解。')
   await page.getByRole('button', { name: '发送', exact: true }).click()
   await until(162)
+  await page.locator('.collaboration-trace summary').click()
   await page.locator('.understanding-check').scrollIntoViewIfNeeded()
   await until(170)
   await page.locator('.understanding-check input').first().check()
@@ -158,9 +161,11 @@ try {
   await until(213)
   await page.goto(`${base}/analytics`)
   await until(218)
-  await page.getByRole('button', { name: '查看证据', exact: true }).first().click()
+  await page.getByLabel('筛选学情章节').selectOption({label:'线性结构'})
+  await page.locator('.matrix-cell').first().click()
   await until(226)
   await page.getByRole('dialog').getByRole('button', { name: '关闭', exact: true }).click()
+  await page.locator('.teaching-groups').scrollIntoViewIfNeeded()
   await scene(230, '针对性任务', '', async () => {
     await page
       .locator('.knowledge-analysis>div')
@@ -198,19 +203,17 @@ try {
       .getByRole('button', { name: '查看结果', exact: true })
       .click()
   })
-  const replay = pathToFileURL(path.join(root, 'docs/development-process/round2-replay.html')).href
+  const replay = pathToFileURL(path.join(root, 'docs/development-process/round3-replay.html')).href
   for (const [at, id, name] of [
     [280, 'chain1', '知识图谱开发'],
     [315, 'chain2', '学习证据开发'],
     [350, 'chain3', '人工智能服务开发'],
-    [385, 'round2', '第二代学习引擎'],
+    [385, 'round3', '四项方法与本轮验证'],
   ]) {
     await scene(at, name, '', () => page.goto(replay + '#' + id))
   }
   await until(410)
-  await page.setContent(
-    `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#f5eee4;color:#352d29;font-family:'Microsoft YaHei',sans-serif"><main style="padding:200px 150px"><p style="font-size:24px;color:#7e6554">学脉 XueMai</p><h1 style="font:72px SimSun;margin:60px 0">让学习建议能够执行<br><br>让教学安排有据可循</h1><p style="font-size:26px;line-height:2">课程知识 · 学习证据 · 教师行动</p><p style="font-size:22px;margin-top:65px">github.com/Sunny1004-7/xuemai-ai-platform</p></main></body></html>`,
-  )
+  await page.goto(replay + '#outro')
   await until(420)
 } catch (error) {
   recording = false
