@@ -31,7 +31,8 @@ class Login(BaseModel):
 
 @app.get("/api/health")
 def health():
-    return {"status":"ok","service":"学脉","synthetic_data":True}
+    from .ai import AIConfig
+    return {"status":"ok","service":"学脉","synthetic_data":True,"ai_mode":AIConfig.from_env().mode}
 
 
 @app.post("/api/auth/login")

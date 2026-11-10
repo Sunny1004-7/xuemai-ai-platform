@@ -1,4 +1,4 @@
-﻿param([switch]$RealAI, [switch]$ReuseExisting)
+﻿param([switch]$RealAI, [switch]$MockAI, [switch]$ReuseExisting)
 
 $ErrorActionPreference = 'Stop'
 $env:PYTHONIOENCODING = 'utf-8'
@@ -30,7 +30,15 @@ if (-not (Test-Path -LiteralPath $frontendEntry)) { throw '前端依赖未就绪
 $nodeCommand = Get-Command node.exe -ErrorAction Stop
 $backendId = Get-ProjectService -Port 8000 -CommandPattern 'uvicorn\s+backend\.app\.main:app'
 $frontendId = Get-ProjectService -Port 5173 -CommandPattern 'vite[\\/]bin[\\/]vite\.js'
-$env:AI_MODE = if ($RealAI) { 'real' } else { 'mock' }
+$env:AI_MODE = if ($MockAI) { 'mock' } elseif ($RealAI) { 'real' } else { 'auto' }
+$expectedMode = if ($MockAI) { 'mock' } elseif ($RealAI -or $env:DEEPSEEK_API_KEY -or (Test-Path -LiteralPath 'deepseek官方api.txt')) { 'real' } else { 'mock' }
+if ($backendId) {
+    $health = Invoke-RestMethod 'http://127.0.0.1:8000/api/health' -TimeoutSec 5
+    if ($health.ai_mode -ne $expectedMode) {
+        Stop-Process -Id $backendId -Force
+        $backendId = $null
+    }
+}
 New-Item -ItemType Directory -Force -Path '.local' | Out-Null
 $started = @()
 

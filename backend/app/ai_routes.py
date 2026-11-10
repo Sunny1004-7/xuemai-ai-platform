@@ -17,6 +17,7 @@ from .auth import current_user, require_course
 from .db import get_db
 from .teaching_actions import MARKER,prepare_actions,validate_selection
 from .evidence import knowledge_state
+from .teaching_agents import begin_collaboration,finalize_collaboration,record_feedback
 
 router = APIRouter(prefix="/api/ai", tags=["AI 教与学"])
 User = Annotated[dict, Depends(current_user)]
@@ -224,6 +225,8 @@ async def chat(request: ChatInput, user: User):
             conversation_id = db.execute("INSERT INTO ai_conversations(user_id,course_id,title) VALUES(?,?,?)",
                                          (user["id"], request.course_id, request.message[:32])).lastrowid
         plan=prepare_actions(db,user,request,conversation_id)
+        if plan.get('knowledge_id'):
+            plan=begin_collaboration(db,user,request,conversation_id,plan)
         db.execute("UPDATE ai_conversations SET context=? WHERE id=?",(json.dumps(request.model_dump(exclude={'message','conversation_id'}),ensure_ascii=False),conversation_id))
         recent = [dict(r) for r in db.execute("SELECT role,content,status FROM ai_messages WHERE conversation_id=? ORDER BY id DESC LIMIT 12", (conversation_id,))]
         history = []
@@ -240,6 +243,7 @@ async def chat(request: ChatInput, user: User):
                    (conversation_id, request.message, service.config.mode))
     messages = [{"role": "system", "content": SYSTEM_TUTOR + "\n" + context}, *history,
                 {"role": "user", "content": request.message}]
+    messages[0]['content'] += '\n结构化诊断与教学策略：'+json.dumps(plan.get('collaboration',{}),ensure_ascii=False)
     messages[0]['content'] += '\n请选择下面受支持的教学动作，解释后以<!--XM_ACTIONS:{"strategy":"hint","kinds":["contrast","check"]}-->结尾。kinds只从候选类型中选择，不输出URL或对象ID。候选：'+json.dumps(plan['actions'],ensure_ascii=False)
     source = f"\n\n可以对照《{citations[0]['title']}》中的说明 [1]。" if citations else "\n\n当前没有检索到可引用的课程资料。"
     title=plan.get('knowledge_title',course['title'])
@@ -263,10 +267,11 @@ async def chat(request: ChatInput, user: User):
             if len(visible)>emitted:
                 yield sse('delta',{'content':visible[emitted:]})
             with get_db() as db:
+                visible,teaching=finalize_collaboration(db,teaching,visible,citations)
                 db.execute("INSERT INTO ai_messages(conversation_id,role,content,citations,mode,teaching) VALUES(?,'assistant',?,?,?,?)",
                            (conversation_id,visible,json.dumps(citations,ensure_ascii=False),service.config.mode,json.dumps(teaching,ensure_ascii=False)))
             saved=True
-            yield sse('done',{'conversation_id':conversation_id,'usage':service.last_usage,'status':'complete','teaching':teaching,
+            yield sse('done',{'conversation_id':conversation_id,'usage':service.last_usage,'status':'complete','teaching':teaching,'content':visible,
                               'next_action':f"/practice?course={request.course_id}&knowledge={plan.get('knowledge_id','')}"})
         except AIError as error:
             yield sse("error", {"message": str(error), "code": error.code, "partial": bool(content), "retryable": error.code not in {"quota", "authentication", "not_configured"}})
@@ -336,7 +341,9 @@ def answer_check(check_id:int,body:UnderstandingAnswer,user:User):
         db.execute('UPDATE tutoring_checks SET attempt_id=? WHERE id=?',(result['id'],check_id))
         next_action={'title':'安排间隔复测','href':f"/review?course={question['course_id']}&knowledge={question['knowledge_id']}"} if result['correct'] else {'title':'查看先修与概念对照','href':f"/graph?course={question['course_id']}&knowledge={question['knowledge_id']}"}
         db.execute("INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload) VALUES(?,?,?,'understanding_check',?)",(user['id'],question['course_id'],question['knowledge_id'],json.dumps({'check_id':check_id,'attempt_id':result['id'],'correct':result['correct'],'next_action':next_action},ensure_ascii=False)))
-        return result|{'next_action':next_action}
+        result=result|{'next_action':next_action}
+        shared=record_feedback(db,check_id,result)
+        return result|{'collaboration':shared}
 
 
 @router.get('/checks/{check_id}')

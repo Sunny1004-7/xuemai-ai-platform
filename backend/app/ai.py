@@ -56,9 +56,11 @@ class AIConfig:
 
     @classmethod
     def from_env(cls) -> "AIConfig":
-        mode = os.getenv("AI_MODE", "mock").lower()
+        mode = os.getenv("AI_MODE", "auto").lower()
+        if mode == "auto":
+            mode = "real" if read_backend_key() else "mock"
         if mode not in {"mock", "real"}:
-            raise AIError("AI_MODE 只能为 mock 或 real", 503, "configuration")
+            raise AIError("AI_MODE 只能为 auto、mock 或 real", 503, "configuration")
         base = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").rstrip("/")
         if base != "https://api.deepseek.com":
             raise AIError("真实 AI 服务只允许 DeepSeek 官方 HTTPS 地址", 503, "configuration")
@@ -104,7 +106,7 @@ def log_usage(config: AIConfig, kind: str, usage: dict, status: str, elapsed: fl
     path = ROOT / "data" / "ai-usage.jsonl"
     path.parent.mkdir(exist_ok=True)
     record = {"at": datetime.now(timezone.utc).isoformat(), "mode": config.mode, "model": config.model,
-              "kind": kind, "status": status, "duration_ms": round(elapsed * 1000), **usage}
+              "kind": kind, "scope": os.getenv("AI_USAGE_SCOPE", "product"), "status": status, "duration_ms": round(elapsed * 1000), **usage}
     # No credentials, prompts, personal data or raw provider errors enter the log.
     with path.open("a", encoding="utf-8") as file:
         file.write(json.dumps(record, ensure_ascii=False) + "\n")

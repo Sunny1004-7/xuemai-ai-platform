@@ -20,7 +20,7 @@ try {
     if (-not $NoBrowser) {
         Start-Process 'http://127.0.0.1:5173'
     }
-    Write-Host '演示账号 student1、student2、teacher，密码均为 Xuemai123!。'
+    Write-Host '演示账号 student1、teacher，密码均为 Xuemai123!。'
 } catch {
     Write-Host ('启动失败。' + $_.Exception.Message) -ForegroundColor Red
     Write-Host '可查看 .local 目录下的前后端日志。'
