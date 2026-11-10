@@ -1,0 +1,241 @@
+[
+  {
+    "slug": "sorting-demo",
+    "title": "冒泡排序",
+    "knowledge_id": 6,
+    "duration": 36,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 3.0,
+        "text": "观察初始序列，比较相邻元素。"
+      },
+      {
+        "start": 3.0,
+        "end": 6.0,
+        "text": "比较第1、2项，交换使较大值右移。"
+      },
+      {
+        "start": 6.0,
+        "end": 9.0,
+        "text": "比较第2、3项，保持当前顺序。"
+      },
+      {
+        "start": 9.0,
+        "end": 12.0,
+        "text": "比较第3、4项，交换使较大值右移。"
+      },
+      {
+        "start": 12.0,
+        "end": 15.0,
+        "text": "比较第4、5项，交换使较大值右移。"
+      },
+      {
+        "start": 15.0,
+        "end": 18.0,
+        "text": "比较第1、2项，保持当前顺序。"
+      },
+      {
+        "start": 18.0,
+        "end": 21.0,
+        "text": "比较第2、3项，交换使较大值右移。"
+      },
+      {
+        "start": 21.0,
+        "end": 24.0,
+        "text": "比较第3、4项，交换使较大值右移。"
+      },
+      {
+        "start": 24.0,
+        "end": 27.0,
+        "text": "比较第1、2项，交换使较大值右移。"
+      },
+      {
+        "start": 27.0,
+        "end": 30.0,
+        "text": "比较第2、3项，保持当前顺序。"
+      },
+      {
+        "start": 30.0,
+        "end": 33.0,
+        "text": "比较第1、2项，保持当前顺序。"
+      },
+      {
+        "start": 33.0,
+        "end": 36.0,
+        "text": "每轮最大值归位。完全有序时，可以提前结束。"
+      }
+    ],
+    "timeline": [
+      {
+        "time": 0.0,
+        "knowledge_id": 6,
+        "title": "观察初始序列，比较相邻元素。"
+      },
+      {
+        "time": 12.0,
+        "knowledge_id": 6,
+        "title": "比较第4、5项，交换使较大值右移。"
+      },
+      {
+        "time": 24.0,
+        "knowledge_id": 6,
+        "title": "比较第1、2项，交换使较大值右移。"
+      }
+    ],
+    "checkpoints": [
+      {
+        "time": 25,
+        "question_id": 3
+      }
+    ],
+    "checkpoint_question_id": 3,
+    "synthetic": true
+  },
+  {
+    "slug": "stack-demo",
+    "title": "栈的入栈与出栈",
+    "knowledge_id": 2,
+    "duration": 40,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 5.0,
+        "text": "栈是后进先出的结构，只在栈顶操作。"
+      },
+      {
+        "start": 5.0,
+        "end": 10.0,
+        "text": "将1压入栈顶，已有元素保持不变。"
+      },
+      {
+        "start": 10.0,
+        "end": 15.0,
+        "text": "将2压入栈顶，已有元素保持不变。"
+      },
+      {
+        "start": 15.0,
+        "end": 20.0,
+        "text": "将3压入栈顶，已有元素保持不变。"
+      },
+      {
+        "start": 20.0,
+        "end": 25.0,
+        "text": "弹出栈顶3，后进入的元素先离开。"
+      },
+      {
+        "start": 25.0,
+        "end": 30.0,
+        "text": "弹出栈顶2，后进入的元素先离开。"
+      },
+      {
+        "start": 30.0,
+        "end": 35.0,
+        "text": "弹出栈顶1，后进入的元素先离开。"
+      },
+      {
+        "start": 35.0,
+        "end": 40.0,
+        "text": "空栈不能弹出。请区分操作顺序和数据本身的大小。"
+      }
+    ],
+    "timeline": [
+      {
+        "time": 0.0,
+        "knowledge_id": 2,
+        "title": "栈是后进先出的结构，只在栈顶操作。"
+      },
+      {
+        "time": 10.0,
+        "knowledge_id": 2,
+        "title": "将2压入栈顶，已有元素保持不变。"
+      },
+      {
+        "time": 20.0,
+        "knowledge_id": 2,
+        "title": "弹出栈顶3，后进入的元素先离开。"
+      },
+      {
+        "time": 30.0,
+        "knowledge_id": 2,
+        "title": "弹出栈顶1，后进入的元素先离开。"
+      }
+    ],
+    "checkpoints": [
+      {
+        "time": 28,
+        "question_id": 1
+      }
+    ],
+    "checkpoint_question_id": 1,
+    "synthetic": true
+  },
+  {
+    "slug": "binary-search-demo",
+    "title": "二分查找与边界收缩",
+    "knowledge_id": 8,
+    "duration": 40,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 8.0,
+        "text": "有序序列中查找17，维护闭区间的左右边界。"
+      },
+      {
+        "start": 8.0,
+        "end": 16.0,
+        "text": "区间[0,6]，中点3的值为11。"
+      },
+      {
+        "start": 16.0,
+        "end": 24.0,
+        "text": "目标更大，左边界更新为4。"
+      },
+      {
+        "start": 24.0,
+        "end": 32.0,
+        "text": "区间[4,6]，中点5的值为17。"
+      },
+      {
+        "start": 32.0,
+        "end": 40.0,
+        "text": "找到17，下标为5。每次比较都缩小候选区间。"
+      }
+    ],
+    "timeline": [
+      {
+        "time": 0.0,
+        "knowledge_id": 8,
+        "title": "有序序列中查找17，维护闭区间的左右边界。"
+      },
+      {
+        "time": 8.0,
+        "knowledge_id": 8,
+        "title": "区间[0,6]，中点3的值为11。"
+      },
+      {
+        "time": 16.0,
+        "knowledge_id": 8,
+        "title": "目标更大，左边界更新为4。"
+      },
+      {
+        "time": 24.0,
+        "knowledge_id": 8,
+        "title": "区间[4,6]，中点5的值为17。"
+      },
+      {
+        "time": 32.0,
+        "knowledge_id": 8,
+        "title": "找到17，下标为5。每次比较都缩小候选区间。"
+      }
+    ],
+    "checkpoints": [
+      {
+        "time": 28,
+        "question_id": 5
+      }
+    ],
+    "checkpoint_question_id": 5,
+    "synthetic": true
+  }
+]

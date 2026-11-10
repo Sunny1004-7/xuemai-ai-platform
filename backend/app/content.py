@@ -38,6 +38,7 @@ GROUPS = ['线性结构', '递归与复杂度', '树结构', '图结构', '排�
 
 
 def upgrade_content(db):
+    upgrade_media(db)
     revision = 2
     if db.execute('SELECT 1 FROM content_revisions WHERE version=?', (revision,)).fetchone():
         return
@@ -97,3 +98,23 @@ def seed_learning_journey(db):
         question = db.execute('SELECT * FROM questions WHERE id=?', (qid,)).fetchone()
         result = record_attempt(db, user, question, answer, hints)
         db.execute("UPDATE learning_events SET payload=json_set(payload,'$.synthetic',json('true')) WHERE json_extract(payload,'$.attempt_id')=?", (result['id'],))
+
+
+def upgrade_media(db):
+    from pathlib import Path
+    path=Path(__file__).resolve().parents[1]/'media/teaching-metadata.json'
+    if not path.is_file() or db.execute('SELECT 1 FROM content_revisions WHERE version=3').fetchone():
+        return
+    course=db.execute("SELECT id FROM courses WHERE code='CS201'").fetchone()
+    if not course:return
+    for item in json.loads(path.read_text(encoding='utf-8')):
+        url='/media/'+item['slug']+'.mp4'
+        old=db.execute('SELECT * FROM resources WHERE course_id=? AND url=?',(course['id'],url)).fetchone()
+        title='看见算法：'+item['title']
+        content='\n'.join(s['text'] for s in item['subtitles'])
+        if old:
+            db.execute('INSERT INTO resource_versions(resource_id,version,content,metadata) VALUES(?,?,?,?)',(old['id'],old['version'],old['content'],old['metadata']))
+            db.execute('UPDATE resources SET title=?,content=?,metadata=?,version=version+1 WHERE id=?',(title,content,json.dumps(item,ensure_ascii=False),old['id']))
+        else:
+            db.execute("INSERT INTO resources(course_id,knowledge_id,title,kind,content,url,metadata) VALUES(?,?,?,'video',?,?,?)",(course['id'],item['knowledge_id'],title,content,url,json.dumps(item,ensure_ascii=False)))
+    db.execute('INSERT INTO content_revisions(version) VALUES(3)')
