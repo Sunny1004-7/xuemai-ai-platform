@@ -22,20 +22,11 @@ export function Button({
     </button>
   )
 }
-export function Title({
-  title,
-  subtitle,
-  action,
-}: {
-  title: string
-  subtitle: string
-  action?: ReactNode
-}) {
+export function Title({ title, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
     <div className="page-heading">
       <div>
         <h1>{title}</h1>
-        <p>{subtitle}</p>
       </div>
       {action}
     </div>
@@ -43,7 +34,6 @@ export function Title({
 }
 export function Panel({
   title,
-  caption,
   children,
   action,
   className = '',
@@ -60,7 +50,6 @@ export function Panel({
         <div className="panel-head">
           <div>
             <h2>{title}</h2>
-            {caption ? <p>{caption}</p> : null}
           </div>
           {action}
         </div>
@@ -99,7 +88,7 @@ export function LoadState({
     return (
       <div className="loading" role="status">
         <LoaderCircle className="spin" size={20} />
-        正在整理学习内容…
+        正在加载…
       </div>
     )
   if (error)

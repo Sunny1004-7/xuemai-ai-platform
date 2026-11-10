@@ -1,0 +1,38 @@
+:root,
+[data-role='student'] {
+  --brand-primary: #2e6a67;
+  --brand-secondary: #5e8c87;
+  --brand-soft: #a9c8be;
+  --surface-subtle: #d7e6db;
+  --surface: #f1f0e8;
+  --text-primary: #263a37;
+  --text-muted: #52665f;
+  --surface-raised: #fdfcf8;
+  --border: #c8d1c7;
+  --focus-ring: #2e6a67;
+  --accent: #c6a348;
+  --danger: #8c2f2d;
+  --data: #607e95;
+  --data-soft: #a8c3d6;
+  --neutral: #f7f6f2;
+  --border-neutral: #e8e9e6;
+  --ink: var(--text-primary);
+  --muted: var(--text-muted);
+  --primary: var(--brand-primary);
+  --blue: var(--data);
+  --line: var(--border);
+  --nav: var(--surface);
+  --shadow: none;
+}
+[data-role='teacher'] {
+  --brand-primary: #7e6554;
+  --brand-secondary: #a78a73;
+  --brand-soft: #d4b79d;
+  --surface-subtle: #e9d6be;
+  --surface: #f5eee4;
+  --surface-raised: #fffcf7;
+  --text-primary: #352d29;
+  --text-muted: #695a50;
+  --border: #d8cbbb;
+  --focus-ring: #7e6554;
+}
