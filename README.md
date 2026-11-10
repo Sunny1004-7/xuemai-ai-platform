@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前为0.1教学闭环验证版，87项后端测试、11项真实浏览器测试和算法验证通过。[技术文档PDF](docs/deliverables/xuemai-technical-report.pdf)与[交付版本](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)提供源码包和6分35秒1080p演示。所有中文阶段提交与开发证据随仓库保留。
+当前为0.1教学闭环验证版，87项后端业务测试、14项审阅工具测试、11项真实浏览器测试和算法验证通过。[技术文档PDF](docs/deliverables/xuemai-technical-report.pdf)与[交付版本](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)提供源码包和6分35秒1080p演示。所有中文阶段提交与开发证据随仓库保留。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
@@ -14,13 +14,20 @@
 
 ## 每轮完整审阅包
 
-每轮修改完成后，在根目录“交付审阅包”生成 `学脉XueMai_完整审阅包_年月日_时分秒.zip`，时间采用北京时间。每包收录当前源码、文档、现有视频、官方手册、本轮修改记录及补丁，并生成“审阅包说明.md”和带SHA256的“审阅清单.json”。文档与视频各自的文件修改时间保留在清单中。
+每轮修改完成后，在根目录“交付审阅包”生成 `学脉XueMai_完整审阅包_年月日_时分秒.zip`，时间采用北京时间。每包收录当前源码、文档、现有视频、官方手册、本轮修改记录及补丁，以及本轮重新拍摄的全部前端模块截图，并生成“审阅包说明.md”和带SHA256的“审阅清单.json”。文档与视频各自的文件修改时间保留在清单中。
 
 ```powershell
-.venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/2026-11-10-一键启动与完整审阅包.md --base-ref aeb6e73
+node frontend/scripts/capture-review.mjs docs/rounds/本轮记录.md
+.venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/本轮记录.md --base-ref 本轮起始提交 --screenshots 交付审阅包/界面截图_年月日_时分秒
 ```
 
-每轮使用对应修改记录和起始Git提交。打包规则过滤凭据、依赖、运行数据、缓存、历史压缩包及既往审阅包，完成ZIP和逐文件摘要校验后才生成可交付的ZIP。后续工程执行约定见AGENTS.md。
+将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×1000桌面和390×844手机窄屏，覆盖登录页、学生端11个模块视图和教师端8个模块视图。长页面、长弹窗保存分段图，另拍关键表单、题型、操作结果、AI引用和异常反馈。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
+
+截图使用本轮生产构建和独立合成演示数据，AI为本地Mock，真实API调用0次。隔离服务占用8002和5176端口，任务结束自动关闭，截图前会检查端口空闲。首次需完成环境安装，Windows使用已安装的Chrome，Linux需安装Playwright Chromium。
+
+解压后先打开“界面截图/截图总览.html”查看缩略图并点击原图，也可用“截图索引.md”逐模块阅读。JSON清单记录模块、路由、状态、尺寸、SHA256和源码指纹。打包工具拒绝缺少模块、图片损坏、跨轮记录或与当前源码不一致的截图。
+
+打包规则过滤凭据、依赖、运行数据、缓存、历史压缩包及既往审阅包，当前截图通过参数单独收录。完成ZIP和逐文件摘要校验后才生成可交付的ZIP。后续工程执行约定见AGENTS.md。
 
 ## 本机 10 分钟复现路径
 
