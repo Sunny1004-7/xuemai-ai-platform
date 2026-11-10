@@ -14,6 +14,8 @@ class QuestionBody(BaseModel):
     hints:list[str]=Field(default_factory=list,max_length=6)
     rubric:dict=Field(default_factory=dict)
     status:str=Field(default="approved",pattern="^(draft|approved)$")
+    skill:str=Field(default="concept",pattern="^(concept|procedure|reasoning|transfer)$")
+    diagnostic_map:dict[str,str]=Field(default_factory=dict,max_length=10)
 
 
 @router.get("/questions")
@@ -34,7 +36,7 @@ def create_question(body:QuestionBody,user=Depends(teacher_user)):
         require_teacher_course(db,user,body.course_id)
         check_knowledge(db,body.course_id,body.knowledge_id)
         validate_question(body)
-        cur=db.execute("INSERT INTO questions(course_id,knowledge_id,type,title,options,answer,explanation,difficulty,hints,rubric,status) VALUES(?,?,?,?,?,?,?,?,?,?,?)",question_values(body))
+        cur=db.execute("INSERT INTO questions(course_id,knowledge_id,type,title,options,answer,explanation,difficulty,hints,rubric,status,skill,diagnostic_map) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",question_values(body))
         return public_question(db.execute("SELECT * FROM questions WHERE id=?",(cur.lastrowid,)).fetchone(),user)
 
 
@@ -56,7 +58,7 @@ def validate_question(body):
 
 
 def question_values(body):
-    return (body.course_id,body.knowledge_id,body.type,body.title,json.dumps(body.options,ensure_ascii=False),json.dumps(body.answer,ensure_ascii=False),body.explanation,body.difficulty,json.dumps(body.hints,ensure_ascii=False),json.dumps(body.rubric,ensure_ascii=False),body.status)
+    return (body.course_id,body.knowledge_id,body.type,body.title,json.dumps(body.options,ensure_ascii=False),json.dumps(body.answer,ensure_ascii=False),body.explanation,body.difficulty,json.dumps(body.hints,ensure_ascii=False),json.dumps(body.rubric,ensure_ascii=False),body.status,body.skill,json.dumps(body.diagnostic_map,ensure_ascii=False))
 
 
 class QuestionPatch(BaseModel):
@@ -71,6 +73,8 @@ class QuestionPatch(BaseModel):
     hints:list[str]|None=Field(default=None,max_length=6)
     rubric:dict|None=None
     status:str|None=Field(default=None,pattern="^(draft|approved)$")
+    skill:str|None=Field(default=None,pattern="^(concept|procedure|reasoning|transfer)$")
+    diagnostic_map:dict[str,str]|None=Field(default=None,max_length=10)
 
 
 @router.patch("/questions/{question_id}")
@@ -93,7 +97,7 @@ def edit_question(question_id:int,body:QuestionPatch,user=Depends(teacher_user))
             locked=("knowledge_id","type","options","answer")
             if any(getattr(body,k)!=old[k] for k in locked):raise HTTPException(409,"题目已有作业或学习记录，题型、答案和知识点请通过新建变式调整")
         if assigned and body.status!="approved":raise HTTPException(409,"题目已用于发布作业，不能撤回为草稿")
-        db.execute("UPDATE questions SET course_id=?,knowledge_id=?,type=?,title=?,options=?,answer=?,explanation=?,difficulty=?,hints=?,rubric=?,status=? WHERE id=?",question_values(body)+(question_id,))
+        db.execute("UPDATE questions SET course_id=?,knowledge_id=?,type=?,title=?,options=?,answer=?,explanation=?,difficulty=?,hints=?,rubric=?,status=?,skill=?,diagnostic_map=? WHERE id=?",question_values(body)+(question_id,))
         return public_question(db.execute("SELECT * FROM questions WHERE id=?",(question_id,)).fetchone(),user)
 
 

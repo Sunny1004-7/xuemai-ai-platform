@@ -131,9 +131,8 @@ def context_for(db, user, request) -> tuple[dict, list[dict], str]:
             raise HTTPException(404, "知识点不属于当前课程")
         details.append(f"当前知识点：{point['title']}；{point['description']}")
         if user["role"] == "student":
-            mastery = db.execute("SELECT value,level,evidence_count FROM mastery WHERE student_id=? AND knowledge_id=?", (user["id"], knowledge_id)).fetchone()
-            if mastery:
-                details.append(f"当前学生学习证据：掌握度 {mastery['value']:.2f}，水平 {mastery['level']}，证据 {mastery['evidence_count']} 条。该估计不代表正式成绩。")
+            mastery=knowledge_state(db,user['id'],knowledge_id)
+            details.append(f"当前学习状态：{mastery['value']:.2f}，{mastery['sufficiency']}，有效证据{mastery['effective_count']:.1f}。")
     if request.question_id:
         question = db.execute("SELECT * FROM questions WHERE id=? AND course_id=?", (request.question_id, request.course_id)).fetchone()
         if not question:

@@ -25,7 +25,13 @@ def graph(course_id:int,user=Depends(current_user)):
         for r in db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)):
             item=json_fields(r,["objectives"])
             val=mastery_value(db,user["id"],r["id"])
-            item.update(evidence=knowledge_state(db,user["id"],r["id"]),mastery=round(val*100),status="mastered" if val>=.75 else "developing" if val>=.5 else "weak",resource_count=db.execute("SELECT COUNT(*) FROM resources WHERE knowledge_id=?",(r["id"],)).fetchone()[0])
+            state=knowledge_state(db,user['id'],r['id'])
+            if user['role']=='teacher':
+                members=[m[0] for m in db.execute('SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1',(course_id,))]
+                states=[knowledge_state(db,sid,r['id']) for sid in members]
+                val=sum(s['value'] for s in states)/len(states) if states else .25
+                state={'value':val,'effective_count':sum(s['effective_count'] for s in states)/len(states) if states else 0,'sufficiency':'班级平均证据','student_count':len(states)}
+            item.update(evidence=state,mastery=round(val*100),status="mastered" if val>=.75 else "developing" if val>=.5 else "weak",resource_count=db.execute("SELECT COUNT(*) FROM resources WHERE knowledge_id=?",(r["id"],)).fetchone()[0])
             nodes.append(item)
         return {"nodes":nodes,"edges":[dict(r) for r in db.execute("SELECT * FROM knowledge_edges WHERE course_id=?",(course_id,))]}
 

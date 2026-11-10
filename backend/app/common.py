@@ -30,7 +30,7 @@ def get_resource(row):
 
 
 def public_question(row,user):
-    item=json_fields(row,["options","answer","hints","rubric"])
+    item=json_fields(row,["options","answer","hints","rubric","diagnostic_map"])
     if user["role"]!="teacher":
         for key in ("answer","explanation","diagnostic_map"):
             item.pop(key,None)
