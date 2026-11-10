@@ -163,6 +163,7 @@ test('Mock 备课草稿编辑发布形成可检索版本，AI 题目审核后学
   )
   await dialog.getByRole('button', { name: '审核并保存资料', exact: true }).click()
   await expect(dialog).not.toBeVisible()
+  await teacher.getByLabel('搜索课程资料').fill(lessonTitle)
   let card = teacher
     .locator('.resource-card')
     .filter({ has: teacher.getByRole('heading', { name: lessonTitle, exact: true }) })

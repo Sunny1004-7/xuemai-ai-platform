@@ -296,12 +296,16 @@ async function details(page, module, fixture) {
         await page.getByRole('button', {name:'先修链',exact:true}).click()
         await capture('ancestors','先修链展开')
         await page.getByRole('button', {name:'全图',exact:true}).click()
-        const node=page.getByRole('button',{name:/快速排序，掌握度/})
-        const box=await node.boundingBox()
-        if(!box) throw new Error('图谱节点不可拖动')
-        await page.mouse.move(box.x+box.width/2,box.y+box.height/2)
-        await page.mouse.down(); await page.mouse.move(box.x+box.width/2+55,box.y+box.height/2+20,{steps:8}); await page.mouse.up()
-        await capture('dragged','节点拖动后的布局')
+        await capture('all-network','全部知识与正交连线')
+        await page.getByRole('button',{name:'章节总览',exact:true}).click()
+        await capture('chapters','章节总览')
+        await page.getByLabel('选择图谱章节').selectOption('1')
+        await capture('chapter-network','章节内知识网络')
+        await page.getByRole('button',{name:'全屏查看',exact:true}).click()
+        await capture('fullscreen','独立全屏工作区与小地图')
+        await page.getByRole('button',{name:'放大图谱'}).click()
+        await page.keyboard.press('Escape')
+        await capture('camera-restored','退出全屏后保留选中与视角')
         break
       case 'practice':
         await question(page, 1)
@@ -350,6 +354,8 @@ async function details(page, module, fixture) {
         await page.locator('.chat-messages').evaluate(el => {el.scrollTop=0})
         await capture('conversation-start','辅导对话开头与课程上下文')
         await page.locator('.chat-messages').evaluate(el => {el.scrollTop=el.scrollHeight})
+        await page.locator('.collaboration-trace summary').last().click()
+        await capture('collaboration','诊断策略校验协作记录')
         await capture('conversation', 'Mock流式辅导与课程引用')
         await capture('understanding-check','辅导后的结构化动作与理解检查')
         await page.locator('.understanding-check input').first().check()
@@ -446,6 +452,9 @@ async function details(page, module, fixture) {
       await modal('添加已有学生', 'member-form', '班级成员管理表单')
       break
     case 'graph':
+      await page.getByRole('button',{name:'全屏查看',exact:true}).click()
+      await capture('fullscreen','教师全屏图谱与编辑工具')
+      await page.keyboard.press('Escape')
       await modal('新增知识点', 'node-form', '新增知识点与学习目标')
       await modal('编辑知识点', 'node-edit', '编辑当前知识点')
       await modal('编辑先修关系', 'prerequisites', '先修关系管理与现有连线')
@@ -486,6 +495,11 @@ async function details(page, module, fixture) {
       await modal('编辑字幕与检查点', 'timeline-editor', '字幕、知识片段和互动时间轴完整表单')
       break
     case 'analytics':
+      await page.getByLabel('筛选学情章节').selectOption('1')
+      await capture('matrix-filtered','章节筛选下的多人知识矩阵')
+      await page.getByRole('button',{name:'安排匹配任务',exact:true}).first().click()
+      await dialog(page,'group-task','动态群组匹配题目与目标学生')
+      await close(page)
       await page.getByRole('button',{name:'查看证据',exact:true}).first().click()
       await dialog(page,'learning-evidence','学生作答证据与参数下钻')
       await close(page)

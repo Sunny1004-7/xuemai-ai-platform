@@ -46,8 +46,9 @@ def init_db():
                 db.execute("INSERT INTO schema_migrations(version) VALUES(?)",(version,))
         if not db.execute("SELECT 1 FROM users LIMIT 1").fetchone():
             seed(db)
-        from .content import upgrade_content
+        from .content import upgrade_content, upgrade_round3_content
         upgrade_content(db)
+        upgrade_round3_content(db)
         from .demo_cohort import seed_cohort
         seed_cohort(db)
         from .retrieval import sync_index

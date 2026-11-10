@@ -60,7 +60,7 @@ def test_cohort_idempotence_chronology_and_teacher_student_views(tmp_path,monkey
         teacher=login(client,'teacher')
         data=client.get('/api/analytics?course_id=1',headers=teacher).json()
         assert data['summary']['student_count']==28
-        assert len(data['heatmap'])==28 and len(data['heatmap'][0]['cells'])==30
+        assert len(data['heatmap'])==28 and len(data['heatmap'][0]['cells'])==31
         assert len({s['accuracy'] for s in data['students']})>10
         assert sum(len(g['student_ids']) for g in data['groups'])==28
         with get_db() as db:

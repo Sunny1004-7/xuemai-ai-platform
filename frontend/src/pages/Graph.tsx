@@ -52,10 +52,11 @@ export function Graph() {
   const nodes: Row[] = graph.data.nodes || []
   const edges: Row[] = graph.data.edges || []
   const current = nodes.find((n) => n.id === selected) || nodes[0]
+  const currentObserved = Number(current?.evidence?.effective_count || 0) > 0
   const shown = useMemo<{nodes: Row[]; edges: Row[]}>(() => {
     if (focusMode === 'chapters') {
-      const chapters: Row[] = course.data.chapters || []
-      const chapterNodes = chapters.map(c => ({...c, id: -c.id, count: nodes.filter(n => n.chapter_id === c.id).length}))
+      const chapters: Row[] = [...(course.data.chapters || []), ...(nodes.some(n=>!n.chapter_id)?[{id:0,title:'未分章节'}]:[])]
+      const chapterNodes = chapters.map(c => ({...c, id: -c.id, count: nodes.filter(n => (n.chapter_id || 0) === c.id).length}))
       const pairs = edges.map(e => [nodes.find(n => n.id === e.source)?.chapter_id, nodes.find(n => n.id === e.target)?.chapter_id])
         .filter(([a,b]) => a && b && a !== b)
       const unique = [...new Set(pairs.map(([a,b]) => `${a}:${b}`))]
@@ -113,6 +114,16 @@ export function Graph() {
       { replace: true },
     )
   }
+  function selectChapter(id: number) {
+    const first = nodes.find(n => (n.chapter_id || 0) === id)
+    setChapter(id)
+    setFocusMode('chapter')
+    setSearch('')
+    if (first) {
+      setSelected(first.id)
+      setParams(previous => {previous.set('knowledge', String(first.id)); return previous}, {replace: true})
+    }
+  }
   useEffect(() => {
     if (!search.trim()) return
     const node = nodes.find(n => n.title.includes(search.trim()))
@@ -137,8 +148,8 @@ export function Graph() {
         .filter(Boolean),
     }
     try {
-      if (edit?.id) await patch(`/knowledge/${edit.id}`, body)
-      else await post(`/courses/${courseId}/knowledge`, body)
+      const saved = edit?.id ? await patch(`/knowledge/${edit.id}`, body) : await post(`/courses/${courseId}/knowledge`, body)
+      selectNode(saved.id)
       notify('知识点已保存')
       setEdit(null)
       graph.reload()
@@ -204,7 +215,7 @@ export function Graph() {
           { [['chapters','章节总览'], ['all','全图'], ['neighbors','邻近知识'], ['ancestors','先修链']].map(([id,label]) =>
             <button key={id} className={focusMode === id ? 'active' : ''} onClick={() => {setSearch(''); setFocusMode(id)}}>{label}</button>) }
         </div>
-        <select aria-label="选择图谱章节" value={focusMode === 'chapter' ? chapter : ''} onChange={e => {setChapter(Number(e.target.value)); setFocusMode('chapter')}}>
+        <select aria-label="选择图谱章节" value={focusMode === 'chapter' ? chapter : ''} onChange={e => selectChapter(Number(e.target.value))}>
           <option value="" disabled>选择章节</option>
           {course.data.chapters?.map((c:Row) => <option key={c.id} value={c.id}>{c.title}</option>)}
         </select>
@@ -234,7 +245,7 @@ export function Graph() {
                 const tone = !observed ? 'unseen' : value >= 75 ? 'mastered' : value < 40 ? 'weak' : 'learning'
                 const dim = !isChapter && (filter === 'weak' && tone !== 'weak' || filter === 'mastered' && tone !== 'mastered')
                 const lines = String(n.title).match(/.{1,6}/g) || []
-                const choose = () => {if (isChapter) {setChapter(-n.id); setFocusMode('chapter')} else selectNode(n.id)}
+                const choose = () => {if (isChapter) selectChapter(-n.id); else selectNode(n.id)}
                 return <g key={n.id} transform={`translate(${pos.x} ${pos.y})`} className={`knowledge-node ${tone} ${selected === n.id ? 'active' : ''} ${dim ? 'dim' : ''}`}
                   role="button" tabIndex={0} aria-pressed={selected === n.id} aria-label={isChapter ? `${n.title}，展开章节` : `${n.title}，掌握度 ${observed ? value+'%' : '待学习'}`}
                   onPointerDown={e => e.stopPropagation()} onClick={choose} onKeyDown={e => {if (e.key === 'Enter' || e.key === ' ') {e.preventDefault(); choose()}}}>
@@ -274,9 +285,9 @@ export function Graph() {
               </p>
               <div className="progress-label">
                 <span>{teacher ? '班级平均估计' : '个人掌握度'}</span>
-                <strong>{percent(current.mastery)}%</strong>
+                <strong>{currentObserved ? percent(current.mastery)+'%' : '待观测'}</strong>
               </div>
-              <Progress value={percent(current.mastery)} />
+              <Progress value={currentObserved ? percent(current.mastery) : 0} />
               <p className="mini-text">
                 {current.evidence?.sufficiency || '待补充证据'} · 有效证据{' '}
                 {Number(current.evidence?.effective_count || 0).toFixed(1)} 条

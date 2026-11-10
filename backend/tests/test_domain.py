@@ -39,7 +39,7 @@ def test_seed_is_idempotent(client):
     init_db();init_db()
     with get_db() as db:
         assert db.execute("SELECT COUNT(*) FROM users").fetchone()[0]==2
-        assert db.execute("SELECT COUNT(*) FROM knowledge_points WHERE course_id=1").fetchone()[0]==30
+        assert db.execute("SELECT COUNT(*) FROM knowledge_points WHERE course_id=1").fetchone()[0]==31
         assert db.execute("PRAGMA foreign_keys").fetchone()[0]==1
     headers=login(client)
     assert len(client.get("/api/courses",headers=headers).json())==2

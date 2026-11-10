@@ -58,6 +58,7 @@ test('教师创建课程章节知识班级，学生邀请码加入后读取同�
   await expect(sp.locator('.course-grid')).toContainText(courseTitle)
   await sp.getByLabel('切换当前课程').selectOption({ label: courseTitle })
   await sp.getByRole('link', { name: '知识图谱', exact: true }).click()
+  await sp.getByRole('button',{name:'认识递归，展开章节'}).click()
   await expect(sp.getByRole('button', { name: /递归终止条件，掌握度/ })).toBeVisible()
   await expect(sp.locator('.node-objectives')).toContainText('能够辨认递归终止条件')
   await expect(sp.getByRole('button', { name: '新增知识点' })).toHaveCount(0)
@@ -68,6 +69,7 @@ test('教师创建课程章节知识班级，学生邀请码加入后读取同�
 test('从图谱进入视频，完成互动检查并真实写回事件', async ({ page }) => {
   await login(page, 'student1')
   await page.getByRole('link', { name: '知识图谱', exact: true }).click()
+  await page.getByLabel('定位知识点').fill('冒泡排序')
   await page.getByRole('button', { name: /冒泡排序，掌握度/ }).click()
   await page.locator('.resource-links a').filter({ hasText: '看见算法：冒泡排序' }).click()
   await expect(page).toHaveURL(/\/video\?resource=100/)

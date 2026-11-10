@@ -118,3 +118,24 @@ def upgrade_media(db):
         else:
             db.execute("INSERT INTO resources(course_id,knowledge_id,title,kind,content,url,metadata) VALUES(?,?,?,'video',?,?,?)",(course['id'],item['knowledge_id'],title,content,url,json.dumps(item,ensure_ascii=False)))
     db.execute('INSERT INTO content_revisions(version) VALUES(3)')
+
+
+def upgrade_round3_content(db):
+    if db.execute('SELECT 1 FROM content_revisions WHERE version=3000').fetchone():
+        return
+    chapter=db.execute("SELECT id,course_id FROM chapters WHERE title='递归与复杂度' AND course_id=1").fetchone()
+    if not chapter:
+        return
+    title='循环边界与不变量'
+    point=db.execute('SELECT id FROM knowledge_points WHERE course_id=1 AND title=?',(title,)).fetchone()
+    kid=point[0] if point else db.execute("INSERT INTO knowledge_points(course_id,chapter_id,title,description,difficulty,objectives) VALUES(1,?,?,?,2,?)",(chapter[0],title,'循环不变量在循环开始前成立，并由每轮操作保持；结合退出条件解释结果。',json.dumps(['写出循环开始时成立的条件','检查一次迭代是否保持不变量','用退出边界说明结果'],ensure_ascii=False))).lastrowid
+    content='# 循环边界与不变量\n\n循环不变量描述每轮开始或结束时始终成立的性质。验证时分为初始化、保持和终止三步。\n\n## 例子\n冒泡排序中，一轮结束后，未排序区间最大值移动到其末尾；外层循环的不变量是右侧后缀已经有序且处于最终位置。若把内层上界多写一位，访问相邻元素时就可能越界。\n\n## 操作检查\n用输入[3,1,2]追踪一次外层循环，标出已排序后缀，并解释下一轮为什么可以缩短边界。'
+    if not db.execute("SELECT 1 FROM resources WHERE knowledge_id=? AND kind='document'",(kid,)).fetchone():
+        db.execute("INSERT INTO resources(course_id,knowledge_id,title,kind,content) VALUES(1,?,?,'document',?)",(kid,title+'学习讲义',content))
+    if not db.execute('SELECT 1 FROM questions WHERE knowledge_id=?',(kid,)).fetchone():
+        db.execute("INSERT INTO questions(course_id,knowledge_id,type,title,options,answer,explanation,difficulty,hints,skill,diagnostic_map) VALUES(1,?,'single',?,?,?,?,2,?,'reasoning',?)",(kid,'证明循环不变量时，除初始化和保持外还需要结合什么？',json.dumps(['终止条件','变量名称','界面颜色'],ensure_ascii=False),json.dumps('终止条件',ensure_ascii=False),'退出时的不变量与终止条件共同说明算法结果。',json.dumps(['考虑循环结束时能得出什么。'],ensure_ascii=False),json.dumps({'变量名称':'推理依据不足','界面颜色':'概念辨析待巩固'},ensure_ascii=False)))
+    source=db.execute("SELECT id FROM knowledge_points WHERE course_id=1 AND title='数组与链表'").fetchone()
+    target=db.execute("SELECT id FROM knowledge_points WHERE course_id=1 AND title='冒泡排序'").fetchone()
+    for a,b in [(source[0],kid),(kid,target[0])]:
+        db.execute('INSERT OR IGNORE INTO knowledge_edges(course_id,source,target) VALUES(1,?,?)',(a,b))
+    db.execute('INSERT INTO content_revisions(version) VALUES(3000)')

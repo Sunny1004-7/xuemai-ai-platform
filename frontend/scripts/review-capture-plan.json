@@ -59,7 +59,11 @@
         "searched",
         "neighbors",
         "ancestors",
-        "dragged"
+        "all-network",
+        "chapters",
+        "chapter-network",
+        "fullscreen",
+        "camera-restored"
       ]
     },
     {
@@ -92,7 +96,8 @@
         "service-error",
         "understanding-check",
         "check-result",
-        "conversation-start"
+        "conversation-start",
+        "collaboration"
       ]
     },
     {
@@ -182,7 +187,8 @@
       "details": [
         "node-form",
         "node-edit",
-        "prerequisites"
+        "prerequisites",
+        "fullscreen"
       ]
     },
     {
@@ -233,7 +239,9 @@
         "subjective-review",
         "rubric-advice",
         "learning-evidence",
-        "intervention-results"
+        "intervention-results",
+        "matrix-filtered",
+        "group-task"
       ]
     },
     {
