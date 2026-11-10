@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://super-memory.com/english/ol/sm2.htm",
+    "status": 200,
+    "title": "SuperMemo 2: Algorithm",
+    "accessed": "2026-11-10"
+  },
+  {
+    "url": "https://mc-stan.org/docs/functions-reference/continuous_distributions_on_0_1.html",
+    "status": 200,
+    "title": "Continuous Distributions on [0, 1]",
+    "accessed": "2026-11-10"
+  },
+  {
+    "url": "https://www.sqlite.org/fts5.html",
+    "status": 200,
+    "title": "SQLite FTS5 Extension",
+    "accessed": "2026-11-10"
+  },
+  {
+    "url": "https://api-docs.deepseek.com/api/create-chat-completion",
+    "status": 200,
+    "title": "Chat Completions API | DeepSeek API Docs",
+    "accessed": "2026-11-10"
+  },
+  {
+    "url": "https://react.dev/reference/react/lazy",
+    "status": 200,
+    "title": "lazy – React",
+    "accessed": "2026-11-10"
+  },
+  {
+    "url": "https://doi.org/10.1007/BF01099821",
+    "status": 200,
+    "title": "Knowledge tracing: Modeling the acquisition of procedural knowledge | User Modeling and User-Adapted Interaction | Springer Nature Link",
+    "accessed": "2026-11-10"
+  }
+]

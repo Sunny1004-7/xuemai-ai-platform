@@ -1,0 +1,5 @@
+\begin{tikzpicture}[node distance=12mm,box/.style={draw=black!45,fill=black!3,minimum width=39mm,minimum height=16mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](browser){浏览器\\学生或教师界面};\node[box,right=of browser](web){前端服务\\React与Vite};\node[box,right=of web](api){后端服务\\FastAPI与SQLite};
+\node[box,below=of api](ai){AI适配层\\本地示例／DeepSeek};
+\draw[flow](browser)--(web);\draw[flow](web)--node[above,font=\small]{API}(api);\draw[flow](api)--(ai);
+\end{tikzpicture}

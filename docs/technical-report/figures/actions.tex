@@ -1,0 +1,5 @@
+\begin{tikzpicture}[node distance=10mm and 12mm,box/.style={draw=black!45,fill=black!3,rounded corners=2pt,minimum width=37mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](context){课程上下文\\知识、题目、视频};\node[box,right=of context](model){模型解释与选择\\提示、对照、检查};\node[box,right=of model](map){业务动作映射\\校验类型与对象};
+\node[box,below=of map](do){实际业务执行\\定位、实验、作答};\node[box,left=of do](grade){确定性评分\\或等待教师复核};\node[box,left=of grade](state){状态与下一行动\\成功复测／先修巩固};
+\draw[flow](context)--(model);\draw[flow](model)--(map);\draw[flow](map)--(do);\draw[flow](do)--(grade);\draw[flow](grade)--(state);\draw[flow](state)--(context);
+\end{tikzpicture}

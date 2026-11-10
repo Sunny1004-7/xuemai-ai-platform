@@ -1,0 +1,120 @@
+[
+  {
+    "label": "初始先验",
+    "weight": 0,
+    "value": 0.25,
+    "alpha": 1.0,
+    "beta": 3.0,
+    "effective_count": 0.0,
+    "lower": 0,
+    "upper": 0.6295523679283268,
+    "sufficiency": "待补充证据",
+    "retention": 1.0,
+    "days_since_evidence": 0,
+    "model": "decayed-beta-v2"
+  },
+  {
+    "label": "甲：独立答对",
+    "alpha": 2.0,
+    "beta": 3.0,
+    "value": 0.4,
+    "effective_count": 1.0,
+    "weight": 1.0,
+    "quality": 1.0,
+    "parameters": {
+      "prior_alpha": 1.0,
+      "prior_beta": 3.0,
+      "half_life_days": 30.0,
+      "difficulty": 1,
+      "hint_count": 0,
+      "novelty": 1.0,
+      "gap_days": null
+    }
+  },
+  {
+    "label": "乙：提示后答对",
+    "alpha": 2.7,
+    "beta": 3.7,
+    "value": 0.421875,
+    "effective_count": 2.4,
+    "weight": 1.4,
+    "quality": 0.5,
+    "parameters": {
+      "prior_alpha": 1.0,
+      "prior_beta": 3.0,
+      "half_life_days": 30.0,
+      "difficulty": 2,
+      "hint_count": 1,
+      "novelty": 1.0,
+      "gap_days": null
+    }
+  },
+  {
+    "label": "丙：首次答错",
+    "alpha": 2.7,
+    "beta": 5.1,
+    "value": 0.3461538461538462,
+    "effective_count": 3.8,
+    "weight": 1.4,
+    "quality": 0.0,
+    "parameters": {
+      "prior_alpha": 1.0,
+      "prior_beta": 3.0,
+      "half_life_days": 30.0,
+      "difficulty": 2,
+      "hint_count": 0,
+      "novelty": 1.0,
+      "gap_days": null
+    }
+  },
+  {
+    "label": "丙：短期订正",
+    "alpha": 3.19,
+    "beta": 5.1,
+    "value": 0.38480096501809413,
+    "effective_count": 4.29,
+    "weight": 0.48999999999999994,
+    "quality": 1.0,
+    "parameters": {
+      "prior_alpha": 1.0,
+      "prior_beta": 3.0,
+      "half_life_days": 30.0,
+      "difficulty": 2,
+      "hint_count": 0,
+      "novelty": 0.35,
+      "gap_days": 0.0
+    }
+  },
+  {
+    "label": "丙：再次答对",
+    "alpha": 3.19,
+    "beta": 5.1,
+    "value": 0.38480096501809413,
+    "effective_count": 4.29,
+    "weight": 0.0,
+    "quality": 1.0,
+    "parameters": {
+      "prior_alpha": 1.0,
+      "prior_beta": 3.0,
+      "half_life_days": 30.0,
+      "difficulty": 2,
+      "hint_count": 0,
+      "novelty": 0.0,
+      "gap_days": 0.0
+    }
+  },
+  {
+    "label": "30天无新证据",
+    "weight": 0,
+    "value": 0.3409275834011391,
+    "alpha": 2.0949999999999998,
+    "beta": 4.05,
+    "effective_count": 2.145,
+    "lower": 0,
+    "upper": 0.6885058338356607,
+    "sufficiency": "证据积累中",
+    "retention": 0.5,
+    "days_since_evidence": 30.0,
+    "model": "decayed-beta-v2"
+  }
+]

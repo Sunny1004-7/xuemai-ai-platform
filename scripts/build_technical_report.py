@@ -1,83 +1,68 @@
-"""将源码对应的技术说明导出为中文 PDF，保留可核对的页数。"""
-import html
+"""用XeLaTeX生成正式技术文档，并校验页数、文字颜色与字体。"""
+import argparse
+import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
+import sys
+from PIL import Image,ImageOps
+import pymupdf as fitz
 
-from reportlab.lib import colors
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from pypdf import PdfReader
-
-ROOT = Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+from review_screenshots import validate_screenshots
 
 
-def build():
-    pdfmetrics.registerFont(TTFont('XueMaiCJK', 'C:/Windows/Fonts/msyh.ttc', subfontIndex=0))
-    pdfmetrics.registerFont(TTFont('XueMaiCJK-Bold', 'C:/Windows/Fonts/msyhbd.ttc', subfontIndex=0))
-    pdfmetrics.registerFontFamily('XueMaiCJK',normal='XueMaiCJK',bold='XueMaiCJK-Bold')
-    destination = ROOT / '最终参赛提交材料' / '学脉XueMai-技术文档.pdf'
-    destination.parent.mkdir(exist_ok=True)
-    styles = {
-        'body': ParagraphStyle('body',fontName='XueMaiCJK',fontSize=10.3,leading=16.5,textColor=colors.HexColor('#22334c'),spaceAfter=6,wordWrap='CJK'),
-        'h1': ParagraphStyle('h1',fontName='XueMaiCJK',fontSize=24,leading=33,spaceBefore=14,spaceAfter=18,textColor=colors.HexColor('#21365e'),keepWithNext=True),
-        'h2': ParagraphStyle('h2',fontName='XueMaiCJK',fontSize=15,leading=23,spaceBefore=14,spaceAfter=10,textColor=colors.HexColor('#244f72'),keepWithNext=True),
-        'h3': ParagraphStyle('h3',fontName='XueMaiCJK',fontSize=12,leading=19,spaceBefore=9,spaceAfter=7,textColor=colors.HexColor('#277d70'),keepWithNext=True),
-        'code': ParagraphStyle('code',fontName='XueMaiCJK',fontSize=9,leading=14,backColor=colors.HexColor('#f0f3f8'),borderPadding=7,spaceAfter=5,wordWrap='CJK'),
-        'cell': ParagraphStyle('cell',fontName='XueMaiCJK',fontSize=9,leading=14,textColor=colors.HexColor('#22334c'),wordWrap='CJK'),
-    }
-    story=[]
-    in_code=False
-    def inline(text):
-        text=html.escape(text)
-        text=re.sub(r'\*\*(.*?)\*\*',r'<b>\1</b>',text)
-        text=re.sub(r'`(.*?)`',r'<font color="#227b70">\1</font>',text)
-        return re.sub(r'\[(.*?)\]\((.*?)\)',r'\1（\2）',text)
-    lines=(ROOT/'docs/TECHNICAL_REPORT.md').read_text(encoding='utf-8').splitlines()
-    pos=0
-    while pos<len(lines):
-        line=lines[pos]
-        pos+=1
-        if line.startswith('```'):
-            in_code=not in_code
-            continue
-        if not line.strip():
-            if pos>=2 and lines[pos-2].startswith('#'):
-                continue
-            story.append(Spacer(1,2*mm));continue
-        if line.startswith('|') and not in_code:
-            block=[line]
-            while pos<len(lines) and lines[pos].startswith('|'):
-                block.append(lines[pos]);pos+=1
-            rows=[]
-            for row in block:
-                if re.match(r'^\|\s*[-:]+\s*\|',row):continue
-                rows.append([Paragraph(inline(c.strip()),styles['cell']) for c in row.strip('|').split('|')])
-            cols=len(rows[0]);width=172*mm
-            widths=[width*.18,width*.39,width*.43] if cols==3 else [width/cols]*cols
-            table=Table(rows,colWidths=widths,repeatRows=1,hAlign='LEFT')
-            table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e7f0f5')),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f7f9fc')]),('VALIGN',(0,0),(-1,-1),'TOP'),('LINEBELOW',(0,0),(-1,0),.6,colors.HexColor('#aec1d1')),('BOTTOMPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),7),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7)]))
-            story.append(table);story.append(Spacer(1,3*mm));continue
-        style='code' if in_code else 'h1' if line.startswith('# ') else 'h2' if line.startswith('## ') else 'h3' if line.startswith('### ') else 'body'
-        text=re.sub(r'^#{1,3}\s+','',line)
-        text=inline(text)
-        if text.startswith('- '):text='• '+text[2:]
-        story.append(Paragraph(text,styles[style]))
-    def footer(canvas,doc):
-        canvas.saveState();canvas.setFont('XueMaiCJK',8);canvas.setFillColor(colors.HexColor('#65748a'))
-        canvas.drawString(19*mm,13*mm,'学脉 XueMai · 技术文档 · 2026-11-03')
-        canvas.drawRightString(191*mm,13*mm,str(doc.page));canvas.restoreState()
-    doc=SimpleDocTemplate(str(destination),pagesize=(210*mm,297*mm),rightMargin=19*mm,leftMargin=19*mm,topMargin=18*mm,bottomMargin=22*mm,title='学脉 XueMai 技术文档',author='XueMai 项目')
-    doc.build(story,onFirstPage=footer,onLaterPages=footer)
-    count=len(PdfReader(destination).pages)
-    if count>30:raise RuntimeError(f'技术文档超过30页：{count}')
-    published=ROOT/'docs/deliverables/xuemai-technical-report.pdf'
-    published.parent.mkdir(parents=True,exist_ok=True)
-    shutil.copyfile(destination,published)
-    print(f'技术文档已生成：{count} 页，{destination}')
+def build(screenshots,record,draft=False):
+    subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
+    source=ROOT/'docs/technical-report'
+    directory=ROOT/screenshots
+    if not draft:
+        manifest,_=validate_screenshots(ROOT,Path(screenshots),record)
+    else:
+        manifest=json.loads((directory/'截图清单.json').read_text(encoding='utf-8'))
+    images=source/'images';images.mkdir(exist_ok=True)
+    mapping={'graph':'student/graph/desktop_full.png','student-dashboard':'student/dashboard/desktop_full.png',
+             'practice':'student/practice/desktop_correct.png','video':'student/video/desktop_full.png',
+             'teacher-dashboard':'teacher/dashboard/desktop_full.png'}
+    for name,relative in mapping.items():
+        img=Image.open(directory/relative).convert('RGB')
+        # 聚焦主工作区，正式文档中的截图使用灰度；审阅包保留原色图。
+        img=img.crop((216,72,img.width,min(img.height,1075)))
+        ImageOps.grayscale(img).save(images/(name+'.png'))
+    back=(ROOT/'.local/round2-pytest.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'.local/round2-e2e.txt').read_text(encoding='utf-8',errors='replace')
+    bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
+    if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
+    summary=f"后端算法、业务与审阅工具回归共{bm[1]}项通过；浏览器师生流程与新增交互回归共{em[1]}项通过。交互实验对110组输入及4类边界进行检查。本轮界面检查覆盖20个模块视图、四种视口，共保存{len(manifest['files'])}张截图，浏览器页面运行错误为0。上述常规验证使用本地示例模式，真实AI请求为0次。\n"
+    (source/'validation-summary.tex').write_text(summary,encoding='utf-8')
+    compiled=ROOT/'.local/technical-report-build';compiled.mkdir(exist_ok=True,parents=True)
+    for index in range(3):
+        r=subprocess.run(['xelatex','-interaction=nonstopmode','-halt-on-error','-output-directory='+str(compiled),'main.tex'],cwd=source,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        (ROOT/'.local'/f'report-compile-{index+1}.log').write_bytes(r.stdout)
+        if r.returncode:raise RuntimeError('文档编译失败，请检查编译输出')
+    document=fitz.open(compiled/'main.pdf')
+    if len(document)>30:raise RuntimeError(f'文档{len(document)}页，超过30页')
+    text='\n'.join(p.get_text() for p in document)
+    for word in ['PROJECT_STATE','CODEX_TASK','本地工作区','本轮记录','D:\\','C:\\']:
+        if word in text:raise RuntimeError('正式文档包含内部工作信息')
+    colored=[];fonts=set();preview=ROOT/'.local/report-preview';preview.mkdir(exist_ok=True)
+    for i,page in enumerate(document):
+        for block in page.get_text('dict')['blocks']:
+            for line in block.get('lines',[]):
+                for span in line['spans']:
+                    fonts.add(span['font'])
+                    if span['color']!=0:colored.append({'page':i+1,'text':span['text'][:30]})
+        page.get_pixmap(matrix=fitz.Matrix(1.4,1.4)).save(preview/f'page-{i+1:02}.png')
+    if colored:raise RuntimeError('文档存在彩色文字')
+    outputs=[ROOT/'最终参赛提交材料/学脉XueMai-技术文档.pdf',ROOT/'docs/deliverables/xuemai-technical-report.pdf']
+    for output in outputs:output.parent.mkdir(exist_ok=True,parents=True);shutil.copy2(compiled/'main.pdf',output)
+    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':8,'screenshots':len(mapping),'frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1])}
+    (ROOT/'docs/technical-report/验收结果.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+    print(json.dumps(result,ensure_ascii=False))
 
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--screenshots',required=True);p.add_argument('--record',required=True);p.add_argument('--draft',action='store_true');args=p.parse_args()
+    build(args.screenshots,args.record,args.draft)

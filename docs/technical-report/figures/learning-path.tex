@@ -1,0 +1,4 @@
+\begin{tikzpicture}[node distance=9mm,box/.style={draw=black!45,fill=black!3,minimum width=86mm,minimum height=11mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](a){知识图谱：识别目标与薄弱先修};\node[box,below=of a](b){知识卡或视频片段：观察规则与例子};\node[box,below=of b](c){针对性练习：独立作答并记录提示};\node[box,below=of c](d){AI辅导与理解检查：定位困难、验证理解};\node[box,below=of d](e){间隔复测：依据质量安排下一次复习};
+\draw[flow](a)--(b);\draw[flow](b)--(c);\draw[flow](c)--(d);\draw[flow](d)--(e);\draw[flow](e.east)--++(13mm,0)|-(a.east);
+\end{tikzpicture}

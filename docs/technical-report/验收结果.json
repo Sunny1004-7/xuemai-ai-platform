@@ -1,0 +1,23 @@
+{
+  "pages": 30,
+  "black_text": true,
+  "fonts": [
+    "CMEX10",
+    "CMMI10",
+    "CMMI12",
+    "CMMI7",
+    "CMMI8",
+    "CMR12",
+    "CMR8",
+    "CMSY10",
+    "CMSY8",
+    "SimSun",
+    "TimesNewRomanPS-BoldMT",
+    "TimesNewRomanPSMT"
+  ],
+  "figures_tikz": 8,
+  "screenshots": 5,
+  "frontend_capture_count": 336,
+  "backend_tests": 116,
+  "browser_tests": 14
+}

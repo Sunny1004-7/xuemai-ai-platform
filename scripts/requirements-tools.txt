@@ -3,3 +3,5 @@ pillow==13.0.0
 imageio-ffmpeg==0.8.0
 reportlab==5.1.0
 pypdf==6.21.4
+PyMuPDF>=1.26
+edge-tts>=7.2
