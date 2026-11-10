@@ -22,6 +22,8 @@ export function Resources() {
   const [params] = useSearchParams()
   const [search, setSearch] = useState('')
   const [kind, setKind] = useState('all')
+  const [page, setPage] = useState(1)
+  useEffect(() => setPage(1), [search, kind, courseId])
   const resources = useApi<Row[]>(`/resources?course_id=${courseId}`, [])
   const graph = useApi<Row>(`/courses/${courseId}/graph`, { nodes: [] })
   const [editing, setEditing] = useState<Row | null>(null)
@@ -142,21 +144,6 @@ export function Resources() {
           ) : undefined
         }
       />
-      {teacher ? (
-        <section className="resource-hero">
-          <span className="ai-welcome-icon">
-            <Sparkles size={27} />
-          </span>
-          <div>
-            <h2>把时间留给教学本身。</h2>
-            <p>基于课程知识与已有资料生成教案草稿，目标、步骤和检查题都可逐项修改。</p>
-          </div>
-          <Button variant="secondary" onClick={() => setLesson(true)}>
-            准备下一堂课
-            <ArrowRight size={16} />
-          </Button>
-        </section>
-      ) : null}
       <div className="resource-toolbar">
         <div className="segmented">
           {[
@@ -184,7 +171,7 @@ export function Resources() {
       </div>
       <LoadState {...resources} retry={resources.reload} />
       <div className="resource-grid">
-        {list.map((r) => (
+        {list.slice((page - 1) * 9, page * 9).map((r) => (
           <article className="resource-card" key={r.id}>
             <div className={`resource-kind-icon ${r.kind}`}>
               {r.kind === 'video' ? (
@@ -199,7 +186,7 @@ export function Resources() {
               {r.kind === 'video' ? '视频资源' : r.kind === 'lesson_plan' ? '教学方案' : '课程资料'}
             </Pill>
             <h3>{r.title}</h3>
-            <p>{r.content?.slice(0, 120) || '打开查看资源内容与课程关联。'}</p>
+            <p>{resourceSummary(r.content) || '暂无摘要'}</p>
             <div className="resource-card-meta">
               <span>
                 {graph.data.nodes?.find((n: Row) => n.id === r.knowledge_id)?.title ||
@@ -243,6 +230,11 @@ export function Resources() {
           </article>
         ))}
       </div>
+      {list.length > 9 ? <nav className="resource-pagination" aria-label="资料分页">
+        <Button variant="secondary small" disabled={page === 1} onClick={() => setPage(page - 1)}>上一页</Button>
+        <span>{page} / {Math.ceil(list.length / 9)} · {list.length} 份资料</span>
+        <Button variant="secondary small" disabled={page * 9 >= list.length} onClick={() => setPage(page + 1)}>下一页</Button>
+      </nav> : null}
       {!list.length && !resources.loading ? (
         <Panel>
           <Empty>没有找到对应的资料，试试其他筛选条件。</Empty>
@@ -385,4 +377,10 @@ export function Resources() {
       ) : null}
     </>
   )
+}
+
+function resourceSummary(content = '') {
+  const text = content.replace(/```[\s\S]*?```/g, ' ').replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]*>/g, ' ').replace(/[#*`>|_~]/g, '').replace(/\s+/g, ' ').trim()
+  return text.length > 100 ? text.slice(0, 100) + '…' : text
 }

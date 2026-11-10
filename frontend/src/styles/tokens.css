@@ -14,6 +14,7 @@
   --danger: #8c2f2d;
   --data: #607e95;
   --data-soft: #a8c3d6;
+  --positive: #2e6a67;
   --neutral: #f7f6f2;
   --border-neutral: #e8e9e6;
   --ink: var(--text-primary);
@@ -35,4 +36,6 @@
   --text-muted: #695a50;
   --border: #d8cbbb;
   --focus-ring: #7e6554;
+  --positive: #6c7f4f;
+  --accent: #6c7f4f;
 }

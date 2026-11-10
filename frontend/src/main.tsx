@@ -33,7 +33,7 @@ import {
 } from 'lucide-react'
 import { api, getSession, post, saveSession, useApi } from './api'
 import type { Row } from './api'
-import { AppContext, Button, Pill } from './ui'
+import { AppContext, Button } from './ui'
 const LearningPlan = lazy(() => import('./pages/Plan').then((m) => ({ default: m.LearningPlan })))
 const Dashboard = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Dashboard })))
 const Courses = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Courses })))
@@ -80,12 +80,8 @@ function Login({ onLogin }: { onLogin: () => void }) {
           </span>
         </div>
         <div className="login-copy">
-          <h1>
-            知识相连
-            <br />
-            教学相知
-          </h1>
-          <p>个性化学习与教学平台</p>
+          <h1>学脉</h1>
+          <p>XueMai</p>
           <svg className="entry-network" viewBox="0 0 560 340" aria-label="从基础到应用的知识网络">
             <path d="M75 175C140 175 120 75 210 75S300 175 320 175S390 85 480 85M75 175C150 175 120 275 210 275S290 175 320 175S390 275 480 275" />
             {[
@@ -105,7 +101,6 @@ function Login({ onLogin }: { onLogin: () => void }) {
             ))}
           </svg>
         </div>
-        <div className="login-foot">数据结构与算法 · Python程序设计</div>
       </section>
       <div className="login-side">
         <form className="login-form" onSubmit={login}>
@@ -113,7 +108,6 @@ function Login({ onLogin }: { onLogin: () => void }) {
             <GraduationCap size={30} />
           </span>
           <h2>登录学脉</h2>
-          <p>选择身份，进入你的工作区</p>
           <label htmlFor="username">账号</label>
           <input
             id="username"
@@ -141,11 +135,10 @@ function Login({ onLogin }: { onLogin: () => void }) {
             <ArrowRight size={18} />
           </Button>
           <div className="demo-logins">
-            <span>体验账号 · 合成教学样例</span>
             <div>
               {[
-                ['student1', '体验学生端'],
-                ['teacher', '体验教师端'],
+                ['student1', '学生端'],
+                ['teacher', '教师端'],
               ].map(([id, label]) => (
                 <button
                   key={id}
@@ -160,7 +153,6 @@ function Login({ onLogin }: { onLogin: () => void }) {
                 </button>
               ))}
             </div>
-            <small>演示密码：Xuemai123!</small>
           </div>
         </form>
       </div>
@@ -202,7 +194,6 @@ function Shell({ logout }: { logout: () => void }) {
   const [toast, setToast] = useState<{ text: string; error?: boolean } | null>(null)
   const [collapsed, setCollapsed] = useState(false)
   const courses = useApi<Row[]>('/courses', [])
-  const status = useApi<Row>('/ai/status', {})
   const location = useLocation()
   const navigate = useNavigate()
   function changeCourse(id: number) {
@@ -320,10 +311,6 @@ function Shell({ logout }: { logout: () => void }) {
                 </select>
                 <ChevronDown size={13} />
               </div>
-              <Pill tone={status.data.mode === 'real' ? 'green' : 'neutral'}>
-                <span className="status-dot" />
-                {status.data.mode === 'real' ? 'DeepSeek 已连接' : '本地演示模式'}
-              </Pill>
               <button
                 className="icon-button"
                 title="查看学习伙伴"
@@ -393,3 +380,4 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
