@@ -8,6 +8,7 @@ import { execFileSync } from 'node:child_process'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const base = process.env.DEMO_BASE_URL || 'http://127.0.0.1:5175'
 const quick = process.env.DEMO_QUICK === '1'
+const taskTitle = `数组知识巩固-${new Date().toISOString().slice(11, 19).replaceAll(':', '')}`
 const scale = quick ? 0.03 : 1
 const runDir = path.join(
   root,
@@ -63,12 +64,12 @@ async function scene(second, name, text, action) {
   console.log(JSON.stringify({ at: Math.round((Date.now() - start) / 1000), scene: name }))
   events.push({ at: (Date.now() - start) / 1000, name, caption: text })
   if (action) await action()
-  await overlay(text)
+  if (text) await overlay(text)
 }
 async function login(username) {
   await page.goto(base)
   if (!(await page.getByLabel('账号', { exact: true }).count())) {
-    await page.getByRole('button', { name: /课程教师|学习者/ }).click()
+    await page.locator('.profile').click()
   }
   await page.getByLabel('账号', { exact: true }).fill(username)
   await page.getByLabel('密码', { exact: true }).fill('Xuemai123!')
@@ -77,7 +78,7 @@ async function login(username) {
 }
 
 await page.setContent(
-  `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#19273f;color:white;font-family:'Microsoft YaHei',sans-serif"><main style="padding:180px 160px"><p style="color:#68ceb6;font-size:26px">师生双端 AI 个性化智慧教育平台</p><h1 style="font-size:100px;margin:40px 0">学脉 XueMai</h1><p style="font-size:32px;line-height:1.8">把课程连成知识网络<br>让每一次学习，都成为下一步的依据</p><p style="color:#b4c5db;font-size:22px;margin-top:65px">真实本机操作 · 合成教学数据 · AI 使用 Mock 演示<br>后段为真实开发记录回放 · 旁白为本机合成语音</p></main></body></html>`,
+  `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#f1f0e8;color:#263a37;font-family:'Microsoft YaHei',sans-serif"><main style="padding:170px 150px"><p style="font-size:25px;letter-spacing:4px">师生双端 AI 个性化智慧教育平台</p><h1 style="font:100px SimSun;margin:65px 0 45px">学脉 XueMai</h1><svg width="1250" height="140"><path d="M50 70 Q200 0 350 70 T650 70 T950 70 L1200 70" fill="none" stroke="#a9c8be" stroke-width="2"/>${[50, 350, 650, 950, 1200].map((x, i) => `<circle cx="${x}" cy="70" r="29" fill="#fdfcf8" stroke="#2e6a67" stroke-width="2"/>`).join('')}</svg><p style="font-size:28px;line-height:1.9">课程知识　·　学习证据　·　教学行动</p><p style="font-size:21px;color:#52665f;margin-top:65px">本机系统操作与已发生开发记录回放<br>合成教学样例 · 本地示例辅导 · 合成配音</p></main></body></html>`,
 )
 const capture = (async () => {
   while (recording) {
@@ -97,147 +98,120 @@ const capture = (async () => {
   }
 })()
 try {
-  await scene(10, '登录', '使用合成学生账号登录；所有操作连接本机真实后端。', () =>
-    login('student1'),
-  )
-  await scene(20, '学习概览', '每项学习推荐都说明原因，并直接连接视频、错题或针对练习。')
-  await scene(35, '知识图谱', '统一知识实体连接先修关系、资源与个人掌握状态。', () =>
-    page.goto(`${base}/graph?knowledge=6`),
-  )
-  await until(46)
-  await page
-    .getByRole('button', { name: /放大/ })
-    .click()
-    .catch(() => {})
-  await until(54)
-  await page.mouse.wheel(0, 230)
-  await scene(
-    65,
-    '视频学习',
-    '原创教学视频真实播放；字幕定位、时间戳笔记和检查题共用课程知识点。',
-    async () => {
-      await page.goto(`${base}/video?t=10`)
-      const video = page.locator('video')
-      await video.waitFor()
-      await video.evaluate(async (v) => {
-        v.muted = true
-        await v.play()
-      })
-    },
-  )
-  await until(80)
+  await scene(12, '登录', '', () => page.goto(base))
+  await until(19)
+  await login('student1')
+  await scene(25, '学习工作台', '')
+  await scene(45, '知识图谱', '', () => page.goto(`${base}/graph`))
+  await until(56)
+  await page.getByLabel('定位知识点').fill('快速排序')
+  await until(64)
+  await page.getByRole('button', { name: '先修链', exact: true }).click()
+  await until(72)
+  await page.getByRole('button', { name: '全图', exact: true }).click()
+  await until(78)
+  await page.getByRole('button', { name: '放大图谱', exact: true }).click()
+  await scene(85, '视频学习', '', async () => {
+    await page.goto(`${base}/video?t=1`)
+    const v = page.locator('video')
+    await v.waitFor()
+    await v.evaluate(async (v) => {
+      v.muted = true
+      await v.play()
+    })
+  })
+  await until(103)
   const checkpoint = page.getByRole('dialog')
   if (await checkpoint.count()) {
     await checkpoint.getByRole('radio').nth(1).check()
     await checkpoint.getByRole('button', { name: '提交检查' }).click()
   }
-  await until(88)
+  await until(108)
   if (await checkpoint.count()) await checkpoint.getByRole('button', { name: '继续观看' }).click()
   await page.getByRole('button', { name: /我的笔记/ }).click()
   await page
     .getByPlaceholder('想明白了什么？还有什么问题？')
-    .fill('每轮通过相邻比较，将最大元素移动到末尾。')
+    .fill('每轮相邻比较后，当前最大元素到达末尾。')
   await page.getByRole('button', { name: '保存笔记' }).click()
-  await scene(100, '智能练习', '客观题使用确定性评分；提示使用和独立作答影响学习证据。', () =>
-    page.goto(`${base}/practice?question=1`),
-  )
-  await until(111)
+  await scene(120, '智能练习', '', () => page.goto(`${base}/practice?question=1`))
+  await until(128)
   await page.getByRole('radio').nth(2).check()
+  await until(132)
   await page.getByRole('button', { name: '提交答案', exact: true }).click()
-  await until(119)
-  await page.mouse.wheel(0, 300)
-  await scene(
-    130,
-    '课程辅导',
-    '本段为 Mock 固定示例，零真实API调用。辅导带入题目、课程资料和版本引用。',
-    () => page.goto(`${base}/tutor?knowledge=2&question=1`),
-  )
-  await page.getByLabel('输入学习问题').fill('栈和队列有什么区别？请先给我一点提示，再做理解检查。')
+  await scene(145, '上下文辅导', '', () => page.goto(`${base}/tutor?knowledge=2&question=1`))
+  await until(150)
+  await page.getByLabel('输入学习问题').fill('请对照解释栈与队列，再检查我的理解。')
   await page.getByRole('button', { name: '发送', exact: true }).click()
-  await until(145)
-  await page.getByRole('button', { name: '对话历史' }).click()
-  await scene(
-    160,
-    '交互实验',
-    '实验由可测试的真实算法运行，动画与步骤状态同步；AI不替代核心计算。',
-    () => page.goto(`${base}/experiments`),
-  )
-  for (let i = 0; i < 4; i++) {
-    await until(166 + i * 4)
-    await page
-      .getByRole('button', { name: /下一步/ })
-      .click()
-      .catch(() => {})
+  await until(162)
+  await page.locator('.understanding-check').scrollIntoViewIfNeeded()
+  await until(170)
+  await page.locator('.understanding-check input').first().check()
+  await page.getByRole('button', { name: '提交理解检查', exact: true }).click()
+  await until(178)
+  await page.getByRole('button', { name: '对话历史', exact: true }).click()
+  await scene(185, '交互实验', '', () => page.goto(`${base}/experiments`))
+  for (let i = 0; i < 5; i++) {
+    await until(188 + i * 2)
+    await page.getByRole('button', { name: '下一步', exact: true }).click()
   }
-  await scene(
-    185,
-    '教师教学',
-    '教师维护题库并发布作业；学生提交后，结果进入同一学习证据模型。',
-    async () => {
-      await login('teacher')
-      await page.goto(`${base}/practice`)
-    },
-  )
-  await until(196)
-  await page.getByRole('button', { name: '发布作业', exact: true }).click()
-  await page.getByRole('dialog').getByLabel('作业标题').fill('演示：栈与队列的理解检查')
-  await page.getByRole('dialog').getByLabel('发布到班级').selectOption('1')
-  await page.getByRole('dialog').getByRole('checkbox').first().check()
-  await until(207)
-  await page.getByRole('dialog').getByRole('button', { name: '发布作业', exact: true }).click()
-  await scene(
-    215,
-    '学情与分层',
-    '从薄弱知识与具体错因安排教学任务，完成后再次查看分析；主观题由教师复核。',
-    () => page.goto(`${base}/analytics`),
-  )
+  await scene(205, '教师工作台', '', () => login('teacher'))
+  await until(213)
+  await page.goto(`${base}/analytics`)
+  await until(218)
+  await page.getByRole('button', { name: '查看证据', exact: true }).first().click()
   await until(226)
-  await page.getByRole('button', { name: '分层任务', exact: true }).nth(1).click()
-  await until(236)
-  await page.getByRole('dialog').getByRole('button', { name: '关闭' }).click()
-  await scene(240, '课堂互动', '课堂提问和反馈约每7秒同步；学生回答按课程与个人权限隔离。', () =>
-    page.goto(`${base}/classroom`),
-  )
-  await scene(
-    250,
-    '真实AI协同证据',
-    '以下为本次实际开发记录的筛选回放；用户原话与Codex自主分工分开，不冒充实时生成。',
-    () =>
-      page.goto(
-        pathToFileURL(path.join(root, 'docs/development-process/raw-evidence/index.html')).href,
-      ),
-  )
-  const sections = [
-    [260, 'knowledge', '知识图谱：真实任务约束、接口契约、数据库占位符错误与修复。'],
-    [295, 'practice', '练习与推荐：真实自主任务、学习证据规则、作业发布与权限校验。'],
-    [330, 'ai', 'AI辅导：真实FTS误召回、SSE中断与私有视频漏洞，均有修复与测试。'],
-  ]
-  for (const [at, key, text] of sections) {
-    await until(at)
-    const tabs = await page.getByRole('button').all()
-    // 证据页使用带中文名称的核心链按钮；只通过可见文本选择。
-    const names = key === 'knowledge' ? /图谱|知识/ : key === 'practice' ? /练习|作业/ : /AI|辅导/
-    for (const tab of tabs) {
-      if (names.test(await tab.innerText())) {
-        await tab.click()
-        break
-      }
-    }
-    await overlay(text)
-    for (let i = 1; i <= 5; i++) {
-      await until(at + i * 5)
-      await page.mouse.wheel(0, 460)
-    }
+  await page.getByRole('dialog').getByRole('button', { name: '关闭', exact: true }).click()
+  await scene(230, '针对性任务', '', async () => {
+    await page
+      .locator('.knowledge-analysis>div')
+      .filter({ has: page.getByRole('heading', { name: '数组与链表', exact: true }) })
+      .getByRole('button', { name: '分层任务' })
+      .click()
+  })
+  await until(235)
+  await page.getByRole('dialog').getByLabel('任务名称').fill(taskTitle)
+  await page
+    .getByRole('dialog')
+    .locator('.checkbox-list label')
+    .filter({ hasText: '陈星河' })
+    .getByRole('checkbox')
+    .check()
+  await until(242)
+  await page.getByRole('button', { name: '发布分层任务', exact: true }).click()
+  await scene(250, '学生完成', '', async () => {
+    await login('student1')
+    await page.goto(`${base}/practice`)
+    await page.getByRole('button', { name: taskTitle, exact: true }).click()
+  })
+  await page.getByRole('radio').first().check()
+  await page.getByRole('button', { name: '提交答案', exact: true }).click()
+  await until(257)
+  await page.getByRole('button', { name: '下一道练习', exact: true }).click()
+  await page.getByRole('radio').first().check()
+  await page.getByRole('button', { name: '提交答案', exact: true }).click()
+  await scene(265, '任务结果', '', async () => {
+    await login('teacher')
+    await page.goto(`${base}/analytics`)
+    await page
+      .locator('.assignment-row')
+      .filter({ hasText: taskTitle })
+      .getByRole('button', { name: '查看结果', exact: true })
+      .click()
+  })
+  const replay = pathToFileURL(path.join(root, 'docs/development-process/round2-replay.html')).href
+  for (const [at, id, name] of [
+    [280, 'chain1', '知识图谱开发'],
+    [315, 'chain2', '学习证据开发'],
+    [350, 'chain3', '人工智能服务开发'],
+    [385, 'round2', '第二代学习引擎'],
+  ]) {
+    await scene(at, name, '', () => page.goto(replay + '#' + id))
   }
-  await until(365)
-  await page.keyboard.press('Home')
-  await page.mouse.wheel(0, -6000)
-  await overlay('真实演进记录关联中文Git提交；本地回归使用Mock，真实联调仅3次、共220 Tokens。')
-  await until(385)
+  await until(410)
   await page.setContent(
-    `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#19273f;color:white;font-family:'Microsoft YaHei',sans-serif"><main style="padding:160px"><h1 style="font-size:64px">从学习证据，回到教学行动。</h1><p style="font-size:30px;line-height:2;color:#b6d8d4">真实全栈业务 · 可解释学习规则 · 有边界的AI服务<br>中文细粒度提交 · 原始可见Prompt证据 · 本机复现脚本</p><p style="font-size:26px;margin-top:70px">github.com/Sunny1004-7/xuemai-ai-platform</p><p style="font-size:22px;color:#b4c5db">本片为真实本机操作与开发记录回放；预置学习记录为合成数据。<br>生成式内容供教学核对，学习成效仍需真实场景进一步验证。</p></main></body></html>`,
+    `<html lang="zh-CN"><meta charset="utf-8"><body style="margin:0;background:#f5eee4;color:#352d29;font-family:'Microsoft YaHei',sans-serif"><main style="padding:200px 150px"><p style="font-size:24px;color:#7e6554">学脉 XueMai</p><h1 style="font:72px SimSun;margin:60px 0">让学习建议能够执行<br><br>让教学安排有据可循</h1><p style="font-size:26px;line-height:2">课程知识 · 学习证据 · 教师行动</p><p style="font-size:22px;margin-top:65px">github.com/Sunny1004-7/xuemai-ai-platform</p></main></body></html>`,
   )
-  await until(395)
+  await until(420)
 } catch (error) {
   recording = false
   await capture
@@ -263,7 +237,7 @@ if (quick) {
 const lines = ['ffconcat version 1.0']
 for (let i = 0; i < shots.length; i++) {
   lines.push(`file '${shots[i].file}'`)
-  lines.push(`duration ${Math.max(0.01, (shots[i + 1]?.at || 395) - shots[i].at).toFixed(3)}`)
+  lines.push(`duration ${Math.max(0.01, (shots[i + 1]?.at || 420) - shots[i].at).toFixed(3)}`)
 }
 lines.push(`file '${shots.at(-1).file}'`)
 await fs.writeFile(path.join(runDir, 'frames.ffconcat'), lines.join('\n'))
@@ -308,7 +282,7 @@ console.log(
     output: out,
     frames: shots.length,
     recorded_seconds: shots.at(-1).at,
-    development_evidence_seconds: 135,
+    development_evidence_seconds: 130,
     runDir,
   }),
 )

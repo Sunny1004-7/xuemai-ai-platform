@@ -1,0 +1,5 @@
+# 文档与视频的可选构建依赖，应用启动不需要安装。
+Pillow>=11
+PyMuPDF>=1.26
+imageio-ffmpeg>=0.6
+edge-tts>=7.2
