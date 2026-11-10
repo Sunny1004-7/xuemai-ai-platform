@@ -5,6 +5,7 @@
 @import './styles/responsive.css';
 @import './styles/workspace.css';
 @import './styles/graph.css';
+@import './styles/charts.css';
 
 :root {
   font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;

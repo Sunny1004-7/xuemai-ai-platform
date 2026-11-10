@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PersonalCharts } from '../components/LearningCharts'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Plus } from 'lucide-react'
 import { post, percent, useApi } from '../api'
@@ -40,6 +41,7 @@ export function Dashboard() {
   const teacher = user.role === 'teacher'
   const analysis = useApi<Row>(teacher ? `/analytics?course_id=${courseId}` : '', {})
   const attempts = useApi<Row[]>(teacher ? `/attempts?course_id=${courseId}` : '', [])
+  const insights = useApi<Row>(!teacher ? `/learning/insights?course_id=${courseId}` : null, {})
   const d = query.data
   const recommendations: Row[] = d.recommendations || []
   const tasks: Row[] = d.assignments || []
@@ -56,6 +58,7 @@ export function Dashboard() {
     <>
       <Title title={teacher ? '教学工作台' : '学习概览'} />
       <LoadState {...query} retry={query.reload} />
+      {!teacher ? <PersonalCharts data={insights.data} courseId={courseId}/> : null}
       {teacher ? (
         <div className="teacher-desk">
           <div>

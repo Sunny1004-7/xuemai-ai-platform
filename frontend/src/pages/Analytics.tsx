@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { CheckCheck, ClipboardList, Edit3, Send, Sparkles, Target, Users } from 'lucide-react'
+import { CohortCharts } from '../components/LearningCharts'
 import { AssignmentRow } from './Practice'
 import { patch, percent, post, useApi } from '../api'
 import type { Row } from '../api'
@@ -21,7 +22,10 @@ import {
 export function Analytics() {
   const { user, courseId, notify } = useApp()
   const [params] = useSearchParams()
-  const query = useApi<Row>(user.role === 'teacher' ? `/analytics?course_id=${courseId}` : null, {})
+  const [classId, setClassId] = useState('')
+  const classes = useApi<Row[]>(`/classes?course_id=${courseId}`, [])
+  useEffect(() => setClassId(''), [courseId])
+  const query = useApi<Row>(user.role === 'teacher' ? `/analytics?course_id=${courseId}${classId ? `&class_id=${classId}` : ''}` : null, {})
   const questions = useApi<Row[]>(
     user.role === 'teacher' ? `/questions?course_id=${courseId}` : null,
     [],
@@ -58,7 +62,7 @@ export function Analytics() {
     const f = new FormData(e.currentTarget)
     setBusy(true)
     try {
-      const ids = questions.data
+      const ids = target?.question_ids || questions.data
         .filter((q) => q.knowledge_id === target?.id)
         .map((q) => q.id)
         .slice(0, 4)
@@ -159,10 +163,12 @@ export function Analytics() {
           )
         })}
       </div>
+      <div className="matrix-filters"><select aria-label="筛选教学班级" value={classId} onChange={e=>setClassId(e.target.value)}><option value="">课程全部班级</option>{classes.data.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
+      <CohortCharts data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
       <div className="analytics-layout">
         <Panel title="知识掌握与教学关注" caption="按知识点识别需要巩固的学生，直接形成教学行动">
           <div className="knowledge-analysis">
-            {knowledge.map((k) => (
+            {knowledge.slice(0,8).map((k) => (
               <div key={k.id} data-knowledge={k.id}>
                 <div>
                   <h3>{k.title}</h3>
@@ -368,9 +374,7 @@ export function Analytics() {
       {target ? (
         <Modal title={`分层学习 · ${target.title}`} close={() => setTarget(null)}>
           <form className="form-stack" onSubmit={publish}>
-            <p className="muted">
-              根据知识掌握与错因安排学习任务。发布后学生会收到关联练习，完成情况会重新进入学情分析。
-            </p>
+
             <label>
               任务名称
               <input required name="title" defaultValue={`${target.title} · 针对性巩固`} />

@@ -8,6 +8,7 @@ export function TeachingActions({ teaching }: { teaching: Row }) {
   const check = teaching.check
   return (
     <div className="teaching-actions">
+      {teaching.collaboration ? <details className="collaboration-trace"><summary>教学协作 · {teaching.collaboration.diagnosis?.concern}</summary><ol>{teaching.collaboration.trace?.map((step:Row,i:number)=><li key={i}><strong>{step.role}</strong>{step.result}</li>)}</ol></details> : null}
       <div className="button-row">
         {(teaching.actions || [])
           .filter((a: Row) => a.href)
@@ -47,6 +48,7 @@ function UnderstandingCheck({ check }: { check: Row }) {
       {feedback ? (
         <div role="status">
           <strong>{feedback.correct ? '检查通过' : '需要再巩固'}</strong>
+          {feedback.collaboration ? <p>{feedback.correct ? '已安排间隔复测' : '已记录本次反馈，继续提问将更换教学策略。'}</p> : null}
           <p>{feedback.explanation}</p>
           {feedback.evidence ? (
             <small>

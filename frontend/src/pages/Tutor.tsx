@@ -141,7 +141,7 @@ export function Tutor() {
             )
           if (event === 'done') {
             setMessages((v) =>
-              v.map((m, i) => (i === v.length - 1 ? { ...m, teaching: data.teaching } : m)),
+              v.map((m, i) => (i === v.length - 1 ? { ...m, teaching: data.teaching, content: data.content ?? m.content } : m)),
             )
             completed = true
             setConversationId(data.conversation_id)
