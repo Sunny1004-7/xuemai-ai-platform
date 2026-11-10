@@ -254,3 +254,28 @@
   fill: var(--text-muted);
   font-weight: 600;
 }
+
+/* 图谱第三版：画布摄像机保持可读字号，不再把全图压进固定视口。 */
+.graph-workspace .graph-canvas {height: 660px;}
+.graph-workspace .graph-canvas > svg:not(.graph-minimap) {height: 100%; padding: 0;}
+.graph-workspace .node-title {font-size: 16px; font-weight: 600;}
+.graph-workspace .node-value {font-size: 13px;}
+.graph-workspace .network-edge {stroke-width: 1.8;}
+.graph-workspace .graph-toolbar {display:flex; margin-bottom:16px; align-items:center;}
+.graph-workspace .graph-toolbar select {max-width:200px; padding:10px;}
+.graph-workspace .search-field {width:180px; flex:1; min-width:130px;}
+.graph-workspace .graph-minimap {position:absolute; bottom:15px; right:15px; width:150px; height:100px; padding:8px; border:1px solid var(--border); background:var(--surface); border-radius:6px; cursor:crosshair; touch-action:auto;}
+.graph-fullscreen {position:fixed; inset:0; z-index:80; background:var(--surface); padding:20px; display:flex; flex-direction:column; overflow:auto;}
+.graph-fullscreen .graph-layout {flex:1; min-height:0; grid-template-columns:minmax(0,1fr) 320px;}
+.graph-fullscreen .graph-canvas {height:100%; min-height:350px;}
+.graph-fullscreen .node-detail {height:100%; max-height:none;}
+@media(max-width:800px) {
+ .graph-workspace .graph-layout {grid-template-columns:1fr;}
+ .graph-workspace .graph-canvas {height:520px;}
+ .graph-fullscreen {padding:12px;}
+ .graph-fullscreen .graph-layout {overflow:auto;}
+ .graph-fullscreen .graph-canvas {height:65vh;}
+ .graph-fullscreen .node-detail {height:auto;}
+ .graph-workspace .graph-toolbar .segmented {overflow:auto; max-width:100%;}
+ .graph-workspace .graph-minimap {width:110px; height:80px;}
+}

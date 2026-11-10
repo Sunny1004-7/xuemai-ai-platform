@@ -11,6 +11,7 @@
     "test:algorithms": "node scripts/verify-algorithms.mjs"
   },
   "dependencies": {
+    "elkjs": "^0.12.1",
     "katex": "^0.16.22",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",

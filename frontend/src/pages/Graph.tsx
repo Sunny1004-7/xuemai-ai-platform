@@ -4,6 +4,8 @@ import {
   ArrowDown,
   BookOpen,
   Check,
+  Maximize2,
+  Minimize2,
   ChevronRight,
   Edit3,
   FlaskConical,
@@ -17,10 +19,11 @@ import {
   Trash2,
   Video,
 } from 'lucide-react'
-import { layoutKnowledge, relatedKnowledge } from '../graph-layout'
+import { layoutKnowledge, relatedKnowledge, routePath } from '../graph-layout'
+import type { GraphLayout } from '../graph-layout'
 import { api, patch, percent, post, useApi } from '../api'
 import type { Row } from '../api'
-import { Button, Empty, LoadState, Modal, Panel, Pill, Progress, Title, useApp } from '../ui'
+import { Button, Empty, LoadState, Modal, Panel, Progress, Title, useApp } from '../ui'
 
 export function Graph() {
   const { user, courseId, notify } = useApp()
@@ -37,45 +40,63 @@ export function Graph() {
   const [from, setFrom] = useState(0)
   const [to, setTo] = useState(0)
   const [filter, setFilter] = useState('all')
-  const [focusMode, setFocusMode] = useState('all')
-  const [moved, setMoved] = useState<Record<number, { x: number; y: number }>>({})
-  const [hover, setHover] = useState(0)
-  const nodeDrag = useRef<{
-    id: number
-    x: number
-    y: number
-    startX: number
-    startY: number
-  } | null>(null)
-  const wasDragged = useRef(false)
+  const [focusMode, setFocusMode] = useState(params.get('knowledge') ? 'neighbors' : 'chapters')
+  const [chapter, setChapter] = useState(0)
+  const [fullscreen, setFullscreen] = useState(false)
+  const [size, setSize] = useState({width: 800, height: 620})
+  const canvasRef = useRef<HTMLDivElement>(null)
+  const [layout, setLayout] = useState<GraphLayout>({positions: {}, routes: [], width: 800, height: 620})
+  const [layoutBusy, setLayoutBusy] = useState(false)
   const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null)
   const teacher = user.role === 'teacher'
   const nodes: Row[] = graph.data.nodes || []
   const edges: Row[] = graph.data.edges || []
   const current = nodes.find((n) => n.id === selected) || nodes[0]
-  const layout = useMemo(
-    () =>
-      layoutKnowledge(
-        nodes as { id: number; title: string; chapter_id?: number }[],
-        edges as { source: number; target: number }[],
-      ),
-    [nodes, edges],
-  )
-  const positions = { ...layout.positions, ...moved }
-  const visibleIds =
-    focusMode === 'all'
-      ? null
-      : relatedKnowledge(
-          current?.id || 0,
-          edges as { source: number; target: number }[],
-          focusMode === 'ancestors',
-        )
+  const shown = useMemo<{nodes: Row[]; edges: Row[]}>(() => {
+    if (focusMode === 'chapters') {
+      const chapters: Row[] = course.data.chapters || []
+      const chapterNodes = chapters.map(c => ({...c, id: -c.id, count: nodes.filter(n => n.chapter_id === c.id).length}))
+      const pairs = edges.map(e => [nodes.find(n => n.id === e.source)?.chapter_id, nodes.find(n => n.id === e.target)?.chapter_id])
+        .filter(([a,b]) => a && b && a !== b)
+      const unique = [...new Set(pairs.map(([a,b]) => `${a}:${b}`))]
+      return {nodes: chapterNodes, edges: unique.map(pair => {const [a,b] = pair.split(':').map(Number); return {source:-a,target:-b}})}
+    }
+    let ids: Set<number> | null = null
+    if (focusMode === 'chapter') {
+      ids = new Set(nodes.filter(n => (n.chapter_id || 0) === chapter).map(n => n.id))
+      // 外部直接先修作为边界上下文，避免带入全图。
+      edges.forEach(e => {if (nodes.some(n => n.id === e.target && n.chapter_id === chapter)) ids!.add(e.source)})
+    } else if (focusMode !== 'all') ids = relatedKnowledge(current?.id || 0, edges as any, focusMode === 'ancestors')
+    return {nodes: nodes.filter(n => !ids || ids.has(n.id)), edges: edges.filter(e => !ids || ids.has(e.source) && ids.has(e.target))}
+  }, [nodes, edges, course.data.chapters, focusMode, chapter, current?.id])
+  function fitView(next = layout) {
+    const z = Math.max(.55, Math.min(1.2, (size.width-70)/next.width, (size.height-70)/next.height))
+    setZoom(z); setPan({x: (size.width-next.width*z)/2, y: (size.height-next.height*z)/2})
+  }
+  useEffect(() => {
+    let cancelled = false
+    setLayoutBusy(true)
+    layoutKnowledge(shown.nodes as any, shown.edges as any).then(next => {
+      if (!cancelled) {setLayout(next); fitView(next); setLayoutBusy(false)}
+    }).catch(() => {if (!cancelled) {setLayoutBusy(false); notify('图谱布局暂不可用，请重试', true)}})
+    return () => {cancelled = true}
+  }, [shown])
+  useEffect(() => {
+    if (!canvasRef.current) return
+    const observer = new ResizeObserver(([e]) => setSize({width: e.contentRect.width, height: e.contentRect.height}))
+    observer.observe(canvasRef.current)
+    return () => observer.disconnect()
+  }, [])
+  useEffect(() => {
+    const exit = (e: KeyboardEvent) => {if (e.key === 'Escape') setFullscreen(false)}
+    window.addEventListener('keydown', exit)
+    if (fullscreen) document.body.style.overflow = 'hidden'
+    return () => {window.removeEventListener('keydown', exit); document.body.style.overflow = ''}
+  }, [fullscreen])
   useEffect(() => {
     const id = Number(params.get('knowledge'))
     setSelected(nodes.some((n) => n.id === id) ? id : nodes[0]?.id || 0)
-    setMoved({})
     setPan({ x: 0, y: 0 })
-    setZoom(1)
   }, [courseId, graph.data])
   useEffect(() => {
     const id = Number(params.get('knowledge'))
@@ -83,6 +104,7 @@ export function Graph() {
   }, [params, nodes])
   function selectNode(id: number) {
     setSelected(id)
+    setFocusMode('neighbors')
     setParams(
       (previous) => {
         previous.set('knowledge', String(id))
@@ -93,13 +115,8 @@ export function Graph() {
   }
   useEffect(() => {
     if (!search.trim()) return
-    const node = nodes.find((n) => n.title.includes(search.trim()))
-    if (node) {
-      setSelected(node.id)
-      const pos = positions[node.id]
-      setZoom(1.65)
-      setPan({ x: layout.width / 2 - pos.x * 1.65, y: layout.height / 2 - pos.y * 1.65 })
-    }
+    const node = nodes.find(n => n.title.includes(search.trim()))
+    if (node) {setSelected(node.id); setFocusMode('neighbors')}
   }, [search])
   const related = resources.data.filter((r) => r.knowledge_id === current?.id)
   const prerequisites = edges
@@ -181,268 +198,68 @@ export function Graph() {
         }
       />
       <LoadState {...graph} retry={graph.reload} />
+      <div className={`graph-workspace ${fullscreen ? 'graph-fullscreen' : ''}`} role={fullscreen ? 'dialog' : undefined} aria-label={fullscreen ? '全屏知识图谱' : undefined}>
       <div className="graph-toolbar">
-        <div className="segmented">
-          {[
-            ['all', '全部知识'],
-            ['weak', '待巩固'],
-            ['mastered', '已掌握'],
-          ].map(([value, label]) => (
-            <button
-              key={value}
-              className={filter === value ? 'active' : ''}
-              onClick={() => setFilter(value)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
         <div className="segmented network-focus">
-          {[
-            ['all', '全图'],
-            ['neighbors', '邻近知识'],
-            ['ancestors', '先修链'],
-          ].map(([id, label]) => (
-            <button
-              key={id}
-              className={focusMode === id ? 'active' : ''}
-              onClick={() => {
-                setSearch('')
-                setFocusMode(id)
-              }}
-            >
-              {label}
-            </button>
-          ))}
+          { [['chapters','章节总览'], ['all','全图'], ['neighbors','邻近知识'], ['ancestors','先修链']].map(([id,label]) =>
+            <button key={id} className={focusMode === id ? 'active' : ''} onClick={() => {setSearch(''); setFocusMode(id)}}>{label}</button>) }
         </div>
-        <div className="graph-legend">
-          <span>
-            <i className="legend-dot green" />
-            已掌握
-          </span>
-          <span>
-            <i className="legend-dot blue" />
-            学习中
-          </span>
-          <span>
-            <i className="legend-dot amber" />
-            待巩固
-          </span>
-          <span>
-            <i className="legend-dot gray" />
-            未接触
-          </span>
-        </div>
-        <input
-          className="search-field"
-          aria-label="定位知识点"
-          placeholder="查找知识点…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <select aria-label="选择图谱章节" value={focusMode === 'chapter' ? chapter : ''} onChange={e => {setChapter(Number(e.target.value)); setFocusMode('chapter')}}>
+          <option value="" disabled>选择章节</option>
+          {course.data.chapters?.map((c:Row) => <option key={c.id} value={c.id}>{c.title}</option>)}
+        </select>
+        <select aria-label="学习状态筛选" value={filter} onChange={e => setFilter(e.target.value)}>
+          <option value="all">全部状态</option><option value="weak">待巩固</option><option value="mastered">已掌握</option>
+        </select>
+        <input className="search-field" aria-label="定位知识点" placeholder="查找知识点…" value={search} onChange={e => setSearch(e.target.value)} />
+        {fullscreen && teacher ? <Button variant="secondary small" onClick={() => setEdit(current || {})}><Edit3 size={16}/>编辑知识点</Button> : null}
+        <Button variant="secondary" onClick={() => setFullscreen(!fullscreen)}>{fullscreen ? <Minimize2 size={17}/> : <Maximize2 size={17}/>} {fullscreen ? '退出全屏' : '全屏查看'}</Button>
       </div>
       <div className="graph-layout">
-        <div className="graph-canvas">
-          <div className="graph-label">
-            <Network size={17} />
-            <span>{course.data.title || '课程知识网络'}</span>
-            <Pill>{nodes.length} 个知识点</Pill>
-          </div>
-          <svg
-            viewBox={`0 0 ${layout.width} ${layout.height}`}
-            role="img"
-            aria-label="课程知识图谱，点击节点查看详情"
-            onWheel={(e) => setZoom((z) => Math.max(0.5, Math.min(3, z - e.deltaY * 0.001)))}
-            onPointerDown={(e) => {
-              if (e.target === e.currentTarget) {
-                drag.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y }
-                e.currentTarget.setPointerCapture(e.pointerId)
-              }
-            }}
-            onPointerMove={(e) => {
-              if (drag.current) {
-                const rect = e.currentTarget.getBoundingClientRect()
-                setPan({
-                  x:
-                    drag.current.px +
-                    (e.clientX - drag.current.x) /
-                      Math.min(rect.width / layout.width, rect.height / layout.height),
-                  y:
-                    drag.current.py +
-                    (e.clientY - drag.current.y) /
-                      Math.min(rect.width / layout.width, rect.height / layout.height),
-                })
-              }
-            }}
-            onPointerUp={() => {
-              drag.current = null
-            }}
-          >
-            <defs>
-              <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
-                <path d="M0,0L0,6L6,3Z" fill="var(--brand-secondary)" />
-              </marker>
-            </defs>
+        <div className="graph-canvas" ref={canvasRef}>
+          <div className="graph-label"><Network size={16}/><span>{course.data.title}</span><span>{shown.nodes.length} {focusMode === 'chapters' ? '个章节' : '个知识点'}</span>{layoutBusy ? <span>布局中…</span> : null}</div>
+          <svg viewBox={`0 0 ${size.width} ${size.height}`} role="img" aria-label="课程知识图谱，点击节点查看详情"
+            onWheel={e => setZoom(z => Math.max(.4, Math.min(2.5, z-e.deltaY*.001)))}
+            onPointerDown={e => {drag.current={x:e.clientX,y:e.clientY,px:pan.x,py:pan.y}; e.currentTarget.setPointerCapture(e.pointerId)}}
+            onPointerMove={e => {if (drag.current) setPan({x:drag.current.px+e.clientX-drag.current.x,y:drag.current.py+e.clientY-drag.current.y})}}
+            onPointerUp={() => {drag.current=null}} onPointerCancel={() => {drag.current=null}}>
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0L0,8L7,4Z" fill="var(--brand-secondary)"/></marker></defs>
             <g transform={`translate(${pan.x} ${pan.y}) scale(${zoom})`}>
-              {layout.groups.map((group) => (
-                <g key={group.chapter_id} className="knowledge-cluster">
-                  <rect x={group.x} y={group.y} width={group.width} height={group.height} rx="12" />
-                  <text x={group.x + 18} y={group.y + 30}>
-                    {course.data.chapters?.find((c: Row) => c.id === group.chapter_id)?.title ||
-                      '未分组'}
-                  </text>
-                </g>
-              ))}
-              {edges.map((edge, i) => {
-                const a = positions[edge.source],
-                  b = positions[edge.target]
-                if (!a || !b) return null
-                const angle = Math.atan2(b.y - a.y, b.x - a.x)
-                const x1 = a.x + Math.cos(angle) * 47,
-                  y1 = a.y + Math.sin(angle) * 47,
-                  x2 = b.x - Math.cos(angle) * 51,
-                  y2 = b.y - Math.sin(angle) * 51
-                return (
-                  <path
-                    key={edge.id || i}
-                    className={`network-edge ${edge.source === current?.id || edge.target === current?.id ? 'connected' : ''}`}
-                    opacity={
-                      visibleIds && (!visibleIds.has(edge.source) || !visibleIds.has(edge.target))
-                        ? 0.12
-                        : 1
-                    }
-                    d={`M${x1} ${y1}C${(x1 + x2) / 2} ${y1} ${(x1 + x2) / 2} ${y2} ${x2} ${y2}`}
-                    markerEnd="url(#arrow)"
-                  />
-                )
-              })}
-              {nodes.map((n) => {
-                const value = percent(n.mastery),
-                  pos = positions[n.id],
-                  active = current?.id === n.id
-                const tone = value >= 75 ? 'mastered' : value < 40 ? 'weak' : 'learning'
-                const dim =
-                  (search && !n.title.includes(search)) ||
-                  (filter === 'weak' && tone !== 'weak') ||
-                  (filter === 'mastered' && tone !== 'mastered') ||
-                  (visibleIds && !visibleIds.has(n.id))
+              {layout.routes.map((e,i) => <path key={i} className={`network-edge ${e.source === selected || e.target === selected ? 'connected' : ''}`} d={routePath(e.points)} markerEnd="url(#arrow)"/>)}
+              {shown.nodes.map(n => {
+                const pos = layout.positions[n.id]
+                if (!pos) return null
+                const value = percent(n.mastery), isChapter = focusMode === 'chapters'
+                const observed = Number(n.evidence?.effective_count || 0) > 0
+                const tone = !observed ? 'unseen' : value >= 75 ? 'mastered' : value < 40 ? 'weak' : 'learning'
+                const dim = !isChapter && (filter === 'weak' && tone !== 'weak' || filter === 'mastered' && tone !== 'mastered')
                 const lines = String(n.title).match(/.{1,6}/g) || []
-                return (
-                  <g
-                    key={n.id}
-                    transform={`translate(${pos.x} ${pos.y})`}
-                    className={`knowledge-node ${tone} ${active ? 'active' : ''} ${dim ? 'dim' : ''}`}
-                    role="button"
-                    tabIndex={0}
-                    aria-pressed={active}
-                    aria-label={`${n.title}，掌握度 ${value}%`}
-                    onMouseEnter={() => setHover(n.id)}
-                    onMouseLeave={() => setHover(0)}
-                    onClick={() => {
-                      if (!wasDragged.current) selectNode(n.id)
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        selectNode(n.id)
-                      }
-                    }}
-                    onPointerDown={(e) => {
-                      e.stopPropagation()
-                      wasDragged.current = false
-                      nodeDrag.current = {
-                        id: n.id,
-                        x: pos.x,
-                        y: pos.y,
-                        startX: e.clientX,
-                        startY: e.clientY,
-                      }
-                      e.currentTarget.setPointerCapture(e.pointerId)
-                    }}
-                    onPointerMove={(e) => {
-                      if (nodeDrag.current?.id === n.id) {
-                        const svg = e.currentTarget.ownerSVGElement!
-                        const rect = svg.getBoundingClientRect()
-                        const scale =
-                          1 /
-                          Math.min(rect.width / layout.width, rect.height / layout.height) /
-                          zoom
-                        const dx = (e.clientX - nodeDrag.current!.startX) * scale,
-                          dy = (e.clientY - nodeDrag.current!.startY) * scale
-                        if (Math.abs(dx) + Math.abs(dy) > 5) wasDragged.current = true
-                        setMoved((v) => ({
-                          ...v,
-                          [n.id]: { x: nodeDrag.current!.x + dx, y: nodeDrag.current!.y + dy },
-                        }))
-                      }
-                    }}
-                    onPointerUp={() => {
-                      nodeDrag.current = null
-                    }}
-                  >
-                    <circle className="node-body" r="42" />
-                    <circle className="node-ring-track" r="46" />
-                    <circle
-                      className="node-ring"
-                      r="46"
-                      strokeDasharray={`${value * 2.89} 289`}
-                      transform="rotate(-90)"
-                    />
-                    <text textAnchor="middle" className="node-title">
-                      {lines.map((line, i) => (
-                        <tspan x="0" dy={i === 0 ? (lines.length === 1 ? -4 : -12) : 16} key={i}>
-                          {line}
-                        </tspan>
-                      ))}
-                    </text>
-                    <text textAnchor="middle" y="27" className="node-value">
-                      {teacher
-                        ? course.data.chapters
-                            ?.find((c: Row) => c.id === n.chapter_id)
-                            ?.title?.slice(0, 5) || '未分组'
-                        : `${value}%`}
-                    </text>
-                    <title>
-                      {n.title} · {n.description}
-                    </title>
-                  </g>
-                )
+                const choose = () => {if (isChapter) {setChapter(-n.id); setFocusMode('chapter')} else selectNode(n.id)}
+                return <g key={n.id} transform={`translate(${pos.x} ${pos.y})`} className={`knowledge-node ${tone} ${selected === n.id ? 'active' : ''} ${dim ? 'dim' : ''}`}
+                  role="button" tabIndex={0} aria-pressed={selected === n.id} aria-label={isChapter ? `${n.title}，展开章节` : `${n.title}，掌握度 ${observed ? value+'%' : '待学习'}`}
+                  onPointerDown={e => e.stopPropagation()} onClick={choose} onKeyDown={e => {if (e.key === 'Enter' || e.key === ' ') {e.preventDefault(); choose()}}}>
+                  <circle className="node-body" r="54"/><circle className="node-ring-track" r="57"/>
+                  {!isChapter && observed ? <circle className="node-ring" r="57" strokeDasharray={`${value*3.58} 358`} transform="rotate(-90)"/> : null}
+                  <text textAnchor="middle" className="node-title">{lines.map((line,i) => <tspan x="0" dy={i === 0 ? (lines.length === 1 ? -4 : -14) : 20} key={i}>{line}</tspan>)}</text>
+                  <text textAnchor="middle" y="32" className="node-value">{isChapter ? `${n.count} 个知识点` : teacher ? '班级状态' : observed ? `${value}%` : '待学习'}</text>
+                  <title>{n.description || n.title}</title>
+                </g>
               })}
             </g>
           </svg>
-          {hover ? (
-            <div className="node-preview">
-              {nodes.find((n) => n.id === hover)?.title} ·{' '}
-              {percent(nodes.find((n) => n.id === hover)?.mastery)}%
-            </div>
-          ) : null}
           <div className="graph-controls">
-            <Button
-              variant="icon secondary"
-              aria-label="放大图谱"
-              onClick={() => setZoom((z) => Math.min(2, z + 0.15))}
-            >
-              <Plus size={17} />
-            </Button>
-            <span>{Math.round(zoom * 100)}%</span>
-            <Button
-              variant="icon secondary"
-              aria-label="缩小图谱"
-              onClick={() => setZoom((z) => Math.max(0.45, z - 0.15))}
-            >
-              <Minus size={17} />
-            </Button>
-            <Button
-              variant="icon secondary"
-              aria-label="重置图谱视角"
-              onClick={() => {
-                setZoom(1)
-                setPan({ x: 0, y: 0 })
-              }}
-            >
-              <Focus size={17} />
-            </Button>
+            <Button variant="icon secondary" aria-label="放大图谱" onClick={() => setZoom(z => Math.min(2.5,z+.15))}><Plus size={17}/></Button>
+            <span>{Math.round(zoom*100)}%</span>
+            <Button variant="icon secondary" aria-label="缩小图谱" onClick={() => setZoom(z => Math.max(.4,z-.15))}><Minus size={17}/></Button>
+            <Button variant="icon secondary" aria-label="重置图谱视角" onClick={() => fitView()}><Focus size={17}/></Button>
           </div>
+          <svg className="graph-minimap" viewBox={`0 0 ${layout.width} ${layout.height}`} aria-label="图谱小地图" role="button" tabIndex={0}
+            onKeyDown={e => {if (e.key === 'Enter') fitView()}}
+            onClick={e => {const box=e.currentTarget.getBoundingClientRect(); const scale=Math.min(box.width/layout.width,box.height/layout.height); const x=(e.clientX-box.left-(box.width-layout.width*scale)/2)/scale; const y=(e.clientY-box.top-(box.height-layout.height*scale)/2)/scale; setPan({x:size.width/2-x*zoom,y:size.height/2-y*zoom})}}>
+            {layout.routes.map((e,i) => <path key={i} d={routePath(e.points)} stroke="var(--border)" fill="none" strokeWidth="7"/>)}
+            {Object.entries(layout.positions).map(([id,p]) => <circle key={id} cx={p.x} cy={p.y} r="24" fill={Number(id)===selected ? 'var(--accent)' : 'var(--brand-secondary)'}/>)}
+            <rect x={-pan.x/zoom} y={-pan.y/zoom} width={size.width/zoom} height={size.height/zoom} fill="none" stroke="var(--brand-primary)" strokeWidth="6"/>
+          </svg>
         </div>
         <Panel className="node-detail">
           {current ? (
@@ -552,6 +369,7 @@ export function Graph() {
             <Empty>在课程中添加第一个知识点。</Empty>
           )}
         </Panel>
+      </div>
       </div>
       {edit ? (
         <Modal title={edit.id ? '编辑知识点' : '新增知识点'} close={() => setEdit(null)}>

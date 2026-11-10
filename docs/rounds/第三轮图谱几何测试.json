@@ -1,0 +1,23 @@
+[
+  {
+    "nodes": 6,
+    "edges": 6,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 88
+  },
+  {
+    "nodes": 31,
+    "edges": 39,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 88
+  },
+  {
+    "nodes": 80,
+    "edges": 104,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 136
+  }
+]
