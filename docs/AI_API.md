@@ -1,6 +1,6 @@
 # AI 接口与成本控制
 
-所有接口需要 Bearer 会话。默认 `AI_MODE=mock`，后端明确返回 mode；Mock 不是 DeepSeek 实时回答。
+所有接口需要 Bearer 会话。默认 `AI_MODE=auto`，有后端Key时使用real，无Key时使用mock；自动化测试显式设置mock。后端明确返回mode，Mock为固定教学样例。
 
 | 接口 | 输入/输出 |
 |---|---|
@@ -42,3 +42,9 @@ question result 可编辑后保存题库；lesson result 可编辑后保存资�
 
 每次发送前写 data/ai-smoke-ledger.json，累计最多 5 次，每次最多 256 输出 Tokens；异常停止后续调用，不自动重试。账本中的 reserved 表示已计数且未确认完成，不能当作未调用而重置。真实开发联调账本与正式按需使用日志分开。
 运行锁残留说明先前进程中断：先核实没有进程运行，再清理 `.running`；保留 ledger 中既有调用计数。
+
+## 0.3协作编排与独立联调
+
+DIA-GUIDE在done.teaching.collaboration与历史消息中保存诊断、策略、校验和角色轨迹。规则诊断读取已评分证据、先修和上轮反馈，策略代理指导一次模型生成，规则校验检查课程对象、理解检查和引用。检查结果写入teaching_runs，下一轮同知识失败时优先转向实验表征。正式成稿用校验后的content覆盖流式临时文本。
+
+0.3已用scripts/validate_live_ai.py完成4次代表性抽样，覆盖协作辅导、出题、备课和量规评阅，输入3744、输出724 Tokens，零重试。使用独立data/ai-smoke-round3.json，保留原历史账本；若该轮账本已存在，脚本直接停止。开发抽样上限与产品正常教学调用分开，不能将历史3/5理解为产品永久限额。

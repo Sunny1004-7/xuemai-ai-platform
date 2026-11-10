@@ -2,13 +2,13 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前主分支为0.2：宋瓷青绿学生端、茶烟米褐教师端、六主题30节点课程、时间折减证据模型、间隔复习与结构化辅导。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分钟1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[本轮验证](docs/VALIDATION.md)和[改版对照](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版，不替代当前主分支。
+当前主分支为0.3：宋瓷青绿学生端、茶烟米褐教师端、六主题31节点渐进式全屏图谱、28人合成教学班，以及知识追踪、约束路径、协作辅导、动态分层四项方法。可阅读[26页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分钟1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V3.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
 ## 人工审阅一键启动
 
-在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。新启动的后端使用本地Mock。
+在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。默认自动选择AI模式：后端配置有效Key时使用DeepSeek官方接口，无Key时使用Mock。离线检查可运行 `.\scripts\start.ps1 -MockAI`。
 
 审阅地址为 http://127.0.0.1:5173 。账号student1和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
 
@@ -64,7 +64,7 @@ cd xuemai-ai-platform
 
 ## AI 模式与额度
 
-默认 `AI_MODE=mock`，无需密钥即可完整本地回归，界面明确标记本地演示。Mock 是固定教学样例，不冒充真实模型结果。
+默认 `AI_MODE=auto`，后端有Key时使用DeepSeek，无Key时使用Mock；`AI_MODE=mock` 明确覆盖自动模式。辅导功能区显示当前模式。Mock为固定教学样例，普通测试、截图和录制均显式使用Mock。
 
 正式按需使用：把 `.env.example` 中所需变量设置到后端环境，或保留已被忽略的根目录 `deepseek官方api.txt`，然后：
 
@@ -75,7 +75,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。真实烟测为显式单独命令，累计硬上限 5 次、发送前持久记账、异常即停止、单次最多 256 输出 Tokens；不要把烟测加入普通测试。2026-11-03 已完成连通性、流式、JSON 各 1 次，合计 3 次、220 Tokens。账本在被忽略的 `data/ai-smoke-ledger.json`，不可为重新测试而删除。
+常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测账本保留3次、220 Tokens，不重置。本次升级另以独立账本完成辅导、出题、备课、量规评阅4次抽样，输入3744、输出724 Tokens，零重试；已有该轮账本时脚本阻止再次运行。正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
 
 ## 结构与验证
 

@@ -62,3 +62,13 @@
 - 课堂列表的`responses`对学生只返回本人回答，提交后与重新进入页面时均可回看；教师可见课程内全部回答。
 
 辅导结构化动作、理解检查与版本引用详见[AI接口](AI_API.md)。
+
+## 0.3新增输出
+
+- GET /api/learning/insights：当前学生课程内的领域知识、14天趋势、活动与技能表现。
+- GET /api/analytics?course_id=1&class_id=1：可选班级范围，返回热力矩阵、趋势、知识状态分布与CLASS-LOOP动态群组；省略class_id按课程全部班级聚合。
+- GET /api/recommendations：沿用原结构并增加PATH-G当次路径、预算、六项效用与搜索展开量。
+- POST /api/ai/chat：SSE完成事件的teaching.collaboration包含诊断、策略、校验与角色轨迹，最终content使用校验后的引用；每轮最多一次模型调用。
+- POST /api/ai/checks/{id}/answer：理解反馈关联实际作答并持久保存，下一轮同知识辅导读取反馈调整策略。
+
+正式AI模式默认auto，有后端Key时real；自动化测试显式mock。无评分证据的知识返回observed=false，界面显示待观测，不将先验均值作为已掌握比例。
