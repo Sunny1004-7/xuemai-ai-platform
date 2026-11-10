@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/Sunny1004-7/xuemai-ai-platform",
+  "source_commit": "5fb0e96f588d961ddc931d9a701c89b741c87062",
+  "remote_sha_verified": true,
+  "push_transport": "正常Git HTTPS推送，保留既有提交历史",
+  "workflow_url": "https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/42853531361",
+  "workflow_conclusion": "success",
+  "runner": "ubuntu-latest",
+  "backend": {"passed": 121, "warnings": 1, "seconds": 27.40},
+  "browser": {"passed": 14, "seconds": 46.6},
+  "algorithms": {"sort_inputs": 110, "boundaries": 4, "BFS_BST_passed": true},
+  "production_build_passed": true,
+  "secret_scan_passed": true,
+  "real_api_calls": 0
+}

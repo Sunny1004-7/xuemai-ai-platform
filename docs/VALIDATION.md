@@ -4,6 +4,8 @@
 
 本轮本机后端执行 `.venv/Scripts/python.exe -m pytest backend/tests --ignore=backend/tests/test_security.py -q`，结果97 passed、1 warning，36.66秒；该命令未包括独立test_security.py。浏览器 `npx playwright test` 为14 passed、47.6秒。最新截图前TypeScript严格检查与生产构建通过。既往0.2/0.1数字保留在下方，只对应历史版本。
 
+功能和材料基线5fb0e96f588d961ddc931d9a701c89b741c87062正常推送后，远端哈希核对一致。[GitHub Linux Actions 42853531361](https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/42853531361)成功：后端121 passed、1 warning、27.40秒，浏览器14 passed、46.6秒，110组排序、4个边界及BFS/BST验证、生产构建和秘密扫描均通过。最终审阅说明修正为自动AI模式，打包工具14项复核通过（1.81秒），不与前述后端测试数量相加。
+
 图谱6/31/80点三组检查节点碰撞0、连线穿过无关节点0，记录见[图谱几何](rounds/第三轮图谱几何测试.json)。四方法的对照见[机制案例](rounds/第三轮核心方法对照.json)：PATH-G 24例先修/预算违规0，静态排序20个违规步骤；CLASS-LOOP使用28人1846条评分、22种正确率，以5条SELECT生成快照，一次48.32毫秒。K-TRACE和DIA-GUIDE的提示、相关性和失败反馈案例均由对应代码实际计算。
 
 独立官方DeepSeek联调4次全部成功，输入3744、输出724 Tokens，零重试；历史3次220 Tokens保留。常规测试、319张全模块截图及录制真实API调用0。详情见[联调摘要](rounds/第三轮DeepSeek联调.json)。本轮联调账本存在时脚本阻止重复执行。
