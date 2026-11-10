@@ -46,15 +46,19 @@ def init_db():
                 db.execute("INSERT INTO schema_migrations(version) VALUES(?)",(version,))
         if not db.execute("SELECT 1 FROM users LIMIT 1").fetchone():
             seed(db)
+        from .content import upgrade_content
+        upgrade_content(db)
+        from .retrieval import sync_index
+        sync_index(db)
 
 
 def seed(db):
     from .auth import hash_password
     password = hash_password("Xuemai123!")
-    db.executemany("INSERT INTO users(id,username,name,role,password_hash) VALUES(?,?,?,?,?)", [(1,"teacher","林知远","teacher",password),(2,"student1","陈星河","student",password),(3,"student2","许沐晴","student",password)])
+    db.executemany("INSERT INTO users(id,username,name,role,password_hash) VALUES(?,?,?,?,?)", [(1,"teacher","林知远","teacher",password),(2,"student1","陈星河","student",password)])
     db.executemany("INSERT INTO courses(id,title,description,code,color,teacher_id) VALUES(?,?,?,?,?,1)", [(1,"数据结构与算法","从理解结构到设计高效算法，在每次探索中建立自己的知识网络。","CS201","#42685b"),(2,"Python 程序设计","用代码表达想法，从基础语法走向问题求解。","CS101","#6374a4")])
     db.executemany("INSERT INTO classes(id,course_id,name,join_code) VALUES(?,?,?,?)", [(1,1,"计算机科学 2026 级 1 班","XM2026"),(2,2,"Python 探索班","PY2026")])
-    db.executemany("INSERT INTO class_members VALUES(?,?)", [(1,2),(1,3),(2,2),(2,3)])
+    db.executemany("INSERT INTO class_members VALUES(?,?)", [(1,2),(2,2)])
     db.executemany("INSERT INTO chapters(id,course_id,title,position) VALUES(?,?,?,?)", [(1,1,"线性结构",1),(2,1,"树与图",2),(3,1,"排序与查找",3),(4,2,"程序基础",1)])
     nodes=[(1,1,1,"数组与链表","数组通过连续空间实现随机访问，链表通过指针连接节点。",30,140),(2,1,1,"栈与队列","栈后进先出，队列先进先出。栈适合回溯，队列适合广度优先搜索。",250,60),(3,1,1,"递归与分治","递归需要终止条件与递归推进；分治将问题拆成独立子问题。",250,240),(4,1,2,"二叉树","每个节点最多两个孩子；前中后序遍历采用不同访问时机。",470,60),(5,1,2,"图的遍历","BFS使用队列按层探索；DFS使用栈或递归深入探索。",690,100),(6,1,3,"冒泡排序","相邻元素比较交换，每一轮将未排序部分最大元素移动到末尾。",470,270),(7,1,3,"快速排序","选定枢轴后划分区间，递归排序；平均 O(n log n)。",690,290),(8,1,3,"二分查找","有序序列上折半缩小查找区间，时间复杂度 O(log n)。",910,200),(9,2,4,"变量与类型","Python变量绑定对象；整数、字符串和列表具有不同语义。",50,100),(10,2,4,"循环与条件","使用条件与循环组织程序控制流。",300,100)]
     db.executemany("INSERT INTO knowledge_points(id,course_id,chapter_id,title,description,x,y) VALUES(?,?,?,?,?,?,?)",nodes)
@@ -66,13 +70,6 @@ def seed(db):
     qs=[(1,1,2,"single","依次将 1、2、3 入栈后，首先出栈的是？",["1","2","3","无法确定"],"3","栈遵循后进先出，最后进入的 3 最先离开。",1,["想象一摞盘子，最后放上的最先拿走。"],{}),(2,1,2,"multiple","以下哪些场景适合使用栈？",["函数调用","括号匹配","按到达顺序排队","撤销操作"],["函数调用","括号匹配","撤销操作"],"函数调用、括号匹配和撤销都需要后进先出。",2,["寻找最近发生、最先处理的场景。"],{}),(3,1,6,"single","冒泡排序完成第一轮后，哪个元素的位置已经确定？",["最小元素","最大元素","中间元素","所有元素"],"最大元素","相邻比较把最大元素逐次交换到末尾。",1,["追踪当前最大的值如何在每次比较中向右移动。"],{}),(4,1,5,"true_false","无权图中，BFS 可以求出从起点到各点的最少边数。",["正确","错误"],"正确","BFS按层扩展；首次访问时的层数就是最少边数。",2,["思考每一层与起点距离的关系。"],{}),(5,1,8,"fill","二分查找要求待查找序列具有哪种性质？",[],"有序","折半排除区间需要单调有序。",1,["如果两侧大小关系不确定，还能排除一半吗？"],{}),(6,1,7,"short","说明快速排序最坏情况出现的原因，并提出一种改进思路。",[],"连续选到极端枢轴；随机化或三数取中","极端枢轴导致子问题规模不均衡，可随机选枢轴降低概率。",3,["关注划分后两侧区间是否均衡。"],{"criteria":[{"name":"解释不均衡划分","points":50},{"name":"提出随机化或合理枢轴","points":50}],"total":100}),(7,1,4,"single","二叉树中序遍历的访问顺序是？",["根左右","左根右","左右根","右根左"],"左根右","中序：先左子树，再根，最后右子树。",1,["中指的是根节点的访问位置。"],{}),(8,1,1,"single","数组按下标访问元素的时间复杂度为？",["O(1)","O(n)","O(log n)","O(n²)"],"O(1)","连续存储可以用基址和偏移计算地址。",1,["地址可以直接计算，不需要逐个遍历。"],{}),(9,2,9,"single","Python 中 type(3) 的结果对应哪种类型？",["int","str","list","bool"],"int","整数常量3的类型是int。",1,["3没有引号。"],{})]
     db.executemany("INSERT INTO questions(id,course_id,knowledge_id,type,title,options,answer,explanation,difficulty,hints,rubric) VALUES(?,?,?,?,?,?,?,?,?,?,?)", [(a,b,c,d,e,json.dumps(f,ensure_ascii=False),json.dumps(g,ensure_ascii=False),h,i,json.dumps(j,ensure_ascii=False),json.dumps(k,ensure_ascii=False)) for a,b,c,d,e,f,g,h,i,j,k in qs])
     db.execute("INSERT INTO assignments(id,course_id,class_id,teacher_id,title,description,question_ids,student_ids,due_at) VALUES(1,1,1,1,?,?,?,?,?)",("线性结构与排序巩固","完成三道练习，检验对栈和排序过程的理解。", "[1,2,3]","[]","2026-11-18T23:59:00"))
-    for student in (2,3):
-        for node in nodes:
-            value = (.35 if student==2 else .72) + (node[0]%3)*.04
-            db.execute("INSERT INTO mastery(student_id,knowledge_id,value,evidence_count,level) VALUES(?,?,?,?,?)",(student,node[0],value,2,"assisted" if student==2 else "independent"))
-    db.execute("INSERT INTO attempts(student_id,question_id,answer,correct,score,error_type) VALUES(2,1,?,0,0,'概念混淆')",(json.dumps("1"),))
-    db.execute("INSERT INTO mistakes(student_id,question_id,error_type,last_answer) VALUES(2,1,'概念混淆',?)",(json.dumps("1"),))
-    db.execute("INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload) VALUES(2,1,2,'attempt','{\"synthetic\":true,\"correct\":false}')")
     db.execute("INSERT INTO classroom(course_id,title,prompt) VALUES(1,'今天的思考','为什么广度优先搜索需要队列，而不是栈？')")
 
 
