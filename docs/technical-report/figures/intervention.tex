@@ -1,4 +1,4 @@
-\begin{tikzpicture}[node distance=8mm,box/.style={draw=black!45,fill=black!3,minimum width=90mm,minimum height=12mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\begin{tikzpicture}[node distance=8mm,box/.style={draw=celadon!65,fill=pale!55,minimum width=90mm,minimum height=12mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
 \node[box](a){学情分析：定位知识点和学生};\node[box,below=of a](b){查看证据：答案、提示、权重与教师复核};\node[box,below=of b](c){发布任务：保存状态和有效证据基线};\node[box,below=of c](d){学生完成：练习、辅导与复测};\node[box,below=of d](e){结果对照：完成情况、状态变化与新增证据};
 \draw[flow](a)--(b);\draw[flow](b)--(c);\draw[flow](c)--(d);\draw[flow](d)--(e);
 \end{tikzpicture}

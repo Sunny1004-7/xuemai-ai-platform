@@ -1,13 +1,15 @@
 {
-  "pages": 30,
+  "pages": 26,
   "black_text": true,
   "fonts": [
     "CMEX10",
     "CMMI10",
     "CMMI12",
+    "CMMI6",
     "CMMI7",
     "CMMI8",
     "CMR12",
+    "CMR6",
     "CMR8",
     "CMSY10",
     "CMSY8",
@@ -16,8 +18,10 @@
     "TimesNewRomanPSMT"
   ],
   "figures_tikz": 8,
-  "screenshots": 5,
-  "frontend_capture_count": 336,
-  "backend_tests": 116,
-  "browser_tests": 14
+  "screenshots": 10,
+  "screenshot_width": "100%版心，彩色，不设高度缩放",
+  "frontend_capture_count": 319,
+  "backend_tests": 97,
+  "browser_tests": 14,
+  "references": 13
 }

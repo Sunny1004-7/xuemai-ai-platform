@@ -1,5 +1,9 @@
-\begin{tikzpicture}[node distance=10mm and 12mm,box/.style={draw=black!45,fill=black!3,rounded corners=2pt,minimum width=37mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](context){课程上下文\\知识、题目、视频};\node[box,right=of context](model){模型解释与选择\\提示、对照、检查};\node[box,right=of model](map){业务动作映射\\校验类型与对象};
-\node[box,below=of map](do){实际业务执行\\定位、实验、作答};\node[box,left=of do](grade){确定性评分\\或等待教师复核};\node[box,left=of grade](state){状态与下一行动\\成功复测／先修巩固};
-\draw[flow](context)--(model);\draw[flow](model)--(map);\draw[flow](map)--(do);\draw[flow](do)--(grade);\draw[flow](grade)--(state);\draw[flow](state)--(context);
+\begin{tikzpicture}[node distance=8mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2pt,minimum width=43mm,minimum height=15mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick,draw=celadon}]
+\node[box](d){诊断代理（规则）\\状态、错误、先修、反馈};
+\node[box,right=of d,fill=silver](p){策略代理\\表征、工具、一次生成};
+\node[box,right=of p,fill=rice!65](v){校验代理（规则）\\课程对象、动作、引用};
+\node[box,below=of v](a){执行教学动作\\实验、视频、理解检查};
+\node[box,left=of a,fill=silver](f){确定性评分\\理解结果与证据更新};
+\node[box,left=of f,fill=rice!65](s){持久化反馈\\下轮调整教学表征};
+\draw[flow](d)--(p);\draw[flow](p)--(v);\draw[flow](v)--(a);\draw[flow](a)--(f);\draw[flow](f)--(s);\draw[flow](s)--(d);
 \end{tikzpicture}

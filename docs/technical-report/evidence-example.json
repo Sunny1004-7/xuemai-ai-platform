@@ -11,7 +11,8 @@
     "sufficiency": "待补充证据",
     "retention": 1.0,
     "days_since_evidence": 0,
-    "model": "decayed-beta-v2"
+    "observed": false,
+    "model": "K-TRACE-v3"
   },
   {
     "label": "甲：独立答对",
@@ -28,7 +29,10 @@
       "difficulty": 1,
       "hint_count": 0,
       "novelty": 1.0,
-      "gap_days": null
+      "gap_days": null,
+      "peer_count": 0,
+      "correlation": 1.0,
+      "performance": 1.0
     }
   },
   {
@@ -46,7 +50,10 @@
       "difficulty": 2,
       "hint_count": 1,
       "novelty": 1.0,
-      "gap_days": null
+      "gap_days": null,
+      "peer_count": 0,
+      "correlation": 1.0,
+      "performance": 1.0
     }
   },
   {
@@ -64,7 +71,10 @@
       "difficulty": 2,
       "hint_count": 0,
       "novelty": 1.0,
-      "gap_days": null
+      "gap_days": null,
+      "peer_count": 0,
+      "correlation": 1.0,
+      "performance": 0.0
     }
   },
   {
@@ -82,7 +92,10 @@
       "difficulty": 2,
       "hint_count": 0,
       "novelty": 0.35,
-      "gap_days": 0.0
+      "gap_days": 0.0,
+      "peer_count": 0,
+      "correlation": 1.0,
+      "performance": 1.0
     }
   },
   {
@@ -100,7 +113,10 @@
       "difficulty": 2,
       "hint_count": 0,
       "novelty": 0.0,
-      "gap_days": 0.0
+      "gap_days": 0.0,
+      "peer_count": 0,
+      "correlation": 1.0,
+      "performance": 1.0
     }
   },
   {
@@ -115,6 +131,7 @@
     "sufficiency": "证据积累中",
     "retention": 0.5,
     "days_since_evidence": 30.0,
-    "model": "decayed-beta-v2"
+    "observed": true,
+    "model": "K-TRACE-v3"
   }
 ]

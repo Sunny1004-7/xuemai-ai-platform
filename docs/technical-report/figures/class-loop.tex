@@ -1,0 +1,9 @@
+\begin{tikzpicture}[node distance=8mm and 8mm,box/.style={draw=tea!65,fill=rice!55,rounded corners=2pt,minimum width=43mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick,draw=tea}]
+\node[box](a){14天已评分作答\\四类错因与提示、参与};
+\node[box,right=of a,fill=silver](b){六维加权距离\\确定性k-medoids};
+\node[box,right=of b,fill=pale](c){动态教学群组\\主要困难与匹配题};
+\node[box,below=of c](d){教师确认并发布\\保存学生状态基线};
+\node[box,left=of d,fill=pale](e){学生完成与复测\\新证据、完成与得分};
+\node[box,left=of e,fill=silver](f){教师结果对照\\重新计算当前群组};
+\draw[flow](a)--(b);\draw[flow](b)--(c);\draw[flow](c)--(d);\draw[flow](d)--(e);\draw[flow](e)--(f);\draw[flow](f)--(a);
+\end{tikzpicture}

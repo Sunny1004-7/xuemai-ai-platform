@@ -1,5 +1,5 @@
-\begin{tikzpicture}[node distance=10mm,box/.style={draw=black!45,fill=black!3,rounded corners=2pt,minimum width=37mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](raw){作答事件\\难度、提示、时间};\node[box,right=of raw](weight){证据加权\\独立性与重复折减};\node[box,right=of weight](post){状态更新\\$\alpha,\beta,N_{eff}$};
+\begin{tikzpicture}[node distance=10mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2pt,minimum width=37mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](raw){作答事件\\难度、提示、时间};\node[box,right=of raw](weight){证据加权\\独立性与相关性折减};\node[box,right=of weight](post){状态更新\\$\alpha,\beta,N_{eff}$};
 \node[box,below=of weight](time){时间折减\\超出先验部分衰减};\node[box,below=of post](out){学习路径与复习\\同时显示充分度};
 \draw[flow](raw)--(weight);\draw[flow](weight)--(post);\draw[flow](time)--(weight);\draw[flow](post)--(out);
 \end{tikzpicture}

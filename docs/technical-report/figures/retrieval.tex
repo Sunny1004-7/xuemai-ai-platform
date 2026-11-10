@@ -1,4 +1,4 @@
-\begin{tikzpicture}[node distance=10mm and 12mm,box/.style={draw=black!45,fill=black!3,minimum width=38mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\begin{tikzpicture}[node distance=10mm and 12mm,box/.style={draw=celadon!65,fill=pale!55,minimum width=38mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
 \node[box](edit){上传或编辑资源\\保存内容与版本};\node[box,right=of edit](queue){变化队列\\仅标记变化资源};\node[box,right=of queue](index){更新FTS片段\\保留未变更索引};
 \node[box,below=of edit](q){学习问题\\课程、知识上下文};\node[box,right=of q](rank){中文分词与排序\\课程范围内检索};\node[box,right=of rank](cite){版本化资料引用\\标题、片段、来源};
 \draw[flow](edit)--(queue);\draw[flow](queue)--(index);\draw[flow](q)--(rank);\draw[flow](index)--(cite);\draw[flow](rank)--(cite);

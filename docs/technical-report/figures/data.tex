@@ -1,4 +1,4 @@
-\begin{tikzpicture}[node distance=13mm and 8mm,box/.style={draw=black!45,fill=black!3,minimum width=36mm,minimum height=13mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\begin{tikzpicture}[node distance=13mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,minimum width=36mm,minimum height=13mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
 \node[box](course){课程与班级};\node[box,right=of course](knowledge){章节与知识点};\node[box,right=of knowledge](question){资源与习题};
 \node[box,below=of course](task){教学任务\\发布时基线};\node[box,below=of knowledge](attempt){作答与评阅};\node[box,below=of question](evidence){证据更新记录};
 \node[box,below=of attempt](state){知识状态与复习安排};
