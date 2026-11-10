@@ -1,0 +1,176 @@
+{
+  "desktop": { "width": 1440, "height": 1000 },
+  "mobile": { "width": 390, "height": 844 },
+  "modules": [
+    {
+      "id": "login",
+      "role": "public",
+      "label": "登录页",
+      "route": "/",
+      "navigation": false,
+      "details": ["login-error"]
+    },
+    {
+      "id": "dashboard",
+      "role": "student",
+      "label": "学习概览",
+      "route": "/",
+      "navigation": true,
+      "details": []
+    },
+    {
+      "id": "plan",
+      "role": "student",
+      "label": "目标与计划",
+      "route": "/plan",
+      "navigation": true,
+      "details": ["goal-form", "plan-form", "populated"]
+    },
+    {
+      "id": "courses",
+      "role": "student",
+      "label": "我的课程",
+      "route": "/courses",
+      "navigation": true,
+      "details": ["join"]
+    },
+    {
+      "id": "graph",
+      "role": "student",
+      "label": "知识图谱",
+      "route": "/graph?knowledge=6",
+      "navigation": true,
+      "details": ["focused"]
+    },
+    {
+      "id": "practice",
+      "role": "student",
+      "label": "智能练习",
+      "route": "/practice",
+      "navigation": true,
+      "details": [
+        "hint",
+        "incorrect",
+        "correct",
+        "multiple",
+        "true-false",
+        "fill",
+        "short-pending",
+        "step-pending",
+        "assignment"
+      ]
+    },
+    {
+      "id": "tutor",
+      "role": "student",
+      "label": "AI学习伙伴",
+      "route": "/tutor?knowledge=2&question=1",
+      "navigation": true,
+      "details": ["conversation", "history", "service-error"]
+    },
+    {
+      "id": "review",
+      "role": "student",
+      "label": "错题与复习",
+      "route": "/review",
+      "navigation": true,
+      "details": ["correction"]
+    },
+    {
+      "id": "experiments",
+      "role": "student",
+      "label": "交互实验室",
+      "route": "/experiments",
+      "navigation": true,
+      "details": ["sort-running", "stack", "queue", "tree", "bfs"]
+    },
+    {
+      "id": "classroom",
+      "role": "student",
+      "label": "课堂互动",
+      "route": "/classroom",
+      "navigation": true,
+      "details": ["submitted"]
+    },
+    {
+      "id": "video",
+      "role": "student",
+      "label": "课程视频",
+      "route": "/video?resource=100&t=10",
+      "navigation": false,
+      "details": ["subtitle-search", "notes", "checkpoint"]
+    },
+    {
+      "id": "resources",
+      "role": "student",
+      "label": "课程资料",
+      "route": "/resources",
+      "navigation": false,
+      "details": ["document"]
+    },
+    {
+      "id": "dashboard",
+      "role": "teacher",
+      "label": "教学工作台",
+      "route": "/",
+      "navigation": true,
+      "details": []
+    },
+    {
+      "id": "manage",
+      "role": "teacher",
+      "label": "课程与班级",
+      "route": "/manage",
+      "navigation": true,
+      "details": ["course-form", "course-edit", "chapter-form", "class-form", "member-form"]
+    },
+    {
+      "id": "graph",
+      "role": "teacher",
+      "label": "图谱编辑器",
+      "route": "/graph?knowledge=6",
+      "navigation": true,
+      "details": ["node-form", "node-edit", "prerequisites"]
+    },
+    {
+      "id": "resources",
+      "role": "teacher",
+      "label": "AI备课与资料",
+      "route": "/resources",
+      "navigation": true,
+      "details": ["upload", "resource-edit", "lesson-intent", "lesson-draft", "document"]
+    },
+    {
+      "id": "practice",
+      "role": "teacher",
+      "label": "题库与作业",
+      "route": "/practice",
+      "navigation": true,
+      "details": ["question-edit", "question-copy", "assignment-form", "assignment-results"]
+    },
+    {
+      "id": "video",
+      "role": "teacher",
+      "label": "视频教学",
+      "route": "/video?resource=100",
+      "navigation": true,
+      "details": ["timeline-editor"]
+    },
+    {
+      "id": "analytics",
+      "role": "teacher",
+      "label": "学情与分层",
+      "route": "/analytics",
+      "navigation": true,
+      "details": ["targeted-task", "subjective-review", "rubric-advice"]
+    },
+    {
+      "id": "classroom",
+      "role": "teacher",
+      "label": "课堂互动",
+      "route": "/classroom",
+      "navigation": true,
+      "details": ["activity-form", "responses"]
+    }
+  ]
+}
