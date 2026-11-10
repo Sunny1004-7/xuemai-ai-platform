@@ -161,7 +161,7 @@ def teacher_review(attempt_id:int,body:TeacherReviewBody,user=Depends(teacher_us
         db.execute("UPDATE attempts SET score=?,correct=?,review_status='teacher_reviewed',feedback=?,error_type=? WHERE id=?",(body.score,int(correct),body.feedback,"" if correct else "论证不充分",attempt_id))
         question=db.execute("SELECT * FROM questions WHERE id=?",(row['question_id'],)).fetchone()
         previous=db.execute("SELECT correct,created_at FROM attempts WHERE student_id=? AND question_id=? AND id<>? AND correct IS NOT NULL ORDER BY id DESC LIMIT 1",(row['student_id'],row['question_id'],attempt_id)).fetchone()
-        update,schedule=apply_evidence(db,row['student_id'],question,attempt_id,correct,row['hints_used'],previous)
+        update,schedule=apply_evidence(db,row['student_id'],question,attempt_id,correct,row['hints_used'],previous,score=body.score)
         value=update['value']
         if not correct:
             db.execute("INSERT INTO mistakes(student_id,question_id,error_type,last_answer) VALUES(?,?,'论证不充分',?) ON CONFLICT(student_id,question_id) DO UPDATE SET wrong_count=wrong_count+1,corrected=0,error_type='论证不充分',last_answer=excluded.last_answer",(row["student_id"],row["question_id"],row["answer"]))

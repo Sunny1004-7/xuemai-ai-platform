@@ -39,24 +39,27 @@ def estimate_state(row=None, now=None):
     return {'value': value, 'alpha': alpha, 'beta': beta, 'effective_count': count,
             'lower': max(0, value - 1.96 * deviation), 'upper': min(1, value + 1.96 * deviation),
             'sufficiency': '证据较充分' if count >= 6 else '证据积累中' if count >= 2 else '待补充证据',
-            'retention': retention, 'days_since_evidence': round(days, 2), 'model': 'decayed-beta-v2'}
+            'retention': retention, 'days_since_evidence': round(days, 2), 'observed': count > 0, 'model': 'K-TRACE-v3'}
 
 
-def update_state(state, correct, difficulty, hints, previous=None, now=None):
+def update_state(state, correct, difficulty, hints, previous=None, now=None, peer_count=0, score=None):
     now = now or utc_now()
     gap = (now - parse_time(previous['created_at'])).total_seconds() / 86400 if previous else None
     novelty = 1.0
     if previous and gap < 1:
         novelty = 0.0 if correct and previous['correct'] else .35
-    weight = (1.0, 1.4, 1.8)[difficulty - 1] * novelty
-    quality = 1 / (1 + hints) if correct else 0.0
+    correlation = 1 / math.sqrt(1 + .4 * max(0, peer_count))
+    weight = (1.0, 1.4, 1.8)[max(1, min(3, difficulty)) - 1] * novelty * correlation
+    performance = max(0, min(1, score / 100)) if score is not None else float(bool(correct))
+    quality = performance / (1 + max(0, hints))
     alpha = state['alpha'] + weight * quality
     beta = state['beta'] + weight * (1 - quality)
     return {'alpha': alpha, 'beta': beta, 'value': alpha / (alpha + beta),
             'effective_count': state['effective_count'] + weight, 'weight': weight, 'quality': quality,
             'parameters': {'prior_alpha': PRIOR_ALPHA, 'prior_beta': PRIOR_BETA,
                            'half_life_days': HALF_LIFE_DAYS, 'difficulty': difficulty,
-                           'hint_count': hints, 'novelty': novelty, 'gap_days': gap}}
+                           'hint_count': hints, 'novelty': novelty, 'gap_days': gap,
+                           'peer_count': peer_count, 'correlation': correlation, 'performance': performance}}
 
 
 def schedule_review(previous, correct, hints, repeated, now=None):
@@ -80,23 +83,29 @@ def knowledge_state(db, student_id, knowledge_id, now=None):
     return estimate_state(row, now)
 
 
-def apply_evidence(db, user_id, question, attempt_id, correct, hints, previous=None):
-    state = knowledge_state(db, user_id, question['knowledge_id'])
-    update = update_state(state, correct, question['difficulty'], hints, previous)
+def apply_evidence(db, user_id, question, attempt_id, correct, hints, previous=None, now=None, score=None):
+    now = now or utc_now()
+    state = knowledge_state(db, user_id, question['knowledge_id'], now)
+    # 同一技能的密集变式相关性折减；同题重复另由novelty控制。
+    peers = db.execute("""SELECT COUNT(*) FROM attempts a JOIN questions q ON q.id=a.question_id
+        WHERE a.student_id=? AND q.knowledge_id=? AND q.skill=? AND a.question_id<>?
+        AND a.correct IS NOT NULL AND julianday(a.created_at) BETWEEN julianday(?) - 1 AND julianday(?)""",
+        (user_id,question['knowledge_id'],question['skill'],question['id'],now.isoformat(),now.isoformat())).fetchone()[0]
+    update = update_state(state, correct, question['difficulty'], hints, previous, now, peers, score)
     level = 'transfer' if correct and not hints and question['difficulty'] == 3 else 'independent' if correct and not hints else 'assisted' if correct else 'developing'
     # 零权重重复成功不刷新时钟，避免借重复作答阻止时间折减。
     if update['weight'] > 0:
-        db.execute('''INSERT INTO mastery(student_id,knowledge_id,value,evidence_count,level,alpha,beta,effective_count)
-                  VALUES(?,?,?,1,?,?,?,?) ON CONFLICT(student_id,knowledge_id) DO UPDATE SET
+        db.execute('''INSERT INTO mastery(student_id,knowledge_id,value,evidence_count,level,alpha,beta,effective_count,updated_at)
+                  VALUES(?,?,?,1,?,?,?,?,?) ON CONFLICT(student_id,knowledge_id) DO UPDATE SET
                   value=excluded.value,evidence_count=mastery.evidence_count+1,level=excluded.level,
-                  alpha=excluded.alpha,beta=excluded.beta,effective_count=excluded.effective_count,updated_at=CURRENT_TIMESTAMP''',
-                   (user_id, question['knowledge_id'], update['value'], level, update['alpha'], update['beta'], update['effective_count']))
-    details = {'model': 'decayed-beta-v2', **update['parameters'], 'correct': bool(correct),
+                  alpha=excluded.alpha,beta=excluded.beta,effective_count=excluded.effective_count,updated_at=excluded.updated_at''',
+                   (user_id, question['knowledge_id'], update['value'], level, update['alpha'], update['beta'], update['effective_count'], now.isoformat()))
+    details = {'model': 'K-TRACE-v3', 'skill': question['skill'], **update['parameters'], 'correct': bool(correct),
                'level': level, 'source': 'teacher_review' if question['type'] in ('short', 'step') else 'automatic'}
-    db.execute('''INSERT INTO evidence_updates(attempt_id,student_id,knowledge_id,before_value,after_value,weight,quality,details)
-                  VALUES(?,?,?,?,?,?,?,?)''', (attempt_id, user_id, question['knowledge_id'], state['value'], update['value'], update['weight'], update['quality'], json.dumps(details, ensure_ascii=False)))
+    db.execute('''INSERT INTO evidence_updates(attempt_id,student_id,knowledge_id,before_value,after_value,weight,quality,details,created_at)
+                  VALUES(?,?,?,?,?,?,?,?,?)''', (attempt_id, user_id, question['knowledge_id'], state['value'], update['value'], update['weight'], update['quality'], json.dumps(details, ensure_ascii=False), now.isoformat()))
     previous_schedule = db.execute('SELECT * FROM review_schedule WHERE student_id=? AND question_id=?', (user_id, question['id'])).fetchone()
-    schedule = schedule_review(previous_schedule, correct, hints, update['weight'] == 0)
+    schedule = schedule_review(previous_schedule, correct, hints, update['weight'] == 0, now)
     db.execute('''INSERT INTO review_schedule(student_id,question_id,interval_days,ease,repetitions,last_quality,next_due,updated_at)
                   VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(student_id,question_id) DO UPDATE SET
                   interval_days=excluded.interval_days,ease=excluded.ease,repetitions=excluded.repetitions,
