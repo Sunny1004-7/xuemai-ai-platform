@@ -21,17 +21,18 @@ def course_detail(course_id:int,user=Depends(current_user)):
 def graph(course_id:int,user=Depends(current_user)):
     with get_db() as db:
         require_course(db,user,course_id)
+        from .evidence import estimate_state
+        members=[m[0] for m in db.execute('SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1',(course_id,))] if user['role']=='teacher' else [user['id']]
+        stored={(r['student_id'],r['knowledge_id']):r for r in db.execute('SELECT m.* FROM mastery m JOIN knowledge_points k ON k.id=m.knowledge_id WHERE k.course_id=?',(course_id,)) if r['student_id'] in members}
+        counts=dict(db.execute('SELECT knowledge_id,COUNT(*) FROM resources WHERE course_id=? GROUP BY knowledge_id',(course_id,)))
         nodes=[]
-        for r in db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)):
-            item=json_fields(r,["objectives"])
-            val=mastery_value(db,user["id"],r["id"])
-            state=knowledge_state(db,user['id'],r['id'])
-            if user['role']=='teacher':
-                members=[m[0] for m in db.execute('SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1',(course_id,))]
-                states=[knowledge_state(db,sid,r['id']) for sid in members]
-                val=sum(s['value'] for s in states)/len(states) if states else .25
-                state={'value':val,'effective_count':sum(s['effective_count'] for s in states)/len(states) if states else 0,'sufficiency':'班级平均证据','student_count':len(states)}
-            item.update(evidence=state,mastery=round(val*100),status="mastered" if val>=.75 else "developing" if val>=.5 else "weak",resource_count=db.execute("SELECT COUNT(*) FROM resources WHERE knowledge_id=?",(r["id"],)).fetchone()[0])
+        for r in db.execute('SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id',(course_id,)):
+            item=json_fields(r,['objectives'])
+            states=[estimate_state(stored.get((sid,r['id']))) for sid in members]
+            observed=[st for st in states if st['observed']]
+            val=sum(st['value'] for st in observed)/len(observed) if observed else .25
+            state=states[0] if user['role']=='student' else {'value':val,'observed':bool(observed),'effective_count':sum(st['effective_count'] for st in observed)/len(observed) if observed else 0,'sufficiency':'班级已观测知识','student_count':len(states),'observed_count':len(observed)}
+            item.update(evidence=state,mastery=round(val*100),status='unseen' if not observed else 'mastered' if val>=.75 else 'developing' if val>=.5 else 'weak',resource_count=counts.get(r['id'],0))
             nodes.append(item)
         return {"nodes":nodes,"edges":[dict(r) for r in db.execute("SELECT * FROM knowledge_edges WHERE course_id=?",(course_id,))]}
 

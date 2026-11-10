@@ -48,6 +48,8 @@ def init_db():
             seed(db)
         from .content import upgrade_content
         upgrade_content(db)
+        from .demo_cohort import seed_cohort
+        seed_cohort(db)
         from .retrieval import sync_index
         sync_index(db)
 

@@ -97,28 +97,31 @@ def remove_member(class_id:int,student_id:int,user=Depends(teacher_user)):
         return {"ok":True}
 
 
-def analytics_data(db,user,course_id):
+def analytics_data(db,user,course_id,class_id=None):
     require_teacher_course(db,user,course_id)
-    students=[]
-    members=db.execute("SELECT DISTINCT u.id,u.name FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1 ORDER BY u.id",(course_id,)).fetchall()
-    for member in members:
-        row=db.execute("SELECT COUNT(*) total,AVG(a.correct)*100 accuracy FROM attempts a JOIN questions q ON q.id=a.question_id WHERE a.student_id=? AND q.course_id=? AND a.correct IS NOT NULL",(member["id"],course_id)).fetchone()
-        states=[knowledge_state(db,member['id'],r[0]) for r in db.execute("SELECT id FROM knowledge_points WHERE course_id=?",(course_id,))]
-        val=sum(st['value'] for st in states)/len(states) if states else .25
-        students.append(dict(member)|{"mastery":round(val*100),"attempts":row["total"],"accuracy":round(row["accuracy"] or 0),"evidence_sufficiency":sum(st['effective_count']>=2 for st in states)})
-    knowledge=[]
-    for node in db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)):
-        values=[(s,mastery_value(db,s["id"],node["id"])) for s in students]
-        knowledge.append({"id":node["id"],"title":node["title"],"average_mastery":round(sum(v for s,v in values)/len(values)*100) if values else 0,"weak_students":[{"id":s["id"],"name":s["name"],"mastery":round(v*100),"evidence":knowledge_state(db,s["id"],node["id"])} for s,v in values if v<.5]})
-    count=db.execute("SELECT COUNT(*) total,AVG(a.correct)*100 accuracy FROM attempts a JOIN questions q ON q.id=a.question_id WHERE q.course_id=? AND a.correct IS NOT NULL",(course_id,)).fetchone()
-    errors=[{"name":r[0],"value":r[1]} for r in db.execute("SELECT a.error_type,COUNT(*) FROM attempts a JOIN questions q ON q.id=a.question_id WHERE q.course_id=? AND a.correct=0 GROUP BY a.error_type",(course_id,))]
-    tasks=[assignment_item(db,user,r) for r in db.execute("SELECT * FROM assignments WHERE course_id=? ORDER BY id DESC",(course_id,))]
-    return {"summary":{"student_count":len(students),"average_mastery":round(sum(s["mastery"] for s in students)/len(students)) if students else 0,"attempt_count":count["total"],"accuracy":round(count["accuracy"] or 0)},"knowledge":knowledge,"students":students,"error_distribution":errors,"assignments":tasks}
+    from .learning_insights import learning_snapshot, dynamic_groups
+    if class_id is not None and not db.execute('SELECT 1 FROM classes WHERE id=? AND course_id=?',(class_id,course_id)).fetchone():
+        raise HTTPException(422,'班级不属于当前课程')
+    members=[r[0] for r in db.execute('SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1 AND (? IS NULL OR c.id=?)',(course_id,class_id,class_id))]
+    result=learning_snapshot(db,course_id,members)
+    questions=[dict(r) for r in db.execute("SELECT * FROM questions WHERE course_id=? AND status='approved' AND type NOT IN ('short','step')",(course_id,))]
+    result['groups']=dynamic_groups(result['students'],questions)
+    result['assignments']=[assignment_item(db,user,r) for r in db.execute("SELECT * FROM assignments WHERE course_id=? AND (? IS NULL OR class_id=? OR class_id IS NULL) ORDER BY id DESC",(course_id,class_id,class_id))]
+    return result
 
 
-@router.get("/analytics")
-def analytics(course_id:int=1,user=Depends(teacher_user)):
-    with get_db() as db:return analytics_data(db,user,course_id)
+@router.get('/analytics')
+def analytics(course_id:int=1,class_id:int|None=None,user=Depends(teacher_user)):
+    with get_db() as db:return analytics_data(db,user,course_id,class_id)
+
+
+@router.get('/learning/insights')
+def personal_insights(course_id:int=1,user=Depends(current_user)):
+    if user['role']!='student':raise HTTPException(403,'请查看班级学情')
+    from .learning_insights import learning_snapshot
+    with get_db() as db:
+        require_course(db,user,course_id)
+        return learning_snapshot(db,course_id,[user['id']])
 
 
 @router.get("/dashboard")

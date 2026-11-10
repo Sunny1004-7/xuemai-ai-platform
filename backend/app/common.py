@@ -7,7 +7,7 @@ from pydantic import BaseModel,Field
 from .db import get_db,json_fields
 from .auth import current_user,teacher_user,require_course,require_teacher_course
 from .learning import mastery_value,recommendations,record_attempt
-from .evidence import knowledge_state,apply_evidence,diagnose_error
+from .evidence import knowledge_state,apply_evidence,diagnose_error,estimate_state
 
 
 
@@ -19,7 +19,8 @@ def course_rows(db,user):
         item=dict(row)
         nodes=[r[0] for r in db.execute("SELECT id FROM knowledge_points WHERE course_id=?",(row["id"],))]
         students=[r[0] for r in db.execute("SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes cl ON cl.id=m.class_id WHERE cl.course_id=? AND u.active=1",(row["id"],))] if user["role"]=="teacher" else [user["id"]]
-        values=[mastery_value(db,sid,kid) for sid in students for kid in nodes]
+        stored=[r for r in db.execute('SELECT m.* FROM mastery m JOIN knowledge_points k ON k.id=m.knowledge_id WHERE k.course_id=?',(row['id'],)) if r['student_id'] in students]
+        values=[st['value'] for r in stored if (st:=estimate_state(r))['observed']]
         item["progress"]=round(sum(values)/len(values)*100) if values else 0
         result.append(item)
     return result
@@ -61,13 +62,13 @@ def assignment_item(db,user,row):
 
 
 
-def save_assignment_baselines(db, assignment_id):
+def save_assignment_baselines(db, assignment_id, now=None):
     row=db.execute("SELECT * FROM assignments WHERE id=?",(assignment_id,)).fetchone()
     kids=[r[0] for r in db.execute("SELECT DISTINCT knowledge_id FROM questions WHERE id IN (SELECT value FROM json_each(?))",(row['question_ids'],))]
     for student in db.execute("SELECT DISTINCT u.id FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1",(row['course_id'],)):
         if not assignment_visible(db,dict(student)|{'role':'student'},row):continue
         for kid in kids:
-            state=knowledge_state(db,student['id'],kid)
+            state=knowledge_state(db,student['id'],kid,now)
             db.execute("INSERT OR IGNORE INTO assignment_baselines VALUES(?,?,?,?,?)",(assignment_id,student['id'],kid,state['value'],state['effective_count']))
 
 
