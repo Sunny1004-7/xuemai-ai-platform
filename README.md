@@ -6,6 +6,22 @@
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
+## 人工审阅一键启动
+
+在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。新启动的后端使用本地Mock。
+
+审阅地址为 http://127.0.0.1:5173 。账号student1、student2和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
+
+## 每轮完整审阅包
+
+每轮修改完成后，在根目录“交付审阅包”生成 `学脉XueMai_完整审阅包_年月日_时分秒.zip`，时间采用北京时间。每包收录当前源码、文档、现有视频、官方手册、本轮修改记录及补丁，并生成“审阅包说明.md”和带SHA256的“审阅清单.json”。文档与视频各自的文件修改时间保留在清单中。
+
+```powershell
+.venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/2026-11-10-一键启动与完整审阅包.md --base-ref aeb6e73
+```
+
+每轮使用对应修改记录和起始Git提交。打包规则过滤凭据、依赖、运行数据、缓存、历史压缩包及既往审阅包，完成ZIP和逐文件摘要校验后才生成可交付的ZIP。后续工程执行约定见AGENTS.md。
+
 ## 本机 10 分钟复现路径
 
 Windows浏览器自动验收使用已安装的Google Chrome；Linux持续集成使用Playwright Chromium。
