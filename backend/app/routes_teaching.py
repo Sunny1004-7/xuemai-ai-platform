@@ -17,7 +17,7 @@ def classes(course_id:int|None=None,user=Depends(current_user)):
             if row["course_id"] not in allowed:continue
             if user["role"]=="student" and not db.execute("SELECT 1 FROM class_members WHERE class_id=? AND student_id=?",(row["id"],user["id"])).fetchone():continue
             item=dict(row)
-            item["students"]=[dict(s) for s in db.execute("SELECT u.id,u.name,u.username FROM class_members m JOIN users u ON u.id=m.student_id WHERE m.class_id=?",(row["id"],))] if user["role"]=="teacher" else []
+            item["students"]=[dict(s) for s in db.execute("SELECT u.id,u.name,u.username FROM class_members m JOIN users u ON u.id=m.student_id WHERE m.class_id=? AND u.active=1",(row["id"],))] if user["role"]=="teacher" else []
             if user["role"]!="teacher":item.pop("join_code",None)
             result.append(item)
         return result
@@ -56,7 +56,7 @@ def add_member(class_id:int,body:MemberBody,user=Depends(teacher_user)):
         row=db.execute("SELECT * FROM classes WHERE id=?",(class_id,)).fetchone()
         if not row:raise HTTPException(404,"班级不存在")
         require_teacher_course(db,user,row["course_id"])
-        if not db.execute("SELECT 1 FROM users WHERE id=? AND role='student'",(body.student_id,)).fetchone():raise HTTPException(422,"学生不存在")
+        if not db.execute("SELECT 1 FROM users WHERE id=? AND role='student' AND active=1",(body.student_id,)).fetchone():raise HTTPException(422,"学生不存在")
         db.execute("INSERT OR IGNORE INTO class_members VALUES(?,?)",(class_id,body.student_id))
         return {"ok":True}
 
@@ -100,15 +100,16 @@ def remove_member(class_id:int,student_id:int,user=Depends(teacher_user)):
 def analytics_data(db,user,course_id):
     require_teacher_course(db,user,course_id)
     students=[]
-    members=db.execute("SELECT DISTINCT u.id,u.name FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? ORDER BY u.id",(course_id,)).fetchall()
+    members=db.execute("SELECT DISTINCT u.id,u.name FROM users u JOIN class_members m ON m.student_id=u.id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1 ORDER BY u.id",(course_id,)).fetchall()
     for member in members:
         row=db.execute("SELECT COUNT(*) total,AVG(a.correct)*100 accuracy FROM attempts a JOIN questions q ON q.id=a.question_id WHERE a.student_id=? AND q.course_id=? AND a.correct IS NOT NULL",(member["id"],course_id)).fetchone()
-        val=db.execute("SELECT AVG(COALESCE(m.value,.2)) FROM knowledge_points k LEFT JOIN mastery m ON m.knowledge_id=k.id AND m.student_id=? WHERE k.course_id=?",(member["id"],course_id)).fetchone()[0]
-        students.append(dict(member)|{"mastery":round((val or .2)*100),"attempts":row["total"],"accuracy":round(row["accuracy"] or 0)})
+        states=[knowledge_state(db,member['id'],r[0]) for r in db.execute("SELECT id FROM knowledge_points WHERE course_id=?",(course_id,))]
+        val=sum(st['value'] for st in states)/len(states) if states else .25
+        students.append(dict(member)|{"mastery":round(val*100),"attempts":row["total"],"accuracy":round(row["accuracy"] or 0),"evidence_sufficiency":sum(st['effective_count']>=2 for st in states)})
     knowledge=[]
     for node in db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)):
         values=[(s,mastery_value(db,s["id"],node["id"])) for s in students]
-        knowledge.append({"id":node["id"],"title":node["title"],"average_mastery":round(sum(v for s,v in values)/len(values)*100) if values else 0,"weak_students":[{"id":s["id"],"name":s["name"],"mastery":round(v*100)} for s,v in values if v<.5]})
+        knowledge.append({"id":node["id"],"title":node["title"],"average_mastery":round(sum(v for s,v in values)/len(values)*100) if values else 0,"weak_students":[{"id":s["id"],"name":s["name"],"mastery":round(v*100),"evidence":knowledge_state(db,s["id"],node["id"])} for s,v in values if v<.5]})
     count=db.execute("SELECT COUNT(*) total,AVG(a.correct)*100 accuracy FROM attempts a JOIN questions q ON q.id=a.question_id WHERE q.course_id=? AND a.correct IS NOT NULL",(course_id,)).fetchone()
     errors=[{"name":r[0],"value":r[1]} for r in db.execute("SELECT a.error_type,COUNT(*) FROM attempts a JOIN questions q ON q.id=a.question_id WHERE q.course_id=? AND a.correct=0 GROUP BY a.error_type",(course_id,))]
     tasks=[assignment_item(db,user,r) for r in db.execute("SELECT * FROM assignments WHERE course_id=? ORDER BY id DESC",(course_id,))]
@@ -139,7 +140,7 @@ def dashboard(user=Depends(current_user)):
         stats={"courses":len(courses),"study_minutes":round(minutes),"completed_tasks":sum(bool(t["completed"]) for t in tasks),"streak":len(activity),"mastery":round(sum(c["progress"] for c in courses)/len(courses)) if courses else 0,"students":0,"assignments":len(tasks)}
         recs=[]
         if user["role"]=="teacher":
-            stats["students"]=db.execute("SELECT COUNT(DISTINCT m.student_id) FROM class_members m JOIN classes cl ON cl.id=m.class_id JOIN courses c ON c.id=cl.course_id WHERE c.teacher_id=?",(user["id"],)).fetchone()[0]
+            stats["students"]=db.execute("SELECT COUNT(DISTINCT m.student_id) FROM class_members m JOIN users u ON u.id=m.student_id AND u.active=1 JOIN classes cl ON cl.id=m.class_id JOIN courses c ON c.id=cl.course_id WHERE c.teacher_id=?",(user["id"],)).fetchone()[0]
             stats["mastery"]=round(sum(c["progress"] for c in courses)/len(courses)) if courses else 0
         else:
             for course in courses:recs.extend(recommendations(db,user,course["id"]))
@@ -204,3 +205,14 @@ def close_classroom(activity_id:int,body:ClassroomEdit,user=Depends(teacher_user
         require_teacher_course(db,user,row["course_id"])
         db.execute("UPDATE classroom SET active=? WHERE id=?",(int(body.active),activity_id))
         return {"ok":True,"active":body.active}
+
+
+@router.get('/analytics/evidence')
+def student_evidence(course_id:int,student_id:int,knowledge_id:int,user=Depends(teacher_user)):
+    with get_db() as db:
+        require_teacher_course(db,user,course_id)
+        check_knowledge(db,course_id,knowledge_id)
+        member=db.execute("SELECT 1 FROM class_members m JOIN classes c ON c.id=m.class_id JOIN users u ON u.id=m.student_id WHERE m.student_id=? AND c.course_id=? AND u.active=1",(student_id,course_id)).fetchone()
+        if not member:raise HTTPException(404,'学生不在本课程')
+        rows=db.execute("SELECT e.*,q.title,a.answer,a.hints_used,a.review_status FROM evidence_updates e JOIN attempts a ON a.id=e.attempt_id JOIN questions q ON q.id=a.question_id WHERE e.student_id=? AND e.knowledge_id=? ORDER BY e.id DESC LIMIT 50",(student_id,knowledge_id))
+        return {'state':knowledge_state(db,student_id,knowledge_id),'updates':[json_fields(r,['details','answer']) for r in rows]}

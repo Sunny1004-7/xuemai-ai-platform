@@ -25,7 +25,7 @@ def graph(course_id:int,user=Depends(current_user)):
         for r in db.execute("SELECT * FROM knowledge_points WHERE course_id=? ORDER BY id",(course_id,)):
             item=json_fields(r,["objectives"])
             val=mastery_value(db,user["id"],r["id"])
-            item.update(mastery=round(val*100),status="mastered" if val>=.75 else "developing" if val>=.5 else "weak",resource_count=db.execute("SELECT COUNT(*) FROM resources WHERE knowledge_id=?",(r["id"],)).fetchone()[0])
+            item.update(evidence=knowledge_state(db,user["id"],r["id"]),mastery=round(val*100),status="mastered" if val>=.75 else "developing" if val>=.5 else "weak",resource_count=db.execute("SELECT COUNT(*) FROM resources WHERE knowledge_id=?",(r["id"],)).fetchone()[0])
             nodes.append(item)
         return {"nodes":nodes,"edges":[dict(r) for r in db.execute("SELECT * FROM knowledge_edges WHERE course_id=?",(course_id,))]}
 

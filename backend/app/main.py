@@ -17,7 +17,7 @@ async def lifespan(app):
     yield
 
 
-app=FastAPI(title="学脉 XueMai API",version="0.1.0",lifespan=lifespan)
+app=FastAPI(title="学脉 XueMai API",version="0.2.0",lifespan=lifespan)
 app.add_middleware(CORSMiddleware,allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],allow_methods=["*"],allow_headers=["Authorization","Content-Type"])
 media=Path(__file__).resolve().parents[1]/"media"
 media.mkdir(exist_ok=True)
@@ -37,7 +37,7 @@ def health():
 @app.post("/api/auth/login")
 def login(body:Login):
     with get_db() as db:
-        user=db.execute("SELECT * FROM users WHERE username=?",(body.username,)).fetchone()
+        user=db.execute("SELECT * FROM users WHERE username=? AND active=1",(body.username,)).fetchone()
         if not user or not verify_password(body.password,user["password_hash"]):
             raise HTTPException(401,"账号或密码不正确")
         token=secrets.token_urlsafe(32)

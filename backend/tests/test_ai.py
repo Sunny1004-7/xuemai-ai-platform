@@ -26,6 +26,10 @@ def offline(monkeypatch, tmp_path):
 @pytest.fixture
 def client():
     init_db()
+    from backend.app.auth import hash_password
+    with get_db() as db:
+        db.execute("INSERT INTO users(id,username,name,role,password_hash) VALUES(3,'student2','隔离测试学生','student',?)",(hash_password('Xuemai123!'),))
+        db.execute('INSERT INTO class_members VALUES(1,3)')
     application = FastAPI()
     application.include_router(router)
     identity = {"id": 2, "name": "陈星河", "role": "student", "username": "student1"}
@@ -136,7 +140,7 @@ def test_tutor_persists_scoped_context_and_history(client):
     assert "event: delta" in response.text and "event: done" in response.text
     metadata = json.loads(response.text.split("data: ")[1].split("\n")[0])
     assert metadata["mode"] == "mock"
-    assert metadata["citations"] and all("栈" in c["excerpt"] or "队列" in c["excerpt"] for c in metadata["citations"])
+    assert metadata["citations"] and any(c["resource_id"]==2 for c in metadata["citations"])
     conversation = browser.get(f"/api/ai/conversations/{metadata['conversation_id']}").json()
     assert [message["role"] for message in conversation["messages"]] == ["user", "assistant"]
     assert browser.post("/api/ai/chat", json={"course_id": 1, "conversation_id": metadata["conversation_id"], "message": "继续"}).status_code == 200

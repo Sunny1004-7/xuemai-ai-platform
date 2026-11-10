@@ -3,6 +3,7 @@ import math
 from pathlib import Path
 from fastapi.responses import FileResponse
 from .db import database_path
+from .retrieval import sync_index
 
 router=APIRouter(prefix="/api")
 
@@ -66,6 +67,7 @@ def create_resource(body:ResourceBody,user=Depends(teacher_user)):
         require_teacher_course(db,user,body.course_id)
         validate_resource(db,body)
         cur=db.execute("INSERT INTO resources(course_id,knowledge_id,title,kind,content,url,metadata) VALUES(?,?,?,?,?,?,?)",(body.course_id,body.knowledge_id,body.title,body.kind,body.content,body.url,json.dumps(body.metadata,ensure_ascii=False)))
+        sync_index(db)
         return get_resource(db.execute("SELECT * FROM resources WHERE id=?",(cur.lastrowid,)).fetchone())
 
 
@@ -92,6 +94,7 @@ def edit_resource(resource_id:int,body:ResourcePatch,user=Depends(teacher_user))
         validate_resource(db,body)
         db.execute("INSERT INTO resource_versions(resource_id,version,content,metadata) VALUES(?,?,?,?)",(resource_id,old["version"],old["content"],old["metadata"]))
         db.execute("UPDATE resources SET title=?,knowledge_id=?,kind=?,content=?,url=?,metadata=?,version=version+1 WHERE id=?",(body.title,body.knowledge_id,body.kind,body.content,body.url,json.dumps(body.metadata,ensure_ascii=False),resource_id))
+        sync_index(db)
         return get_resource(db.execute("SELECT * FROM resources WHERE id=?",(resource_id,)).fetchone())
 
 
@@ -111,6 +114,7 @@ def delete_resource(resource_id:int,user=Depends(teacher_user)):
         if not row: raise HTTPException(404,"资源不存在")
         require_teacher_course(db,user,row["course_id"])
         db.execute("DELETE FROM resources WHERE id=?",(resource_id,))
+        sync_index(db)
         return {"ok":True}
 
 

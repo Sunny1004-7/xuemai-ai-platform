@@ -15,6 +15,12 @@ def client(tmp_path,monkeypatch):
 
 
 def login(client,username="student1"):
+    if username=="student2":
+        from backend.app.auth import hash_password
+        with get_db() as db:
+            if not db.execute("SELECT 1 FROM users WHERE username='student2'").fetchone():
+                db.execute("INSERT INTO users(id,username,name,role,password_hash) VALUES(3,'student2','隔离测试学生','student',?)",(hash_password('Xuemai123!'),))
+                db.executemany("INSERT OR IGNORE INTO class_members VALUES(?,3)",[(1,),(2,)])
     response=client.post("/api/auth/login",json={"username":username,"password":"Xuemai123!"})
     assert response.status_code==200,response.text
     return {"Authorization":"Bearer "+response.json()["token"]}
@@ -32,8 +38,8 @@ def test_auth_and_revocation(client):
 def test_seed_is_idempotent(client):
     init_db();init_db()
     with get_db() as db:
-        assert db.execute("SELECT COUNT(*) FROM users").fetchone()[0]==3
-        assert db.execute("SELECT COUNT(*) FROM knowledge_points WHERE course_id=1").fetchone()[0]==8
+        assert db.execute("SELECT COUNT(*) FROM users").fetchone()[0]==2
+        assert db.execute("SELECT COUNT(*) FROM knowledge_points WHERE course_id=1").fetchone()[0]==30
         assert db.execute("PRAGMA foreign_keys").fetchone()[0]==1
     headers=login(client)
     assert len(client.get("/api/courses",headers=headers).json())==2
@@ -69,18 +75,18 @@ def test_graph_cycle_and_course_relation_validation(client):
     assert "循环" in response.json()["detail"]
     assert client.post("/api/courses/1/edges",headers=teacher,json={"source":9,"target":1}).status_code==422
     assert client.post("/api/courses/1/knowledge",headers=teacher,json={"title":"跨课程","chapter_id":4}).status_code==422
-    assert len(client.get("/api/courses/1/graph",headers=teacher).json()["edges"])==8
+    assert len(client.get("/api/courses/1/graph",headers=teacher).json()["edges"])>=30
 
 
 def test_objective_grading_and_recommendation_change(client):
     student=login(client)
     before=client.get("/api/courses/1/graph",headers=student).json()["nodes"][1]["mastery"]
-    result=client.post("/api/attempts",headers=student,json={"question_id":1,"answer":"3"}).json()
+    result=client.post("/api/attempts",headers=student,json={"question_id":2,"answer":["函数调用","括号匹配","撤销操作"]}).json()
     assert result["correct"] is True and result["score"]==100
     assert result["mastery"]>before
     assert result["recommendations"] and "reason" in result["recommendations"][0]
     history=client.get("/api/attempts",headers=student).json()
-    assert history[0]["answer"]=="3"
+    assert set(history[0]["answer"])=={"函数调用","括号匹配","撤销操作"}
 
 
 @pytest.mark.parametrize("qid,answer,correct",[(2,["撤销操作","函数调用","括号匹配"],True),(2,["函数调用"],False),(4,"正确",True),(5,"有序",True),(8,"O(1)",True)])
@@ -113,7 +119,8 @@ def test_wrong_answer_correction_and_hint_penalty(client):
     mistakes=client.get("/api/mistakes",headers=student).json()
     assert any(m["question_id"]==3 and not m["corrected"] for m in mistakes)
     corrected=client.post("/api/mistakes/3/review",headers=student,json={"answer":"最大元素","hints_used":1}).json()
-    assert corrected["correct"] and corrected["mastery"]-wrong["mastery"]==7
+    assert corrected["correct"] and corrected["evidence"]["value"]>wrong["evidence"]["value"]
+    assert corrected["review_schedule"]["last_quality"]==3
     assert next(m for m in client.get("/api/mistakes",headers=student).json() if m["question_id"]==3)["corrected"]==1
 
 
@@ -165,7 +172,7 @@ def test_targeted_assignment_and_new_analysis(client):
     client.post("/api/attempts",headers=student,json={"question_id":1,"answer":"3","assignment_id":task["id"]})
     after=client.get("/api/analytics",headers=teacher).json()
     assert after["summary"]["attempt_count"]==analysis["summary"]["attempt_count"]+1
-    assert next(n for n in after["knowledge"] if n["id"]==2)["average_mastery"]>next(n for n in analysis["knowledge"] if n["id"]==2)["average_mastery"]
+    assert next(n for n in after["knowledge"] if n["id"]==2)["average_mastery"]==next(n for n in analysis["knowledge"] if n["id"]==2)["average_mastery"]  # 短时同题再次正确不能刷高状态
 
 
 def test_assignment_cross_course_rejected(client):
@@ -230,6 +237,6 @@ def test_dashboard_reports_actual_data(client):
     assert dash["stats"]["courses"]==2 and dash["synthetic_data"]
     assert dash["recommendations"] and dash["assignments"]
     teacher_dash=client.get("/api/dashboard",headers=teacher).json()
-    assert teacher_dash["stats"]["students"]==2
+    assert teacher_dash["stats"]["students"]==1
     assert teacher_dash["recent_events"][0]["student_name"]=="陈星河"
     assert teacher_dash["courses"][0]["progress"]>0

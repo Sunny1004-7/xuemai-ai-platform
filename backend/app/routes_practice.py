@@ -155,9 +155,10 @@ def teacher_review(attempt_id:int,body:TeacherReviewBody,user=Depends(teacher_us
         if row["review_status"]=="teacher_reviewed":raise HTTPException(409,"此作答已经复核，避免重复修改学习证据")
         correct=body.score>=60
         db.execute("UPDATE attempts SET score=?,correct=?,review_status='teacher_reviewed',feedback=?,error_type=? WHERE id=?",(body.score,int(correct),body.feedback,"" if correct else "论证不充分",attempt_id))
-        old=mastery_value(db,row["student_id"],row["knowledge_id"])
-        value=max(.05,min(.98,old+(.18 if correct and not row["hints_used"] else .07 if correct else -.14)))
-        db.execute("INSERT INTO mastery(student_id,knowledge_id,value,evidence_count,level) VALUES(?,?,?,1,?) ON CONFLICT(student_id,knowledge_id) DO UPDATE SET value=excluded.value,evidence_count=mastery.evidence_count+1,level=excluded.level,updated_at=CURRENT_TIMESTAMP",(row["student_id"],row["knowledge_id"],value,"independent" if correct else "developing"))
+        question=db.execute("SELECT * FROM questions WHERE id=?",(row['question_id'],)).fetchone()
+        previous=db.execute("SELECT correct,created_at FROM attempts WHERE student_id=? AND question_id=? AND id<>? AND correct IS NOT NULL ORDER BY id DESC LIMIT 1",(row['student_id'],row['question_id'],attempt_id)).fetchone()
+        update,schedule=apply_evidence(db,row['student_id'],question,attempt_id,correct,row['hints_used'],previous)
+        value=update['value']
         if not correct:
             db.execute("INSERT INTO mistakes(student_id,question_id,error_type,last_answer) VALUES(?,?,'论证不充分',?) ON CONFLICT(student_id,question_id) DO UPDATE SET wrong_count=wrong_count+1,corrected=0,error_type='论证不充分',last_answer=excluded.last_answer",(row["student_id"],row["question_id"],row["answer"]))
         else:
@@ -191,6 +192,7 @@ def create_assignment(body:AssignmentBody,user=Depends(teacher_user)):
             if not db.execute(query,(sid,body.course_id)).fetchone(): raise HTTPException(422,"定向学生不属于当前课程")
             if body.class_id and not db.execute("SELECT 1 FROM class_members WHERE class_id=? AND student_id=?",(body.class_id,sid)).fetchone(): raise HTTPException(422,"定向学生不属于选定班级")
         cur=db.execute("INSERT INTO assignments(course_id,class_id,teacher_id,knowledge_id,title,description,question_ids,student_ids,due_at) VALUES(?,?,?,?,?,?,?,?,?)",(body.course_id,body.class_id,user["id"],body.knowledge_id,body.title,body.description,json.dumps(ids),json.dumps(body.student_ids),body.due_at))
+        save_assignment_baselines(db,cur.lastrowid)
         return assignment_item(db,user,db.execute("SELECT * FROM assignments WHERE id=?",(cur.lastrowid,)).fetchone())
 
 
@@ -224,10 +226,10 @@ def assignment_results(assignment_id:int,user=Depends(teacher_user)):
         require_teacher_course(db,user,row["course_id"])
         result=[]
         ids=json.loads(row["question_ids"])
-        for student in db.execute("SELECT DISTINCT u.id,u.name FROM users u JOIN class_members m ON u.id=m.student_id JOIN classes c ON c.id=m.class_id WHERE c.course_id=?",(row["course_id"],)):
+        for student in db.execute("SELECT DISTINCT u.id,u.name FROM users u JOIN class_members m ON u.id=m.student_id JOIN classes c ON c.id=m.class_id WHERE c.course_id=? AND u.active=1",(row["course_id"],)):
             if not assignment_visible(db,dict(student)|{"role":"student"},row):continue
             attempts=db.execute("SELECT a.* FROM attempts a WHERE assignment_id=? AND student_id=? AND a.id=(SELECT MAX(b.id) FROM attempts b WHERE b.assignment_id=a.assignment_id AND b.student_id=a.student_id AND b.question_id=a.question_id)",(assignment_id,student["id"])).fetchall()
-            result.append(dict(student)|{"completed":len(attempts)>=len(ids),"completed_count":len(attempts),"score":round(sum(a["score"] for a in attempts)/len(ids),1),"attempts":[json_fields(a,["answer"]) for a in attempts]})
+            result.append(dict(student)|{"comparison":intervention_comparison(db,assignment_id,student["id"]),"interpretation":"任务完成与状态变化分别展示；状态对照不等同教学效果证实", "completed":len(attempts)>=len(ids),"completed_count":len(attempts),"score":round(sum(a["score"] for a in attempts)/len(ids),1),"attempts":[json_fields(a,["answer"]) for a in attempts]})
         return result
 
 
@@ -242,7 +244,15 @@ def get_recommendations(course_id:int=1,user=Depends(current_user)):
 def mistakes(course_id:int=1,user=Depends(current_user)):
     with get_db() as db:
         require_course(db,user,course_id)
-        return [json_fields(r,["options","last_answer"]) for r in db.execute("SELECT m.*,q.title,q.course_id,q.knowledge_id,q.options,q.type,k.title knowledge_title FROM mistakes m JOIN questions q ON q.id=m.question_id JOIN knowledge_points k ON k.id=q.knowledge_id WHERE m.student_id=? AND q.course_id=? ORDER BY m.corrected,m.next_review_at",(user["id"],course_id))]
+        query="""SELECT q.id question_id,q.title,q.course_id,q.knowledge_id,q.options,q.type,q.hints,q.difficulty,k.title knowledge_title,
+                 COALESCE(m.error_type,'间隔复习') error_type,COALESCE(m.wrong_count,0) wrong_count,COALESCE(m.corrected,1) corrected,m.last_answer,
+                 COALESCE(r.next_due,m.next_review_at) next_review_at,r.interval_days,r.ease,r.last_quality
+                 FROM questions q JOIN knowledge_points k ON k.id=q.knowledge_id
+                 LEFT JOIN mistakes m ON m.question_id=q.id AND m.student_id=?
+                 LEFT JOIN review_schedule r ON r.question_id=q.id AND r.student_id=?
+                 WHERE q.course_id=? AND (m.question_id IS NOT NULL OR r.question_id IS NOT NULL)
+                 ORDER BY COALESCE(m.corrected,1),julianday(COALESCE(r.next_due,m.next_review_at))"""
+        return [json_fields(r,["options","last_answer","hints"]) for r in db.execute(query,(user['id'],user['id'],course_id))]
 
 
 class ReviewBody(BaseModel):
@@ -255,3 +265,10 @@ def review(question_id:int,body:ReviewBody,user=Depends(current_user)):
     return attempt(AttemptBody(question_id=question_id,answer=body.answer,hints_used=body.hints_used),user)
 
 
+
+
+@router.get('/review-schedule')
+def review_schedule(course_id:int=1,user=Depends(current_user)):
+    with get_db() as db:
+        require_course(db,user,course_id)
+        return [dict(r) for r in db.execute("SELECT r.*,q.title,q.knowledge_id,k.title knowledge_title,julianday(r.next_due)<=julianday('now') due FROM review_schedule r JOIN questions q ON q.id=r.question_id JOIN knowledge_points k ON k.id=q.knowledge_id WHERE r.student_id=? AND q.course_id=? ORDER BY r.next_due",(user['id'],course_id))]

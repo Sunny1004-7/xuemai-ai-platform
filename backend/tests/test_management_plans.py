@@ -12,6 +12,12 @@ def client(tmp_path,monkeypatch):
 
 
 def login(client,name="student1"):
+    if name=="student2":
+        from backend.app.auth import hash_password
+        with get_db() as db:
+            if not db.execute("SELECT 1 FROM users WHERE username='student2'").fetchone():
+                db.execute("INSERT INTO users(id,username,name,role,password_hash) VALUES(3,'student2','隔离测试学生','student',?)",(hash_password('Xuemai123!'),))
+                db.executemany("INSERT OR IGNORE INTO class_members VALUES(?,3)",[(1,),(2,)])
     response=client.post("/api/auth/login",json={"username":name,"password":"Xuemai123!"})
     assert response.status_code==200
     return {"Authorization":"Bearer "+response.json()["token"]}

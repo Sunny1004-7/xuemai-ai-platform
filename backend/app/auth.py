@@ -28,7 +28,7 @@ def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(bear
     if not credentials:
         raise HTTPException(401,"请先登录")
     with get_db() as db:
-        row = db.execute("SELECT u.id,u.username,u.name,u.role FROM sessions s JOIN users u ON s.user_id=u.id WHERE s.token=? AND s.expires_at>?",(credentials.credentials,time.time())).fetchone()
+        row = db.execute("SELECT u.id,u.username,u.name,u.role FROM sessions s JOIN users u ON s.user_id=u.id WHERE s.token=? AND s.expires_at>? AND u.active=1",(credentials.credentials,time.time())).fetchone()
         if not row:
             raise HTTPException(401,"登录已过期，请重新登录")
         return dict(row)

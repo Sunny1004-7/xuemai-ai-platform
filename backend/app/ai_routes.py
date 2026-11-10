@@ -15,6 +15,8 @@ from pydantic import AliasChoices, BaseModel, Field, ValidationError, model_vali
 from .ai import AIConfig, AIError, AIService, read_backend_key
 from .auth import current_user, require_course
 from .db import get_db
+from .teaching_actions import MARKER,prepare_actions,validate_selection
+from .evidence import knowledge_state
 
 router = APIRouter(prefix="/api/ai", tags=["AI 教与学"])
 User = Annotated[dict, Depends(current_user)]
@@ -108,52 +110,15 @@ def ensure_ai_schema(db: sqlite3.Connection):
     CREATE VIRTUAL TABLE IF NOT EXISTS ai_resource_fts USING fts5(
       resource_id UNINDEXED, course_id UNINDEXED, title UNINDEXED, excerpt UNINDEXED, tokens);
     """)
+    if "teaching" not in {column["name"] for column in db.execute("PRAGMA table_info(ai_messages)")}:
+        db.execute("ALTER TABLE ai_messages ADD COLUMN teaching TEXT NOT NULL DEFAULT '{}'")
+    if "context" not in {column["name"] for column in db.execute("PRAGMA table_info(ai_conversations)")}:
+        db.execute("ALTER TABLE ai_conversations ADD COLUMN context TEXT NOT NULL DEFAULT '{}'")
     if "status" not in {column["name"] for column in db.execute("PRAGMA table_info(ai_messages)")}:
         db.execute("ALTER TABLE ai_messages ADD COLUMN status TEXT NOT NULL DEFAULT 'complete'")
 
 
-def search_tokens(text: str) -> list[str]:
-    # Chinese words are not space-delimited. Bigrams avoid broad matches on
-    # common single characters such as 的/区; preserve one-character concepts.
-    stop = {"什么", "怎么", "如何", "为何", "是否", "可以", "应该", "学习", "当前", "解释", "说明",
-            "一下", "哪种", "区别", "不同", "请问", "关于", "需要", "进行", "一个", "这些", "哪些", "知识", "课程"}
-    tokens = re.findall(r"[a-zA-Z0-9_]{2,}|[栈树图堆]", text.lower())
-    for run in re.findall(r"[\u4e00-\u9fff]+", text):
-        tokens.extend(run[i:i + 2] for i in range(len(run) - 1) if run[i:i + 2] not in stop)
-    return list(dict.fromkeys(tokens))
-
-
-def retrieve(db, course_id: int, query: str, knowledge_id: int | None = None) -> list[dict]:
-    """Small local corpus: refresh only this authorized course, then rank with FTS5."""
-    resources = db.execute("SELECT * FROM resources WHERE course_id=? ORDER BY id", (course_id,)).fetchall()
-    versions = {resource["id"]: resource["version"] for resource in resources}
-    db.execute("DELETE FROM ai_resource_fts WHERE course_id=?", (course_id,))
-    for resource in resources:
-        text = resource["content"] or ""
-        for start in range(0, len(text), 520):
-            excerpt = text[start:start + 600]
-            db.execute("INSERT INTO ai_resource_fts(resource_id,course_id,title,excerpt,tokens) VALUES(?,?,?,?,?)",
-                       (resource["id"], course_id, resource["title"], excerpt,
-                        " ".join(search_tokens(resource["title"] + " " + excerpt))))
-    terms = search_tokens(query)[:32]
-    citations = []
-    if terms:
-        expression = " OR ".join('"' + token + '"' for token in terms)
-        rows = db.execute("SELECT resource_id,title,excerpt FROM ai_resource_fts WHERE ai_resource_fts MATCH ? "
-                          "AND course_id=? ORDER BY bm25(ai_resource_fts) LIMIT 3", (expression, course_id)).fetchall()
-        for row in rows:
-            citations.append({"id": len(citations) + 1, "resource_id": row["resource_id"],
-                              "title": row["title"], "excerpt": row["excerpt"], "version": versions.get(row["resource_id"], 1),
-                              "url": f"/resources?course_id={course_id}&resource_id={row['resource_id']}"})
-    if not citations and knowledge_id:
-        for resource in resources:
-            if resource["knowledge_id"] == knowledge_id and resource["content"]:
-                citations.append({"id": len(citations) + 1, "resource_id": resource["id"], "title": resource["title"],
-                                  "excerpt": resource["content"][:600], "version": resource["version"],
-                                  "url": f"/resources?course_id={course_id}&resource_id={resource['id']}"})
-                if len(citations) == 2:
-                    break
-    return citations
+from .retrieval import search_tokens, retrieve
 
 
 def context_for(db, user, request) -> tuple[dict, list[dict], str]:
@@ -235,8 +200,9 @@ def conversation_detail(conversation_id: int, user: User):
         for row in db.execute("SELECT * FROM ai_messages WHERE conversation_id=? ORDER BY id", (conversation_id,)):
             message = dict(row)
             message["citations"] = json.loads(message["citations"])
+            message["teaching"] = json.loads(message["teaching"])
             messages.append(message)
-        return {**dict(conversation), "messages": messages}
+        return {**dict(conversation), "context":json.loads(conversation["context"]), "messages": messages}
 
 
 def sse(event: str, payload: dict) -> str:
@@ -258,6 +224,8 @@ async def chat(request: ChatInput, user: User):
         else:
             conversation_id = db.execute("INSERT INTO ai_conversations(user_id,course_id,title) VALUES(?,?,?)",
                                          (user["id"], request.course_id, request.message[:32])).lastrowid
+        plan=prepare_actions(db,user,request,conversation_id)
+        db.execute("UPDATE ai_conversations SET context=? WHERE id=?",(json.dumps(request.model_dump(exclude={'message','conversation_id'}),ensure_ascii=False),conversation_id))
         recent = [dict(r) for r in db.execute("SELECT role,content,status FROM ai_messages WHERE conversation_id=? ORDER BY id DESC LIMIT 12", (conversation_id,))]
         history = []
         remaining = 6000
@@ -273,33 +241,41 @@ async def chat(request: ChatInput, user: User):
                    (conversation_id, request.message, service.config.mode))
     messages = [{"role": "system", "content": SYSTEM_TUTOR + "\n" + context}, *history,
                 {"role": "user", "content": request.message}]
+    messages[0]['content'] += '\n请选择下面受支持的教学动作，解释后以<!--XM_ACTIONS:{"strategy":"hint","kinds":["contrast","check"]}-->结尾。kinds只从候选类型中选择，不输出URL或对象ID。候选：'+json.dumps(plan['actions'],ensure_ascii=False)
     source = f"\n\n可以对照《{citations[0]['title']}》中的说明 [1]。" if citations else "\n\n当前没有检索到可引用的课程资料。"
-    mock_answer = f"（本地演示辅导）\n\n你正在学习《{course['title']}》。先把问题拆成“操作前的状态”和“操作后的状态”。\n\n" \
-                  "用一个只有 3 个元素的小例子逐步执行，每一步只改变一个位置；再检查是否满足数据结构的约束。" + source + \
-                  "\n\n理解检查：如果把输入顺序反过来，第一步的结果会如何变化？你可以回到相关习题验证。"
+    title=plan.get('knowledge_title',course['title'])
+    concept=plan.get('concept','先明确输入和目标，再逐步追踪状态。')
+    mock_answer = f"### {title}\n\n{concept}\n\n先写出操作前后的状态，比较哪一步改变了结构约束。\n\n" + source + "\n\n完成下方的理解检查，再根据结果决定是否需要先修练习。" + MARKER + json.dumps({'strategy':plan['strategy'],'kinds':[a['kind'] for a in plan['actions']]})+'-->'
 
     async def output():
         yield sse("meta", {"conversation_id": conversation_id, "mode": service.config.mode, "citations": citations})
         content = ""
         saved = False
         try:
+            emitted=0
             async for fragment in service.stream(messages, user_key=str(user["id"]), mock_content=mock_answer):
                 content += fragment
-                yield sse("delta", {"content": fragment})
+                boundary=content.find(MARKER)
+                safe_end=boundary if boundary>=0 else max(0,len(content)-len(MARKER))
+                if safe_end>emitted:
+                    yield sse('delta',{'content':content[emitted:safe_end]})
+                    emitted=safe_end
+            visible,teaching=validate_selection(content,plan)
+            if len(visible)>emitted:
+                yield sse('delta',{'content':visible[emitted:]})
             with get_db() as db:
-                db.execute("INSERT INTO ai_messages(conversation_id,role,content,citations,mode) VALUES(?,'assistant',?,?,?)",
-                           (conversation_id, content, json.dumps(citations, ensure_ascii=False), service.config.mode))
-            saved = True
-            yield sse("done", {"conversation_id": conversation_id, "usage": service.last_usage,
-                               "status": "complete",
-                               "next_action": f"/practice?course_id={request.course_id}" + (f"&knowledge={request.knowledge_point_id}" if request.knowledge_point_id else "") + (f"&question={request.question_id}" if request.question_id else "")})
+                db.execute("INSERT INTO ai_messages(conversation_id,role,content,citations,mode,teaching) VALUES(?,'assistant',?,?,?,?)",
+                           (conversation_id,visible,json.dumps(citations,ensure_ascii=False),service.config.mode,json.dumps(teaching,ensure_ascii=False)))
+            saved=True
+            yield sse('done',{'conversation_id':conversation_id,'usage':service.last_usage,'status':'complete','teaching':teaching,
+                              'next_action':f"/practice?course={request.course_id}&knowledge={plan.get('knowledge_id','')}"})
         except AIError as error:
             yield sse("error", {"message": str(error), "code": error.code, "partial": bool(content), "retryable": error.code not in {"quota", "authentication", "not_configured"}})
         finally:
             if content and not saved:
                 with get_db() as db:
                     db.execute("INSERT INTO ai_messages(conversation_id,role,content,citations,mode,status) VALUES(?,'assistant',?,?,?,'interrupted')",
-                               (conversation_id, content, json.dumps(citations, ensure_ascii=False), service.config.mode))
+                               (conversation_id, content.split(MARKER)[0], json.dumps(citations, ensure_ascii=False), service.config.mode))
     return StreamingResponse(output(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
@@ -340,3 +316,39 @@ async def generate(request: GenerateInput, user: User):
         raise HTTPException(502, "AI 草稿未通过教学结构校验，未保存任何内容，请修改要求后重试") from error
     return {"mode": service.config.mode, "kind": request.kind, "draft": True,
             "review_status": "pending_teacher_review", "result": validated, "citations": citations, "usage": service.last_usage}
+
+
+class UnderstandingAnswer(BaseModel):
+    answer:str|list[str]=Field(max_length=8000)
+    hints_used:int=Field(default=0,ge=0,le=6)
+
+
+@router.post('/checks/{check_id}/answer')
+def answer_check(check_id:int,body:UnderstandingAnswer,user:User):
+    from .learning import record_attempt
+    with get_db() as db:
+        check=db.execute('SELECT * FROM tutoring_checks WHERE id=? AND user_id=?',(check_id,user['id'])).fetchone()
+        if not check:raise HTTPException(404,'理解检查不存在')
+        if check['attempt_id']:raise HTTPException(409,'这次理解检查已提交，请从练习继续复测')
+        question=db.execute("SELECT * FROM questions WHERE id=? AND status='approved'",(check['question_id'],)).fetchone()
+        if not question:raise HTTPException(404,'检查题已调整，请开启新的辅导')
+        require_course(db,user,question['course_id'])
+        result=record_attempt(db,user,question,body.answer,body.hints_used)
+        db.execute('UPDATE tutoring_checks SET attempt_id=? WHERE id=?',(result['id'],check_id))
+        next_action={'title':'安排间隔复测','href':f"/review?course={question['course_id']}&knowledge={question['knowledge_id']}"} if result['correct'] else {'title':'查看先修与概念对照','href':f"/graph?course={question['course_id']}&knowledge={question['knowledge_id']}"}
+        db.execute("INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload) VALUES(?,?,?,'understanding_check',?)",(user['id'],question['course_id'],question['knowledge_id'],json.dumps({'check_id':check_id,'attempt_id':result['id'],'correct':result['correct'],'next_action':next_action},ensure_ascii=False)))
+        return result|{'next_action':next_action}
+
+
+@router.get('/checks/{check_id}')
+def check_status(check_id:int,user:User):
+    with get_db() as db:
+        row=db.execute('SELECT c.*,q.course_id,q.knowledge_id,q.explanation FROM tutoring_checks c JOIN questions q ON q.id=c.question_id WHERE c.id=? AND c.user_id=?',(check_id,user['id'])).fetchone()
+        if not row:raise HTTPException(404,'理解检查不存在')
+        require_course(db,user,row['course_id'])
+        result=None
+        if row['attempt_id']:
+            attempt=db.execute('SELECT correct,score FROM attempts WHERE id=?',(row['attempt_id'],)).fetchone()
+            schedule=db.execute('SELECT * FROM review_schedule WHERE student_id=? AND question_id=?',(user['id'],row['question_id'])).fetchone()
+            result=dict(attempt)|{'explanation':row['explanation'],'evidence':knowledge_state(db,user['id'],row['knowledge_id']),'review_schedule':dict(schedule) if schedule else None}
+        return {'result':result}

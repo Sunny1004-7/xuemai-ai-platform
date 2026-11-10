@@ -1,0 +1,8 @@
+CREATE TABLE tutoring_checks(
+ id INTEGER PRIMARY KEY,
+ user_id INTEGER NOT NULL REFERENCES users(id),
+ conversation_id INTEGER NOT NULL,
+ question_id INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+ attempt_id INTEGER REFERENCES attempts(id) ON DELETE SET NULL,
+ created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
