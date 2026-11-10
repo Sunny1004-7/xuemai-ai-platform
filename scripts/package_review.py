@@ -15,6 +15,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.check_secrets import SECRET_PATTERN
+from scripts.review_screenshots import validate_screenshots
 
 BEIJING = timezone(timedelta(hours=8))
 EXCLUDED_DIRECTORIES = {
@@ -61,6 +62,7 @@ def git_output(root: Path, *arguments: str) -> str:
 
 def build_review_package(
     root: Path, record: Path, base_ref: str | None = None, timestamp: datetime | None = None,
+    *, screenshots: Path,
 ) -> Path:
     root = root.resolve()
     record = (root / record).resolve()
@@ -69,6 +71,8 @@ def build_review_package(
     record_name = record.relative_to(root).as_posix()
     if any(part in EXCLUDED_DIRECTORIES for part in record.relative_to(root).parts) or excluded_file(record):
         raise ValueError('本轮修改记录位于打包排除范围，请放入 docs/rounds。')
+    screenshot_manifest, screenshot_files = validate_screenshots(root, screenshots, record_name)
+    screenshot_directory = (root / screenshots).resolve()
 
     generated_at = (timestamp or datetime.now(BEIJING)).astimezone(BEIJING)
     output_directory = root / '交付审阅包'
@@ -117,6 +121,12 @@ def build_review_package(
         '默认使用本地Mock。\n\n'
         '完整源码、文档、官方手册、现有教学和演示视频按当前目录收录。'
         '各份文档与视频保留其原有内容日期，文件摘要见“审阅清单.json”。\n\n'
+        f'本轮界面覆盖 {len(screenshot_manifest["modules"])} 个模块视图，'
+        f'共 {len(screenshot_manifest["files"])} 张实际PNG。'
+        '先打开“界面截图/截图总览.html”浏览缩略图，再点开原图，'
+        '也可按“界面截图/截图索引.md”逐模块审阅。'
+        '每个模块含桌面与手机窄屏全页图，长页及长弹窗附分段图。'
+        '截图使用隔离合成数据和本地Mock，详细状态见截图清单。\n\n'
         '凭据、依赖、运行数据、缓存、历史压缩包及既往审阅包已按脚本规则过滤。'
         '可从迁移和种子数据初始化演示系统。\n\n'
         f'源码Git提交为 {head or "当前目录未包含Git元数据"}。\n'
@@ -134,6 +144,13 @@ def build_review_package(
                     name = path.relative_to(root).as_posix()
                     add_entry(archive, name, content)
                     entries[-1]['modified_at'] = datetime.fromtimestamp(after.st_mtime, BEIJING).isoformat()
+                screenshot_hashes = {entry['path']: entry['sha256'] for entry in screenshot_manifest['files']}
+                for path in screenshot_files:
+                    relative = path.relative_to(screenshot_directory).as_posix()
+                    content = path.read_bytes()
+                    if relative in screenshot_hashes and hashlib.sha256(content).hexdigest() != screenshot_hashes[relative]:
+                        raise RuntimeError('截图在打包期间发生变化，请重新打包。')
+                    add_entry(archive, f'界面截图/{relative}', content)
                 add_entry(archive, '审阅包说明.md', guide.encode('utf-8'))
                 if history is not None:
                     add_entry(archive, 'Git提交记录.txt', history.encode('utf-8'))
@@ -142,6 +159,10 @@ def build_review_package(
                 manifest = {
                     'generated_at_beijing': generated_at.isoformat(), 'round_record': record_name,
                     'source_commit': head, 'source_worktree_status': status, 'base_ref': base_ref,
+                    'screenshots': {'directory': '界面截图', 'modules': len(screenshot_manifest['modules']),
+                                    'images': len(screenshot_manifest['files']),
+                                    'captured_at': screenshot_manifest['captured_at'],
+                                    'source_fingerprint': screenshot_manifest['source_fingerprint']},
                     'file_count': len(entries), 'files': entries,
                     'excluded_directories': sorted(EXCLUDED_DIRECTORIES),
                     'excluded_suffixes': sorted(EXCLUDED_SUFFIXES),
@@ -171,8 +192,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--record', required=True, type=Path, help='本轮修改记录的工程相对路径')
     parser.add_argument('--base-ref', help='本轮修改前的Git提交，用于生成本轮补丁')
+    parser.add_argument('--screenshots', required=True, type=Path, help='本轮完整截图目录，位于交付审阅包内')
     args = parser.parse_args()
-    output = build_review_package(ROOT, args.record, args.base_ref)
+    output = build_review_package(ROOT, args.record, args.base_ref, screenshots=args.screenshots)
     print(f'审阅包已生成并完成完整性、SHA256及敏感信息检查\n{output}\n{output.stat().st_size:,} 字节')
 
 
