@@ -1,6 +1,6 @@
 import { Pager, usePage } from '../components/Workspace'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { CheckCheck, ClipboardList, Edit3, Send, Sparkles, Target, Users } from 'lucide-react'
 import { CohortCharts } from '../components/LearningCharts'
@@ -141,6 +141,7 @@ export function Analytics() {
         title="学情分析"
         subtitle="发现共同困难，安排分层任务，再用复测结果检验教学是否有效"
         action={
+          <div className="button-row"><Link className="button secondary" to={`/teacher-ai?course=${courseId}${classId ? `&class=${classId}` : ''}`}>教学研讨</Link>
           <Button
             variant="secondary"
             onClick={() => {
@@ -150,6 +151,7 @@ export function Analytics() {
           >
             刷新学习状态
           </Button>
+          </div>
         }
       />
       <LoadState {...query} retry={query.reload} />

@@ -128,6 +128,7 @@ export function Resources() {
         action={
           teacher ? (
             <div className="button-row">
+              <Link className="button secondary" to={`/teacher-ai?course=${courseId}`}>教学研讨</Link>
               <Button variant="secondary" onClick={() => setUploading(true)}>
                 <Upload size={16} />
                 上传资料或视频

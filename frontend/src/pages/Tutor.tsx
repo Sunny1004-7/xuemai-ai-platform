@@ -4,19 +4,19 @@ import {
   ArrowRight,
   BookOpen,
   ChevronRight,
-  CircleStop,
   History,
   Lightbulb,
   MessageCircle,
   Plus,
-  Send,
   Sparkles,
 } from 'lucide-react'
 import { RichText } from '../components/RichText'
 import { TeachingActions } from '../components/TeachingActions'
+import { AIComposer } from '../components/AIComposer'
+import { TeacherDraft } from '../components/TeacherDraft'
 import { api, getSession, useApi } from '../api'
 import type { Row } from '../api'
-import { Button, LoadState, Panel, Pill, Title, useApp } from '../ui'
+import { Button, LoadState, Modal, Panel, Pill, Title, useApp } from '../ui'
 
 type Message = {
   role: string
@@ -26,8 +26,11 @@ type Message = {
   error?: boolean
   status?: string
   teaching?: Row
+  model?: string
+  attachments?: Row[]
+  artifact?: Row
 }
-export function Tutor() {
+export function Tutor({ teacher = false }: { teacher?: boolean }) {
   const { courseId, user, notify } = useApp()
   const [params, setParams] = useSearchParams()
   const knowledgeId = Number(params.get('knowledge')) || undefined
@@ -42,6 +45,10 @@ export function Tutor() {
   const [busy, setBusy] = useState(false)
   const [citations, setCitations] = useState<Row[]>([])
   const [sideOpen, setSideOpen] = useState(false)
+  const [model, setModel] = useState('deepseek-flash')
+  const [attachments, setAttachments] = useState<Row[]>([])
+  const [source, setSource] = useState<Row | null>(null)
+  const [composerKey, setComposerKey] = useState(0)
   const abortRef = useRef<AbortController | null>(null)
   const historyRequest = useRef<AbortController | null>(null)
   const end = useRef<HTMLDivElement>(null)
@@ -84,6 +91,9 @@ export function Tutor() {
       setConversationId(id)
       setCitations(conversation.messages?.flatMap((m: Row) => m.citations || []).slice(-5) || [])
       setSideOpen(false)
+      setInput('')
+      setAttachments([])
+      setComposerKey(key => key + 1)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') notify((e as Error).message, true)
     }
@@ -92,8 +102,8 @@ export function Tutor() {
     if (!text.trim() || busy) return
     const next = [
       ...messages,
-      { role: 'user', content: text.trim() },
-      { role: 'assistant', content: '', mode: status.data.mode },
+      { role: 'user', content: text.trim(), attachments },
+      { role: 'assistant', content: '', mode: status.data.mode, model },
     ]
     setMessages(next)
     setInput('')
@@ -118,6 +128,10 @@ export function Tutor() {
           question_id: questionId,
           video_timestamp: videoTimestamp,
           resource_id: Number(params.get('resource')) || undefined,
+          model,
+          attachment_ids: attachments.map(item => item.id),
+          class_id: Number(params.get('class')) || undefined,
+          request_id: crypto.randomUUID(),
         }),
       })
       if (!response.ok) {
@@ -141,7 +155,7 @@ export function Tutor() {
             setCitations(data.citations || [])
             setMessages((v) =>
               v.map((m, i) =>
-                i === v.length - 1 ? { ...m, mode: data.mode, citations: data.citations } : m,
+                i === v.length - 1 ? { ...m, mode: data.mode, model: data.model, citations: data.citations } : m,
               ),
             )
           }
@@ -155,12 +169,13 @@ export function Tutor() {
             setMessages((v) =>
               v.map((m, i) =>
                 i === v.length - 1
-                  ? { ...m, teaching: data.teaching, content: data.content ?? m.content }
+                  ? { ...m, teaching: data.teaching, artifact: data.artifact, content: data.content ?? m.content }
                   : m,
               ),
             )
             completed = true
             setConversationId(data.conversation_id)
+            setAttachments([])
           }
           if (event === 'error') {
             streamError = true
@@ -211,7 +226,7 @@ export function Tutor() {
   return (
     <>
       <Title
-        title="AI 辅导"
+        title={teacher ? 'AI 教学助手' : 'AI 学习伙伴'}
         subtitle="带着课程上下文，一步步解释、追问与理解；所有建议都需要你主动思考"
         action={
           <Button variant="secondary" onClick={() => setSideOpen(!sideOpen)}>
@@ -229,6 +244,9 @@ export function Tutor() {
               setMessages([])
               setConversationId(undefined)
               setCitations([])
+              setInput('')
+              setAttachments([])
+              setComposerKey(key => key + 1)
             }}
           >
             <Plus size={17} />
@@ -257,7 +275,7 @@ export function Tutor() {
               <Sparkles size={19} />
             </span>
             <div>
-              <strong>学脉学习伙伴</strong>
+              <strong>{teacher ? '教学研讨' : '学脉学习伙伴'}</strong>
               <small>
                 {currentKnowledge
                   ? `正在讨论：${currentKnowledge.title}`
@@ -268,7 +286,6 @@ export function Tutor() {
                       : '基于当前课程资料回答'}
               </small>
             </div>
-            <Pill tone="green">循序引导</Pill>
           </div>
           <div className="chat-messages" aria-live="polite">
             {!messages.length ? (
@@ -279,13 +296,13 @@ export function Tutor() {
                 <h2>{currentKnowledge?.title || '从一个问题开始'}</h2>
                 <div className="starter-prompts">
                   {[
-                    knowledgeId
+                    teacher ? '这个班在队列和栈的应用题上有哪些典型错误？安排40分钟讲评课和两组后续练习。' : knowledgeId
                       ? `请用一个例子解释${currentKnowledge?.title || '这个知识点'}`
                       : '栈和队列为什么有不同的应用场景？',
-                    questionId
+                    teacher ? '结合当前课程资料，设计一节有先修检查和课后复测的教学课。' : questionId
                       ? '请先给这道题一点提示，不要直接告诉我答案'
                       : '树的前序、中序、后序遍历怎么区分？',
-                    '请用一个理解检查题，帮助我检验是否掌握',
+                    teacher ? '查看这个班的学习证据，哪些知识点需要优先关注？' : '请用一个理解检查题，帮助我检验是否掌握',
                   ].map((p) => (
                     <button key={p} onClick={() => send(p)}>
                       <Lightbulb size={16} />
@@ -303,9 +320,9 @@ export function Tutor() {
                   </span>
                   <div>
                     <div className="message-label">
-                      {m.role === 'user' ? '你' : '学习伙伴'}
+                      {m.role === 'user' ? '你' : teacher ? '教学助手' : '学习伙伴'}
                       {m.role !== 'user' ? (
-                        <small>{m.mode === 'real' ? 'DeepSeek' : 'Mock 示例'}</small>
+                        <small>{m.model === 'deepseek-v4-pro' ? 'DeepSeek Pro' : 'DeepSeek Flash'}{m.mode === 'mock' ? ' · 本地样例' : ''}</small>
                       ) : null}
                     </div>
                     {m.status === 'interrupted' ? (
@@ -325,13 +342,18 @@ export function Tutor() {
                         '对话已停止。你可以继续追问。'
                       )}
                     </div>
-                    {m.teaching ? <TeachingActions teaching={m.teaching} /> : null}
+                    {m.attachments?.length ? <div className="message-attachments">{m.attachments.map(file => <button key={file.id} onClick={async () => {
+                      try { const detail = await api<Row>(`/ai/attachments/${file.id}`); setSource({ title: detail.filename, excerpt: detail.chunks.map((chunk: Row) => `${chunk.locator}\n${chunk.content}`).join('\n\n') }) } catch (error) { notify((error as Error).message, true) }
+                    }}>{file.filename}</button>)}</div> : null}
+                    {m.teaching && !teacher ? <TeachingActions teaching={m.teaching} /> : null}
+                    {m.teaching && teacher ? <details className="collaboration-trace"><summary>教学依据与处理过程</summary><ol>{m.teaching.trace?.map((step: Row, index: number) => <li key={index}><strong>{step.role}</strong><span>{typeof step.result === 'string' ? step.result : JSON.stringify(step.result)}</span></li>)}</ol></details> : null}
+                    {teacher && m.artifact ? <TeacherDraft artifact={m.artifact} evidence={m.teaching?.evidence} /> : null}
                     {m.citations?.length ? (
                       <div className="message-sources">
                         {m.citations.map((c, n) => (
-                          <span key={c.id || n}>
+                          <button type="button" key={c.id || n} onClick={() => setSource(c)}>
                             <BookOpen size={12} />[{n + 1}] {c.title}
-                          </span>
+                          </button>
                         ))}
                       </div>
                     ) : null}
@@ -341,49 +363,7 @@ export function Tutor() {
             )}
             <div ref={end} />
           </div>
-          <form
-            className="chat-composer"
-            onSubmit={(e) => {
-              e.preventDefault()
-              send()
-            }}
-          >
-            <label className="sr-only" htmlFor="chat-input">
-              输入学习问题
-            </label>
-            <textarea
-              id="chat-input"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-                  e.preventDefault()
-                  send()
-                }
-              }}
-              placeholder="写下你的困惑，或告诉我卡在了哪一步…"
-              rows={2}
-              maxLength={3000}
-            />
-            <div>
-              <span>Enter 发送 · Shift + Enter 换行</span>
-              {busy ? (
-                <Button
-                  type="button"
-                  variant="secondary small"
-                  onClick={() => abortRef.current?.abort()}
-                >
-                  <CircleStop size={16} />
-                  停止
-                </Button>
-              ) : (
-                <Button type="submit" variant="small" disabled={!input.trim()}>
-                  <Send size={16} />
-                  发送
-                </Button>
-              )}
-            </div>
-          </form>
+          <AIComposer key={composerKey} value={input} onChange={setInput} model={model} setModel={setModel} attachments={attachments} setAttachments={setAttachments} conversationId={conversationId} busy={busy} send={() => send()} stop={() => abortRef.current?.abort()} teacher={teacher} />
           <p className="ai-disclosure">回答供学习参考，可对照课程资料核对。</p>
         </Panel>
         <aside className="context-aside">
@@ -400,10 +380,10 @@ export function Tutor() {
                     {String(c.excerpt || '').length > 180 ? '…' : ''}
                   </p>
                   {c.url ? (
-                    <a href={c.url} target="_blank" rel="noreferrer">
+                    <button className="text-link" onClick={() => setSource(c)}>
                       查看来源
                       <ArrowRight size={13} />
-                    </a>
+                    </button>
                   ) : null}
                 </div>
               ))
@@ -416,6 +396,7 @@ export function Tutor() {
           </Panel>
         </aside>
       </div>
+      {source && <Modal title={source.title} close={() => setSource(null)}><p className="mini-text">{source.locator}{source.version ? ` · 版本${source.version}` : ''}</p><RichText>{source.excerpt || ''}</RichText></Modal>}
     </>
   )
 }

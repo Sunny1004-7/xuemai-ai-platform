@@ -68,6 +68,19 @@ const teacherNav = [
   ['/video', '视频教学', Video],
   ['/analytics', '学情与分层', ChartNoAxesCombined],
   ['/classroom', '课堂互动', MessagesSquare],
+  ['/teacher-ai', 'AI 教学助手', Sparkles],
+] as const
+const studentGroups = [
+  ['学习安排', ['/', '/plan']],
+  ['课程学习', ['/video', '/resources', '/graph']],
+  ['练习巩固', ['/practice', '/review', '/experiments']],
+  ['答疑互动', ['/tutor', '/classroom']],
+] as const
+const teacherGroups = [
+  ['教学组织', ['/', '/manage']],
+  ['备课与资源', ['/resources', '/graph', '/video']],
+  ['教学实施', ['/practice', '/classroom']],
+  ['分析与研讨', ['/analytics', '/teacher-ai']],
 ] as const
 function Shell({ logout }: { logout: () => void }) {
   const user = getSession()!.user
@@ -129,6 +142,7 @@ function Shell({ logout }: { logout: () => void }) {
     sessionStorage.setItem(`xuemai-course-${user.id}`, String(id))
   }, [courses.data, location.search])
   const nav = user.role === 'teacher' ? teacherNav : studentNav
+  const groups = user.role === 'teacher' ? teacherGroups : studentGroups
   const current = nav.find((x) => x[0] === location.pathname)?.[1] || '课程学习'
   useEffect(() => {
     if (!toast) return
@@ -164,12 +178,17 @@ function Shell({ logout }: { logout: () => void }) {
             <span>{user.role === 'teacher' ? '教师端' : '学生端'}</span>
           </div>
           <nav aria-label="主导航">
-            {nav.map(([to, label, Icon]) => (
-              <NavLink key={to} to={to} end={to === '/'} title={label}>
-                <Icon size={19} />
-                <span>{label}</span>
-                {to === '/tutor' ? <i>AI</i> : null}
-              </NavLink>
+            {groups.map(([name, paths]) => (
+              <section className="nav-group" key={name} aria-label={name}>
+                <h2>{name}</h2>
+                {paths.map(path => {
+                  const item = nav.find(entry => entry[0] === path)!
+                  const [to, label, Icon] = item
+                  return <NavLink key={to} to={to} end={to === '/'} title={label}>
+                    <Icon size={19} /><span>{label}</span>
+                  </NavLink>
+                })}
+              </section>
             ))}
           </nav>
           <div className="sidebar-bottom">
@@ -201,10 +220,12 @@ function Shell({ logout }: { logout: () => void }) {
               <CourseSelector courses={courses.data} reload={courses.reload} />
               <button
                 className="icon-button"
-                title="查看学习伙伴"
+                title={user.role === 'teacher' ? 'AI 教学助手' : 'AI 学习伙伴'}
                 aria-label="帮助"
                 onClick={() => {
-                  window.location.href = '/tutor'
+                  const query = new URLSearchParams(location.search)
+                  query.set('course', String(courseId))
+                  navigate(`${user.role === 'teacher' ? '/teacher-ai' : '/tutor'}?${query}`)
                 }}
               >
                 <CircleHelp size={19} />
@@ -224,7 +245,8 @@ function Shell({ logout }: { logout: () => void }) {
                 <Route path="/graph" element={<Graph />} />
                 <Route path="/practice" element={<Practice />} />
                 <Route path="/review" element={<Practice review />} />
-                <Route path="/tutor" element={<Tutor />} />
+                <Route path="/tutor" element={user.role === 'teacher' ? <Navigate to={`/teacher-ai?course=${courseId}`} replace /> : <Tutor />} />
+                <Route path="/teacher-ai" element={user.role === 'teacher' ? <Tutor teacher /> : <Navigate to={`/tutor?course=${courseId}`} replace />} />
                 <Route path="/video" element={<VideoPage />} />
                 <Route path="/experiments" element={<Experiments />} />
                 <Route path="/manage" element={<Management />} />

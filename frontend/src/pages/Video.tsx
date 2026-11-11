@@ -246,7 +246,7 @@ export function VideoPage() {
                 </div>
                 <Link
                   className="button secondary"
-                  to={`/tutor?knowledge=${current.knowledge_id || ''}&t=${Math.floor(position)}&resource=${current.id}`}
+                  to={`${user.role === 'teacher' ? '/teacher-ai' : '/tutor'}?course=${courseId}&knowledge=${current.knowledge_id || ''}&t=${Math.floor(position)}&resource=${current.id}`}
                 >
                   <Sparkles size={16} />
                   问问这个片段
