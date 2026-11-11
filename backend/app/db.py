@@ -42,8 +42,9 @@ def init_db():
         for migration in sorted(directory.glob("*.sql")):
             version=int(migration.name.split("_",1)[0])
             if not db.execute("SELECT 1 FROM schema_migrations WHERE version=?",(version,)).fetchone():
-                db.executescript(migration.read_text(encoding="utf-8"))
-                db.execute("INSERT INTO schema_migrations(version) VALUES(?)",(version,))
+                # DDL与版本记录共同提交，后续内容初始化失败时可安全重启。
+                db.executescript("BEGIN IMMEDIATE;\n" + migration.read_text(encoding="utf-8") +
+                    f"\nINSERT INTO schema_migrations(version) VALUES({version});\nCOMMIT;")
         if not db.execute("SELECT 1 FROM users LIMIT 1").fetchone():
             seed(db)
         from .content import upgrade_content, upgrade_round3_content

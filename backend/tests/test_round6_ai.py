@@ -24,6 +24,45 @@ def headers(client, username='student1'):
     return {'Authorization':'Bearer '+response.json()['token']}
 
 
+def test_legacy_fts_upgrade_rebuilds_without_losing_content(client):
+    from backend.app.db import init_db
+    with get_db() as db:
+        resources=db.execute('SELECT count(*) FROM resources').fetchone()[0]
+        messages=db.execute('SELECT count(*) FROM ai_messages').fetchone()[0]
+        db.execute('DELETE FROM schema_migrations WHERE version>=10')
+        db.execute('DELETE FROM ai_resource_passages')
+        db.execute('DELETE FROM ai_resource_fts')
+        db.execute("INSERT INTO ai_resource_fts(rowid,resource_id,course_id,title,excerpt,tokens) VALUES(1,2,1,'旧资源索引','旧片段','旧 片段')")
+    init_db()
+    init_db()
+    with get_db() as db:
+        assert db.execute('SELECT count(*) FROM resources').fetchone()[0]==resources
+        assert db.execute('SELECT count(*) FROM ai_messages').fetchone()[0]==messages
+        assert db.execute('SELECT count(*) FROM ai_resource_passages').fetchone()[0]>resources
+        assert db.execute('SELECT count(*) FROM ai_resource_fts').fetchone()[0]==db.execute('SELECT count(*) FROM ai_resource_passages').fetchone()[0]
+        assert db.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
+
+
+def test_initialization_failure_keeps_migration_versions_atomic(tmp_path, monkeypatch):
+    from backend.app.db import init_db
+    from backend.app import retrieval
+    monkeypatch.setenv('DATABASE_PATH',str(tmp_path/'restart.db'))
+    monkeypatch.setenv('AI_MODE','mock')
+    original=retrieval.sync_index
+    def fail_index(db):
+        raise RuntimeError('模拟派生索引初始化中断')
+    monkeypatch.setattr(retrieval,'sync_index',fail_index)
+    with pytest.raises(RuntimeError,match='初始化中断'):
+        init_db()
+    with get_db() as db:
+        assert db.execute('SELECT max(version) FROM schema_migrations').fetchone()[0]==11
+    monkeypatch.setattr(retrieval,'sync_index',original)
+    init_db()
+    with get_db() as db:
+        assert db.execute('SELECT count(*) FROM resources').fetchone()[0]>0
+        assert db.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
+
+
 def events(response):
     assert response.status_code==200,response.text
     return [json.loads(line[6:]) for line in response.text.splitlines() if line.startswith('data: ')]

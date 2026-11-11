@@ -1,0 +1,56 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "frontend_http": 200,
+  "integrity": "ok",
+  "migrations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "retained_rows": {
+    "users": {
+      "before": 30,
+      "after": 30
+    },
+    "resources": {
+      "before": 78,
+      "after": 78
+    },
+    "questions": {
+      "before": 73,
+      "after": 73
+    },
+    "attempts": {
+      "before": 2439,
+      "after": 2439
+    },
+    "ai_conversations": {
+      "before": 17,
+      "after": 17
+    },
+    "ai_messages": {
+      "before": 56,
+      "after": 56
+    },
+    "study_plans": {
+      "before": 24,
+      "after": 24
+    }
+  },
+  "passages": 345,
+  "fts_rows": 345,
+  "model_calls": 0
+}
