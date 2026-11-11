@@ -1,5 +1,5 @@
 // 真实本机页面录制。开发证据是已发生记录的回放，明确不冒充实时生成。
-import { chromium } from '@playwright/test'
+import { chromium, expect } from '@playwright/test'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const base = process.env.DEMO_BASE_URL || 'http://127.0.0.1:5175'
 const quick = process.env.DEMO_QUICK === '1'
-const taskTitle = `数组知识巩固-${new Date().toISOString().slice(11, 19).replaceAll(':', '')}`
+const taskTitle = `Python边界巩固-${new Date().toISOString().slice(11, 19).replaceAll(':', '')}`
 const scale = quick ? 0.03 : 1
 const totalSeconds=450
 const runDir = path.join(
@@ -20,7 +20,7 @@ const runDir = path.join(
 await fs.mkdir(runDir, { recursive: true })
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 const context = await browser.newContext({
-  viewport: { width: 1920, height: 1080 },
+  viewport: { width: 1920, height: 1000 },
   deviceScaleFactor: 1,
 })
 const page = await context.newPage()
@@ -74,11 +74,35 @@ async function login(username) {
   }
   await page.getByLabel('账号', { exact: true }).fill(username)
   await page.getByLabel('密码', { exact: true }).fill('Xuemai123!')
+  const response=page.waitForResponse(r=>r.url().endsWith('/api/auth/login'))
   await page.getByRole('button', { name: '进入学脉', exact: true }).click()
   await page.getByRole('navigation', { name: '主导航' }).waitFor()
+  return (await (await response).json()).token
 }
 
-await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round4-replay.html')).href + '#intro')
+async function readApi(token,route){
+  const response=await fetch(new URL('/api'+route,base),{headers:{Authorization:`Bearer ${token}`}})
+  if(!response.ok)throw new Error(`只读演示对象查询失败：${route}`)
+  return response.json()
+}
+async function go(route){
+  await page.goto(base+route)
+  await expect(page.locator('main h1')).toBeVisible()
+  await expect(page.locator('main .loading')).toHaveCount(0)
+  if(route.startsWith('/graph')) {
+    await expect(page.locator('.knowledge-node').first()).toBeVisible()
+    await expect(page.locator('.graph-canvas')).toHaveAttribute('aria-busy','false')
+  }
+}
+async function correctAnswer(question){
+  const index=question.options.findIndex(option=>String(option)===String(question.answer))
+  if(index<0)throw new Error('演示题答案与选项不一致')
+  await page.getByRole('radio').nth(index).check()
+  await page.getByRole('button',{name:'提交答案',exact:true}).click()
+  await expect(page.locator('.answer-feedback')).toBeVisible()
+}
+
+await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round5-replay.html')).href + '#intro')
 const capture = (async () => {
   while (recording) {
     const tick = Date.now()
@@ -101,11 +125,22 @@ try {
   await until(19)
   await login('student1')
   await scene(25, '学习工作台', '')
-  await scene(45, '知识图谱', '', () => page.goto(`${base}/graph`))
-  await until(52)
-  await page.getByRole('button', { name: /线性结构，展开章节/ }).click()
-  await until(59)
-  await page.getByLabel('定位知识点').fill('快速排序')
+  await page.getByLabel('切换当前课程').click()
+  await until(28)
+  await page.getByRole('option',{name:/Python/}).click()
+  await until(32)
+  await go('/plan?course=2')
+  await until(37)
+  await page.getByRole('tab',{name:'预算内路径',exact:true}).click()
+  await scene(45, '知识图谱', '', () => go('/graph?course=1'))
+  await expect(page.locator('.knowledge-node')).toHaveCount(31)
+  await until(55)
+  await page.getByLabel('切换当前课程').click()
+  await page.getByRole('option',{name:/Python/}).click()
+  await expect(page.locator('.knowledge-node')).toHaveCount(27)
+  await expect(page.locator('.graph-canvas')).toHaveAttribute('aria-busy','false')
+  await until(60)
+  await page.getByLabel('定位知识点').fill('循环')
   await until(65)
   await page.getByRole('button', { name: '全屏查看', exact: true }).click()
   await until(70)
@@ -115,7 +150,7 @@ try {
   await until(81)
   await page.keyboard.press('Escape')
   await scene(85, '视频学习', '', async () => {
-    await page.goto(`${base}/video?t=1`)
+    await go('/video?course=2')
     const v = page.locator('video')
     await v.waitFor()
     await v.evaluate(async (v) => {
@@ -132,80 +167,75 @@ try {
   await until(108)
   if (await checkpoint.count()) await checkpoint.getByRole('button', { name: '继续观看' }).click()
   await page.getByRole('button', { name: /我的笔记/ }).click()
-  await page
-    .getByPlaceholder('想明白了什么？还有什么问题？')
-    .fill('每轮相邻比较后，当前最大元素到达末尾。')
+  await page.getByPlaceholder('想明白了什么？还有什么问题？').fill('range右端点不包含；每轮累加后，total对应已处理的整数。')
   await page.getByRole('button', { name: '保存笔记' }).click()
-  await scene(120, '智能练习', '', () => page.goto(`${base}/practice?question=1`))
+  await scene(120, '智能练习', '', () => go('/practice?course=2'))
+  await page.getByRole('button',{name:'跳转第10题',exact:true}).click()
   await until(128)
-  await page.getByRole('radio').nth(2).check()
+  await page.getByRole('button',{name:'跳转第1题',exact:true}).click()
+  await page.getByRole('radio').first().check()
   await until(132)
   await page.getByRole('button', { name: '提交答案', exact: true }).click()
-  await scene(145, '上下文辅导', '', () => page.goto(`${base}/tutor?knowledge=2&question=1`))
+  await scene(145, '上下文辅导', '', () => go('/tutor?course=2'))
+  await page.locator('.conversation-list>button:not(.button)').first().click()
   await until(150)
-  await page.getByLabel('输入学习问题').fill('请对照解释栈与队列，再检查我的理解。')
+  await page.getByLabel('输入学习问题').fill('请用一个循环边界反例继续解释，再检查我的理解。')
   await page.getByRole('button', { name: '发送', exact: true }).click()
   await until(162)
-  await page.locator('.collaboration-trace summary').click()
-  await page.locator('.understanding-check').scrollIntoViewIfNeeded()
+  await expect(page.getByRole('button',{name:'停止',exact:true})).toHaveCount(0)
+  await page.locator('.collaboration-trace summary').last().click()
+  await page.locator('.understanding-check').last().scrollIntoViewIfNeeded()
   await until(170)
-  await page.locator('.understanding-check input').first().check()
-  await page.getByRole('button', { name: '提交理解检查', exact: true }).click()
+  await page.locator('.understanding-check input').last().check()
+  await page.getByRole('button', { name: '提交理解检查', exact: true }).last().click()
   await until(178)
   await page.getByRole('button', { name: '对话历史', exact: true }).click()
-  await scene(185, '交互实验', '', () => page.goto(`${base}/experiments`))
+  await scene(185, '交互实验', '', () => go('/experiments?course=2&mode=py-loop'))
   for (let i = 0; i < 5; i++) {
     await until(188 + i * 2)
     await page.getByRole('button', { name: '下一步', exact: true }).click()
   }
-  await scene(205, '教师工作台', '', () => login('teacher'))
+  let teacherToken
+  await scene(205, '教师工作台', '', async () => {teacherToken=await login('teacher');await go('/analytics?course=2')})
   await until(213)
-  await page.goto(`${base}/analytics`)
+  await page.getByLabel('筛选学情章节').selectOption({label:'条件与循环'})
   await until(218)
-  await page.getByLabel('筛选学情章节').selectOption({label:'线性结构'})
   await page.locator('.matrix-cell').first().click()
   await until(226)
   await page.getByRole('dialog').getByRole('button', { name: '关闭', exact: true }).click()
-  await page.getByRole('tab',{name:'教学干预',exact:true}).click()
-  await page.locator('.teaching-groups').scrollIntoViewIfNeeded()
+  await page.getByRole('tab',{name:'教学群组',exact:true}).click()
+  const questions=(await readApi(teacherToken,'/questions?course_id=2')).filter(q=>q.type==='single'&&q.status==='approved').slice(0,2)
   await scene(230, '针对性任务', '', async () => {
-    await page
-      .locator('.knowledge-analysis>div')
-      .filter({ has: page.getByRole('heading', { name: '数组与链表', exact: true }) })
-      .getByRole('button', { name: '分层任务' })
-      .click()
+    await go('/practice?course=2')
+    await page.getByRole('button',{name:'发布作业',exact:true}).click()
   })
   await until(235)
-  await page.getByRole('dialog').getByLabel('任务名称').fill(taskTitle)
-  await page
-    .getByRole('dialog')
-    .locator('.checkbox-list label')
-    .filter({ hasText: '陈星河' })
-    .getByRole('checkbox')
-    .check()
+  await page.getByRole('dialog').locator('input[name=title]').fill(taskTitle)
+  await page.getByRole('dialog').locator('select[name=class_id]').selectOption({index:1})
+  for(const q of questions) await page.getByRole('dialog').locator('.checkbox-list label').filter({hasText:q.title}).getByRole('checkbox').check()
   await until(242)
-  await page.getByRole('button', { name: '发布分层任务', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: '发布作业', exact: true }).click()
+  const assignment=(await readApi(teacherToken,'/assignments?course_id=2')).find(a=>a.title===taskTitle)
+  if(!assignment)throw new Error('已发布任务未落库')
   await scene(250, '学生完成', '', async () => {
     await login('student1')
-    await page.goto(`${base}/practice`)
-    await page.getByRole('button', { name: taskTitle, exact: true }).click()
+    await go(`/practice?course=2&assignment=${assignment.id}`)
   })
-  await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '提交答案', exact: true }).click()
+  await correctAnswer(questions[0])
   await until(257)
   await page.getByRole('button', { name: '下一道练习', exact: true }).click()
-  await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '提交答案', exact: true }).click()
+  await correctAnswer(questions[1])
   await scene(265, '任务结果', '', async () => {
     await login('teacher')
-    await page.goto(`${base}/analytics?view=intervention`)
+    await go('/practice?course=2')
+    await page.getByRole('tab',{name:'作业记录',exact:true}).click()
     await page
       .locator('.assignment-row')
       .filter({ hasText: taskTitle })
       .getByRole('button', { name: '查看结果', exact: true })
       .click()
   })
-  const replay = pathToFileURL(path.join(root, 'docs/development-process/round4-replay.html')).href
+  const replay = pathToFileURL(path.join(root, 'docs/development-process/round5-replay.html')).href
   for (const [at, id, name] of [
     [280, 'chain1', '知识图谱开发'],
     [320, 'chain2', '学习证据开发'],
@@ -234,7 +264,7 @@ await capture
 await browser.close()
 await fs.writeFile(
   path.join(runDir, 'recording.json'),
-  JSON.stringify({ width: 1920, height: 1080, duration:totalSeconds, quick, events, shots }, null, 2),
+  JSON.stringify({ width: 1920, height: 1080, contentHeight:1000, subtitleBand:80, duration:totalSeconds, quick, events, shots }, null, 2),
 )
 if (!shots.length) throw new Error('没有捕获任何有效视频帧，停止导出')
 if (quick) {
@@ -270,6 +300,8 @@ execFileSync(
     path.join(runDir, 'frames.ffconcat'),
     '-r',
     '24',
+    '-vf',
+    'pad=1920:1080:0:0:color=0xf7f6f2',
     '-t',
     String(totalSeconds),
     '-c:v',
