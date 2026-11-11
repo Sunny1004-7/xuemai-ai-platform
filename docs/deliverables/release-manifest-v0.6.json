@@ -1,0 +1,55 @@
+{
+  "version": "0.6.0",
+  "generated_at_beijing": "2026-11-12T02:43:20.777380+08:00",
+  "source_commit": "18e0f48e35f099e1e9bfe11c4c64c81685cc3862",
+  "source_commit_scope": "功能、报告与视频基线；最终源码提交以本轮ZIP审阅清单为准",
+  "repository": "https://github.com/Sunny1004-7/xuemai-ai-platform",
+  "source_archive": "第六轮完整源码与478张界面图见根目录交付审阅包中的时间戳ZIP",
+  "verification": {
+    "backend_local_business_method_and_tool_tests": 122,
+    "backend_local_command_excluded": [
+      "backend/tests/test_security.py"
+    ],
+    "browser_tests": 29,
+    "real_api_calls_this_round": 13,
+    "flash_calls": 10,
+    "pro_calls": 3,
+    "prompt_tokens": 16527,
+    "completion_tokens": 2540,
+    "pdf_pages": 30,
+    "pdf_references": 17,
+    "tikz_figures": 11,
+    "report_screenshots": 13,
+    "video_seconds": 450,
+    "video_resolution": "1920x1080",
+    "development_evidence_replay_seconds": 120,
+    "narration_segments": 56,
+    "subtitle_entries": 73,
+    "screenshot_modules": 20,
+    "screenshot_images": 478,
+    "mechanism_experiment_seed": 4011
+  },
+  "preferred_video": "学脉XueMai-演示视频-含旁白.mp4",
+  "files": [
+    {
+      "name": "学脉XueMai-技术文档.pdf",
+      "bytes": 1507588,
+      "sha256": "0b2e5c5035d06c8b725ad4c4571a284f75038c7b56d061aa585fe7ae1154cb04"
+    },
+    {
+      "name": "学脉XueMai-演示视频-含旁白.mp4",
+      "bytes": 11752506,
+      "sha256": "bdab23d45fed427b124f9cbe593dbea416d957c3fceafc1a5a2b07fafd6faf4c"
+    },
+    {
+      "name": "学脉XueMai-演示视频.mp4",
+      "bytes": 6910077,
+      "sha256": "76b67cb256ab79a95186c8bc46948ee4dbfcbe909a14f577cdf8a6df7b7598f8"
+    },
+    {
+      "name": "学脉XueMai-演示字幕.srt",
+      "bytes": 6992,
+      "sha256": "029ad7bfb57261245259040b9270d24471a8a2d90effd27341d5e57670b6e7c3"
+    }
+  ]
+}

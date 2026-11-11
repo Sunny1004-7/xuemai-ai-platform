@@ -48,3 +48,14 @@ question result 可编辑后保存题库；lesson result 可编辑后保存资�
 DIA-GUIDE在done.teaching.collaboration与历史消息中保存诊断、策略、校验和角色轨迹。规则诊断读取已评分证据、先修和上轮反馈，策略代理指导一次模型生成，规则校验检查课程对象、理解检查和引用。检查结果写入teaching_runs，下一轮同知识失败时优先转向实验表征。正式成稿用校验后的content覆盖流式临时文本。
 
 0.3已用scripts/validate_live_ai.py完成4次代表性抽样，覆盖协作辅导、出题、备课和量规评阅，输入3744、输出724 Tokens，零重试。使用独立data/ai-smoke-round3.json，保留原历史账本；若该轮账本已存在，脚本直接停止。开发抽样上限与产品正常教学调用分开，不能将历史3/5理解为产品永久限额。
+
+
+## 0.6双角色问答接口
+
+`GET /api/ai/models`返回模型标识与图片能力。`POST /api/ai/chat`增加`model`、`attachment_ids`、`class_id`与`request_id`，模型仅接受`deepseek-flash`和`deepseek-v4-pro`。服务端根据账号角色进入DIA-GUIDE或DIA-TEACH。流式meta和done及历史消息包含实际模型、用量、附件与教学产物。
+
+`POST /api/ai/attachments`接收multipart文件和course_id。文件最多8MB、单次问答最多4份，支持TXT、MD、PDF、DOCX、CSV、PNG和JPEG。详情、原文件与删除分别使用`GET /api/ai/attachments/{id}`、`GET /api/ai/attachments/{id}/file`与`DELETE /api/ai/attachments/{id}`，均核对所有者与课程权限。Pro请求带图片时返回422并提示切换Flash。
+
+`GET /api/ai/voice/status`检查本地转写准备情况，`POST /api/ai/voice/transcribe`接收音频，返回转写文本、原始文本、固定术语订正和时间片段。临时音频在finally清理，浏览器在停止或取消录音时释放设备。
+
+`GET /api/ai/teacher-drafts/{id}`返回教师本人的草稿与授权证据，`POST /api/ai/teacher-drafts/{id}/save`接收修改后的教案并幂等保存。群组与出题草稿由前端带标识进入原题库编辑与作业确认入口，发布仍通过已有教学接口。

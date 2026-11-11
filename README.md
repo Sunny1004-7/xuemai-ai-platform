@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前主分支为0.5：宋瓷青绿学生端、茶烟米褐教师端，共用课程选择器与首屏工作区。两门演示课程均包含六个单元、多题型练习、三段原创视频、目标计划和教学历史，通过正常启动自动初始化。预算路径连接具体学习对象，理解检查与教师干预共享学习证据。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V5.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
+当前主分支为0.6：宋瓷青绿学生端、茶烟米褐教师端，共用课程选择器与首屏工作区。双端分组导航、力导向知识网络和栈操作实验连接现有课程数据。师生可逐条选择Flash或Pro，上传材料或用本地语音输入，教师通过独立DIA-TEACH助手组织教学草稿与群组任务。两门演示课程均包含六个单元、多题型练习、三段原创视频、目标计划和教学历史，通过正常启动自动初始化。预算路径连接具体学习对象，理解检查与教师干预共享学习证据。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V6.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
@@ -11,6 +11,12 @@
 在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。默认自动选择AI模式：后端配置有效Key时使用DeepSeek官方接口，无Key时使用Mock。离线检查可运行 `.\scripts\start.ps1 -MockAI`。
 
 审阅地址为 http://127.0.0.1:5173 。账号student1和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
+
+## 文件、模型与语音
+
+师生问答支持Flash与Pro逐请求切换。Flash可读取图片，Pro使用文本与文档片段。TXT、Markdown、PDF、DOCX、CSV附件保存在当前用户的私有目录，回答中的引用可以打开原片段、版本和位置。附件绑定课程与会话。
+
+当前开发机已准备本地Whisper small模型。其他电脑解压源码后，在已安装主依赖的环境运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup-voice.ps1`，下载约483MB本地模型并安装可选语音依赖。模型缓存和临时音频由交付过滤规则排除。语音支持麦克风录音和音频上传，每段60秒以内，转写结果可编辑后发送。临时音频处理后删除。
 
 ## 每轮完整审阅包
 
@@ -21,7 +27,7 @@ node frontend/scripts/capture-review.mjs docs/rounds/本轮记录.md
 .venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/本轮记录.md --base-ref 本轮起始提交 --screenshots 交付审阅包/界面截图_年月日_时分秒
 ```
 
-将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×900、1366×768、1366×650、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端10个模块和教师端8个模块，并分别切换两门课程。桌面保存首屏，移动端长页面、长弹窗另存分段图，并拍摄分页、关键表单、题型、操作结果和AI引用。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
+将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×900、1366×768、1366×650、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端10个模块和教师端9个模块，并分别切换两门课程。桌面保存首屏，移动端长页面、长弹窗另存分段图，并拍摄分页、关键表单、题型、操作结果和AI引用。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
 
 截图使用本轮生产构建和独立合成演示数据，AI为本地Mock，真实API调用0次。隔离服务占用8002和5176端口，任务结束自动关闭，截图前会检查端口空闲。首次需完成环境安装，Windows使用已安装的Chrome，Linux需安装Playwright Chromium。
 
@@ -75,7 +81,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
+常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。第六轮实际调用13次，Flash 10次、Pro 3次，输入16527、输出2540 Tokens，覆盖师生双角色、文档、图片、语音、出题、备课与评阅，全部成功。见[第六轮真实联调](docs/rounds/第六轮DeepSeek真实联调.json)。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
 
 ## 结构与验证
 
