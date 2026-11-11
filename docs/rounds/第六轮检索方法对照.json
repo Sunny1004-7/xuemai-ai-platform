@@ -1,0 +1,432 @@
+{
+  "conditions": "20个带当前知识点上下文的模糊提问，双课相同材料、分段与候选集合，仅改变知识关联排序项。目标来源是当前知识点关联的课程资料。",
+  "cases": [
+    {
+      "course_id": 1,
+      "knowledge_id": 1,
+      "knowledge": "数组与链表",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "数组与链表学习讲义",
+        "线性结构教学活动设计",
+        "线性结构教学活动设计"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 2,
+      "knowledge": "栈与队列",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "栈与队列学习讲义",
+        "栈与队列学习讲义",
+        "看见算法：栈的入栈与出栈"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 3,
+      "knowledge": "递归与分治",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "递归与分治学习讲义",
+        "递归与复杂度教学活动设计",
+        "递归与复杂度教学活动设计"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 4,
+      "knowledge": "二叉树",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "二叉树学习讲义",
+        "树结构教学活动设计",
+        "树结构教学活动设计"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 5,
+      "knowledge": "图的遍历",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "图的遍历学习讲义",
+        "图结构教学活动设计",
+        "图结构教学活动设计"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 6,
+      "knowledge": "冒泡排序",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "冒泡排序学习讲义",
+        "排序方法教学活动设计",
+        "看见算法：冒泡排序"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 7,
+      "knowledge": "快速排序",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "快速排序学习讲义",
+        "快速排序学习讲义",
+        "递归与复杂度教学活动设计"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 8,
+      "knowledge": "二分查找",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "二分查找学习讲义",
+        "查找与索引教学活动设计",
+        "二分查找学习讲义"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 11,
+      "knowledge": "顺序表插入与删除",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "顺序表插入与删除学习讲义",
+        "顺序表插入与删除学习讲义",
+        "时间复杂度学习讲义"
+      ]
+    },
+    {
+      "course_id": 1,
+      "knowledge_id": 12,
+      "knowledge": "单链表链接操作",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "递归终止条件学习讲义",
+        "循环边界与不变量学习讲义",
+        "哈希表学习讲义"
+      ],
+      "associated_titles": [
+        "单链表链接操作学习讲义",
+        "单链表链接操作学习讲义",
+        "双向链表学习讲义"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 9,
+      "knowledge": "变量与类型",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "变量与类型：例题与边界",
+        "变量与类型学习讲义",
+        "变量与表达式教学活动设计"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 10,
+      "knowledge": "循环与条件",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": true,
+      "associated_top1": true,
+      "keyword_top3": true,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 34,
+      "knowledge": "数值运算",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "数值运算：例题与边界",
+        "数值运算：例题与边界",
+        "布尔表达式：例题与边界"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 35,
+      "knowledge": "布尔表达式",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "布尔表达式：例题与边界",
+        "布尔表达式：例题与边界",
+        "循环与条件学习讲义"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 36,
+      "knowledge": "输入与类型转换",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "输入与类型转换：例题与边界",
+        "输入与类型转换：例题与边界",
+        "异常与文件教学活动设计"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 37,
+      "knowledge": "分支边界",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "分支边界：例题与边界",
+        "分支边界：例题与边界",
+        "布尔表达式：例题与边界"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 38,
+      "knowledge": "累加与循环不变量",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "累加与循环不变量：例题与边界",
+        "累加与循环不变量：例题与边界",
+        "循环与条件学习讲义"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 39,
+      "knowledge": "break与continue",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "break与continue：例题与边界",
+        "break与continue：例题与边界",
+        "循环与条件学习讲义"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 40,
+      "knowledge": "字符串与切片",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "字符串与切片：例题与边界",
+        "序列与映射教学活动设计",
+        "字符串与切片：例题与边界"
+      ]
+    },
+    {
+      "course_id": 2,
+      "knowledge_id": 41,
+      "knowledge": "列表遍历",
+      "query": "请结合当前知识点，说明边界条件与操作步骤",
+      "keyword_top1": false,
+      "associated_top1": true,
+      "keyword_top3": false,
+      "associated_top3": true,
+      "source_locators_valid": true,
+      "keyword_titles": [
+        "循环与条件学习讲义",
+        "条件与循环教学活动设计",
+        "条件与循环教学活动设计"
+      ],
+      "associated_titles": [
+        "列表遍历：例题与边界",
+        "列表遍历：例题与边界",
+        "循环与条件学习讲义"
+      ]
+    }
+  ],
+  "count": 20,
+  "keyword_top1_hits": 1,
+  "associated_top1_hits": 20,
+  "keyword_top3_hits": 1,
+  "associated_top3_hits": 20,
+  "locators_valid": true,
+  "model_requests": 0
+}
