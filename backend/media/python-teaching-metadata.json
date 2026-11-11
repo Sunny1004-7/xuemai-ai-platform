@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "python-loop",
+    "title": "Python：循环与累加",
+    "knowledge_title": "循环与条件",
+    "duration": 36,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 6.0,
+        "text": "初始累加器为0，还没有处理元素。"
+      },
+      {
+        "start": 6.0,
+        "end": 12.0,
+        "text": "先绑定value=2，再将total从0更新为2。"
+      },
+      {
+        "start": 12.0,
+        "end": 18.0,
+        "text": "total保持已处理元素之和，2+4得到6。"
+      },
+      {
+        "start": 18.0,
+        "end": 24.0,
+        "text": "处理第三项后total为12，循环不变量继续成立。"
+      },
+      {
+        "start": 24.0,
+        "end": 30.0,
+        "text": "没有下一个元素时退出循环，随后打印12。"
+      },
+      {
+        "start": 30.0,
+        "end": 36.0,
+        "text": "空列表没有迭代，初始值0直接作为结果。"
+      }
+    ],
+    "synthetic": true
+  },
+  {
+    "slug": "python-list",
+    "title": "Python：列表切片与共享引用",
+    "knowledge_title": "列表切片与别名",
+    "duration": 36,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 7.2,
+        "text": "a绑定一个包含1和2的列表对象。"
+      },
+      {
+        "start": 7.2,
+        "end": 14.4,
+        "text": "b=a不会复制列表，两个变量引用同一对象。"
+      },
+      {
+        "start": 14.4,
+        "end": 21.6,
+        "text": "a[:]创建新的外层列表，c与a不共享外层容器。"
+      },
+      {
+        "start": 21.6,
+        "end": 28.8,
+        "text": "通过b修改共享对象，a随之变化，c保持不变。"
+      },
+      {
+        "start": 28.8,
+        "end": 36.0,
+        "text": "如果元素本身是列表，浅拷贝仍共享内部对象。"
+      }
+    ],
+    "synthetic": true
+  },
+  {
+    "slug": "python-function",
+    "title": "Python：函数参数与局部状态",
+    "knowledge_title": "参数绑定",
+    "duration": 36,
+    "subtitles": [
+      {
+        "start": 0.0,
+        "end": 6.0,
+        "text": "定义时保存默认值，调用时绑定参数。"
+      },
+      {
+        "start": 6.0,
+        "end": 12.0,
+        "text": "add(3)将3绑定给a，b使用默认值2。"
+      },
+      {
+        "start": 12.0,
+        "end": 18.0,
+        "text": "函数内部计算result=5，局部名称只属于本次调用。"
+      },
+      {
+        "start": 18.0,
+        "end": 24.0,
+        "text": "return结束调用，返回值绑定给外部value。"
+      },
+      {
+        "start": 24.0,
+        "end": 30.0,
+        "text": "关键字参数按名称匹配，此时b为4，结果为7。"
+      },
+      {
+        "start": 30.0,
+        "end": 36.0,
+        "text": "代入新输入0，逐步验证默认参数与返回值。"
+      }
+    ],
+    "synthetic": true
+  }
+]

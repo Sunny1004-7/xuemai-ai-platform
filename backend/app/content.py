@@ -94,9 +94,12 @@ def seed_learning_journey(db):
     """单个合成学生的连续真实接口逻辑作答，清楚保留合成来源。"""
     from .learning import record_attempt
     user = dict(db.execute("SELECT * FROM users WHERE username='student1'").fetchone())
-    for qid, answer, hints in [(8,'O(1)',0),(1,'1',0),(3,'最大元素',0),(1,'3',1),(4,'错误',0),(5,'有序',0)]:
+    from datetime import timedelta
+    from .evidence import utc_now
+    base=utc_now()-timedelta(days=14)
+    for i,(qid, answer, hints) in enumerate([(8,'O(1)',0),(1,'1',0),(3,'最大元素',0),(1,'3',1),(4,'错误',0),(5,'有序',0)]):
         question = db.execute('SELECT * FROM questions WHERE id=?', (qid,)).fetchone()
-        result = record_attempt(db, user, question, answer, hints)
+        result = record_attempt(db, user, question, answer, hints,now=base+timedelta(hours=i*12))
         db.execute("UPDATE learning_events SET payload=json_set(payload,'$.synthetic',json('true')) WHERE json_extract(payload,'$.attempt_id')=?", (result['id'],))
 
 

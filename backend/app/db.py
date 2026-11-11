@@ -51,6 +51,8 @@ def init_db():
         upgrade_round3_content(db)
         from .demo_cohort import seed_cohort
         seed_cohort(db)
+        from .sample_package import install_samples
+        install_samples(db)
         from .retrieval import sync_index
         sync_index(db)
 
