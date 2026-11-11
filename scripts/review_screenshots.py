@@ -82,7 +82,8 @@ def validate_screenshots(root: Path, directory: Path, record_name: str) -> tuple
         required = [(viewport, 'full') for viewport in viewports]
         required.extend(('desktop', state) for state in module['details'])
         for course in ([None] if module['role']=='public' else plan.get('courses',[None])):
-            for viewport, state in required:
+            course_required=required + [('desktop',state) for state in module.get('course_details',{}).get(course,[])]
+            for viewport, state in course_required:
                 if (module['role'], module['id'], course, viewport, state) not in coverage:
                     raise ValueError(f'截图覆盖不足 {module["role"]}/{module["id"]}/{course}/{viewport}/{state}。')
     for name in ('截图清单.json', '截图索引.md', '截图总览.html'):

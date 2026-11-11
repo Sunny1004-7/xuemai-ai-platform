@@ -69,13 +69,17 @@ for (const role of ['student', 'teacher'])
           }))
           expect(m.height, `${route} ${viewport.height} 整页高度`).toBeLessThanOrEqual(m.client + 2)
           expect(m.width).toBeLessThanOrEqual(m.viewport + 2)
-          for (const btn of await page
+          const controls = await page
             .locator(
               'main .workspace-pager:visible,main .question-navigation:visible,main .chat-composer:visible,main .experiment-controls:visible',
             )
-            .all()) {
-            const box = await btn.boundingBox()
-            expect(box!.y + box!.height, route).toBeLessThanOrEqual(viewport.height + 2)
+            .evaluateAll(elements => elements.map(element => {
+              const box = element.getBoundingClientRect()
+              return { bottom: box.bottom, height: box.height }
+            }))
+          for (const box of controls) {
+            expect(box.height, route).toBeGreaterThan(0)
+            expect(box.bottom, route).toBeLessThanOrEqual(viewport.height + 2)
           }
         }
       }

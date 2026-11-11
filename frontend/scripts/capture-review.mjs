@@ -31,6 +31,7 @@ const stamp = new Intl.DateTimeFormat('sv-SE', {
   .replace(/[-:]/g, '')
   .replace(' ', '_')
 const output = path.join(root, '交付审阅包', `界面截图_${stamp}`)
+const buildDirectory = path.join(root, '.local', 'review-builds', stamp)
 const apiUrl = 'http://127.0.0.1:8002'
 const baseUrl = 'http://127.0.0.1:5176'
 const python = path.join(
@@ -178,6 +179,8 @@ async function shot(page, state, label, viewport = 'desktop', options = {}) {
       viewportHeight: innerHeight,
       viewportWidth: innerWidth,
       devicePixelRatio,
+      cssZoom: getComputedStyle(document.documentElement).zoom,
+      navigationExpanded: !document.querySelector('.app-shell')?.classList.contains('nav-collapsed'),
       tabs: [...document.querySelectorAll('[role=tab][aria-selected=true]')].map(
         (n) => n.textContent,
       ),
@@ -400,6 +403,23 @@ async function details(page, module, tokens) {
       await button(page, '提交理解检查').last().click()
       await expect(page.locator('.understanding-check [role=status]').last()).toBeVisible()
       await shotState('check-result', '理解检查与持久化反馈')
+      await captureAIInputs(page, module, shotState)
+      break
+    case 'teacher-ai':
+      await captureAIInputs(page, module, shotState)
+      await button(page, '开启新对话').click()
+      await page.locator('#chat-input').fill('这个班有哪些典型错误？安排40分钟讲评课和两组后续练习。')
+      await button(page, '发送').click()
+      await expect(button(page, '编辑与保存教案')).toBeVisible()
+      await shotState('teaching-draft', '班级证据与教学方案草稿')
+      await button(page, '编辑与保存教案').click()
+      await dialog(page, 'draft-editor', '可编辑的教学安排')
+      await button(page, '关闭').click()
+      await button(page, '开启新对话').click()
+      await page.locator('#chat-input').fill(`为${currentCourse.title}生成一道基础单选题供审核。`)
+      await button(page, '发送').click()
+      await expect(page.getByRole('link', { name: '进入题库审核' })).toBeVisible()
+      await shotState('question-draft', '教师助手生成题库待审核草稿')
       break
     case 'experiments':
       await button(page, '下一步').click()
@@ -415,6 +435,18 @@ async function details(page, module, tokens) {
         for (const mode of ['stack', 'queue', 'tree', 'bfs']) {
           await go(page, route(module, { mode }))
           await shotState(mode, '数据结构 · ' + mode)
+          if (mode === 'stack') {
+            await button(page, '压栈').click()
+            await expect(button(page, '出栈')).toBeEnabled()
+            await shotState('stack-push', '栈入栈后的指针与状态')
+            await button(page, '出栈').click()
+            await expect(button(page, '出栈')).toBeEnabled()
+            await shotState('stack-pop', '栈出栈结果与新栈顶')
+            for (let index = 0; index < 3; index++) { await button(page, '出栈').click(); await expect(button(page, '出栈')).toBeEnabled() }
+            await button(page, '出栈').click()
+            await expect(page.locator('.collection-message')).toContainText('结构为空')
+            await shotState('stack-empty', '栈为空时的边界反馈')
+          }
         }
       break
     case 'classroom':
@@ -501,6 +533,23 @@ async function details(page, module, tokens) {
       break
   }
 }
+
+async function captureAIInputs(page, module, shotState) {
+  await button(page, '开启新对话').click()
+  await page.getByLabel('选择AI模型').selectOption('deepseek-v4-pro')
+  await shotState('model-switch', '逐请求选择DeepSeek Pro')
+  await page.getByLabel('选择问答附件').setInputFiles({ name: '课程补充笔记.md', mimeType: 'text/markdown', buffer: Buffer.from(currentCourse.code === 'CS101' ? 'Python列表别名共享对象，切片创建新的外层列表，嵌套元素仍可能共享。' : '队列遵循先进先出，BFS在入队时标记顶点，避免重复加入队列。') })
+  await expect(page.locator('.composer-attachments')).toBeVisible()
+  await page.locator('#chat-input').fill('根据这份笔记解释核心概念，并引用来源。')
+  await button(page, '发送').click()
+  await expect(button(page, '停止')).toHaveCount(0, { timeout: 25000 })
+  await expect(page.locator('.message-sources').last()).toBeVisible()
+  await shotState('attachment', '附件进入问答与定位引用')
+  await button(page, '开启新对话').click()
+  await page.getByLabel('选择语音文件').setInputFiles(path.join(root, '.local/round6-voice-sample.mp3'))
+  await expect(page.locator('#chat-input')).not.toHaveValue('', { timeout: 60000 })
+  await shotState('voice-input', '本地识别后可编辑的语音文字')
+}
 function escapeHtml(text) {
   return String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;')
 }
@@ -510,7 +559,7 @@ try {
   await mkdir(output, { recursive: true })
   outputCreated = true
   await run(process.execPath, ['node_modules/typescript/bin/tsc', '-b'], { cwd: frontend })
-  await run(process.execPath, ['node_modules/vite/bin/vite.js', 'build'], { cwd: frontend })
+  await run(process.execPath, ['node_modules/vite/bin/vite.js', 'build', '--outDir', buildDirectory, '--emptyOutDir'], { cwd: frontend })
   const sourceFingerprint = await fingerprint()
   const backend = start(
     python,
@@ -530,6 +579,8 @@ try {
     [
       'node_modules/vite/bin/vite.js',
       'preview',
+      '--outDir',
+      buildDirectory,
       '--host',
       '127.0.0.1',
       '--port',
@@ -618,7 +669,7 @@ try {
   }
   await writeFile(path.join(output, '截图清单.json'), JSON.stringify(manifest, null, 2), 'utf8')
   let markdown =
-    '# 第五轮双角色双课程界面截图\n\n桌面100%缩放首屏；手机全页及分段；所有内容来自正常初始化。每图记录课程、路由、标签、分页、视口尺寸和SHA256。\n\n'
+    '# 第六轮双角色双课程界面截图\n\n桌面100%缩放首屏，保留导航、顶部栏和完整工作区。手机全页及分段。每图记录课程、路由、标签、分页、视口、devicePixelRatio和SHA256。\n\n'
   let html =
     '<html lang="zh-CN"><meta charset="utf-8"><title>学脉双课程界面审阅</title><style>body{font:16px system-ui;background:#f1f0e8;color:#254b46;margin:32px}section{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}figure{margin:0;background:white;padding:12px;border-radius:12px}img{width:100%;height:230px;object-fit:contain;object-position:top}figcaption{padding:10px}h2{margin-top:45px}</style><h1>学脉双课程界面审阅</h1><p>桌面首屏 · 手机全页 · 关键交互状态 · 正常初始化 · 本地Mock</p>'
   for (const module of plan.modules)

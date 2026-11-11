@@ -88,7 +88,10 @@
       "details": [
         "history",
         "conversation",
-        "check-result"
+        "check-result",
+        "model-switch",
+        "attachment",
+        "voice-input"
       ]
     },
     {
@@ -109,7 +112,8 @@
       "navigation": true,
       "details": [
         "running"
-      ]
+      ],
+      "course_details": { "CS201": ["stack-push", "stack-pop", "stack-empty"] }
     },
     {
       "id": "classroom",
@@ -223,6 +227,14 @@
         "matrix-drill",
         "review-form"
       ]
+    },
+    {
+      "id": "teacher-ai",
+      "role": "teacher",
+      "label": "AI教学助手",
+      "route": "/teacher-ai",
+      "navigation": true,
+      "details": ["model-switch", "attachment", "voice-input", "teaching-draft", "draft-editor", "question-draft"]
     },
     {
       "id": "classroom",
