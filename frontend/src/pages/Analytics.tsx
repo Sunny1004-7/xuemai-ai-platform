@@ -62,6 +62,7 @@ export function Analytics() {
   const pending = attempts.data.filter((a) => String(a.review_status).startsWith('pending'))
   const studentPage = usePage<Row>(students, 49, 460)
   const knowledgePage = usePage<Row>(knowledge, 86, 410)
+  const errorPage = usePage<Row>(d.error_distribution || [], 65, 440)
   const pendingPage = usePage<Row>(pending, 100, 440)
   const taskPage = usePage<Row>(d.assignments || [], 100, 420)
   if (user.role !== 'teacher') return <Empty>班级学情仅向课程教师开放。</Empty>
@@ -280,7 +281,7 @@ export function Analytics() {
         </Panel>
         <Panel title="常见错因分布" caption="从错误类型寻找教学切入点">
           <div className="error-distribution">
-            {(d.error_distribution || []).map((e: Row, i: number) => (
+            {errorPage.rows.map((e: Row, i: number) => (
               <div key={e.name}>
                 <div>
                   <span>
@@ -316,6 +317,7 @@ export function Analytics() {
               </div>
             ))}
           </div>
+          <Pager {...errorPage} onChange={errorPage.setPage} label="类错因" />
           {!d.error_distribution?.length ? <Empty>暂时没有已记录的错因。</Empty> : null}
         </Panel>
       </div>

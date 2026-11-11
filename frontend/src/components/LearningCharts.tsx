@@ -141,6 +141,7 @@ export function CohortCharts({
     530,
   )
   const [columnPage, setColumnPage] = useState(1)
+  const distributionPage = usePage<Row>(nodes, 50, 460)
   const columns = nodes.slice((columnPage - 1) * 6, columnPage * 6)
   return (
     <>
@@ -245,13 +246,13 @@ export function CohortCharts({
       ) : null}
       {view === 'trends' ? (
         <>
-          <div className="learning-chart-grid">
+          <div className="learning-chart-grid cohort-trends">
             <Panel title="班级练习趋势">
               <TrendChart rows={data.trend} />
             </Panel>
             <Panel title="知识状态分布">
               <div className="distribution-bars">
-                {nodes.slice(0, 6).map((n) => (
+                {distributionPage.rows.map((n) => (
                   <button key={n.id} onClick={() => onCell(n, data.students?.[0] || {})}>
                     <span>{n.title}</span>
                     <i>
@@ -269,6 +270,7 @@ export function CohortCharts({
                   </button>
                 ))}
               </div>
+              <Pager {...distributionPage} onChange={distributionPage.setPage} label="项知识" />
             </Panel>
           </div>
         </>

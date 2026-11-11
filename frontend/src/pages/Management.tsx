@@ -26,7 +26,7 @@ export function Management() {
   const chapters = usePage<Row>(course.data.chapters || [], 100, 350)
   const [memberClass, setMemberClass] = useState(0)
   const selected = classes.data.find((c) => c.id === memberClass) || classes.data[0]
-  const members = usePage<Row>(selected?.students || [], 45, 420)
+  const members = usePage<Row>(selected?.students || [], 45, 500)
   const [form, setForm] = useState('')
   const [busy, setBusy] = useState(false)
   const [selectedClass, setSelectedClass] = useState(0)

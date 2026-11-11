@@ -49,7 +49,7 @@ export function LearningPlan() {
 
   const goals: Row[] = query.data.goals || [],
     items: Row[] = query.data.items || []
-  const goalPage = usePage<Row>(goals, 140, 290)
+  const goalPage = usePage<Row>(goals, 180, 330)
   const today = new Date().toLocaleDateString('en-CA')
   const shownItems = items.filter((r) =>
     view === 'history'

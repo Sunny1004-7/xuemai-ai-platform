@@ -929,6 +929,56 @@
     min-height: 0;
     flex: 1;
   }
+  .app-shell .workspace > .analytics-layout:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(270px, 1fr);
+  }
+  .analytics-layout > .panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .knowledge-analysis,
+  .error-distribution {
+    flex: 1;
+    min-height: 0;
+  }
+  .knowledge-analysis > div {
+    grid-template-columns: minmax(140px, 1.2fr) minmax(65px, 1fr) auto auto;
+    gap: 12px;
+  }
+  .knowledge-analysis h3 {
+    font-size: 15px;
+  }
+  .app-shell .workspace .cohort-trends {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .cohort-trends > .panel {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .cohort-trends .distribution-bars {
+    flex: 1;
+    min-height: 0;
+    align-content: start;
+  }
+  .cohort-trends .distribution-bars button {
+    min-height: 32px;
+    font-size: 15px;
+  }
+  .cohort-trends .trend-chart {
+    min-height: 0;
+    flex: 1;
+    height: auto;
+  }
+  .cohort-trends .trend-column {
+    height: auto;
+    flex: 1;
+  }
   .knowledge-analysis > div {
     padding: 12px 0;
   }
