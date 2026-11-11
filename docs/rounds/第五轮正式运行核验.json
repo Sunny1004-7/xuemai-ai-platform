@@ -1,0 +1,40 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "database_integrity": "ok",
+  "sample_versions": [
+    [
+      5001
+    ]
+  ],
+  "courses": [
+    {
+      "code": "CS101",
+      "knowledge": 27,
+      "questions": 34
+    },
+    {
+      "code": "CS201",
+      "knowledge": 31,
+      "questions": 39
+    }
+  ],
+  "model_requests": 0,
+  "database_backup_created": true,
+  "sample_packages": [
+    {
+      "version": 5001,
+      "seed": 20261111,
+      "time_base": "2026-11-11T00:00:00+00:00"
+    },
+    {
+      "version": 5002,
+      "seed": 20261111,
+      "time_base": "2026-11-11T00:00:00+00:00"
+    }
+  ]
+}

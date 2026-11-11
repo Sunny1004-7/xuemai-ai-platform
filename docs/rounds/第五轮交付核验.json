@@ -1,0 +1,43 @@
+{
+  "checked_at_beijing": "2026-11-11T23:36:54.605593+08:00",
+  "screenshots": {
+    "images": 447,
+    "modules": 19,
+    "source_fingerprint": "1c8fc133fc7ee2041a65e8217bb2ce52beda580954b0d9f9fdb20d4fdfa09a6d",
+    "validated": true
+  },
+  "relative_links": {
+    "checked": 49,
+    "missing": []
+  },
+  "media": [
+    {
+      "file": "docs/deliverables/xuemai-technical-report.pdf",
+      "formal_copy_identical": true,
+      "bytes": 1293683,
+      "sha256": "ac930004ce71a35d328610bb23e7496ae1559589ae376b12b71347da3bdc2c19"
+    },
+    {
+      "file": "docs/deliverables/xuemai-demo-1080p.mp4",
+      "formal_copy_identical": true,
+      "bytes": 11297796,
+      "sha256": "3a00701e13dd636d8da95293b3b0a568c6eef146f0119b5872f0f49ac51328be"
+    },
+    {
+      "file": "docs/demo/学脉XueMai-演示字幕.srt",
+      "formal_copy_identical": true,
+      "bytes": 6859,
+      "sha256": "d4f89e0a83655ccb2ac7cd655154277a065590844077c95cab15fe9c252960a5"
+    }
+  ],
+  "release_manifest_consistent": true,
+  "visual_review": {
+    "capture_contact_sheets": 23,
+    "all_contact_sheets_reviewed": true,
+    "pdf_pages": 30,
+    "all_pdf_contact_sheets_reviewed": true,
+    "video_sampled_timepoints": 28,
+    "human_audio_listening": false
+  },
+  "real_model_requests": 0
+}

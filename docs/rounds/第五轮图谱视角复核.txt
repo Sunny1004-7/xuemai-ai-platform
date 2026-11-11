@@ -1,0 +1,17 @@
+[WebServer] INFO:     Started server process [30688]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+[WebServer] (node:6600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+  ok 1 e2e\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (2.9s)
+  ok 2 e2e\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (3.0s)
+  ok 3 e2e\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (2.7s)
+  ok 4 e2e\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (2.8s)
+
+  4 passed (25.5s)

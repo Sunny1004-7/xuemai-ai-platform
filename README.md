@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前主分支为0.4：重新设计的书页路径登录入口、宋瓷青绿学生端、茶烟米褐教师端、章节聚类与圆滑连线知识网络，以及知识追踪、约束路径、协作辅导、动态分层四项方法。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[29页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V4.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
+当前主分支为0.5：宋瓷青绿学生端、茶烟米褐教师端，共用课程选择器与首屏工作区。两门演示课程均包含六个单元、多题型练习、三段原创视频、目标计划和教学历史，通过正常启动自动初始化。预算路径连接具体学习对象，理解检查与教师干预共享学习证据。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V5.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
@@ -21,7 +21,7 @@ node frontend/scripts/capture-review.mjs docs/rounds/本轮记录.md
 .venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/本轮记录.md --base-ref 本轮起始提交 --screenshots 交付审阅包/界面截图_年月日_时分秒
 ```
 
-将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×1000、1366×768、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端11个模块视图和教师端8个模块视图。长页面、长弹窗保存分段图，另拍关键表单、题型、操作结果、AI引用和异常反馈。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
+将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×900、1366×768、1366×650、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端10个模块和教师端8个模块，并分别切换两门课程。桌面保存首屏，移动端长页面、长弹窗另存分段图，并拍摄分页、关键表单、题型、操作结果和AI引用。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
 
 截图使用本轮生产构建和独立合成演示数据，AI为本地Mock，真实API调用0次。隔离服务占用8002和5176端口，任务结束自动关闭，截图前会检查端口空闲。首次需完成环境安装，Windows使用已安装的Chrome，Linux需安装Playwright Chromium。
 
@@ -60,7 +60,7 @@ cd xuemai-ai-platform
 5. 在图谱选择冒泡排序并进入课程视频；字幕定位、时间戳笔记、随堂题写回学习记录。
 6. 教师学情与分层页查看薄弱群组、发布巩固任务，学生完成后刷新统计。
 
-交互实验室由真实算法执行排序、栈/队列、二叉树与 BFS，预测、步骤与结果相连。课程资料支持文本/PDF 解析；教师 AI 备课和出题先生成可编辑草稿，审核保存后才成为课程内容。
+交互实验室由算法执行排序、栈/队列、二叉树与 BFS；Python课程使用循环、分支、列表共享和函数调用四类受控实验，逐步展示变量与输出。课程资料支持文本/PDF解析；教师AI备课和出题先生成可编辑草稿，审核保存后才成为课程内容。
 
 ## AI 模式与额度
 
@@ -75,7 +75,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四轮未新增真实API调用。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
+常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
 
 ## 结构与验证
 
@@ -99,7 +99,7 @@ npx playwright install chromium
 
 后端测试使用隔离临时数据库；端到端使用独立端口和演示数据库，不访问真实 AI。测试报告和截图生成在忽略的本机目录，核实结果后把不含敏感信息的必要证据存入 docs。
 
-数据库默认 `data/xuemai.db`，启动自动迁移及首次种子初始化。不要在已有真实数据上删除数据库以“修复”；演示重置请另选 `DATABASE_PATH` 创建新库。三个原创教学片段已随源码提供，重建素材安装 `scripts/media-requirements.txt` 后执行 `scripts/generate_teaching_clips.py`。正式文档与系统演示的生成方式见[材料说明](docs/TECHNICAL_REPORT.md)和[演示分镜](docs/demo/讲解稿与分镜.md)。
+数据库默认 `data/xuemai.db`，启动自动迁移并执行版本化教学内容补全。5001导入双课样例，5002精修未被人工修改的原始对话和目标；重复启动保留编辑、作答及完成状态。不要在已有真实数据上删除数据库以“修复”；演示重建请另选 `DATABASE_PATH` 创建新库。六个原创教学片段已随源码提供，重建素材安装 `scripts/media-requirements.txt` 后执行 `scripts/generate_teaching_clips.py` 及 `scripts/generate_python_clips.py`。正式文档与系统演示的生成方式见[材料说明](docs/TECHNICAL_REPORT.md)和[演示分镜](docs/demo/讲解稿与分镜.md)。
 
 ## 使用边界与赛事证据
 
