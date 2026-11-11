@@ -1,0 +1,9 @@
+\begin{tikzpicture}[node distance=7mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2mm,minimum width=40mm,minimum height=15mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](goal){教师问题与教学目标\\讨论／分析／设计};
+\node[box,right=of goal](evidence){受控课程与班级工具\\专题错因／群组／题目};
+\node[box,right=of evidence](generate){一次模型生成\\解释与结构化草稿};
+\node[box,below=of generate](check){约束校验\\时间／题目／统计来源};
+\node[box,left=of check,fill=tea!20](review){教师编辑与确认\\教案／作业／题目};
+\node[box,left=of review](feedback){学生完成与证据回流\\后续分析与教学调整};
+\draw[flow](goal)--(evidence);\draw[flow](evidence)--(generate);\draw[flow](generate)--(check);\draw[flow](check)--(review);\draw[flow](review)--(feedback);
+\end{tikzpicture}

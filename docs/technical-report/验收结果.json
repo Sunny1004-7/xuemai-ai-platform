@@ -17,11 +17,11 @@
     "TimesNewRomanPS-BoldMT",
     "TimesNewRomanPSMT"
   ],
-  "figures_tikz": 10,
+  "figures_tikz": 11,
   "screenshots": 13,
   "screenshot_width": "100%版心，彩色，不设高度缩放",
-  "frontend_capture_count": 447,
-  "backend_tests": 112,
-  "browser_tests": 23,
-  "references": 16
+  "frontend_capture_count": 478,
+  "backend_tests": 122,
+  "browser_tests": 29,
+  "references": 17
 }
