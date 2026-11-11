@@ -1,0 +1,54 @@
+{
+  "resolution": "1920x1080",
+  "subtitle_safe_bottom": 950,
+  "slides": [
+    {
+      "id": "intro",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 813
+    },
+    {
+      "id": "chain1",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 845.21875
+    },
+    {
+      "id": "chain2",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 910.3125
+    },
+    {
+      "id": "chain3",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 845.21875
+    },
+    {
+      "id": "methods",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 806.796875
+    },
+    {
+      "id": "path-results",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 885.6875
+    },
+    {
+      "id": "group-results",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 857.390625
+    },
+    {
+      "id": "outro",
+      "width": 1920,
+      "height": 1080,
+      "bottom": 697.765625
+    }
+  ]
+}

@@ -1,138 +1,154 @@
 [
   {
-    "id": "round3-01",
+    "id": "round4-01",
     "name": "片头",
     "start": 0,
     "duration": 12,
-    "text": "学脉是一套面向课程学习和日常教学的智慧教育平台。它把一次作答形成的证据，连接到下一步学习和教师的教学安排。",
-    "file": ".local/narration/round3-01.wav"
+    "text": "学脉面向课程学习、课后巩固和教学协作。它把一次作答形成的证据，连接到下一步学习与教师安排。",
+    "file": ".local/narration/round4-01.wav"
   },
   {
-    "id": "round3-02",
+    "id": "round4-02",
     "name": "登录",
     "start": 12,
     "duration": 13,
-    "text": "平台提供学生和教师两个体验入口。学生使用宋瓷青绿界面，教师使用茶烟米褐工作台，共享课程与学习记录。",
-    "file": ".local/narration/round3-02.wav"
+    "text": "统一的书页路径图形与表单组成品牌入口。学生采用宋瓷青绿，教师采用茶烟米褐，身份切换后共享课程和学习记录。",
+    "file": ".local/narration/round4-02.wav"
   },
   {
-    "id": "round3-03",
+    "id": "round4-03",
     "name": "学生工作台",
     "start": 25,
     "duration": 20,
-    "text": "学生首页先呈现知识领域、近期练习和能力表现，再组织当前任务与课程入口。概念、步骤、推理和迁移分别呈现，让学生看见自己需要巩固的方向。",
-    "file": ".local/narration/round3-03.wav"
+    "text": "学生首页优先呈现下一项学习任务，课程进度与近期任务放在相邻位置。下方的知识领域、练习趋势与技能表现，帮助学生回顾已有证据。切换课程后，推荐和近期记录同步更新。",
+    "file": ".local/narration/round4-03.wav"
   },
   {
-    "id": "round3-04",
+    "id": "round4-04",
     "name": "知识网络",
     "start": 45,
     "duration": 40,
-    "text": "图谱采用章节、章节知识和局部关系三个层次，课程包含六个主题、三十一个知识点。点击章节后展开相关内容，搜索快速排序，再沿先修链查看基础。全屏工作区保留搜索、缩放、小地图和详情，节点位置与连线由分层布局计算。",
-    "file": ".local/narration/round3-04.wav"
+    "text": "图谱分为章节、章节网络与局部关系。大图按章节聚类，连线在避开节点后处理圆滑转角。搜索定位快速排序，可以沿先修链查看基础。全屏保留工具与资源入口；聚焦阅读使用固定比例，退出后恢复原来视角。",
+    "file": ".local/narration/round4-04.wav"
   },
   {
-    "id": "round3-05",
+    "id": "round4-05",
     "name": "视频学习",
     "start": 85,
     "duration": 35,
     "text": "视频页把播放器、章节时间线和字幕放在同一工作区。这里播放原创冒泡排序片段，逐步展示比较与交换。学生可以定位字幕、记录带时间戳的笔记，并完成随堂检查。观看记录与作答记录分别保存。",
-    "file": ".local/narration/round3-05.wav"
+    "file": ".local/narration/round4-05.wav"
   },
   {
-    "id": "round3-06",
+    "id": "round4-06",
     "name": "习题证据",
     "start": 120,
     "duration": 25,
-    "text": "这道栈的练习由确定性规则评分。知识追踪同时考虑提示、难度、部分得分和短期相近题的相关性；已经答对的同题重复成功不继续积累证据。无作答支持的知识显示待观测。",
-    "file": ".local/narration/round3-06.wav"
+    "text": "练习提交后，页面对照知识估计的前后变化，并给出重新计算的后续路径。知识追踪考虑难度、提示、部分得分和相近题相关性；已经答对的同题重复成功不继续增加证据。",
+    "file": ".local/narration/round4-06.wav"
   },
   {
-    "id": "round3-07",
+    "id": "round4-07",
     "name": "辅导与理解检查",
     "start": 145,
     "duration": 40,
     "text": "辅导带入当前题目和知识状态。这里使用本地示例模式，展开协作记录可以看到诊断、策略和校验三个角色。诊断读取困难，策略选择教学方式，校验检查课程动作与引用。理解检查写回实际学习证据；未通过时，下一轮会调整教学表征。",
-    "file": ".local/narration/round3-07.wav"
+    "file": ".local/narration/round4-07.wav"
   },
   {
-    "id": "round3-08",
+    "id": "round4-08",
     "name": "交互实验",
     "start": 185,
     "duration": 20,
     "text": "交互实验允许学生逐步执行算法，观察每次比较、交换和结构变化。修改输入或预测下一步之后，可以继续运行验证自己的判断。画面中的状态由算法实际计算。",
-    "file": ".local/narration/round3-08.wav"
+    "file": ".local/narration/round4-08.wav"
   },
   {
-    "id": "round3-09",
+    "id": "round4-09",
     "name": "教师证据",
     "start": 205,
     "duration": 25,
-    "text": "教师工作台面向二十八人的教学班。知识矩阵呈现每位学生的差异，选择章节后可以打开单个学生的作答证据。动态群组依据错因、提示和参与情况重新计算，并匹配相应练习。",
-    "file": ".local/narration/round3-09.wav"
+    "text": "教师通过知识矩阵、教学干预、学生轨迹和作答复核四个工作区，处理不同任务。选择章节后，可以下钻到原始答案。动态群组根据错因和证据支持度计算，观测不足的学生先进入学习起点观察组。",
+    "file": ".local/narration/round4-09.wav"
   },
   {
-    "id": "round3-10",
+    "id": "round4-10",
     "name": "针对性任务",
     "start": 230,
     "duration": 20,
     "text": "教师可以从群组安排任务，也可以针对具体知识点选择学生。这里为陈星河发布数组与链表巩固任务，保存发布时的知识状态，便于跟踪后续表现。",
-    "file": ".local/narration/round3-10.wav"
+    "file": ".local/narration/round4-10.wav"
   },
   {
-    "id": "round3-11",
+    "id": "round4-11",
     "name": "学生完成任务",
     "start": 250,
     "duration": 15,
     "text": "学生收到任务后直接进入练习，连续完成两道题。任务完成情况和新的学习证据会回到教师端。",
-    "file": ".local/narration/round3-11.wav"
+    "file": ".local/narration/round4-11.wav"
   },
   {
-    "id": "round3-12",
+    "id": "round4-12",
     "name": "干预跟踪",
     "start": 265,
     "duration": 15,
     "text": "教师再次打开结果，可以对照任务完成状态、发布前后的知识估计和新增证据。这样的记录帮助教师判断下一次应当如何安排教学。",
-    "file": ".local/narration/round3-12.wav"
+    "file": ".local/narration/round4-12.wav"
   },
   {
-    "id": "round3-13",
+    "id": "round4-13",
     "name": "开发记录一",
     "start": 280,
-    "duration": 35,
+    "duration": 40,
     "text": "接下来回放已经发生的人工智能开发协作。第一组围绕统一课程和知识图谱展开：先明确实体关系、接口和数据迁移，再接入双端界面。反馈中保留了首次初始化失败与修正结果。图谱、资源和题目因此能够使用同一套课程对象。画面显示原始协作消息的节选与对应中文提交。",
-    "file": ".local/narration/round3-13.wav"
+    "file": ".local/narration/round4-13.wav"
   },
   {
-    "id": "round3-14",
+    "id": "round4-14",
     "name": "开发记录二",
-    "start": 315,
-    "duration": 35,
+    "start": 320,
+    "duration": 40,
     "text": "第二组针对练习与学习证据继续深化。提示要求补齐章节目标、题目审核和个人计划。浏览器测试发现单选输入被装饰元素遮挡，随后修正交互层；又发现加入课程后顶部课程列表没有刷新。记录同时保存问题、实际修改和再次验证，保留了产品逐步完善的过程。",
-    "file": ".local/narration/round3-14.wav"
+    "file": ".local/narration/round4-14.wav"
   },
   {
-    "id": "round3-15",
+    "id": "round4-15",
     "name": "开发记录三",
-    "start": 350,
-    "duration": 35,
-    "text": "第三组建立课程上下文辅导和结构化教学草稿。开发指令要求常规验证使用本地示例，控制真实联调。原记录保留中文检索、流式中断和预算处理。初版三次接口抽样继续保存；本次升级另做四次代表性抽样，分别验证辅导、出题、备课和量规评阅。",
-    "file": ".local/narration/round3-15.wav"
+    "start": 360,
+    "duration": 40,
+    "text": "第三组建立课程上下文辅导和结构化教学草稿。指令要求常规验证使用本地示例，控制真实接口用量。记录保留中文检索、流式中断和预算处理的反馈。已有官方抽样分别验证辅导、出题、备课和量规评阅。本段操作录制使用独立示例数据，不消耗官方接口额度。",
+    "file": ".local/narration/round4-15.wav"
   },
   {
-    "id": "round3-16",
     "name": "四项教学方法",
-    "start": 385,
-    "duration": 25,
-    "text": "在这些开发基础上，学脉形成四项方法：相关性修正的知识追踪，先修约束的路径规划，诊断干预校验协作，以及基于错因距离的动态分层。当前九十七项后端功能与方法检查、十四项浏览器流程通过。四次官方接口抽样成功，录制使用本地示例。",
-    "file": ".local/narration/round3-16.wav"
+    "start": 400,
+    "duration": 12,
+    "text": "四项方法分别负责知识追踪、路径规划、协作辅导与动态分层。结果共享同一份学习记录，直接进入学生和教师的操作。",
+    "id": "round4-16",
+    "file": ".local/narration/round4-16.wav"
   },
   {
-    "id": "round3-17",
+    "name": "路径约束实验",
+    "start": 412,
+    "duration": 14,
+    "text": "四十八个合成案例中，路径规划的先修和预算违规均为零。目标优先排序出现三十六步先修违规。先修得到证据支持后，计划会把时间留给后续内容。",
+    "id": "round4-17",
+    "file": ".local/narration/round4-17.wav"
+  },
+  {
+    "name": "错因分层实验",
+    "start": 426,
+    "duration": 14,
+    "text": "二十四名等均分合成学生中，错因分层的原型纯度为一点零，对照为零点三三三。证据变化会改变分组，观测不足时先补充学习证据。",
+    "id": "round4-18",
+    "file": ".local/narration/round4-18.wav"
+  },
+  {
     "name": "片尾",
-    "start": 410,
+    "start": 440,
     "duration": 10,
     "text": "学脉把课程知识、学生反馈和教师行动连接起来，让学习建议能够执行，让教学安排有据可循。",
-    "file": ".local/narration/round3-17.wav"
+    "id": "round4-19",
+    "file": ".local/narration/round4-19.wav"
   }
 ]

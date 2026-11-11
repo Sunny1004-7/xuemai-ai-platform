@@ -10,6 +10,7 @@ const base = process.env.DEMO_BASE_URL || 'http://127.0.0.1:5175'
 const quick = process.env.DEMO_QUICK === '1'
 const taskTitle = `数组知识巩固-${new Date().toISOString().slice(11, 19).replaceAll(':', '')}`
 const scale = quick ? 0.03 : 1
+const totalSeconds=450
 const runDir = path.join(
   root,
   '.local',
@@ -77,7 +78,7 @@ async function login(username) {
   await page.getByRole('navigation', { name: '主导航' }).waitFor()
 }
 
-await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round3-replay.html')).href + '#intro')
+await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round4-replay.html')).href + '#intro')
 const capture = (async () => {
   while (recording) {
     const tick = Date.now()
@@ -110,7 +111,7 @@ try {
   await until(70)
   await page.getByRole('button', { name: '先修链', exact: true }).click()
   await until(76)
-  await page.getByRole('button', { name: '放大图谱', exact: true }).click()
+  await page.getByRole('button', { name: '聚焦阅读', exact: true }).click()
   await until(81)
   await page.keyboard.press('Escape')
   await scene(85, '视频学习', '', async () => {
@@ -204,18 +205,20 @@ try {
       .getByRole('button', { name: '查看结果', exact: true })
       .click()
   })
-  const replay = pathToFileURL(path.join(root, 'docs/development-process/round3-replay.html')).href
+  const replay = pathToFileURL(path.join(root, 'docs/development-process/round4-replay.html')).href
   for (const [at, id, name] of [
     [280, 'chain1', '知识图谱开发'],
-    [315, 'chain2', '学习证据开发'],
-    [350, 'chain3', '人工智能服务开发'],
-    [385, 'round3', '四项方法与本轮验证'],
+    [320, 'chain2', '学习证据开发'],
+    [360, 'chain3', '人工智能服务开发'],
+    [400, 'methods', '四项方法与验证'],
+    [412, 'path-results', '路径约束实验'],
+    [426, 'group-results', '错因分层实验'],
   ]) {
     await scene(at, name, '', () => page.goto(replay + '#' + id))
   }
-  await until(410)
+  await until(440)
   await page.goto(replay + '#outro')
-  await until(420)
+  await until(totalSeconds)
 } catch (error) {
   recording = false
   await capture
@@ -231,7 +234,7 @@ await capture
 await browser.close()
 await fs.writeFile(
   path.join(runDir, 'recording.json'),
-  JSON.stringify({ width: 1920, height: 1080, quick, events, shots }, null, 2),
+  JSON.stringify({ width: 1920, height: 1080, duration:totalSeconds, quick, events, shots }, null, 2),
 )
 if (!shots.length) throw new Error('没有捕获任何有效视频帧，停止导出')
 if (quick) {
@@ -241,7 +244,7 @@ if (quick) {
 const lines = ['ffconcat version 1.0']
 for (let i = 0; i < shots.length; i++) {
   lines.push(`file '${shots[i].file}'`)
-  lines.push(`duration ${Math.max(0.01, (shots[i + 1]?.at || 420) - shots[i].at).toFixed(3)}`)
+  lines.push(`duration ${Math.max(0.01, (shots[i + 1]?.at || totalSeconds) - shots[i].at).toFixed(3)}`)
 }
 lines.push(`file '${shots.at(-1).file}'`)
 await fs.writeFile(path.join(runDir, 'frames.ffconcat'), lines.join('\n'))
@@ -267,6 +270,8 @@ execFileSync(
     path.join(runDir, 'frames.ffconcat'),
     '-r',
     '24',
+    '-t',
+    String(totalSeconds),
     '-c:v',
     'libx264',
     '-preset',
@@ -286,7 +291,7 @@ console.log(
     output: out,
     frames: shots.length,
     recorded_seconds: shots.at(-1).at,
-    development_evidence_seconds: 130,
+    development_evidence_seconds: 120,
     runDir,
   }),
 )
