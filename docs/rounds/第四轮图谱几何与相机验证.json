@@ -1,0 +1,137 @@
+[
+  {
+    "nodes": 6,
+    "edges": 6,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 101,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 1.15,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.9492119089316988,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.8791593695271454,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.2136602451838879,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "nodes": 31,
+    "edges": 39,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 160,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 0.10906515580736544,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.09135977337110482,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.09135977337110482,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.06657223796033994,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "nodes": 80,
+    "edges": 104,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 225,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 0.04295676429567643,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.03598326359832636,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.03598326359832636,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.026220362622036263,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  }
+]

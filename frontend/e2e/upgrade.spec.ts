@@ -48,12 +48,14 @@ test('渐进图谱支持章节展开搜索全屏小地图与平移', async ({ pa
   await expect(page.locator('.node-detail h2')).toHaveText('快速排序')
   await page.getByRole('button', { name: '先修链', exact: true }).click()
   expect(await page.locator('.knowledge-node').count()).toBeGreaterThan(1)
+  const cameraBefore = await page.locator('.graph-canvas>svg>g').getAttribute('transform')
   await page.getByRole('button',{name:'全屏查看',exact:true}).click()
   await expect(page.getByRole('dialog',{name:'全屏知识图谱'})).toBeVisible()
   await expect(page.getByLabel('图谱小地图')).toBeVisible()
   await page.getByRole('button',{name:'放大图谱'}).click()
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog',{name:'全屏知识图谱'})).toHaveCount(0)
+  await expect(page.locator('.graph-canvas>svg>g')).toHaveAttribute('transform', cameraBefore!)
   const g=page.locator('.graph-canvas>svg>g')
   const before=await g.getAttribute('transform')
   const svg=page.locator('.graph-canvas>svg').first()
@@ -64,6 +66,20 @@ test('渐进图谱支持章节展开搜索全屏小地图与平移', async ({ pa
   await expect(g).not.toHaveAttribute('transform',before!)
   await page.getByRole('button',{name:'全图',exact:true}).click()
   await expect(page.locator('.knowledge-node')).toHaveCount(31)
+  await page.getByRole('button',{name:'收起知识详情'}).click()
+  for (const viewport of [{width:1920,height:1080},{width:1440,height:1000},{width:1366,height:768},{width:390,height:844}]) {
+    await page.setViewportSize(viewport)
+    await page.getByRole('button',{name:'重置图谱视角'}).click()
+    await expect.poll(() => page.locator('.graph-canvas').evaluate(canvas => {
+      const box = canvas.getBoundingClientRect()
+      return [...canvas.querySelectorAll('.knowledge-node .node-body')].every(node => {
+        const r = node.getBoundingClientRect()
+        return r.left>=box.left && r.right<=box.right && r.top>=box.top && r.bottom<=box.bottom
+      })
+    })).toBe(true)
+  }
+  await page.getByRole('button',{name:'聚焦阅读',exact:true}).click()
+  await expect(page.locator('.graph-controls > span')).toHaveText('115%')
 })
 
 test('辅导结构化动作执行理解检查并在历史保留评分', async ({ page }) => {

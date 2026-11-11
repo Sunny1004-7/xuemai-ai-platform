@@ -6,6 +6,9 @@ const require=createRequire(import.meta.url)
 const compiled={exports:{}}
 new Function('require','module','exports',ts.transpileModule(readFileSync(new URL('../src/graph-layout.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,esModuleInterop:true}}).outputText)(require,compiled,compiled.exports)
 const {layoutKnowledge}=compiled.exports
+const cameraModule={exports:{}}
+new Function('module','exports',ts.transpileModule(readFileSync(new URL('../src/graph-camera.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText)(cameraModule,cameraModule.exports)
+const {fitCamera,zoomCamera,focusCamera,canvasInsets}=cameraModule.exports
 const report=[]
 for(const count of [6,31,80]) {
  const nodes=Array.from({length:count},(_,i)=>({id:i+1,title:`知识点${i+1}`,chapter_id:Math.floor(i/5)}))
@@ -25,7 +28,22 @@ for(const count of [6,31,80]) {
  }
  assert.equal(collision,0,'节点必须无碰撞');assert.equal(obstruction,0,'连线不能穿过无关节点')
  assert.equal(Object.keys(result.positions).length,count)
- report.push({nodes:count,edges:edges.length,collisions:collision,obstructions:obstruction,elapsed_ms:Math.round(performance.now()-start)})
+ const cameras=[]
+ for (const viewport of [{width:1620,height:760},{width:1140,height:660},{width:1060,height:660},{width:300,height:520}]) {
+   const camera=fitCamera(result,viewport)
+   for(const p of pos) {
+     const x=p.x*camera.zoom+camera.pan.x,y=p.y*camera.zoom+camera.pan.y,r=62*camera.zoom
+     assert.ok(x-r>=0&&x+r<=viewport.width,'全图节点及选中光圈必须在左右边界内')
+     assert.ok(y-r>=canvasInsets.top-2&&y+r<=viewport.height-canvasInsets.bottom+2,'全图必须避开标题和工具条')
+   }
+   const anchor={x:viewport.width*.7,y:viewport.height*.3}
+   const next=zoomCamera(camera,camera.zoom*1.4,anchor)
+   for(const axis of ['x','y'])assert.ok(Math.abs((anchor[axis]-camera.pan[axis])/camera.zoom-(anchor[axis]-next.pan[axis])/next.zoom)<1e-7,'鼠标锚点缩放不可漂移')
+   const focused=focusCamera(pos[0],viewport)
+   assert.equal(focused.zoom,1.15)
+   cameras.push({viewport,fit_zoom:camera.zoom,visible_nodes:pos.length,anchor_error_below:1e-7})
+ }
+ report.push({nodes:count,edges:edges.length,collisions:collision,obstructions:obstruction,elapsed_ms:Math.round(performance.now()-start),cameras})
 }
 console.log(JSON.stringify(report,null,2))
 if(process.argv[2])writeFileSync(process.argv[2],JSON.stringify(report,null,2))
