@@ -1,3 +1,4 @@
+import { Pager, usePage } from '../components/Workspace'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
@@ -23,10 +24,17 @@ export function Analytics() {
   const { user, courseId, notify } = useApp()
   const [params] = useSearchParams()
   const [classId, setClassId] = useState('')
-  const [view, setView] = useState(params.get('knowledge') ? 'intervention' : params.get('view') || 'matrix')
+  const [view, setView] = useState(
+    params.get('knowledge') ? 'intervention' : params.get('view') || 'matrix',
+  )
   const classes = useApi<Row[]>(`/classes?course_id=${courseId}`, [])
   useEffect(() => setClassId(''), [courseId])
-  const query = useApi<Row>(user.role === 'teacher' ? `/analytics?course_id=${courseId}${classId ? `&class_id=${classId}` : ''}` : null, {})
+  const query = useApi<Row>(
+    user.role === 'teacher'
+      ? `/analytics?course_id=${courseId}${classId ? `&class_id=${classId}` : ''}`
+      : null,
+    {},
+  )
   const questions = useApi<Row[]>(
     user.role === 'teacher' ? `/questions?course_id=${courseId}` : null,
     [],
@@ -47,26 +55,27 @@ export function Analytics() {
   const [selected, setSelected] = useState<number[]>([])
   const [busy, setBusy] = useState(false)
   const [rubric, setRubric] = useState<Row | null>(null)
-  useEffect(() => {
-    const kid = Number(params.get('knowledge'))
-    if (kid)
-      document.querySelector(`[data-knowledge="${kid}"]`)?.scrollIntoView({ block: 'center' })
-  }, [params, query.data])
-  if (user.role !== 'teacher') return <Empty>班级学情仅向课程教师开放。</Empty>
   const d = query.data,
     summary = d.summary || {},
     knowledge: Row[] = d.knowledge || [],
     students: Row[] = d.students || []
   const pending = attempts.data.filter((a) => String(a.review_status).startsWith('pending'))
+  const studentPage = usePage<Row>(students, 49, 460)
+  const knowledgePage = usePage<Row>(knowledge, 86, 410)
+  const pendingPage = usePage<Row>(pending, 100, 440)
+  const taskPage = usePage<Row>(d.assignments || [], 100, 420)
+  if (user.role !== 'teacher') return <Empty>班级学情仅向课程教师开放。</Empty>
   async function publish(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const f = new FormData(e.currentTarget)
     setBusy(true)
     try {
-      const ids = target?.question_ids || questions.data
-        .filter((q) => q.knowledge_id === target?.id)
-        .map((q) => q.id)
-        .slice(0, 4)
+      const ids =
+        target?.question_ids ||
+        questions.data
+          .filter((q) => q.knowledge_id === target?.id)
+          .map((q) => q.id)
+          .slice(0, 4)
       if (!ids.length) {
         notify('该知识点还没有题目，请先创建练习', true)
         return
@@ -164,19 +173,74 @@ export function Analytics() {
           )
         })}
       </div>
-      <div className="matrix-filters"><select aria-label="筛选教学班级" value={classId} onChange={e=>setClassId(e.target.value)}><option value="">课程全部班级</option>{classes.data.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
+      <div className="matrix-filters">
+        <select
+          aria-label="筛选教学班级"
+          value={classId}
+          onChange={(e) => setClassId(e.target.value)}
+        >
+          <option value="">课程全部班级</option>
+          {classes.data.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="analytics-tabs" role="tablist" aria-label="学情工作区">
-        {[['matrix','知识矩阵'],['intervention','教学干预'],['students','学生轨迹'],['review','作答复核']].map(([id,label]) => <button key={id} id={`tab-${id}`} role="tab" aria-selected={view===id} aria-controls={`view-${id}`} onClick={()=>setView(id)}>{label}{id==='review' && pending.length ? <span>{pending.length}</span> : null}</button>)}
+        {[
+          ['matrix', '知识矩阵'],
+          ['trends', '趋势表现'],
+          ['intervention', '教学群组'],
+          ['focus', '知识关注'],
+          ['tasks', '干预跟踪'],
+          ['students', '学生轨迹'],
+          ['review', '作答复核'],
+        ].map(([id, label]) => (
+          <button
+            key={id}
+            id={`tab-${id}`}
+            role="tab"
+            aria-selected={view === id}
+            aria-controls={`view-${id}`}
+            onClick={() => setView(id)}
+          >
+            {label}
+            {id === 'review' && pending.length ? <span>{pending.length}</span> : null}
+          </button>
+        ))}
       </div>
-      <div id="view-matrix" role="tabpanel" aria-labelledby="tab-matrix" hidden={view!=='matrix'}>
-      <CohortCharts view="matrix" data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
+      <div id="view-matrix" role="tabpanel" aria-labelledby="tab-matrix" hidden={view !== 'matrix'}>
+        <CohortCharts
+          view="matrix"
+          data={d}
+          onCell={(node, student) => setDrill({ node, student })}
+          onGroup={(g) => {
+            setTarget({ id: g.knowledge_id, title: g.name, question_ids: g.question_ids })
+            setSelected(g.student_ids)
+          }}
+        />
       </div>
-      <div id="view-intervention" role="tabpanel" aria-labelledby="tab-intervention" hidden={view!=='intervention'}>
-      <CohortCharts view="groups" data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
-      <div className="analytics-layout">
+      <div
+        id="view-intervention"
+        role="tabpanel"
+        aria-labelledby="tab-intervention"
+        hidden={view !== 'intervention'}
+      >
+        <CohortCharts
+          view="groups"
+          data={d}
+          onCell={(node, student) => setDrill({ node, student })}
+          onGroup={(g) => {
+            setTarget({ id: g.knowledge_id, title: g.name, question_ids: g.question_ids })
+            setSelected(g.student_ids)
+          }}
+        />
+      </div>
+      <div role="tabpanel" hidden={view !== 'focus'} className="analytics-layout">
         <Panel title="知识掌握与教学关注" caption="按知识点识别需要巩固的学生，直接形成教学行动">
           <div className="knowledge-analysis">
-            {knowledge.slice(0,8).map((k) => (
+            {knowledgePage.rows.map((k) => (
               <div key={k.id} data-knowledge={k.id}>
                 <div>
                   <h3>{k.title}</h3>
@@ -211,6 +275,7 @@ export function Analytics() {
               </div>
             ))}
           </div>
+          <Pager {...knowledgePage} onChange={knowledgePage.setPage} label="个知识点" />
           {!knowledge.length ? <Empty>课程加入知识点与作答后，分析会在这里出现。</Empty> : null}
         </Panel>
         <Panel title="常见错因分布" caption="从错误类型寻找教学切入点">
@@ -254,96 +319,118 @@ export function Analytics() {
           {!d.error_distribution?.length ? <Empty>暂时没有已记录的错因。</Empty> : null}
         </Panel>
       </div>
-      <Panel title="教学干预跟踪">
-        {(d.assignments || []).map((a: Row) => <AssignmentRow key={a.id} assignment={a} />)}
-      </Panel>
+      <div role="tabpanel" hidden={view !== 'tasks'}>
+        <Panel title="教学干预跟踪">
+          {taskPage.rows.map((a: Row) => (
+            <AssignmentRow key={a.id} assignment={a} />
+          ))}
+          <Pager {...taskPage} onChange={taskPage.setPage} label="份任务" />
+        </Panel>
       </div>
-      <div id="view-students" role="tabpanel" aria-labelledby="tab-students" hidden={view!=='students'}>
-      <Panel title="学生学习轨迹概览" caption="掌握度来自可解释的学习证据，观看时长不直接代表理解">
-        <div className="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>学生</th>
-                <th>学生编号</th>
-                <th>综合掌握</th>
-                <th>作答次数</th>
-                <th>正确率</th>
-                <th>教学建议</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((s) => (
-                <tr key={s.id}>
-                  <td>
-                    <span className="table-person">
-                      <i>{s.name.slice(0, 1)}</i>
-                      {s.name}
-                    </span>
-                  </td>
-                  <td>{s.id}</td>
-                  <td>
-                    <div className="table-progress">
-                      <Progress value={percent(s.mastery)} />
-                      <strong>{percent(s.mastery)}%</strong>
-                    </div>
-                  </td>
-                  <td>{s.attempts || 0}</td>
-                  <td>{percent(s.accuracy)}%</td>
-                  <td>
-                    <Pill tone={percent(s.mastery) < 40 ? 'amber' : 'green'}>
-                      {percent(s.mastery) < 40
-                        ? '关注先修知识与概念辨析'
-                        : percent(s.mastery) < 75
-                          ? '增加独立练习与复测'
-                          : '尝试迁移与进阶应用'}
-                    </Pill>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Panel>
+      <div role="tabpanel" hidden={view !== 'trends'}>
+        <CohortCharts
+          view="trends"
+          data={d}
+          onCell={(node, student) => setDrill({ node, student })}
+          onGroup={() => {}}
+        />
       </div>
-      <div id="view-review" role="tabpanel" aria-labelledby="tab-review" hidden={view!=='review'}>
-      <Panel
-        title="主观题待复核"
-        caption="AI 可给出量规建议，最终评分由教师确认"
-        action={<Pill tone="amber">{pending.length} 待处理</Pill>}
+      <div
+        id="view-students"
+        role="tabpanel"
+        aria-labelledby="tab-students"
+        hidden={view !== 'students'}
       >
-        {pending.length ? (
-          <div className="pending-reviews">
-            {pending.map((a) => (
-              <div key={a.id}>
-                <span className="class-icon">
-                  <Edit3 size={20} />
-                </span>
-                <div>
-                  <h3>{a.student_name || `学生 ${a.student_id}`}</h3>
-                  <p>
-                    {questions.data.find((q) => q.id === a.question_id)?.title ||
-                      a.title ||
-                      '主观题作答'}
-                  </p>
-                  <small>{dateLabel(a.created_at)}</small>
-                </div>
-                <Button
-                  variant="small secondary"
-                  onClick={() => {
-                    setReview(a)
-                    setRubric(null)
-                  }}
-                >
-                  查看并复核
-                </Button>
-              </div>
-            ))}
+        <Panel
+          title="学生学习轨迹概览"
+          caption="掌握度来自可解释的学习证据，观看时长不直接代表理解"
+        >
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>学生</th>
+                  <th>学生编号</th>
+                  <th>综合掌握</th>
+                  <th>作答次数</th>
+                  <th>正确率</th>
+                  <th>教学建议</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentPage.rows.map((s) => (
+                  <tr key={s.id}>
+                    <td>
+                      <span className="table-person">
+                        <i>{s.name.slice(0, 1)}</i>
+                        {s.name}
+                      </span>
+                    </td>
+                    <td>{s.id}</td>
+                    <td>
+                      <div className="table-progress">
+                        <Progress value={percent(s.mastery)} />
+                        <strong>{percent(s.mastery)}%</strong>
+                      </div>
+                    </td>
+                    <td>{s.attempts || 0}</td>
+                    <td>{percent(s.accuracy)}%</td>
+                    <td>
+                      <Pill tone={percent(s.mastery) < 40 ? 'amber' : 'green'}>
+                        {percent(s.mastery) < 40
+                          ? '关注先修知识与概念辨析'
+                          : percent(s.mastery) < 75
+                            ? '增加独立练习与复测'
+                            : '尝试迁移与进阶应用'}
+                      </Pill>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ) : (
-          <Empty>当前没有等待复核的主观题。</Empty>
-        )}
-      </Panel>
+          <Pager {...studentPage} onChange={studentPage.setPage} label="位学生" />
+        </Panel>
+      </div>
+      <div id="view-review" role="tabpanel" aria-labelledby="tab-review" hidden={view !== 'review'}>
+        <Panel
+          title="主观题待复核"
+          caption="AI 可给出量规建议，最终评分由教师确认"
+          action={<Pill tone="amber">{pending.length} 待处理</Pill>}
+        >
+          {pending.length ? (
+            <div className="pending-reviews">
+              {pendingPage.rows.map((a) => (
+                <div key={a.id}>
+                  <span className="class-icon">
+                    <Edit3 size={20} />
+                  </span>
+                  <div>
+                    <h3>{a.student_name || `学生 ${a.student_id}`}</h3>
+                    <p>
+                      {questions.data.find((q) => q.id === a.question_id)?.title ||
+                        a.title ||
+                        '主观题作答'}
+                    </p>
+                    <small>{dateLabel(a.created_at)}</small>
+                  </div>
+                  <Button
+                    variant="small secondary"
+                    onClick={() => {
+                      setReview(a)
+                      setRubric(null)
+                    }}
+                  >
+                    查看并复核
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Empty>当前没有等待复核的主观题。</Empty>
+          )}
+          <Pager {...pendingPage} onChange={pendingPage.setPage} label="份作答" />
+        </Panel>
       </div>
       {drill ? (
         <Modal title={`${drill.student.name} · ${drill.node.title}`} close={() => setDrill(null)}>
@@ -385,7 +472,6 @@ export function Analytics() {
       {target ? (
         <Modal title={`分层学习 · ${target.title}`} close={() => setTarget(null)}>
           <form className="form-stack" onSubmit={publish}>
-
             <label>
               任务名称
               <input required name="title" defaultValue={`${target.title} · 针对性巩固`} />

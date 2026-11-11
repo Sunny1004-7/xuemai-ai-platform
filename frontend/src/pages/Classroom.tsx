@@ -1,3 +1,4 @@
+import { Pager, usePage } from '../components/Workspace'
 import { useEffect, useState } from 'react'
 
 import { MessageCircle, Plus, Send } from 'lucide-react'
@@ -8,6 +9,10 @@ import { Button, Empty, LoadState, Modal, Panel, Pill, Title, useApp } from '../
 export function Classroom() {
   const { user, courseId, notify } = useApp()
   const activities = useApi<Row[]>(`/classroom?course_id=${courseId}`, [])
+  const [selected, setSelected] = useState<number | null>(null)
+  const activityPage = usePage<Row>(activities.data, 80, 290)
+  const current = activities.data.find((a) => a.id === selected) || activities.data[0]
+  const responsePage = usePage<Row>(current?.responses || [], 100, 390)
   const [create, setCreate] = useState(false)
   const [busy, setBusy] = useState(false)
   const [answers, setAnswers] = useState<Record<number, string>>({})
@@ -69,93 +74,126 @@ export function Classroom() {
         }
       />
       <LoadState {...activities} retry={activities.reload} />
-      <div className="classroom-grid">
-        {activities.data.map((a) => (
-          <Panel key={a.id} className={`classroom-card ${a.active ? 'is-active' : ''}`}>
-            <div className="classroom-card-head">
-              <span className="class-icon">
-                <MessageCircle size={23} />
-              </span>
-              <Pill tone={a.active ? 'green' : 'neutral'}>{a.active ? '正在进行' : '已结束'}</Pill>
-            </div>
-            <h2>{a.title}</h2>
-            <p className="classroom-prompt">{a.prompt}</p>
-            <div className="classroom-meta">
-              <span>
-                {a.kind === 'quiz' ? '课堂小测' : a.kind === 'feedback' ? '教学反馈' : '课堂提问'}
-              </span>
-              <span>{a.responses?.length || 0} 次参与</span>
-            </div>
-            {teacher ? (
-              <>
-                <div className="classroom-responses">
-                  {a.responses?.map((r: Row, i: number) => (
-                    <div key={r.id || i}>
-                      <strong>
-                        {r.student_name || r.name || `学生 ${r.student_id || r.user_id || ''}`}
-                      </strong>
-                      <p>{r.answer}</p>
-                    </div>
-                  ))}
-                </div>
-                {a.active ? (
-                  <Button
-                    variant="secondary small"
-                    onClick={async () => {
-                      try {
-                        await patch(`/classroom/${a.id}`, { active: false })
-                        activities.reload()
-                        notify('课堂互动已结束')
-                      } catch (e) {
-                        notify((e as Error).message, true)
-                      }
-                    }}
-                  >
-                    结束本次互动
-                  </Button>
-                ) : null}
-              </>
-            ) : a.active ? (
-              <>
-                {a.responses?.length ? (
-                  <div className="classroom-responses" aria-label="已提交回答">
-                    {a.responses.map((r: Row) => (
-                      <div key={r.id}>
-                        <strong>已提交</strong>
+      <div className="classroom-workspace">
+        <Panel className="activity-list">
+          <div>
+            {activityPage.rows.map((a) => (
+              <button
+                className={current?.id === a.id ? 'active' : ''}
+                key={a.id}
+                onClick={() => setSelected(a.id)}
+              >
+                <strong>{a.title}</strong>
+                <small>
+                  {a.active ? '进行中' : '已结束'} · {a.responses?.length || 0} 次参与
+                </small>
+              </button>
+            ))}
+          </div>
+          <Pager {...activityPage} onChange={activityPage.setPage} label="项活动" />
+        </Panel>
+        <div className="classroom-grid">
+          {(current ? [current] : []).map((a) => (
+            <Panel key={a.id} className={`classroom-card ${a.active ? 'is-active' : ''}`}>
+              <div className="classroom-card-head">
+                <span className="class-icon">
+                  <MessageCircle size={23} />
+                </span>
+                <Pill tone={a.active ? 'green' : 'neutral'}>
+                  {a.active ? '正在进行' : '已结束'}
+                </Pill>
+              </div>
+              <h2>{a.title}</h2>
+              <p className="classroom-prompt">{a.prompt}</p>
+              <div className="classroom-meta">
+                <span>
+                  {a.kind === 'quiz' ? '课堂小测' : a.kind === 'feedback' ? '教学反馈' : '课堂提问'}
+                </span>
+                <span>{a.responses?.length || 0} 次参与</span>
+              </div>
+              {teacher ? (
+                <>
+                  <div className="classroom-responses">
+                    {responsePage.rows.map((r: Row, i: number) => (
+                      <div key={r.id || i}>
+                        <strong>
+                          {r.student_name || r.name || `学生 ${r.student_id || r.user_id || ''}`}
+                        </strong>
                         <p>{r.answer}</p>
                       </div>
                     ))}
                   </div>
-                ) : null}
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    respond(a.id)
-                  }}
-                  className="classroom-answer"
-                >
-                  <label>
-                    你的回答
-                    <textarea
-                      required
-                      aria-label={`回答${a.title}`}
-                      value={answers[a.id] || ''}
-                      onChange={(e) => setAnswers((v) => ({ ...v, [a.id]: e.target.value }))}
-                      rows={3}
-                      placeholder="写下你的理解或反馈…"
-                    />
-                  </label>
-                  <Button variant="small" disabled={busy || !answers[a.id]?.trim()}>
-                    <Send size={15} />
-                    提交课堂回答
-                  </Button>
-                </form>
-              </>
-            ) : (
-              <Pill>课堂活动已归档</Pill>
-            )}
-          </Panel>
-        ))}
+                  <Pager {...responsePage} onChange={responsePage.setPage} label="条回答" />
+                  {a.active ? (
+                    <Button
+                      variant="secondary small"
+                      onClick={async () => {
+                        try {
+                          await patch(`/classroom/${a.id}`, { active: false })
+                          activities.reload()
+                          notify('课堂互动已结束')
+                        } catch (e) {
+                          notify((e as Error).message, true)
+                        }
+                      }}
+                    >
+                      结束本次互动
+                    </Button>
+                  ) : null}
+                </>
+              ) : a.active ? (
+                <>
+                  {a.responses?.length ? (
+                    <div className="classroom-responses" aria-label="已提交回答">
+                      {a.responses.map((r: Row) => (
+                        <div key={r.id}>
+                          <strong>已提交</strong>
+                          <p>{r.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      respond(a.id)
+                    }}
+                    className="classroom-answer"
+                  >
+                    <label>
+                      你的回答
+                      <textarea
+                        required
+                        aria-label={`回答${a.title}`}
+                        value={answers[a.id] || ''}
+                        onChange={(e) => setAnswers((v) => ({ ...v, [a.id]: e.target.value }))}
+                        rows={3}
+                        placeholder="写下你的理解或反馈…"
+                      />
+                    </label>
+                    <Button variant="small" disabled={busy || !answers[a.id]?.trim()}>
+                      <Send size={15} />
+                      提交课堂回答
+                    </Button>
+                  </form>
+                </>
+              ) : (
+                <div className="classroom-responses" aria-label="历史回答">
+                  {a.responses?.length ? (
+                    a.responses.map((r: Row) => (
+                      <div key={r.id}>
+                        <strong>我的历史回答</strong>
+                        <p>{r.answer}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="muted">本次活动未参与</p>
+                  )}
+                </div>
+              )}
+            </Panel>
+          ))}
+        </div>
       </div>
       {!activities.data.length && !activities.loading ? (
         <Panel>

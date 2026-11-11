@@ -1,3 +1,4 @@
+import { Pager, usePage } from '../components/Workspace'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
@@ -22,8 +23,6 @@ export function Resources() {
   const [params] = useSearchParams()
   const [search, setSearch] = useState('')
   const [kind, setKind] = useState('all')
-  const [page, setPage] = useState(1)
-  useEffect(() => setPage(1), [search, kind, courseId])
   const resources = useApi<Row[]>(`/resources?course_id=${courseId}`, [])
   const graph = useApi<Row>(`/courses/${courseId}/graph`, { nodes: [] })
   const [editing, setEditing] = useState<Row | null>(null)
@@ -41,6 +40,7 @@ export function Resources() {
       (kind === 'all' || r.kind === kind) &&
       (!search || `${r.title} ${r.content}`.includes(search)),
   )
+  const paging = usePage(list, 110, 290)
   async function save(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const f = new FormData(e.currentTarget)
@@ -171,7 +171,7 @@ export function Resources() {
       </div>
       <LoadState {...resources} retry={resources.reload} />
       <div className="resource-grid">
-        {list.slice((page - 1) * 9, page * 9).map((r) => (
+        {paging.rows.map((r) => (
           <article className="resource-card" key={r.id}>
             <div className={`resource-kind-icon ${r.kind}`}>
               {r.kind === 'video' ? (
@@ -230,11 +230,7 @@ export function Resources() {
           </article>
         ))}
       </div>
-      {list.length > 9 ? <nav className="resource-pagination" aria-label="资料分页">
-        <Button variant="secondary small" disabled={page === 1} onClick={() => setPage(page - 1)}>上一页</Button>
-        <span>{page} / {Math.ceil(list.length / 9)} · {list.length} 份资料</span>
-        <Button variant="secondary small" disabled={page * 9 >= list.length} onClick={() => setPage(page + 1)}>下一页</Button>
-      </nav> : null}
+      <Pager {...paging} onChange={paging.setPage} label="份资料" />
       {!list.length && !resources.loading ? (
         <Panel>
           <Empty>没有找到对应的资料，试试其他筛选条件。</Empty>
@@ -380,7 +376,12 @@ export function Resources() {
 }
 
 function resourceSummary(content = '') {
-  const text = content.replace(/```[\s\S]*?```/g, ' ').replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/<[^>]*>/g, ' ').replace(/[#*`>|_~]/g, '').replace(/\s+/g, ' ').trim()
+  const text = content
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[#*`>|_~]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
   return text.length > 100 ? text.slice(0, 100) + '…' : text
 }
