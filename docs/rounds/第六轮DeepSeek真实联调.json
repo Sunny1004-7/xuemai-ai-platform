@@ -1,0 +1,970 @@
+{
+  "scope": "xuemai-round6-20261112",
+  "limit": 20,
+  "requests": 13,
+  "model_counts": {
+    "deepseek-flash": 10,
+    "deepseek-v4-pro": 3
+  },
+  "usage": {
+    "prompt_tokens": 16527,
+    "completion_tokens": 2540
+  },
+  "automatic_retries": 0,
+  "scenarios": [
+    {
+      "id": "01-student-flash",
+      "role": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 1773,
+      "usage": {
+        "prompt_tokens": 1380,
+        "completion_tokens": 93,
+        "estimated": false
+      },
+      "conversation_id": 11,
+      "citations": [
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "操作检查 · 段落7",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "栈与队列 · 段落3",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "看见算法：栈的入栈与出栈",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "循环队列学习讲义",
+          "locator": "操作检查 · 段落7",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "括号匹配学习讲义",
+          "locator": "操作检查 · 段落7",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-GUIDE",
+      "flow_status": "awaiting_check",
+      "answer_excerpt": "队列只在队尾入队、队首出队，所以先进的先出。你出错常因把入队、出队顺序当成栈的“后进先出”。先写初始空队列，再逐步标出队首与队尾变化，检查每步是否仍满足先进先出[2][4]。",
+      "understanding_feedback": {
+        "correct": false,
+        "attempt_id": 2436,
+        "transition": "awaiting_check → feedback"
+      }
+    },
+    {
+      "id": "02-student-pro",
+      "role": "student",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 2014,
+      "usage": {
+        "prompt_tokens": 1261,
+        "completion_tokens": 130,
+        "estimated": false
+      },
+      "conversation_id": 12,
+      "citations": [
+        {
+          "title": "列表遍历：例题与边界",
+          "locator": "推导与例题 · 段落5",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "列表遍历：例题与边界",
+          "locator": "列表遍历 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "列表切片与别名：例题与边界",
+          "locator": "推导与例题 · 段落5",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "列表切片与别名：例题与边界",
+          "locator": "列表切片与别名 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "Python：列表切片与共享引用",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-GUIDE",
+      "flow_status": "awaiting_check",
+      "answer_excerpt": "```python\na = [1, 2]\nb = a        # 别名：同一个列表\nc = a[:]     # 切片：新的外层列表\n\nb.append(3)\nprint(a)  # [1, 2, 3]  b 改，a 也变\nprint(c)  # [1, 2]     c 不变\n```\n\n`b = a` 共享同一列表；`c = a[:]` 创建新列表 [5]。",
+      "understanding_feedback": {
+        "correct": true,
+        "attempt_id": 2437,
+        "transition": "awaiting_check → feedback"
+      }
+    },
+    {
+      "id": "03-document",
+      "role": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 1223,
+      "usage": {
+        "prompt_tokens": 957,
+        "completion_tokens": 62,
+        "estimated": false
+      },
+      "conversation_id": 13,
+      "citations": [
+        {
+          "title": "队列补充笔记.md",
+          "locator": "第1段",
+          "source_kind": "attachment",
+          "version": "98a46a5e35c0"
+        },
+        {
+          "title": "图结构教学活动设计",
+          "locator": "图结构 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "例子 · 段落5",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "图的遍历学习讲义",
+          "locator": "例子 · 段落5",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 2
+        }
+      ],
+      "answer_excerpt": "BFS 用队列逐层扩展，若等到出队才标记，同一节点可能被多个邻居重复入队。入队时立即标记可避免重复加入[1]。"
+    },
+    {
+      "id": "04-image",
+      "role": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 1469,
+      "usage": {
+        "prompt_tokens": 1574,
+        "completion_tokens": 81,
+        "estimated": false
+      },
+      "conversation_id": 14,
+      "citations": [
+        {
+          "title": "看见算法：栈的入栈与出栈",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "例子 · 段落5",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "括号匹配学习讲义",
+          "locator": "括号匹配 · 段落3",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "括号匹配学习讲义",
+          "locator": "例子 · 段落5",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-GUIDE",
+      "flow_status": "awaiting_check",
+      "answer_excerpt": "栈顶数值是 **36**；入栈 48 后，首先出栈的是 **48**。\n\n栈只在栈顶操作，后进入的元素先离开，所以新压入的 48 会成为新的栈顶，并最先被弹出 [1][3]。",
+      "understanding_feedback": {
+        "correct": false,
+        "attempt_id": 2438,
+        "transition": "awaiting_check → feedback"
+      }
+    },
+    {
+      "id": "05-voice",
+      "role": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 2454,
+      "usage": {
+        "prompt_tokens": 1203,
+        "completion_tokens": 239,
+        "estimated": false
+      },
+      "conversation_id": 15,
+      "citations": [
+        {
+          "title": "广度优先搜索学习讲义",
+          "locator": "广度优先搜索 · 段落3",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "广度优先搜索学习讲义",
+          "locator": "广度优先搜索 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "深度优先搜索学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "深度优先搜索学习讲义",
+          "locator": "深度优先搜索 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "二叉树遍历学习讲义",
+          "locator": "二叉树遍历 · 段落3",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-GUIDE",
+      "flow_status": "awaiting_check",
+      "answer_excerpt": "栈和队列的核心区别在**元素进出顺序**：\n\n- **栈（Stack）**：后进先出（LIFO），最后压入的元素最先弹出。适合“回退、深入”的场景，DFS 的显式实现通常用栈。\n- **队列（Queue）**：先进先出（FIFO），最早入队的元素最先出队。适合“按到达顺序处理”的场景。\n\nBFS 用队列，是因为它要**按层扩展**：从起点出发，先把所有距离为 1 的顶点入队，再依次取出、把距离为 2 的顶点入队……队列的 FIFO 保证了“先被发现（先入队）的顶点先被扩展”，从而严格按层推进。在无权图中，顶点**首次被到达时的层数就是最少边数**，这正是 BFS 求最短路径的依据 [1]。\n\n对比一下：若改用栈，就会沿着一条路一直深入，变成 DFS 式的行为，无法保证按层到达。",
+      "understanding_feedback": {
+        "correct": true,
+        "attempt_id": 2439,
+        "transition": "awaiting_check → feedback"
+      }
+    },
+    {
+      "id": "06-teacher-discussion",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 3142,
+      "usage": {
+        "prompt_tokens": 1808,
+        "completion_tokens": 410,
+        "estimated": false
+      },
+      "conversation_id": 16,
+      "citations": [
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "括号匹配学习讲义",
+          "locator": "括号匹配 · 段落3",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "栈与队列 · 段落2",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "循环队列学习讲义",
+          "locator": "循环队列 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "优先队列学习讲义",
+          "locator": "优先队列 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-TEACH",
+      "flow_status": "draft_ready",
+      "artifact_status": "draft",
+      "artifact_id": 1,
+      "answer_excerpt": "队列与栈的课堂提问建议：先问“1、2、3依次入队，首先出队的是谁”，再换同一输入问栈的出栈顺序，让学生对比“先进先出”与“后进先出”的规则差异，并追问判断依据[1]。对概念辨析组可追加反例：“若中途出队再入队，顺序会怎样？”要求说出理由而非只报答案。"
+    },
+    {
+      "id": "07-teacher-intervention",
+      "role": "teacher",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 3395,
+      "usage": {
+        "prompt_tokens": 2044,
+        "completion_tokens": 300,
+        "estimated": false
+      },
+      "conversation_id": 17,
+      "citations": [
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "栈与队列 · 段落3",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "排序方法教学活动设计",
+          "locator": "排序方法 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "树结构教学活动设计",
+          "locator": "树结构 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "图结构教学活动设计",
+          "locator": "图结构 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-TEACH",
+      "flow_status": "draft_ready",
+      "artifact_status": "draft",
+      "artifact_id": 2,
+      "answer_excerpt": "班级证据显示，栈与队列相关错误集中在“入栈与出栈顺序混淆”（31次）、“推理依据不足”（128次）和“程序步骤偏差”（123次），其中“栈与队列”平均掌握度仅46%，8人处于薄弱水平。建议40分钟讲评聚焦操作顺序与结构边界，并安排两组后续练习。"
+    },
+    {
+      "id": "08-question",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "kind": "question",
+      "duration_ms": 2387,
+      "usage": {
+        "prompt_tokens": 366,
+        "completion_tokens": 242,
+        "estimated": false
+      },
+      "result": {
+        "type": "single",
+        "title": "学习“数据结构与算法”时，关于递归终止条件，下列说法正确的是？",
+        "options": [
+          "递归不需要终止条件，只要不断调用即可",
+          "递归必须有可到达的基础情况，且每次调用朝基础情况缩小问题",
+          "递归的终止条件可以永远无法到达，不影响正确性",
+          "递归每次调用应扩大问题规模，以便更快结束"
+        ],
+        "answer": "递归必须有可到达的基础情况，且每次调用朝基础情况缩小问题",
+        "explanation": "递归要正确结束，必须存在可到达的基础情况，并且每次递归调用都让问题规模向基础情况靠近，否则会无限递归。",
+        "difficulty": 1,
+        "hints": [
+          "想一想递归什么时候应该停下来。",
+          "检查每次调用后问题是否更接近基础情况。"
+        ]
+      },
+      "review_status": "pending_teacher_review"
+    },
+    {
+      "id": "09-lesson",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "kind": "lesson",
+      "duration_ms": 2968,
+      "usage": {
+        "prompt_tokens": 1084,
+        "completion_tokens": 286,
+        "estimated": false
+      },
+      "result": {
+        "title": "栈与队列：对照理解后进先出与先进先出",
+        "objectives": [
+          "解释栈后进先出与队列先进先出的基本约束",
+          "用小规模例子追踪入栈出栈、入队出队过程并说明空结构边界条件"
+        ],
+        "prerequisites": [
+          "基本变量与顺序执行",
+          "数组或列表的基本操作"
+        ],
+        "steps": [
+          "5 分钟：以输入 1、2、3 的对照情境引出问题，让学生先预测全部入栈后弹出与全部入队后取出的顺序差异",
+          "10 分钟：观察并逐步预测入栈、出栈与入队、出队的状态变化，对照栈顶操作与队首队尾操作，讨论空栈不能弹出等边界条件",
+          "5 分钟：独立完成随堂对照题，比较两种结构的操作顺序与适用场景，并讨论错因"
+        ],
+        "examples": [
+          "输入 1、2、3：全部入栈后依次弹出 3、2、1；全部入队后依次取出 1、2、3。",
+          "空栈尝试弹出时说明为何不能操作，并区分操作顺序与数据本身的大小。"
+        ],
+        "assessment": "提交一次独立作答：写出输入 1、2、3 分别经过栈与队列后的输出顺序，并说明输入为空时两种结构应如何处理。"
+      },
+      "review_status": "pending_teacher_review"
+    },
+    {
+      "id": "10-rubric",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "kind": "rubric",
+      "duration_ms": 3413,
+      "usage": {
+        "prompt_tokens": 982,
+        "completion_tokens": 181,
+        "estimated": false
+      },
+      "result": {
+        "score": 0,
+        "criteria": [
+          {
+            "name": "解释不均衡划分",
+            "score": 0,
+            "max_score": 50
+          },
+          {
+            "name": "提出随机化或合理枢轴",
+            "score": 0,
+            "max_score": 50
+          }
+        ],
+        "feedback": "本地演示评阅草稿：学生答案仅泛泛描述解题流程（检查前提与边界、按状态解释、补充反例），未说明快速排序最坏情况的成因（连续选到极端枢轴导致不均衡划分），也未提出随机化或三数取中等改进思路，两项量规均无实质得分依据。建议引导学生先分析划分均衡性与递归深度的关系，再给出具体枢轴选择策略。该分数仅为量规展示样例，不能视为对真实答案的判定。",
+        "review_status": "pending_teacher_review"
+      },
+      "review_status": "pending_teacher_review"
+    },
+    {
+      "id": "11-teacher-light-recheck",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 1841,
+      "usage": {
+        "prompt_tokens": 889,
+        "completion_tokens": 67,
+        "estimated": false
+      },
+      "conversation_id": 18,
+      "citations": [
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "操作检查 · 段落7",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "栈与队列 · 段落2",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "看见算法：栈的入栈与出栈",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "循环队列学习讲义",
+          "locator": "操作检查 · 段落7",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "循环队列学习讲义",
+          "locator": "循环队列 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-TEACH",
+      "flow_status": "answered",
+      "answer_excerpt": "**课堂提问建议（80字内）**：问“入栈1、2、3后依次弹出，顺序如何？为什么？”再问“同样输入进队列，出队顺序有何不同？”引导对比操作约束与输出差异，追问“空结构还能弹出/出队吗？”[1][3]"
+    },
+    {
+      "id": "12-scoped-evidence-recheck",
+      "role": "teacher",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 3352,
+      "usage": {
+        "prompt_tokens": 2096,
+        "completion_tokens": 308,
+        "estimated": false
+      },
+      "conversation_id": 19,
+      "citations": [
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "栈与队列 · 段落3",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "栈与队列学习讲义",
+          "locator": "自测 · 段落9",
+          "source_kind": "course",
+          "version": 2
+        },
+        {
+          "title": "看见算法：栈的入栈与出栈",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "图结构教学活动设计",
+          "locator": "图结构 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "线性结构教学活动设计",
+          "locator": "线性结构 · 段落4",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-TEACH",
+      "flow_status": "draft_ready",
+      "artifact_status": "draft",
+      "artifact_id": 3,
+      "answer_excerpt": "班级证据显示，栈与队列的典型错误集中在“入栈与出栈顺序混淆”（31次）和“程序步骤偏差”（29次），迁移应用与先修知识问题次之。40分钟讲评课先展示匿名错例定位顺序误区，再对照相同输入逐步追踪栈与队列状态，最后分两组独立复测。"
+    },
+    {
+      "id": "13-teacher-question-workflow",
+      "role": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "passed",
+      "duration_ms": 2212,
+      "usage": {
+        "prompt_tokens": 883,
+        "completion_tokens": 141,
+        "estimated": false
+      },
+      "conversation_id": 20,
+      "citations": [
+        {
+          "title": "列表遍历：例题与边界",
+          "locator": "列表遍历 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "列表遍历：例题与边界",
+          "locator": "列表遍历 · 段落3",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "Python：列表切片与共享引用",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "Python：循环与累加",
+          "locator": "段落1",
+          "source_kind": "course",
+          "version": 1
+        },
+        {
+          "title": "列表切片与别名：例题与边界",
+          "locator": "列表切片与别名 · 段落2",
+          "source_kind": "course",
+          "version": 1
+        }
+      ],
+      "method": "DIA-TEACH",
+      "flow_status": "draft_ready",
+      "artifact_status": "draft",
+      "artifact_id": 4,
+      "answer_excerpt": "列表遍历时若在循环中删除元素，可能跳过待访问元素，这是本节要辨析的边界[2]。下面给出一道基础单选题供审核。"
+    }
+  ],
+  "ledger": [
+    {
+      "id": 9,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1380,
+        "completion_tokens": 93,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:16"
+    },
+    {
+      "id": 10,
+      "model": "deepseek-v4-pro",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1261,
+        "completion_tokens": 130,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:18"
+    },
+    {
+      "id": 11,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 957,
+        "completion_tokens": 62,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:21"
+    },
+    {
+      "id": 12,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1574,
+        "completion_tokens": 81,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:23"
+    },
+    {
+      "id": 13,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1203,
+        "completion_tokens": 239,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:28"
+    },
+    {
+      "id": 14,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1808,
+        "completion_tokens": 410,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:31"
+    },
+    {
+      "id": 15,
+      "model": "deepseek-v4-pro",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 2044,
+        "completion_tokens": 300,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:35"
+    },
+    {
+      "id": 16,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 366,
+        "completion_tokens": 242,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:13:38"
+    },
+    {
+      "id": 17,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1084,
+        "completion_tokens": 286,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:14:39"
+    },
+    {
+      "id": 18,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 982,
+        "completion_tokens": 181,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:14:42"
+    },
+    {
+      "id": 21,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 889,
+        "completion_tokens": 67,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:16:23"
+    },
+    {
+      "id": 22,
+      "model": "deepseek-v4-pro",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 2096,
+        "completion_tokens": 308,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:16:24"
+    },
+    {
+      "id": 23,
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 883,
+        "completion_tokens": 141,
+        "estimated": false
+      },
+      "created_at": "2026-11-11 18:16:28"
+    }
+  ],
+  "saved_history": [
+    {
+      "scenario": "01-student-flash",
+      "conversation_id": 11,
+      "purpose": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-GUIDE",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "02-student-pro",
+      "conversation_id": 12,
+      "purpose": "student",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-GUIDE",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "03-document",
+      "conversation_id": 13,
+      "purpose": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": null,
+      "numeric_validation": null
+    },
+    {
+      "scenario": "04-image",
+      "conversation_id": 14,
+      "purpose": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-GUIDE",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "05-voice",
+      "conversation_id": 15,
+      "purpose": "student",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-GUIDE",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "06-teacher-discussion",
+      "conversation_id": 16,
+      "purpose": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-TEACH",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "07-teacher-intervention",
+      "conversation_id": 17,
+      "purpose": "teacher",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-TEACH",
+      "numeric_validation": null
+    },
+    {
+      "scenario": "11-teacher-light-recheck",
+      "conversation_id": 18,
+      "purpose": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-TEACH",
+      "numeric_validation": {
+        "checked": [],
+        "unsupported": [],
+        "scope": null
+      }
+    },
+    {
+      "scenario": "12-scoped-evidence-recheck",
+      "conversation_id": 19,
+      "purpose": "teacher",
+      "model": "deepseek-v4-pro",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-TEACH",
+      "numeric_validation": {
+        "checked": [
+          "31",
+          "29",
+          "40"
+        ],
+        "unsupported": [],
+        "scope": "栈与队列、循环队列、优先队列"
+      }
+    },
+    {
+      "scenario": "13-teacher-question-workflow",
+      "conversation_id": 20,
+      "purpose": "teacher",
+      "model": "deepseek-flash",
+      "mode": "real",
+      "status": "complete",
+      "method": "DIA-TEACH",
+      "numeric_validation": {
+        "checked": [],
+        "unsupported": [],
+        "scope": null
+      }
+    }
+  ],
+  "issues_and_rechecks": [
+    {
+      "initial": "06-teacher-discussion",
+      "issue": "普通提问被关键词课触发为完整教学设计",
+      "resolved_by": "11-teacher-light-recheck"
+    },
+    {
+      "initial": "07-teacher-intervention",
+      "issue": "专题错误说明使用了全班统计范围",
+      "resolved_by": "12-scoped-evidence-recheck"
+    }
+  ],
+  "local_voice": "faster-whisper-small，固定音频经过解码与推理，原文本和术语修正见第六轮本地语音核验.json",
+  "models_discovery": {
+    "object": "list",
+    "data": [
+      {
+        "id": "deepseek-flash",
+        "object": "model",
+        "owned_by": "deepseek",
+        "name": "DeepSeek-V4.1-Flash",
+        "context_window": 1048576,
+        "max_output_tokens": 393216,
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "effort": {
+          "supported_levels": [
+            "low",
+            "high",
+            "max"
+          ],
+          "default_level": "high"
+        },
+        "api_capabilities": {
+          "anthropic_messages": {
+            "system_prompt_update": "in-history",
+            "tool_update": "addition-only"
+          }
+        }
+      },
+      {
+        "id": "deepseek-v4-pro",
+        "object": "model",
+        "owned_by": "deepseek",
+        "name": "DeepSeek-V4-Pro",
+        "context_window": 1048576,
+        "max_output_tokens": 393216,
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "effort": {
+          "supported_levels": [
+            "low",
+            "high",
+            "max"
+          ],
+          "default_level": "high"
+        },
+        "api_capabilities": {
+          "anthropic_messages": {
+            "system_prompt_update": "leading-only",
+            "tool_update": "leading-only"
+          }
+        }
+      }
+    ]
+  }
+}

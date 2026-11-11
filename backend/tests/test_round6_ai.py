@@ -133,3 +133,14 @@ def test_development_budget_counts_reservations_across_requests(monkeypatch):
     second=reserve('deepseek-v4-pro'); finish(second,'network',{})
     with pytest.raises(AIError,match='预算'):
         reserve('deepseek-flash')
+
+
+def test_teacher_light_path_and_question_draft_are_distinct(client):
+    teacher=headers(client,'teacher')
+    simple=events(client.post('/api/ai/chat',headers=teacher,json={'course_id':1,'message':'比较栈和队列的课堂提问建议'}))[-1]
+    assert simple['teaching']['task']=='discussion'
+    assert simple['teaching']['evidence']=={}
+    generated=events(client.post('/api/ai/chat',headers=teacher,json={'course_id':2,'message':'围绕Python列表设计题目，生成一道单选题'}))[-1]
+    assert generated['artifact']['kind']=='question'
+    assert generated['artifact']['draft']['knowledge_id']
+    assert 'options' in generated['artifact']['draft']

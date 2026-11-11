@@ -251,8 +251,7 @@ async def chat(request: ChatInput, user: User):
             raise HTTPException(422,'Pro当前接收文本，请切换Flash处理图片')
         request.conversation_id=conversation_id
         scoped_attachments(db,user,request.course_id,request.attachment_ids,conversation_id,bind=True)
-        if not teacher:
-            request.knowledge_point_id=infer_knowledge(db,request)
+        request.knowledge_point_id=infer_knowledge(db,request)
         course, citations, context = context_for(db, user, request)
         plan=prepare_teacher(db,user,request,conversation_id) if teacher else prepare_actions(db,user,request,conversation_id)
         if not teacher and plan.get('knowledge_id'):
@@ -280,7 +279,7 @@ async def chat(request: ChatInput, user: User):
     marker=TEACH_MARKER if teacher else MARKER
     if teacher:
         messages[0]['content']+='\n教学目标与班级证据：'+json.dumps(plan,ensure_ascii=False)
-        if plan['task'] in {'design','intervention'}:
+        if plan['task'] in {'design','intervention','question','rubric'}:
             messages[0]['content']+='\n先用简短中文解释，再在末尾输出<!--XM_TEACH:合法JSON-->。必须遵循下面字段，课时总和不超过'+str(plan['minutes'])+'分钟，群组和题目只能从证据候选选择。样例：'+json.dumps(draft_sample(plan),ensure_ascii=False)
     else:
         messages[0]['content'] += '\n结构化诊断与教学策略：'+json.dumps(plan.get('collaboration',{}),ensure_ascii=False)
@@ -290,7 +289,7 @@ async def chat(request: ChatInput, user: User):
     concept=plan.get('concept','先明确输入和目标，再逐步追踪状态。')
     if teacher:
         mock_answer='结合班级证据，先比较操作顺序与边界判断，再安排短练习和独立复测。'+source
-        if plan['task'] in {'design','intervention'}:
+        if plan['task'] in {'design','intervention','question','rubric'}:
             mock_answer+=TEACH_MARKER+json.dumps(draft_sample(plan),ensure_ascii=False)+'-->'
     else:
         mock_answer = f"### {title}\n\n{concept}\n\n先写出操作前后的状态，比较哪一步改变了结构约束。\n\n" + source + ("\n\n完成下方的理解检查，再根据结果决定是否需要先修练习。" if plan.get('check') else '') + MARKER + json.dumps({'strategy':plan['strategy'],'kinds':[a['kind'] for a in plan['actions']]})+'-->'

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import Counter
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -38,7 +39,7 @@ def prepare_teacher(db, user, request, conversation_id):
     require_teacher_course(db, user, request.course_id)
     from .routes_teaching import analytics_data
     message = request.message
-    task = 'intervention' if any(term in message for term in ['分层','两组','后续练习']) else 'analysis' if any(term in message for term in ['学情','这个班','错误','掌握']) else 'design' if any(term in message for term in ['课','教案','安排','教学']) else 'discussion'
+    task = 'intervention' if any(term in message for term in ['分层','两组','后续练习']) else 'question' if any(term in message for term in ['出题','设计题目','生成一道']) else 'rubric' if any(term in message for term in ['量规','评分标准','评阅']) else 'analysis' if any(term in message for term in ['学情','这个班','错误','掌握']) else 'design' if any(term in message for term in ['教案','安排','设计一节','备课','教学设计','准备一节']) else 'discussion'
     matched = re.search(r'(\d{1,3})\s*分钟', message)
     minutes = min(120,max(5,int(matched.group(1)))) if matched else 40
     trace=[{'role':'教学任务规划','result':{'task':task,'minutes':minutes,'class_id':request.class_id}}]
@@ -47,6 +48,8 @@ def prepare_teacher(db, user, request, conversation_id):
         snapshot=analytics_data(db,user,request.course_id,request.class_id)
         points=[point for point in snapshot['knowledge'] if any(word in point['title'] for word in ['栈','队列'])] if any(word in message for word in ['栈','队列']) else snapshot['knowledge']
         point_ids={point['id'] for point in points}
+        member_ids={student['id'] for student in snapshot['students']}
+        errors=Counter(row['error_type'] for row in db.execute('SELECT a.student_id,a.error_type,q.knowledge_id FROM attempts a JOIN questions q ON q.id=a.question_id WHERE q.course_id=? AND a.correct=0',(request.course_id,)) if row['student_id'] in member_ids and row['knowledge_id'] in point_ids)
         questions=[dict(row) for row in db.execute("SELECT id,knowledge_id,difficulty FROM questions WHERE course_id=? AND status='approved' AND type NOT IN ('short','step')",(request.course_id,)) if row['knowledge_id'] in point_ids]
         groups=[]
         for group in snapshot['groups']:
@@ -54,16 +57,22 @@ def prepare_teacher(db, user, request, conversation_id):
             candidates=sorted(questions,key=lambda question:(question['knowledge_id'] not in weak,question['difficulty'],question['id']))[:3]
             if candidates:
                 groups.append({key:group[key] for key in ['id','name','student_ids','focus','strategy']}|{'question_ids':[question['id'] for question in candidates],'knowledge_id':candidates[0]['knowledge_id']})
-        evidence={'summary':snapshot['summary'],'errors':snapshot['error_distribution'],
+        evidence={'summary':snapshot['summary'],'errors':[{'name':name,'value':value} for name,value in errors.most_common()],
+            'scope':'、'.join(point['title'] for point in points[:8]),
             'knowledge':[{'id':point['id'],'title':point['title'],'observed_count':point['observed_count'],'average_mastery':point['average_mastery'],'distribution':point['distribution']} for point in points[:8]],
             'groups':groups,
             'assignments':[{'id':assignment['id'],'title':assignment['title'],'submission_count':assignment['submission_count']} for assignment in snapshot['assignments'][:5]],
             'generated_at':snapshot['generated_at']}
         trace.append({'role':'班级证据工具','result':{'tool':'analytics_data / CLASS-LOOP','student_count':snapshot['summary']['student_count'],'graded_attempts':snapshot['summary']['attempt_count']}})
-    return {'method':'DIA-TEACH','task':task,'minutes':minutes,'evidence':evidence,'trace':trace,'conversation_id':conversation_id,'model_calls_limit':1}
+    point=db.execute('SELECT title FROM knowledge_points WHERE id=? AND course_id=?',(request.knowledge_point_id,request.course_id)).fetchone()
+    return {'method':'DIA-TEACH','task':task,'minutes':minutes,'topic':point['title'] if point else '当前课程', 'evidence':evidence,'trace':trace,'conversation_id':conversation_id,'model_calls_limit':1}
 
 
 def draft_sample(plan):
+    if plan['task']=='question':
+        return {'type':'single','title':f"理解{plan['topic']}时，哪种方式能检查中间状态？",'options':['逐步追踪','只看术语'],'answer':'逐步追踪','explanation':'逐步追踪可以核对实际状态变化。','difficulty':1,'hints':['考虑能观察执行过程的方法。']}
+    if plan['task']=='rubric':
+        return {'score':0,'criteria':[{'name':'概念与推理','score':0,'max_score':100}],'feedback':'请教师结合学生作答核对各项依据。','review_status':'pending_teacher_review'}
     groups=plan['evidence'].get('groups',[])[:2]
     return {'title':'状态追踪与边界讲评课','objective':'对照具体作答，区分操作顺序与结构边界，完成独立复测。',
         'steps':[{'title':'发现问题','minutes':5,'activity':'展示匿名错例，预测操作结果。'},
@@ -93,20 +102,47 @@ def validate_draft(db, request, plan, payload):
 def finalize_teacher(db,user,request,plan,content,citations):
     visible, _, raw=content.partition(TEACH_MARKER)
     artifact={}
-    if plan['task'] in {'design','intervention'}:
+    if plan['task'] in {'design','intervention','question','rubric'}:
         try:
-            draft=validate_draft(db,request,plan,json.loads(raw.split('-->',1)[0]))
+            payload=json.loads(raw.split('-->',1)[0])
+            if plan['task'] in {'question','rubric'}:
+                from .ai_routes import QuestionDraft,RubricDraft
+                schema=QuestionDraft if plan['task']=='question' else RubricDraft
+                draft=schema.model_validate(payload).model_dump()
+                if request.knowledge_point_id:
+                    draft['knowledge_id']=request.knowledge_point_id
+            else:
+                draft=validate_draft(db,request,plan,payload)
             key=f"{plan['conversation_id']}:{request.request_id}"
             db.execute('INSERT OR IGNORE INTO ai_teacher_drafts(user_id,course_id,conversation_id,kind,content,evidence,request_key) VALUES(?,?,?,?,?,?,?)',
                 (user['id'],request.course_id,plan['conversation_id'],plan['task'],json.dumps(draft,ensure_ascii=False),json.dumps(plan['evidence'],ensure_ascii=False),key))
             row=db.execute('SELECT id FROM ai_teacher_drafts WHERE request_key=?',(key,)).fetchone()
             artifact={'id':row['id'],'kind':plan['task'],'draft':draft,'status':'draft'}
-            plan['trace'].append({'role':'草稿质量校验','result':'课时、课程题目、群组与学生范围通过'})
+            plan['trace'].append({'role':'草稿质量校验','result':'结构、课时及课程对象范围通过'})
         except (ValueError,ValidationError,TypeError,KeyError):
             plan['trace'].append({'role':'草稿质量校验','result':'结构未通过，请调整要求后重新生成'})
             artifact={'status':'invalid','error':'草稿结构或业务对象未通过校验'}
     from .retrieval import citation_support
     plan['citation_support']=citation_support(visible,citations)
+    allowed={str(plan['minutes'])}
+    def collect_numbers(value):
+        if isinstance(value,dict):
+            for key,item in value.items():
+                if key not in {'id','student_ids','question_ids','knowledge_id','generated_at'}:collect_numbers(item)
+        elif isinstance(value,list):
+            for item in value:collect_numbers(item)
+        elif isinstance(value,(int,float)):
+            allowed.add(str(value))
+    collect_numbers(plan['evidence'])
+    claims=re.findall(r'(?<![\d\[])(\d+(?:\.\d+)?)\s*(?:人|位|次|%|％|分)',visible)
+    unsupported=[value for value in claims if value not in allowed]
+    plan['numeric_validation']={'checked':claims,'unsupported':unsupported,'scope':plan['evidence'].get('scope')}
+    if unsupported:
+        sentences=re.split(r'(?<=[。！？])',visible)
+        visible=''.join(sentence for sentence in sentences if not any(value in re.findall(r'(\d+(?:\.\d+)?)\s*(?:人|位|次|%|％|分)',sentence) for value in unsupported))
+        summary=plan['evidence'].get('summary',{})
+        visible=f"当前范围共有{summary.get('student_count',0)}位学生，累计{summary.get('attempt_count',0)}次已评分作答。\n\n"+visible.strip()
+        plan['trace'].append({'role':'统计依据校验','result':'保留受控查询支持的数值，移除未匹配统计的句子'})
     plan['status']='draft_ready' if artifact.get('id') else 'answered' if plan['task'] in {'analysis','discussion'} else 'needs_revision'
     return visible.strip(),plan,artifact
 
