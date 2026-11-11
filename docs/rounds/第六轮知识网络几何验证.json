@@ -1,10 +1,12 @@
 [
   {
+    "course": "合成6",
     "nodes": 6,
     "edges": 6,
     "collisions": 0,
     "obstructions": 0,
-    "elapsed_ms": 66,
+    "stable_under_reordering": true,
+    "elapsed_ms": 40,
     "cameras": [
       {
         "viewport": {
@@ -45,11 +47,13 @@
     ]
   },
   {
+    "course": "合成31",
     "nodes": 31,
     "edges": 39,
     "collisions": 0,
     "obstructions": 0,
-    "elapsed_ms": 219,
+    "stable_under_reordering": true,
+    "elapsed_ms": 182,
     "cameras": [
       {
         "viewport": {
@@ -90,11 +94,13 @@
     ]
   },
   {
+    "course": "合成80",
     "nodes": 80,
     "edges": 104,
     "collisions": 0,
-    "obstructions": 1,
-    "elapsed_ms": 890,
+    "obstructions": 0,
+    "stable_under_reordering": true,
+    "elapsed_ms": 623,
     "cameras": [
       {
         "viewport": {
@@ -130,6 +136,100 @@
         },
         "fit_zoom": 0.14535810012368708,
         "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "course": "CS201",
+    "nodes": 31,
+    "edges": 38,
+    "collisions": 0,
+    "obstructions": 0,
+    "stable_under_reordering": true,
+    "elapsed_ms": 232,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 0.9823758226752303,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.8228992280850955,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.8228992280850955,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.24363329681031512,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "course": "CS101",
+    "nodes": 27,
+    "edges": 30,
+    "collisions": 0,
+    "obstructions": 0,
+    "stable_under_reordering": true,
+    "elapsed_ms": 148,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 1.0072235864287469,
+        "visible_nodes": 27,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.8437132639565478,
+        "visible_nodes": 27,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.8437132639565478,
+        "visible_nodes": 27,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.23865077517164365,
+        "visible_nodes": 27,
         "anchor_error_below": 1e-7
       }
     ]

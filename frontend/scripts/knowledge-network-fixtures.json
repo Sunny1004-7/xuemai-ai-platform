@@ -1,0 +1,578 @@
+[
+  {
+    "course": "CS201",
+    "nodes": [
+      {
+        "id": 1,
+        "title": "数组与链表",
+        "chapter_id": 1
+      },
+      {
+        "id": 2,
+        "title": "栈与队列",
+        "chapter_id": 1
+      },
+      {
+        "id": 3,
+        "title": "递归与分治",
+        "chapter_id": 5
+      },
+      {
+        "id": 4,
+        "title": "二叉树",
+        "chapter_id": 2
+      },
+      {
+        "id": 5,
+        "title": "图的遍历",
+        "chapter_id": 6
+      },
+      {
+        "id": 6,
+        "title": "冒泡排序",
+        "chapter_id": 3
+      },
+      {
+        "id": 7,
+        "title": "快速排序",
+        "chapter_id": 3
+      },
+      {
+        "id": 8,
+        "title": "二分查找",
+        "chapter_id": 7
+      },
+      {
+        "id": 11,
+        "title": "顺序表插入与删除",
+        "chapter_id": 1
+      },
+      {
+        "id": 12,
+        "title": "单链表链接操作",
+        "chapter_id": 1
+      },
+      {
+        "id": 13,
+        "title": "双向链表",
+        "chapter_id": 1
+      },
+      {
+        "id": 14,
+        "title": "循环队列",
+        "chapter_id": 1
+      },
+      {
+        "id": 15,
+        "title": "括号匹配",
+        "chapter_id": 1
+      },
+      {
+        "id": 16,
+        "title": "时间复杂度",
+        "chapter_id": 5
+      },
+      {
+        "id": 17,
+        "title": "空间复杂度",
+        "chapter_id": 5
+      },
+      {
+        "id": 18,
+        "title": "递归终止条件",
+        "chapter_id": 5
+      },
+      {
+        "id": 19,
+        "title": "二叉树遍历",
+        "chapter_id": 2
+      },
+      {
+        "id": 20,
+        "title": "二叉搜索树",
+        "chapter_id": 2
+      },
+      {
+        "id": 21,
+        "title": "堆与堆调整",
+        "chapter_id": 2
+      },
+      {
+        "id": 22,
+        "title": "优先队列",
+        "chapter_id": 2
+      },
+      {
+        "id": 23,
+        "title": "邻接表与邻接矩阵",
+        "chapter_id": 6
+      },
+      {
+        "id": 24,
+        "title": "深度优先搜索",
+        "chapter_id": 6
+      },
+      {
+        "id": 25,
+        "title": "广度优先搜索",
+        "chapter_id": 6
+      },
+      {
+        "id": 26,
+        "title": "拓扑排序",
+        "chapter_id": 6
+      },
+      {
+        "id": 27,
+        "title": "插入排序",
+        "chapter_id": 3
+      },
+      {
+        "id": 28,
+        "title": "归并排序",
+        "chapter_id": 3
+      },
+      {
+        "id": 29,
+        "title": "排序稳定性",
+        "chapter_id": 3
+      },
+      {
+        "id": 30,
+        "title": "顺序查找",
+        "chapter_id": 7
+      },
+      {
+        "id": 31,
+        "title": "哈希表",
+        "chapter_id": 7
+      },
+      {
+        "id": 32,
+        "title": "哈希冲突处理",
+        "chapter_id": 7
+      },
+      {
+        "id": 33,
+        "title": "循环边界与不变量",
+        "chapter_id": 5
+      }
+    ],
+    "edges": [
+      {
+        "source": 1,
+        "target": 2
+      },
+      {
+        "source": 2,
+        "target": 5
+      },
+      {
+        "source": 3,
+        "target": 7
+      },
+      {
+        "source": 18,
+        "target": 3
+      },
+      {
+        "source": 18,
+        "target": 4
+      },
+      {
+        "source": 23,
+        "target": 5
+      },
+      {
+        "source": 1,
+        "target": 6
+      },
+      {
+        "source": 1,
+        "target": 8
+      },
+      {
+        "source": 16,
+        "target": 8
+      },
+      {
+        "source": 1,
+        "target": 11
+      },
+      {
+        "source": 16,
+        "target": 11
+      },
+      {
+        "source": 1,
+        "target": 12
+      },
+      {
+        "source": 12,
+        "target": 13
+      },
+      {
+        "source": 2,
+        "target": 14
+      },
+      {
+        "source": 2,
+        "target": 15
+      },
+      {
+        "source": 16,
+        "target": 17
+      },
+      {
+        "source": 4,
+        "target": 19
+      },
+      {
+        "source": 2,
+        "target": 19
+      },
+      {
+        "source": 19,
+        "target": 20
+      },
+      {
+        "source": 4,
+        "target": 21
+      },
+      {
+        "source": 21,
+        "target": 22
+      },
+      {
+        "source": 16,
+        "target": 22
+      },
+      {
+        "source": 1,
+        "target": 23
+      },
+      {
+        "source": 5,
+        "target": 24
+      },
+      {
+        "source": 18,
+        "target": 24
+      },
+      {
+        "source": 5,
+        "target": 25
+      },
+      {
+        "source": 23,
+        "target": 26
+      },
+      {
+        "source": 2,
+        "target": 26
+      },
+      {
+        "source": 11,
+        "target": 27
+      },
+      {
+        "source": 3,
+        "target": 28
+      },
+      {
+        "source": 28,
+        "target": 29
+      },
+      {
+        "source": 27,
+        "target": 29
+      },
+      {
+        "source": 1,
+        "target": 30
+      },
+      {
+        "source": 1,
+        "target": 31
+      },
+      {
+        "source": 31,
+        "target": 32
+      },
+      {
+        "source": 12,
+        "target": 32
+      },
+      {
+        "source": 1,
+        "target": 33
+      },
+      {
+        "source": 33,
+        "target": 6
+      }
+    ]
+  },
+  {
+    "course": "CS101",
+    "nodes": [
+      {
+        "id": 9,
+        "title": "变量与类型",
+        "chapter_id": 8
+      },
+      {
+        "id": 10,
+        "title": "循环与条件",
+        "chapter_id": 9
+      },
+      {
+        "id": 34,
+        "title": "数值运算",
+        "chapter_id": 8
+      },
+      {
+        "id": 35,
+        "title": "布尔表达式",
+        "chapter_id": 8
+      },
+      {
+        "id": 36,
+        "title": "输入与类型转换",
+        "chapter_id": 8
+      },
+      {
+        "id": 37,
+        "title": "分支边界",
+        "chapter_id": 9
+      },
+      {
+        "id": 38,
+        "title": "累加与循环不变量",
+        "chapter_id": 9
+      },
+      {
+        "id": 39,
+        "title": "break与continue",
+        "chapter_id": 9
+      },
+      {
+        "id": 40,
+        "title": "字符串与切片",
+        "chapter_id": 10
+      },
+      {
+        "id": 41,
+        "title": "列表遍历",
+        "chapter_id": 10
+      },
+      {
+        "id": 42,
+        "title": "列表切片与别名",
+        "chapter_id": 10
+      },
+      {
+        "id": 43,
+        "title": "元组与集合",
+        "chapter_id": 10
+      },
+      {
+        "id": 44,
+        "title": "字典计数",
+        "chapter_id": 10
+      },
+      {
+        "id": 45,
+        "title": "函数定义与返回",
+        "chapter_id": 11
+      },
+      {
+        "id": 46,
+        "title": "参数绑定",
+        "chapter_id": 11
+      },
+      {
+        "id": 47,
+        "title": "局部作用域",
+        "chapter_id": 11
+      },
+      {
+        "id": 48,
+        "title": "默认参数陷阱",
+        "chapter_id": 11
+      },
+      {
+        "id": 49,
+        "title": "函数分解",
+        "chapter_id": 11
+      },
+      {
+        "id": 50,
+        "title": "异常处理",
+        "chapter_id": 12
+      },
+      {
+        "id": 51,
+        "title": "文件上下文",
+        "chapter_id": 12
+      },
+      {
+        "id": 52,
+        "title": "文本解析",
+        "chapter_id": 12
+      },
+      {
+        "id": 53,
+        "title": "异常与资源边界",
+        "chapter_id": 12
+      },
+      {
+        "id": 54,
+        "title": "类与实例",
+        "chapter_id": 13
+      },
+      {
+        "id": 55,
+        "title": "初始化与属性",
+        "chapter_id": 13
+      },
+      {
+        "id": 56,
+        "title": "方法与状态约束",
+        "chapter_id": 13
+      },
+      {
+        "id": 57,
+        "title": "测试与边界案例",
+        "chapter_id": 13
+      },
+      {
+        "id": 58,
+        "title": "综合成绩分析",
+        "chapter_id": 13
+      }
+    ],
+    "edges": [
+      {
+        "source": 9,
+        "target": 10
+      },
+      {
+        "source": 9,
+        "target": 34
+      },
+      {
+        "source": 34,
+        "target": 35
+      },
+      {
+        "source": 9,
+        "target": 36
+      },
+      {
+        "source": 35,
+        "target": 10
+      },
+      {
+        "source": 35,
+        "target": 37
+      },
+      {
+        "source": 10,
+        "target": 38
+      },
+      {
+        "source": 10,
+        "target": 39
+      },
+      {
+        "source": 9,
+        "target": 40
+      },
+      {
+        "source": 10,
+        "target": 41
+      },
+      {
+        "source": 41,
+        "target": 42
+      },
+      {
+        "source": 41,
+        "target": 43
+      },
+      {
+        "source": 41,
+        "target": 44
+      },
+      {
+        "source": 10,
+        "target": 45
+      },
+      {
+        "source": 45,
+        "target": 46
+      },
+      {
+        "source": 46,
+        "target": 47
+      },
+      {
+        "source": 46,
+        "target": 48
+      },
+      {
+        "source": 47,
+        "target": 49
+      },
+      {
+        "source": 36,
+        "target": 50
+      },
+      {
+        "source": 50,
+        "target": 51
+      },
+      {
+        "source": 40,
+        "target": 52
+      },
+      {
+        "source": 51,
+        "target": 52
+      },
+      {
+        "source": 52,
+        "target": 53
+      },
+      {
+        "source": 45,
+        "target": 54
+      },
+      {
+        "source": 54,
+        "target": 55
+      },
+      {
+        "source": 55,
+        "target": 56
+      },
+      {
+        "source": 49,
+        "target": 57
+      },
+      {
+        "source": 44,
+        "target": 58
+      },
+      {
+        "source": 53,
+        "target": 58
+      },
+      {
+        "source": 57,
+        "target": 58
+      }
+    ]
+  }
+]

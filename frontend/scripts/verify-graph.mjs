@@ -14,9 +14,13 @@ const cameraModule={exports:{}}
 new Function('module','exports',ts.transpileModule(readFileSync(new URL('../src/graph-camera.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText)(cameraModule,cameraModule.exports)
 const {fitCamera,zoomCamera,focusCamera,canvasInsets}=cameraModule.exports
 const report=[]
-for(const count of [6,31,80]) {
+const cases=[6,31,80].map(count=>{
  const nodes=Array.from({length:count},(_,i)=>({id:i+1,title:`知识点${i+1}`,chapter_id:Math.floor(i/5)}))
  const edges=nodes.flatMap((n,i)=>[...(i+1<count?[{source:n.id,target:n.id+1}]:[]),...(i+5<count&&i%3===0?[{source:n.id,target:n.id+5}]:[])])
+ return {course:`合成${count}`,nodes,edges}
+}).concat(JSON.parse(readFileSync(new URL('./knowledge-network-fixtures.json',import.meta.url),'utf8')))
+for(const {course,nodes,edges} of cases) {
+ const count=nodes.length
  const start=performance.now(), result=await layoutKnowledge(nodes,edges)
  let collision=0,obstruction=0
  const pos=Object.values(result.positions)
@@ -27,15 +31,24 @@ for(const count of [6,31,80]) {
    for(const n of nodes.filter(n=>n.id!==e.source&&n.id!==e.target)) {
      let blocked=false
      for(let k=0;k<=100;k++) {
-       const t=k/100,[a,c,b]=e.points,p=result.positions[n.id]
-       const x=(1-t)**2*a.x+2*t*(1-t)*c.x+t*t*b.x
-       const y=(1-t)**2*a.y+2*t*(1-t)*c.y+t*t*b.y
+       const t=k/100,p=result.positions[n.id]
+       let x,y
+       if(e.points.length===3){
+         const [a,c,b]=e.points
+         x=(1-t)**2*a.x+2*t*(1-t)*c.x+t*t*b.x
+         y=(1-t)**2*a.y+2*t*(1-t)*c.y+t*t*b.y
+       }else{
+         const segment=Math.min(e.points.length-2,Math.floor(t*(e.points.length-1)))
+         const ratio=t*(e.points.length-1)-segment,a=e.points[segment],b=e.points[segment+1]
+         x=a.x+(b.x-a.x)*ratio;y=a.y+(b.y-a.y)*ratio
+       }
        if(Math.hypot(p.x-x,p.y-y)<43)blocked=true
      }
      if(blocked)obstruction++
    }
  }
  assert.equal(collision,0,'节点必须无碰撞')
+ assert.equal(obstruction,0,'连线不得穿过无关节点')
  const repeated=await layoutKnowledge([...nodes].reverse(),edges)
  assert.deepEqual(repeated.positions,result.positions,'相同结构与节点顺序变化应保持稳定')
  assert.equal(Object.keys(result.positions).length,count)
@@ -54,7 +67,7 @@ for(const count of [6,31,80]) {
    assert.equal(focused.zoom,1.15)
    cameras.push({viewport,fit_zoom:camera.zoom,visible_nodes:pos.length,anchor_error_below:1e-7})
  }
- report.push({nodes:count,edges:edges.length,collisions:collision,obstructions:obstruction,elapsed_ms:Math.round(performance.now()-start),cameras})
+ report.push({course,nodes:count,edges:edges.length,collisions:collision,obstructions:obstruction,stable_under_reordering:true,elapsed_ms:Math.round(performance.now()-start),cameras})
 }
 console.log(JSON.stringify(report,null,2))
 if(process.argv[2])writeFileSync(process.argv[2],JSON.stringify(report,null,2))
