@@ -1,0 +1,1022 @@
+{
+  "executed_at": "2026-11-11T03:43:59.579047+00:00",
+  "seed": 4011,
+  "data": "固定种子的隔离合成案例；机制指标与业务回归，不估计真实学生成绩提升",
+  "real_api_requests": 0,
+  "K-TRACE": {
+    "cases": [
+      {
+        "difficulty": 1,
+        "peers": 0,
+        "hints": 0,
+        "posterior": 0.4,
+        "without_hint_adjustment": 0.4,
+        "weight": 1.0,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 0,
+        "hints": 1,
+        "posterior": 0.3,
+        "without_hint_adjustment": 0.4,
+        "weight": 1.0,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 0,
+        "hints": 2,
+        "posterior": 0.26666666666666666,
+        "without_hint_adjustment": 0.4,
+        "weight": 1.0,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 4,
+        "hints": 0,
+        "posterior": 0.35067375982707216,
+        "without_hint_adjustment": 0.35067375982707216,
+        "weight": 0.6201736729460422,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 4,
+        "hints": 1,
+        "posterior": 0.2835579199423574,
+        "without_hint_adjustment": 0.35067375982707216,
+        "weight": 0.6201736729460422,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 4,
+        "hints": 2,
+        "posterior": 0.26118597331411914,
+        "without_hint_adjustment": 0.35067375982707216,
+        "weight": 0.6201736729460422,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 8,
+        "hints": 0,
+        "posterior": 0.33154336041655225,
+        "without_hint_adjustment": 0.33154336041655225,
+        "weight": 0.48795003647426655,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 8,
+        "hints": 1,
+        "posterior": 0.2771811201388507,
+        "without_hint_adjustment": 0.33154336041655225,
+        "weight": 0.48795003647426655,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 1,
+        "peers": 8,
+        "hints": 2,
+        "posterior": 0.2590603733796169,
+        "without_hint_adjustment": 0.33154336041655225,
+        "weight": 0.48795003647426655,
+        "without_correlation_weight": 1.0
+      },
+      {
+        "difficulty": 2,
+        "peers": 0,
+        "hints": 0,
+        "posterior": 0.4444444444444444,
+        "without_hint_adjustment": 0.4444444444444444,
+        "weight": 1.4,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 0,
+        "hints": 1,
+        "posterior": 0.31481481481481477,
+        "without_hint_adjustment": 0.4444444444444444,
+        "weight": 1.4,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 0,
+        "hints": 2,
+        "posterior": 0.2716049382716049,
+        "without_hint_adjustment": 0.4444444444444444,
+        "weight": 1.4,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 4,
+        "hints": 0,
+        "posterior": 0.3837612640910893,
+        "without_hint_adjustment": 0.3837612640910893,
+        "weight": 0.8682431421244591,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 4,
+        "hints": 1,
+        "posterior": 0.2945870880303631,
+        "without_hint_adjustment": 0.3837612640910893,
+        "weight": 0.8682431421244591,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 4,
+        "hints": 2,
+        "posterior": 0.2648623626767877,
+        "without_hint_adjustment": 0.3837612640910893,
+        "weight": 0.8682431421244591,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 8,
+        "hints": 0,
+        "posterior": 0.3594027995617116,
+        "without_hint_adjustment": 0.3594027995617116,
+        "weight": 0.6831300510639732,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 8,
+        "hints": 1,
+        "posterior": 0.2864675998539039,
+        "without_hint_adjustment": 0.3594027995617116,
+        "weight": 0.6831300510639732,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 2,
+        "peers": 8,
+        "hints": 2,
+        "posterior": 0.26215586661796797,
+        "without_hint_adjustment": 0.3594027995617116,
+        "weight": 0.6831300510639732,
+        "without_correlation_weight": 1.4
+      },
+      {
+        "difficulty": 3,
+        "peers": 0,
+        "hints": 0,
+        "posterior": 0.48275862068965514,
+        "without_hint_adjustment": 0.48275862068965514,
+        "weight": 1.8,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 0,
+        "hints": 1,
+        "posterior": 0.3275862068965517,
+        "without_hint_adjustment": 0.48275862068965514,
+        "weight": 1.8,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 0,
+        "hints": 2,
+        "posterior": 0.27586206896551724,
+        "without_hint_adjustment": 0.48275862068965514,
+        "weight": 1.8,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 4,
+        "hints": 0,
+        "posterior": 0.4136402077206057,
+        "without_hint_adjustment": 0.4136402077206057,
+        "weight": 1.116312611302876,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 4,
+        "hints": 1,
+        "posterior": 0.3045467359068686,
+        "without_hint_adjustment": 0.4136402077206057,
+        "weight": 1.116312611302876,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 4,
+        "hints": 2,
+        "posterior": 0.2681822453022895,
+        "without_hint_adjustment": 0.4136402077206057,
+        "weight": 1.116312611302876,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 8,
+        "hints": 0,
+        "posterior": 0.38503293976292,
+        "without_hint_adjustment": 0.38503293976292,
+        "weight": 0.8783100656536798,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 8,
+        "hints": 1,
+        "posterior": 0.29501097992097336,
+        "without_hint_adjustment": 0.38503293976292,
+        "weight": 0.8783100656536798,
+        "without_correlation_weight": 1.8
+      },
+      {
+        "difficulty": 3,
+        "peers": 8,
+        "hints": 2,
+        "posterior": 0.26500365997365777,
+        "without_hint_adjustment": 0.38503293976292,
+        "weight": 0.8783100656536798,
+        "without_correlation_weight": 1.8
+      }
+    ],
+    "case_count": 27,
+    "repeat_success_weight": 0.0,
+    "ninety_day_effective_count": 1.5,
+    "ninety_day_posterior": 0.4318181818181818,
+    "interpretation": "检验提示、相关性、重复成功与时间折减的计算行为"
+  },
+  "PATH-G": {
+    "cases": [
+      {
+        "graph": 0,
+        "nodes": 8,
+        "budget": 8,
+        "goal": 7,
+        "sequence": [
+          7
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 0,
+        "nodes": 8,
+        "budget": 16,
+        "goal": 7,
+        "sequence": [
+          7,
+          5
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 0,
+        "nodes": 8,
+        "budget": 24,
+        "goal": 7,
+        "sequence": [
+          7,
+          5,
+          4
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 0,
+        "nodes": 8,
+        "budget": 40,
+        "goal": 7,
+        "sequence": [
+          7,
+          3,
+          1,
+          5,
+          8
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 1,
+        "nodes": 12,
+        "budget": 8,
+        "goal": 9,
+        "sequence": [
+          12
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 1,
+        "nodes": 12,
+        "budget": 16,
+        "goal": 9,
+        "sequence": [
+          12,
+          11
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 1,
+        "nodes": 12,
+        "budget": 24,
+        "goal": 9,
+        "sequence": [
+          2,
+          6,
+          9
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 1,
+        "nodes": 12,
+        "budget": 40,
+        "goal": 9,
+        "sequence": [
+          2,
+          6,
+          9,
+          12,
+          11
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 2,
+        "nodes": 16,
+        "budget": 8,
+        "goal": 13,
+        "sequence": [
+          6
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 2,
+        "nodes": 16,
+        "budget": 16,
+        "goal": 13,
+        "sequence": [
+          6,
+          9
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 2,
+        "nodes": 16,
+        "budget": 24,
+        "goal": 13,
+        "sequence": [
+          6,
+          9,
+          8
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 2,
+        "nodes": 16,
+        "budget": 40,
+        "goal": 13,
+        "sequence": [
+          1,
+          3,
+          2,
+          4,
+          13
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 3,
+        "nodes": 8,
+        "budget": 8,
+        "goal": 4,
+        "sequence": [
+          4
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 3,
+        "nodes": 8,
+        "budget": 16,
+        "goal": 4,
+        "sequence": [
+          4,
+          8
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 3,
+        "nodes": 8,
+        "budget": 24,
+        "goal": 4,
+        "sequence": [
+          4,
+          8,
+          7
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 3,
+        "nodes": 8,
+        "budget": 40,
+        "goal": 4,
+        "sequence": [
+          4,
+          2,
+          1,
+          6,
+          8
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 4,
+        "nodes": 12,
+        "budget": 8,
+        "goal": 5,
+        "sequence": [
+          5
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 4,
+        "nodes": 12,
+        "budget": 16,
+        "goal": 5,
+        "sequence": [
+          5,
+          11
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 4,
+        "nodes": 12,
+        "budget": 24,
+        "goal": 5,
+        "sequence": [
+          5,
+          11,
+          9
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 4,
+        "nodes": 12,
+        "budget": 40,
+        "goal": 5,
+        "sequence": [
+          5,
+          1,
+          6,
+          9,
+          11
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 5,
+        "nodes": 16,
+        "budget": 8,
+        "goal": 2,
+        "sequence": [
+          2
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 5,
+        "nodes": 16,
+        "budget": 16,
+        "goal": 2,
+        "sequence": [
+          2,
+          10
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 5,
+        "nodes": 16,
+        "budget": 24,
+        "goal": 2,
+        "sequence": [
+          2,
+          10,
+          13
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 5,
+        "nodes": 16,
+        "budget": 40,
+        "goal": 2,
+        "sequence": [
+          2,
+          1,
+          6,
+          9,
+          10
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 6,
+        "nodes": 8,
+        "budget": 8,
+        "goal": 7,
+        "sequence": [
+          8
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 2
+      },
+      {
+        "graph": 6,
+        "nodes": 8,
+        "budget": 16,
+        "goal": 7,
+        "sequence": [
+          8,
+          5
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 2
+      },
+      {
+        "graph": 6,
+        "nodes": 8,
+        "budget": 24,
+        "goal": 7,
+        "sequence": [
+          5,
+          4,
+          7
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 2
+      },
+      {
+        "graph": 6,
+        "nodes": 8,
+        "budget": 40,
+        "goal": 7,
+        "sequence": [
+          5,
+          4,
+          7,
+          8,
+          1
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 2
+      },
+      {
+        "graph": 7,
+        "nodes": 12,
+        "budget": 8,
+        "goal": 2,
+        "sequence": [
+          2
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 7,
+        "nodes": 12,
+        "budget": 16,
+        "goal": 2,
+        "sequence": [
+          2,
+          8
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 7,
+        "nodes": 12,
+        "budget": 24,
+        "goal": 2,
+        "sequence": [
+          2,
+          8,
+          7
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 7,
+        "nodes": 12,
+        "budget": 40,
+        "goal": 2,
+        "sequence": [
+          2,
+          1,
+          8,
+          4,
+          11
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 8,
+        "nodes": 16,
+        "budget": 8,
+        "goal": 4,
+        "sequence": [
+          4
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 8,
+        "nodes": 16,
+        "budget": 16,
+        "goal": 4,
+        "sequence": [
+          4,
+          15
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 8,
+        "nodes": 16,
+        "budget": 24,
+        "goal": 4,
+        "sequence": [
+          4,
+          15,
+          7
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 8,
+        "nodes": 16,
+        "budget": 40,
+        "goal": 4,
+        "sequence": [
+          4,
+          1,
+          15,
+          6,
+          16
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 9,
+        "nodes": 8,
+        "budget": 8,
+        "goal": 4,
+        "sequence": [
+          4
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 9,
+        "nodes": 8,
+        "budget": 16,
+        "goal": 4,
+        "sequence": [
+          4,
+          8
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 9,
+        "nodes": 8,
+        "budget": 24,
+        "goal": 4,
+        "sequence": [
+          4,
+          8,
+          6
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 9,
+        "nodes": 8,
+        "budget": 40,
+        "goal": 4,
+        "sequence": [
+          4,
+          2,
+          1,
+          8,
+          6
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 0
+      },
+      {
+        "graph": 10,
+        "nodes": 12,
+        "budget": 8,
+        "goal": 12,
+        "sequence": [
+          7
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 4
+      },
+      {
+        "graph": 10,
+        "nodes": 12,
+        "budget": 16,
+        "goal": 12,
+        "sequence": [
+          7,
+          10
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 4
+      },
+      {
+        "graph": 10,
+        "nodes": 12,
+        "budget": 24,
+        "goal": 12,
+        "sequence": [
+          7,
+          10,
+          4
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 4
+      },
+      {
+        "graph": 10,
+        "nodes": 12,
+        "budget": 40,
+        "goal": 12,
+        "sequence": [
+          1,
+          7,
+          10,
+          4,
+          5
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 4
+      },
+      {
+        "graph": 11,
+        "nodes": 16,
+        "budget": 8,
+        "goal": 11,
+        "sequence": [
+          15
+        ],
+        "minutes": 8,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 11,
+        "nodes": 16,
+        "budget": 16,
+        "goal": 11,
+        "sequence": [
+          7,
+          11
+        ],
+        "minutes": 16,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 11,
+        "nodes": 16,
+        "budget": 24,
+        "goal": 11,
+        "sequence": [
+          7,
+          11,
+          15
+        ],
+        "minutes": 24,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      },
+      {
+        "graph": 11,
+        "nodes": 16,
+        "budget": 40,
+        "goal": 11,
+        "sequence": [
+          7,
+          11,
+          4,
+          2,
+          15
+        ],
+        "minutes": 40,
+        "violations": 0,
+        "static_goal_sort_violations": 1
+      }
+    ],
+    "case_count": 48,
+    "prerequisite_violations": 0,
+    "static_sort_violations": 36,
+    "budget_violations": 0,
+    "evidence_replanning": {
+      "before": [
+        1,
+        2
+      ],
+      "after_prerequisite_supported": [
+        2,
+        3
+      ]
+    },
+    "missing_prerequisite_blocked": true
+  },
+  "CLASS-LOOP": {
+    "students": 24,
+    "profiles": 4,
+    "classloop_purity": 1.0,
+    "equal_score_tiebreak_purity": 0.3333333333333333,
+    "classloop_mean_weighted_distance": 0.014102821522259045,
+    "baseline_mean_weighted_distance": 1.195278821168551,
+    "permutation_stable": true,
+    "changed_student_focus": "操作步骤",
+    "observation_focus": "补充学习证据",
+    "group_sizes": [
+      6,
+      6,
+      6,
+      6
+    ]
+  },
+  "DIA-GUIDE": {
+    "scenarios": [
+      {
+        "concern": "证据不足",
+        "failed_feedback": false,
+        "expected": "hint",
+        "actual": "hint",
+        "fixed_hint_baseline": "hint"
+      },
+      {
+        "concern": "概念辨析",
+        "failed_feedback": false,
+        "expected": "contrast",
+        "actual": "contrast",
+        "fixed_hint_baseline": "hint"
+      },
+      {
+        "concern": "先修缺口",
+        "failed_feedback": false,
+        "expected": "contrast",
+        "actual": "contrast",
+        "fixed_hint_baseline": "hint"
+      },
+      {
+        "concern": "准备独立复测",
+        "failed_feedback": false,
+        "expected": "check",
+        "actual": "check",
+        "fixed_hint_baseline": "hint"
+      },
+      {
+        "concern": "概念辨析",
+        "failed_feedback": true,
+        "expected": "experiment",
+        "actual": "experiment",
+        "fixed_hint_baseline": "hint"
+      }
+    ],
+    "policy_matches": 5,
+    "fixed_hint_matches": 1,
+    "first_strategy": "contrast",
+    "after_failed_check": "experiment",
+    "roles": [
+      "学习诊断代理",
+      "教学策略代理",
+      "教学校验代理"
+    ],
+    "verification": {
+      "role": "教学校验代理",
+      "passed": true,
+      "rejected_actions": [],
+      "invalid_references": [],
+      "checks": [
+        "课程对象映射",
+        "可执行动作类型",
+        "理解检查关联",
+        "资料引用编号"
+      ]
+    },
+    "mock_chat_turns": 2,
+    "interpretation": "策略规则和执行衔接检查，匹配率不代表学习收益"
+  },
+  "cohort_snapshot": {
+    "students": 28,
+    "graded_attempts": 1847,
+    "selects": 5,
+    "elapsed_ms": 39.2
+  }
+}

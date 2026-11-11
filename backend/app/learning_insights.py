@@ -13,12 +13,27 @@ def dynamic_groups(students, questions, max_groups=4):
     """确定性加权L1 k-medoids；组别根据当次证据重新计算。"""
     if not students:
         return []
+    observation = [s for s in students if s.get('recent_graded_count', 2) < 2]
+    students = [s for s in students if s not in observation]
+    observation_groups = []
+    if observation:
+        starters = sorted(questions, key=lambda q:(q['difficulty'],q['id']))[:3]
+        observation_groups.append({'id':'group-observation', 'name':'学习起点观察组',
+            'student_ids':[s['id'] for s in observation], 'features':dict.fromkeys(FEATURES,0),
+            'focus':'补充学习证据', 'strategy':'先完成少量独立练习，再根据作答安排针对性任务',
+            'question_ids':[q['id'] for q in starters], 'knowledge_id':starters[0]['knowledge_id'] if starters else None,
+            'method':'CLASS-LOOP', 'medoid':None, 'dispersion':0, 'evidence_level':'观察中'})
+    if not students:
+        return observation_groups
     vectors = {s['id']: s['features'] for s in students}
+    confidence = {s['id']:s.get('feature_confidence',[1]*len(FEATURES)) for s in students}
     def distance(a,b):
-        return sum(w*abs(x-y) for w,x,y in zip(WEIGHTS,vectors[a],vectors[b]))
+        # 共有证据决定差异；支持程度差异给予小幅惩罚，未知维度不当成相同错因。
+        return sum(w*(min(ca,cb)*abs(x-y)+.25*abs(ca-cb))
+                   for w,x,y,ca,cb in zip(WEIGHTS,vectors[a],vectors[b],confidence[a],confidence[b]))
     ids = sorted(vectors)
     medoids = [ids[0]]
-    for _ in range(min(max_groups,len(ids))-1):
+    for _ in range(min(max(1,max_groups-len(observation_groups)),len(ids))-1):
         medoids.append(max((i for i in ids if i not in medoids),key=lambda i:(min(distance(i,m) for m in medoids),-i)))
     clusters = {}
     for _ in range(12):
@@ -38,7 +53,7 @@ def dynamic_groups(students, questions, max_groups=4):
     for m,members in clusters.items():
         if not members:
             continue
-        center = [sum(vectors[i][j] for i in members)/len(members) for j in range(len(FEATURES))]
+        center = [sum(vectors[i][j]*confidence[i][j] for i in members)/max(.001,sum(confidence[i][j] for i in members)) for j in range(len(FEATURES))]
         focus = max(range(len(center)),key=lambda j:center[j])
         candidates = sorted(questions,key=lambda q:(-(2 if focus<4 and q['skill']==SKILLS[focus] else 0),q['difficulty'] if focus>=4 else abs(q['difficulty']-2),q['id']))
         qids = [q['id'] for q in candidates[:3]]
@@ -48,7 +63,7 @@ def dynamic_groups(students, questions, max_groups=4):
                        'strategy':strategies[focus], 'question_ids':qids,
                        'knowledge_id':candidates[0]['knowledge_id'] if candidates else None,
                        'method':'CLASS-LOOP', 'medoid':m, 'dispersion':round(sum(distance(i,m) for i in members)/len(members),3)})
-    return output
+    return output + observation_groups
 
 
 def learning_snapshot(db, course_id, student_ids, now=None):
@@ -68,15 +83,19 @@ def learning_snapshot(db, course_id, student_ids, now=None):
         graded = [a for a in by_student[s['id']] if a['correct'] is not None]
         recent = [a for a in graded if (now-parse_time(a['created_at'])).days<14]
         features = []
+        feature_confidence = []
         for skill in SKILLS:
             subset = [a for a in recent if a['skill']==skill]
             features.append(sum(1-a['score']/100 for a in subset)/len(subset) if subset else .5)
+            feature_confidence.append(min(1,len(subset)/4))
         features.append(sum(a['hints_used']>0 for a in recent)/len(recent) if recent else 0)
         gap = max(0,(now-parse_time(graded[-1]['created_at'])).total_seconds()/86400) if graded else 14
         features.append(min(1,gap/14))
+        feature_confidence += [min(1,len(recent)/6),1 if graded else 0]
         s.update(mastery=round(sum(v['value'] for v in observed)/len(observed)*100) if observed else 0,
                  attempts=len(graded),accuracy=round(sum(a['correct'] for a in graded)/len(graded)*100) if graded else 0,
-                 evidence_sufficiency=sum(v['effective_count']>=2 for v in observed),coverage=len(observed),features=features)
+                 evidence_sufficiency=sum(v['effective_count']>=2 for v in observed),coverage=len(observed),features=features,
+                 recent_graded_count=len(recent),feature_confidence=feature_confidence)
         heatmap.append({'student_id':s['id'],'name':s['name'],'cells':[{'knowledge_id':n['id'],'value':round(states[(s['id'],n['id'])]['value']*100) if states[(s['id'],n['id'])]['observed'] else None,'count':round(states[(s['id'],n['id'])]['effective_count'],1)} for n in nodes]})
     knowledge=[]
     for n in nodes:

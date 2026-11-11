@@ -47,9 +47,10 @@ def order_recommendations(candidates, parents, states, budget=30):
     remaining = {c['knowledge_id']: c for c in candidates if c['knowledge_id'] not in ordered}
     ready = {k for k, s in states.items() if s['effective_count'] >= 2 and s['value'] >= .6}
     while remaining:
-        eligible = [k for k in remaining if all(p in ready or p in ordered or p not in remaining for p in parents.get(k, []))]
-        if not eligible:  # 数据层有环路校验；异常导入也保证终止。
-            eligible = list(remaining)
+        eligible = [k for k in remaining if all(p in ready or p in ordered for p in parents.get(k, []))]
+        # 缺少可学习先修资源时保留阻塞，不把目标伪装成可直接执行的路径。
+        if not eligible:
+            break
         kid = max(eligible, key=lambda k: (sum(plan['components'][k].values()), -k))
         ordered.append(kid)
         remaining.pop(kid)
