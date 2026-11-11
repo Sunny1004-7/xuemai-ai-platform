@@ -23,27 +23,29 @@ def build(screenshots,record,draft=False):
     else:
         manifest=json.loads((directory/'截图清单.json').read_text(encoding='utf-8'))
     images=source/'images';images.mkdir(exist_ok=True)
-    mapping={'graph':'student/graph/desktop_fullscreen.png',
-             'graph-overview':'student/graph/desktop_chapters.png',
-             'student-dashboard':'student/dashboard/desktop_full_part01.png',
-             'practice':'student/practice/desktop_correct.png','video':'student/video/desktop_full.png',
-             'teacher-dashboard':'teacher/dashboard/desktop_full.png',
-             'teacher-matrix':'teacher/analytics/desktop_full_part01.png',
-             'teacher-groups':'teacher/analytics/desktop_intervention-workspace.png',
-             'resources':'teacher/resources/desktop_full_part01.png',
-             'tutor':'student/tutor/desktop_collaboration.png',
-             'login':'public/login/desktop_full.png'}
+    mapping={'graph':'student/graph/CS201/desktop_fullscreen.png',
+             'graph-overview':'student/graph/CS201/desktop_chapters.png',
+             'student-dashboard':'student/dashboard/CS201/desktop_full.png',
+             'practice':'student/practice/CS201/desktop_correct.png','video':'student/video/CS101/desktop_full.png',
+             'teacher-dashboard':'teacher/dashboard/CS201/desktop_full.png',
+             'teacher-matrix':'teacher/analytics/CS201/desktop_full.png',
+             'teacher-groups':'teacher/analytics/CS201/desktop_view-3.png',
+             'resources':'teacher/resources/CS101/desktop_full.png',
+             'tutor':'student/tutor/CS101/desktop_conversation.png',
+             'login':'public/login/public/desktop_full.png',
+             'python-plan':'student/plan/CS101/desktop_view-4.png',
+             'python-experiment':'student/experiments/CS101/desktop_py-function.png'}
     for name,relative in mapping.items():
         img=Image.open(directory/relative).convert('RGB')
         # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
         if name not in {'graph','login'}:
             img=img.crop((232,72,img.width,min(img.height,1000)))
         img.save(images/(name+'.png'))
-    back=(ROOT/'.local/round4-pytest.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'.local/round4-e2e.txt').read_text(encoding='utf-8',errors='replace')
+    back=(ROOT/'.local/round5-business-tests.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'.local/round5-e2e.txt').read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
-    summary=f"后端功能、算法与业务回归共{bm[1]}项通过；浏览器师生流程与新增交互回归共{em[1]}项通过。界面检查覆盖20个模块、四种视口，保存{len(manifest['files'])}张截图，浏览器页面运行错误为0。常规验证使用本地示例模式，不消耗官方接口额度。官方服务抽样已覆盖辅导、出题、备课与量规评阅，四次均成功、零重试，累计输入3744 Tokens、输出724 Tokens。\n"
+    summary=f"后端业务与算法98项、交付校验14项通过；浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生18个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。自动化、内容建设和录制使用本地示例模式，本次升级新增官方接口调用为0。已有官方服务抽样覆盖辅导、出题、备课与量规评阅，四次均成功、零重试，累计输入3744 Tokens、输出724 Tokens。\n"
     (source/'validation-summary.tex').write_text(summary,encoding='utf-8')
     compiled=ROOT/'.local/technical-report-build';compiled.mkdir(exist_ok=True,parents=True)
     for index in range(3):

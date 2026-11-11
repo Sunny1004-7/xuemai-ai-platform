@@ -1,0 +1,9 @@
+\begin{tikzpicture}[font=\small,>={Stealth[length=2mm]},box/.style={draw=celadon!55,rounded corners=3pt,fill=pale!45,minimum height=1.05cm,text width=3.5cm,align=center},flow/.style={->,thick,draw=celadon}]
+\node[box] (goal) {个人目标\\共享每日学习时间};
+\node[box,right=1cm of goal] (path) {PATH-G规划\\先修、成本与任务效用};
+\node[box,right=1cm of path] (activity) {具体学习活动\\题目／视频／资料／实验};
+\node[box,below=1cm of activity,fill=rice!50,draw=tea!60] (event) {活动完成事件\\评分／观看／执行步骤};
+\node[box,left=1cm of event,fill=rice!50,draw=tea!60] (plan) {更新计划进度\\保留事件与完成来源};
+\node[box,left=1cm of plan] (state) {独立作答更新证据\\重新计算下一次路径};
+\draw[flow] (goal)--(path);\draw[flow] (path)--(activity);\draw[flow] (activity)--(event);\draw[flow] (event)--(plan);\draw[flow] (plan)--(state);\draw[flow] (state)--(goal);
+\end{tikzpicture}
