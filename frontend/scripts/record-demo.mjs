@@ -24,6 +24,7 @@ const context = await browser.newContext({
   deviceScaleFactor: 1,
 })
 const page = await context.newPage()
+page.setDefaultTimeout(30000)
 const events = [],
   shots = []
 let recording = true,
@@ -102,7 +103,7 @@ async function correctAnswer(question){
   await expect(page.locator('.answer-feedback')).toBeVisible()
 }
 
-await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round5-replay.html')).href + '#intro')
+await page.goto(pathToFileURL(path.join(root, 'docs/development-process/round6-replay.html')).href + '#intro')
 const capture = (async () => {
   while (recording) {
     const tick = Date.now()
@@ -179,7 +180,9 @@ try {
   await scene(145, '上下文辅导', '', () => go('/tutor?course=2'))
   await page.locator('.conversation-list>button:not(.button)').first().click()
   await until(150)
-  await page.getByLabel('输入学习问题').fill('请用一个循环边界反例继续解释，再检查我的理解。')
+  await page.getByLabel('选择AI模型').selectOption('deepseek-v4-pro')
+  await page.getByLabel('选择问答附件').setInputFiles({name:'循环边界笔记.md',mimeType:'text/markdown',buffer:Buffer.from('Python range不包含右端点。循环变量逐次取得序列元素。')})
+  await page.getByLabel('输入学习问题').fill('根据笔记，用循环边界反例解释，再检查我的理解。')
   await page.getByRole('button', { name: '发送', exact: true }).click()
   await until(162)
   await expect(page.getByRole('button',{name:'停止',exact:true})).toHaveCount(0)
@@ -189,12 +192,16 @@ try {
   await page.locator('.understanding-check input').last().check()
   await page.getByRole('button', { name: '提交理解检查', exact: true }).last().click()
   await until(178)
-  await page.getByRole('button', { name: '对话历史', exact: true }).click()
-  await scene(185, '交互实验', '', () => go('/experiments?course=2&mode=py-loop'))
-  for (let i = 0; i < 5; i++) {
-    await until(188 + i * 2)
-    await page.getByRole('button', { name: '下一步', exact: true }).click()
-  }
+  await page.getByLabel('选择语音文件').setInputFiles(path.join(root,'.local/round6-voice-sample.mp3'))
+  await expect(page.locator('#chat-input')).not.toHaveValue('',{timeout:60000})
+  await scene(185, '栈操作实验', '', () => go('/experiments?course=1&mode=stack'))
+  await until(189)
+  await page.getByLabel('待加入元素').fill('48')
+  await page.getByRole('button', { name: '压栈', exact: true }).click()
+  await until(194)
+  await page.getByRole('button', { name: '查看栈顶', exact: true }).click()
+  await until(198)
+  await page.getByRole('button', { name: '出栈', exact: true }).click()
   let teacherToken
   await scene(205, '教师工作台', '', async () => {teacherToken=await login('teacher');await go('/analytics?course=2')})
   await until(213)
@@ -204,45 +211,35 @@ try {
   await until(226)
   await page.getByRole('dialog').getByRole('button', { name: '关闭', exact: true }).click()
   await page.getByRole('tab',{name:'教学群组',exact:true}).click()
-  const questions=(await readApi(teacherToken,'/questions?course_id=2')).filter(q=>q.type==='single'&&q.status==='approved').slice(0,2)
-  await scene(230, '针对性任务', '', async () => {
-    await go('/practice?course=2')
-    await page.getByRole('button',{name:'发布作业',exact:true}).click()
+  await scene(230, '教师AI教学助手', '', () => go('/teacher-ai?course=1&class=1'))
+  await page.getByLabel('选择AI模型').selectOption('deepseek-v4-pro')
+  await page.locator('#chat-input').fill('这个班栈与队列有哪些典型错误？安排40分钟讲评课和两组后续练习。')
+  await page.getByRole('button', { name: '发送', exact: true }).click()
+  await expect(page.getByRole('button', {name:'编辑与保存教案',exact:true})).toBeVisible()
+  await until(240)
+  await page.locator('.collaboration-trace summary').last().click()
+  await scene(250, '教师确认教学草稿', '', async () => {
+    await page.getByRole('button', { name:'编辑与保存教案',exact:true }).click()
+    await page.getByLabel('教案标题',{exact:true}).fill('栈与队列讲评课')
   })
-  await until(235)
-  await page.getByRole('dialog').locator('input[name=title]').fill(taskTitle)
-  await page.getByRole('dialog').locator('select[name=class_id]').selectOption({index:1})
-  for(const q of questions) await page.getByRole('dialog').locator('.checkbox-list label').filter({hasText:q.title}).getByRole('checkbox').check()
-  await until(242)
-  await page.getByRole('dialog').getByRole('button', { name: '发布作业', exact: true }).click()
-  const assignment=(await readApi(teacherToken,'/assignments?course_id=2')).find(a=>a.title===taskTitle)
-  if(!assignment)throw new Error('已发布任务未落库')
-  await scene(250, '学生完成', '', async () => {
-    await login('student1')
-    await go(`/practice?course=2&assignment=${assignment.id}`)
-  })
-  await correctAnswer(questions[0])
   await until(257)
-  await page.getByRole('button', { name: '下一道练习', exact: true }).click()
-  await correctAnswer(questions[1])
-  await scene(265, '任务结果', '', async () => {
-    await login('teacher')
-    await go('/practice?course=2')
-    await page.getByRole('tab',{name:'作业记录',exact:true}).click()
-    await page
-      .locator('.assignment-row')
-      .filter({ hasText: taskTitle })
-      .getByRole('button', { name: '查看结果', exact: true })
-      .click()
+  await page.getByRole('button',{name:'保存为教案草稿',exact:true}).click()
+  await expect(page.getByRole('link',{name:'打开教案',exact:true})).toBeVisible()
+  await scene(265, '群组任务审核', '', async () => {
+    await page.getByRole('link',{name:'审核并发布任务',exact:true}).first().click()
+    await page.getByRole('dialog').waitFor()
+    await page.getByRole('combobox',{name:'发布到班级',exact:true}).selectOption({index:1})
   })
-  const replay = pathToFileURL(path.join(root, 'docs/development-process/round5-replay.html')).href
+  await until(273)
+  await page.getByRole('button',{name:'发布作业',exact:true}).last().click()
+  const replay = pathToFileURL(path.join(root, 'docs/development-process/round6-replay.html')).href
   for (const [at, id, name] of [
     [280, 'chain1', '知识图谱开发'],
     [320, 'chain2', '学习证据开发'],
     [360, 'chain3', '人工智能服务开发'],
-    [400, 'methods', '四项方法与验证'],
+    [400, 'methods', '五项方法与验证'],
     [412, 'path-results', '路径约束实验'],
-    [426, 'group-results', '错因分层实验'],
+    [426, 'retrieval-results', '检索与真实联调'],
   ]) {
     await scene(at, name, '', () => page.goto(replay + '#' + id))
   }

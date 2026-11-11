@@ -1,6 +1,6 @@
 {
   "output": "学脉XueMai-演示视频-含旁白.mp4",
-  "duration_seconds": 449.96,
+  "duration_seconds": 450.0,
   "resolution": "1920x1080",
   "fps": 24.0,
   "video_codec": "H.264",
@@ -11,14 +11,14 @@
     "2026-11-03"
   ],
   "narration": "晓晓中文神经合成语音",
-  "narration_segments": 55,
+  "narration_segments": 56,
   "narration_timeline_no_overlap": true,
   "subtitle_timing": "同次TTS WordBoundary经音频速度换算",
   "audio_mean_db": -21.3,
   "audio_peak_db": -0.5,
   "audio_auditory_review": "未进行人工听审，已验证音轨非静音、分句时间轴和完整解码",
   "subtitles_burned_in": true,
-  "subtitle_entries": 71,
+  "subtitle_entries": 73,
   "real_api_calls_during_recording": 0,
-  "sha256": "3a00701e13dd636d8da95293b3b0a568c6eef146f0119b5872f0f49ac51328be"
+  "sha256": "bdab23d45fed427b124f9cbe593dbea416d957c3fceafc1a5a2b07fafd6faf4c"
 }
