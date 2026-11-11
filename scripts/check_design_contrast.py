@@ -9,6 +9,8 @@ def luminance(color):
 def contrast(a,b):
     x,y=sorted([luminance(a),luminance(b)]);return (y+.05)/(x+.05)
 pairs=[('学生正文','#263A37','#F1F0E8'),('学生辅助文字','#52665F','#F1F0E8'),('学生主按钮','#FFFFFF','#2E6A67'),('教师正文','#352D29','#F5EEE4'),('教师辅助文字','#695A50','#F5EEE4'),('教师主按钮','#FFFFFF','#7E6554'),('学生柱图数值','#263A37','#A9C8BE'),('教师柱图数值','#352D29','#D4B79D')]
+pairs += [('学生导航','#C3D9D2','#173F3D'),('学生选中导航','#FFFFFF','#315C58'),
+          ('教师导航','#DFCBBB','#463A32'),('教师选中导航','#FFFFFF','#655345')]
 rows=[{'usage':n,'foreground':a,'background':b,'ratio':round(contrast(a,b),2),'passes_normal_text':contrast(a,b)>=4.5} for n,a,b in pairs]
 if not all(r['passes_normal_text'] for r in rows):raise RuntimeError('关键文字对比不足')
 (ROOT/'docs/design-contrast.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2),encoding='utf8')

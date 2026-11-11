@@ -1,0 +1,13 @@
+{
+  "conclusion": "success",
+  "headSha": "e6fd7c6d029affd83ff2cd9117261bdbf45a6226",
+  "status": "completed",
+  "url": "https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/42957848192",
+  "backend_tests": 125,
+  "backend_seconds": 53.71,
+  "browser_tests": 16,
+  "browser_seconds": 44.5,
+  "build_and_frontend_algorithms": "passed",
+  "real_api_requests": 0,
+  "source_scope": "第四轮界面、算法和报告功能基线；后续视频与交付说明不改业务源码"
+}

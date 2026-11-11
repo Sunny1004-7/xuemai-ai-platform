@@ -1,0 +1,31 @@
+{
+  "status": "complete",
+  "captured_at": "2026-11-11T03:51:05.369Z",
+  "round_record": "docs/rounds/2026-11-11-第四轮产品视觉与教学体验升级.md",
+  "source_fingerprint": "ae737ffc7af9d1490b60f3d435a66e0183138845c447cd30fb13714850624c17",
+  "ai_mode": "mock",
+  "real_ai_requests": 0,
+  "viewports": {
+    "desktop": {
+      "width": 1440,
+      "height": 1000
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844
+    },
+    "desktop_compact": {
+      "width": 1366,
+      "height": 768
+    },
+    "desktop_wide": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "page_errors": [],
+  "modules": 20,
+  "images": 327,
+  "png_dimensions_and_sha256_valid": true,
+  "visual_review": "全部17张联系表已浏览，登录、图谱、教师资料、练习结果和窄屏等重点原图复核"
+}

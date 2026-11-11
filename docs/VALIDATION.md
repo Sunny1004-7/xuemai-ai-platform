@@ -1,5 +1,21 @@
 # 实际验证记录
 
+## 2026年11月11日：0.4第四轮验收
+
+本机后端功能与方法回归101 passed、1 warning、59.86秒，命令为`.venv/Scripts/python.exe -m pytest backend/tests --ignore=backend/tests/test_security.py -q`；浏览器16 passed、56.4秒。严格TypeScript、生产构建、110组排序、4个边界及BFS/BST通过。公开命令输出见[第四轮测试记录](rounds/第四轮测试记录.txt)。
+
+固定种子4011的四方法消融与对照、图谱相机验证分别见[逐例实验](rounds/第四轮核心方法对照.json)和[图谱结果](rounds/第四轮图谱几何与相机验证.json)。PATH-G 48例先修/预算违规0，对照36个先修违规步骤；CLASS-LOOP 24人四类等均分错因纯度1.0，对照0.333333；DIA-GUIDE五类策略匹配5/5，对照1/5，接口完成检查失败后的策略变化。K-TRACE 27组消融验证提示、相近题与时间折减。实验采用隔离合成数据，真实API调用0次。
+
+全模块截图20模块、四视口、327张PNG，页面错误0；完整目录为“交付审阅包/界面截图_20261111_114830”。已查看17张联系表及重点原图，源码指纹、覆盖、PNG尺寸和SHA256复核通过。12组关键颜色对比度高于4.5。报告29页、9幅TikZ、11张界面图、16参考文献，全页渲染检查。
+
+新视频450秒、1920×1080、24fps、H.264/AAC，59句晓晓合成配音、75条底部字幕，三组原始协作回放120秒、方法与实验40秒。全片解码与时间轴通过，音轨均值-21.1dB、峰值-0.5dB；复核20个时间点和重点原图，未进行人工听审。画板边界、字幕安全区、媒体信息及SHA256见[视频结果](demo/验收结果.json)和[画面复核](demo/画面复核.json)。
+
+[GitHub Linux Actions 42957848192](https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/42957848192)在功能基线e6fd7c6成功：后端125 passed、1 warning、53.71秒，浏览器16 passed、44.5秒，构建、算法和秘密扫描通过。范围与本机命令不同，分别记录。后续视频和交付说明不改业务源码。记录见[远端验收](rounds/第四轮远端验收.json)。当前本机入口已重启并检查前端HTTP 200、后端status=ok、ai_mode=real，健康检查不调用模型。
+
+本轮修复旧窄屏图谱偏移、全图与阅读缩放混用、缺先修资源仍放行目标、缺失技能证据影响分层，以及视频画板溢出。详见[本轮修改记录](rounds/2026-11-11-第四轮产品视觉与教学体验升级.md)。
+
+---
+
 ## 2026年11月11日：0.3第三轮验收
 
 本轮本机后端执行 `.venv/Scripts/python.exe -m pytest backend/tests --ignore=backend/tests/test_security.py -q`，结果97 passed、1 warning，36.66秒；该命令未包括独立test_security.py。浏览器 `npx playwright test` 为14 passed、47.6秒。最新截图前TypeScript严格检查与生产构建通过。既往0.2/0.1数字保留在下方，只对应历史版本。

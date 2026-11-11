@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前主分支为0.3：宋瓷青绿学生端、茶烟米褐教师端、六主题31节点渐进式全屏图谱、28人合成教学班，以及知识追踪、约束路径、协作辅导、动态分层四项方法。可阅读[26页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分钟1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V3.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
+当前主分支为0.4：重新设计的书页路径登录入口、宋瓷青绿学生端、茶烟米褐教师端、章节聚类与圆滑连线知识网络，以及知识追踪、约束路径、协作辅导、动态分层四项方法。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[29页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V4.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 
@@ -75,7 +75,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测账本保留3次、220 Tokens，不重置。本次升级另以独立账本完成辅导、出题、备课、量规评阅4次抽样，输入3744、输出724 Tokens，零重试；已有该轮账本时脚本阻止再次运行。正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
+常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四轮未新增真实API调用。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
 
 ## 结构与验证
 
