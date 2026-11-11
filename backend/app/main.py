@@ -69,3 +69,9 @@ except ModuleNotFoundError as exc:
         raise
 else:
     app.include_router(ai_router)
+from .ai_attachments import router as attachment_router
+from .voice import router as voice_router
+from .teacher_assistant import router as teacher_ai_router
+app.include_router(attachment_router)
+app.include_router(voice_router)
+app.include_router(teacher_ai_router)

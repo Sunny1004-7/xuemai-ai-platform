@@ -33,7 +33,7 @@ class StrategyAgent:
     def run(self, diagnosis, candidates):
         concern=diagnosis['concern']
         failed=diagnosis['previous_feedback'] and not diagnosis['previous_feedback']['correct']
-        preferred='experiment' if failed else 'contrast' if diagnosis['prerequisites'] or diagnosis['recent_errors'] else 'check' if concern=='准备独立复测' else 'hint'
+        preferred='experiment' if failed or diagnosis.get('intent')=='procedure' else 'contrast' if diagnosis['prerequisites'] or diagnosis['recent_errors'] or diagnosis.get('intent')=='contrast' else 'check' if concern=='准备独立复测' else 'hint'
         available={a['kind'] for a in candidates}
         if preferred not in available and preferred!='hint':
             preferred='contrast' if 'contrast' in available else 'hint'
@@ -62,10 +62,15 @@ class VerificationAgent:
             try:
                 if int(query.get('course',[0])[0])!=run['course_id'] or int(query.get('knowledge',[0])[0])!=run['knowledge_id']:return False
                 if not db.execute('SELECT 1 FROM knowledge_points WHERE id=? AND course_id=?',(run['knowledge_id'],run['course_id'])).fetchone():return False
-                if action['kind']=='video':return bool(db.execute("SELECT 1 FROM resources WHERE id=? AND course_id=? AND knowledge_id=? AND kind='video'",(int(query.get('resource',[0])[0]),run['course_id'],run['knowledge_id'])).fetchone()) and url.path=='/video'
+                if action['kind']=='video':
+                    resource=db.execute("SELECT * FROM resources WHERE id=? AND course_id=? AND kind='video'",(int(query.get('resource',[0])[0]),run['course_id'])).fetchone()
+                    if not resource or url.path!='/video':return False
+                    metadata=json.loads(resource['metadata'] or '{}')
+                    linked=resource['knowledge_id']==run['knowledge_id'] or any(t.get('knowledge_id')==run['knowledge_id'] for t in metadata.get('timeline',[]))
+                    timestamp=float(query.get('t',[0])[0])
+                    return linked and 0<=timestamp<=float(metadata.get('duration',0))
                 if action['kind']=='experiment':
-                    from .plan_targets import EXPERIMENTS
-                    return url.path=='/experiments' and query.get('mode',[''])[0] in EXPERIMENTS
+                    return url.path=='/experiments' and bool(db.execute('SELECT 1 FROM knowledge_activities WHERE knowledge_id=? AND mode=?',(run['knowledge_id'],query.get('mode',[''])[0])).fetchone())
                 return action['kind']=='contrast' and url.path=='/graph'
             except (TypeError,ValueError):return False
         for action in plan['actions']:
@@ -77,14 +82,22 @@ class VerificationAgent:
         refs=[int(r) for r in re.findall(r'\[(\d+)\]',content)]
         bad_refs=[r for r in refs if r<1 or r>len(citations)]
         if db and run:
-            bad_refs += [i for i,c in enumerate(citations,1) if not db.execute('SELECT 1 FROM resources WHERE id=? AND course_id=?',(c.get('resource_id'),run['course_id'])).fetchone()]
+            for index,citation in enumerate(citations,1):
+                if citation.get('source_kind')=='attachment':
+                    valid_source=db.execute('SELECT 1 FROM ai_attachments WHERE id=? AND user_id=? AND course_id=? AND conversation_id=? AND deleted_at IS NULL',(citation.get('attachment_id'),run['user_id'],run['course_id'],run['conversation_id'])).fetchone()
+                else:
+                    valid_source=db.execute('SELECT 1 FROM resources WHERE id=? AND course_id=?',(citation.get('resource_id'),run['course_id'])).fetchone()
+                if not valid_source:bad_refs.append(index)
+        from .retrieval import citation_support
         return {'role':self.name,'passed':bool(valid) and not bad_refs and not rejected,'actions':valid,
                 'rejected_actions':rejected,'invalid_references':bad_refs,
-                'checks':['课程对象映射','可执行动作类型','理解检查关联','资料引用编号']}
+                'citation_support':citation_support(content,citations),
+                'checks':['课程对象映射','可执行动作类型','理解检查关联','资料引用位置与词项支持']}
 
 
 def begin_collaboration(db,user,request,conversation_id,plan):
     diagnosis=DiagnosisAgent().run(db,user['id'],request.course_id,plan['knowledge_id'],conversation_id)
+    diagnosis['intent']=plan.get('intent','concept')
     decision=StrategyAgent().run(diagnosis,plan['actions'])
     plan['strategy']=decision['strategy']
     plan['actions']=decision['actions']

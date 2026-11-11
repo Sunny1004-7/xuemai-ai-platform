@@ -3,7 +3,7 @@ import math
 from pathlib import Path
 from fastapi.responses import FileResponse
 from .db import database_path
-from .retrieval import sync_index
+from .retrieval import sync_index, visible_resource
 
 router=APIRouter(prefix="/api")
 
@@ -24,7 +24,7 @@ def resources(course_id:int=1,knowledge_id:int|None=None,q:str="",user=Depends(c
         query="SELECT * FROM resources WHERE course_id=?"; args=[course_id]
         if knowledge_id is not None: query+=" AND knowledge_id=?";args.append(knowledge_id)
         if q: query+=" AND (title LIKE ? OR content LIKE ?)";args.extend([f"%{q[:200]}%"]*2)
-        result=[get_resource(r) for r in db.execute(query+" ORDER BY id",args)]
+        result=[get_resource(r) for r in db.execute(query+" ORDER BY id",args) if visible_resource(r,user['role'])]
         latest={}
         for event in db.execute("SELECT payload FROM learning_events WHERE student_id=? AND course_id=? AND kind='video_progress' ORDER BY id DESC",(user["id"],course_id)):
             payload=json.loads(event[0]);rid=payload.get("resource_id")
@@ -164,9 +164,10 @@ async def upload_resource(course_id:int=Form(...),title:str=Form(...),knowledge_
 @router.get("/resources/{resource_id}/file")
 def private_resource_file(resource_id:int,user=Depends(current_user)):
     with get_db() as db:
-        row=db.execute("SELECT r.course_id,f.filename,f.mime_type FROM resources r JOIN resource_files f ON r.id=f.resource_id WHERE r.id=?",(resource_id,)).fetchone()
+        row=db.execute("SELECT r.course_id,r.metadata,f.filename,f.mime_type FROM resources r JOIN resource_files f ON r.id=f.resource_id WHERE r.id=?",(resource_id,)).fetchone()
         if not row:raise HTTPException(404,"资源文件不存在")
         require_course(db,user,row["course_id"])
+        if not visible_resource(row,user['role']):raise HTTPException(404,'资源暂未发布')
         name=row["filename"]
         if Path(name).name!=name:raise HTTPException(404,"资源文件不存在")
         path=database_path().parent/"uploads"/name

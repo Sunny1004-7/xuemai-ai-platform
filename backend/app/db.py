@@ -55,6 +55,8 @@ def init_db():
         install_samples(db)
         from .sample_dialogues import refine_sample_text
         refine_sample_text(db)
+        from .activity_catalog import register_activities
+        register_activities(db)
         from .retrieval import sync_index
         sync_index(db)
 
