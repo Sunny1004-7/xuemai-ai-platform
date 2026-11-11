@@ -196,7 +196,7 @@ export function Graph() {
         y: p.y + (size.height - previousSize.current.height) / 2,
       }))
     previousSize.current = size
-  }, [size])
+  }, [size, layout])
   useEffect(() => {
     if (!canvasRef.current) return
     const observer = new ResizeObserver(([e]) =>
@@ -419,7 +419,7 @@ export function Graph() {
               {current.title}
             </button>
           ) : null}
-          <div className="graph-canvas" ref={canvasRef}>
+          <div className="graph-canvas" ref={canvasRef} aria-busy={layoutBusy}>
             <div className="graph-label">
               <Network size={16} />
               <span>{course.data.title}</span>

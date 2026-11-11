@@ -1037,6 +1037,21 @@
   }
 }
 @media (max-width: 700px) {
+  .plan-workspace .personal-plan-list > div,
+  .plan-workspace .goal-card {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .plan-workspace .goal-card {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+  .plan-workspace .plan-item-actions,
+  .plan-workspace .goal-actions {
+    grid-column: 2;
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
   .course-trigger {
     max-width: 170px;
     gap: 6px;
