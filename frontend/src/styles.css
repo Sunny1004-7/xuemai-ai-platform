@@ -6,11 +6,12 @@
 @import './styles/workspace.css';
 @import './styles/graph.css';
 @import './styles/charts.css';
+@import './styles/login.css';
 
 :root {
   font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
   color: var(--text-primary);
   background: var(--neutral);
-  font-size: 14px;
+  font-size: 15px;
   font-synthesis: none;
 }

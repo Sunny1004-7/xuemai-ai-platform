@@ -1,0 +1,61 @@
+.login-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 54px 5vw;
+  background: var(--nav);
+}
+.login-scene {
+  width: min(1160px, 100%);
+  min-height: 670px;
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--surface-raised);
+  box-shadow: 0 28px 90px #061d1c30;
+}
+.login-identity {
+  display: flex;
+  flex-direction: column;
+  padding: 46px 42px 38px;
+  background: var(--surface);
+  min-width: 0;
+}
+.login-identity .brand { color: var(--text-primary); gap: 14px; }
+.login-identity .brand > span:last-child { font: 700 34px 'SimSun', 'Songti SC', serif; letter-spacing: 4px; }
+.login-identity .brand small { color: var(--brand-primary); font: 15px Georgia, serif; letter-spacing: 2px; margin-top: 4px; }
+.login-identity .brand-symbol { width: 48px; height: 48px; border-radius: 16px 16px 16px 5px; }
+.login-art { flex: 1; display: grid; place-items: center; margin: 6px -32px; }
+.learning-pages { width: 100%; color: var(--brand-primary); }
+.login-identity > p { color: var(--brand-primary); font-size: 16px; letter-spacing: 2px; padding-left: 4px; }
+.login-entry { display: grid; align-items: center; padding: 56px 64px; }
+.login-form { display: flex; flex-direction: column; min-width: 0; width: 100%; }
+.login-form h1 { font: 600 30px/1.5 'Microsoft YaHei', sans-serif; letter-spacing: 0; margin-bottom: 30px; }
+.login-roles { display: grid; grid-template-columns: 1fr 1fr; padding: 5px; background: var(--surface); border-radius: 12px; margin-bottom: 28px; gap: 4px; }
+.login-roles button { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 8px; border: 0; border-radius: 9px; background: transparent; color: var(--text-muted); }
+.login-roles button.selected { background: var(--surface-raised); color: var(--brand-primary); box-shadow: 0 2px 7px #18353112; font-weight: 600; }
+.login-form > label { color: var(--text-primary); font-size: 15px; margin: 14px 0 9px; }
+.login-form > input, .password-field { height: 50px; width: 100%; }
+.login-form > input { border-radius: 9px; }
+.password-field { position: relative; }
+.password-field input { width: 100%; height: 100%; padding-right: 48px; border-radius: 9px; }
+.password-field button { position: absolute; right: 7px; top: 7px; min-height: 36px; min-width: 36px; }
+.login-form > .button { width: 100%; height: 50px; margin-top: 32px; justify-content: space-between; padding-inline: 20px; border-radius: 9px; }
+.login-form .error-box { margin-bottom: 0; font-size: 14px; }
+@media (max-width: 1000px) {
+  .login-scene { grid-template-columns: 1fr 1fr; min-height: 610px; }
+  .login-entry { padding: 40px 32px; }
+  .login-identity { padding: 38px 30px; }
+}
+@media (max-width: 700px) {
+  .login-page { padding: 24px 20px; }
+  .login-scene { display: block; min-height: auto; max-width: 440px; border-radius: 22px; }
+  .login-identity { padding: 25px 28px 20px; }
+  .login-identity .brand > span:last-child { font-size: 28px; }
+  .login-identity .brand-symbol { width: 42px; height: 42px; }
+  .login-art, .login-identity > p { display: none; }
+  .login-entry { padding: 28px 28px 36px; }
+  .login-form h1 { font-size: 25px; margin-bottom: 22px; }
+  .login-roles { margin-bottom: 14px; }
+}

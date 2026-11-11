@@ -85,9 +85,6 @@
     grid-template-columns: minmax(0, 2fr) minmax(215px, 1fr);
     gap: 17px;
   }
-  .hero-copy h2 {
-    font-size: 20px;
-  }
   .hero-copy {
     max-width: 62%;
   }
@@ -102,9 +99,6 @@
   .daily-focus {
     padding: 20px;
   }
-  .daily-focus h3 {
-    font-size: 12px;
-  }
   .stats-row .stat {
     padding: 0 18px;
     gap: 10px;
@@ -112,12 +106,6 @@
   .stat-icon {
     width: 33px;
     height: 33px;
-  }
-  .stat strong {
-    font-size: 20px;
-  }
-  .stat small {
-    font-size: 11px;
   }
   .dashboard-columns {
     grid-template-columns: minmax(0, 2fr) minmax(245px, 1fr);
@@ -131,9 +119,6 @@
   }
   .course-info {
     padding: 14px;
-  }
-  .course-info > h3 {
-    font-size: 14px;
   }
   .course-art {
     height: 100px;
@@ -187,7 +172,6 @@
     gap: 9px;
   }
   .experiment-tabs > button {
-    font-size: 11px;
     padding: 12px 14px;
   }
   .management-layout {
@@ -200,9 +184,6 @@
   .course-large-icon {
     width: 65px;
     height: 65px;
-  }
-  .course-summary h2 {
-    font-size: 17px;
   }
   .course-shortcuts {
     flex-direction: column;
@@ -222,15 +203,6 @@
   .video-caption {
     flex-wrap: wrap;
   }
-  .login-story {
-    padding: 45px;
-  }
-  .login-copy > h1 {
-    font-size: 33px;
-  }
-  .login-side {
-    padding: 40px;
-  }
 }
 @media (max-width: 1020px) {
   .page-heading {
@@ -239,11 +211,7 @@
   .page-heading > .pill {
     display: none;
   }
-  .page-heading h1 {
-    font-size: 23px;
-  }
   .page-heading p {
-    font-size: 11px;
     line-height: 1.9;
     max-width: 540px;
   }
@@ -264,9 +232,6 @@
   }
   .hero-copy {
     max-width: 60%;
-  }
-  .hero-copy h2 {
-    font-size: 24px;
   }
   .learning-hero {
     min-height: 235px;
@@ -306,11 +271,9 @@
   }
   .course-info > h3 {
     margin-top: 7px;
-    font-size: 14px;
   }
   .course-info > p {
     min-height: 0;
-    font-size: 11px;
     -webkit-line-clamp: 1;
     margin-top: 5px;
   }
@@ -318,7 +281,6 @@
     display: none;
   }
   .course-bottom {
-    font-size: 11px;
     padding-top: 10px;
     margin-top: 10px;
   }
@@ -345,22 +307,12 @@
   .stat-icon {
     display: none;
   }
-  .stat strong {
-    font-size: 21px;
-  }
   .stat small {
-    font-size: 11px;
     line-height: 1.7;
   }
   .route-item > div > div {
     flex-wrap: wrap;
     gap: 6px;
-  }
-  .route-item h3 {
-    font-size: 11px;
-  }
-  .route-item p {
-    font-size: 11px;
   }
   .graph-layout {
     grid-template-columns: 1fr;
@@ -422,7 +374,6 @@
     justify-content: flex-end;
   }
   .page-heading .button-row .button {
-    font-size: 11px;
     padding: 9px 11px;
   }
   .management-layout {
@@ -476,34 +427,6 @@
     justify-content: center;
     white-space: nowrap;
   }
-  .login-page {
-    grid-template-columns: 1fr 1fr;
-  }
-  .login-story {
-    padding: 35px;
-  }
-  .login-copy > h1 {
-    font-size: 28px;
-    line-height: 1.8;
-  }
-  .login-copy > p {
-    font-size: 11px;
-  }
-  .login-copy > .pill {
-    font-size: 11px;
-  }
-  .login-foot {
-    font-size: 11px;
-  }
-  .login-side {
-    padding: 35px;
-  }
-  .login-form h2 {
-    font-size: 23px;
-  }
-  .login-network {
-    margin: 30px -35px -40px;
-  }
 }
 @media (max-width: 850px) {
   .app-shell {
@@ -547,12 +470,6 @@
   .page-heading {
     margin-bottom: 23px;
   }
-  .page-heading h1 {
-    font-size: 22px;
-  }
-  .page-heading p {
-    font-size: 11px;
-  }
   .top-actions > .icon-button {
     display: none;
   }
@@ -566,23 +483,11 @@
   .dashboard-aside > .panel {
     padding: 17px;
   }
-  .dashboard-aside h2 {
-    font-size: 13px;
-  }
   .panel-head {
     gap: 10px;
   }
-  .panel h2 {
-    font-size: 15px;
-  }
-  .panel-head p {
-    font-size: 11px;
-  }
   .stats-row {
     padding: 18px 0;
-  }
-  .hero-copy h2 {
-    font-size: 23px;
   }
   .resource-card {
     padding: 20px;
@@ -620,7 +525,6 @@
   }
   .experiment-tabs > button {
     padding: 12px 9px;
-    font-size: 11px;
     gap: 6px;
   }
   .experiment-tabs > button > svg {
@@ -628,15 +532,6 @@
   }
   .toast {
     left: calc(50% + 30px);
-  }
-  .workspace-footer {
-    font-size: 11px;
-  }
-  .workspace-footer > span:first-child {
-    font-size: 11px;
-  }
-  .graph-legend > span {
-    font-size: 11px;
   }
   .graph-legend {
     gap: 8px;
@@ -646,7 +541,6 @@
   }
   .graph-toolbar .segmented button {
     padding: 7px 9px;
-    font-size: 11px;
   }
 }
 @media (max-width: 620px) {
@@ -688,7 +582,6 @@
   .avatar {
     width: 30px;
     height: 30px;
-    font-size: 12px;
   }
   .topbar {
     padding: 0 14px;
@@ -697,7 +590,6 @@
   }
   .breadcrumb {
     gap: 8px;
-    font-size: 11px;
   }
   .breadcrumb > span:first-of-type,
   .breadcrumb > .crumb-slash {
@@ -710,7 +602,6 @@
     gap: 5px;
   }
   .course-switch select {
-    font-size: 11px;
     max-width: 150px;
   }
   .course-switch > svg:first-child {
@@ -728,13 +619,11 @@
     margin-bottom: 22px;
   }
   .page-heading h1 {
-    font-size: 20px;
     line-height: 1.6;
     letter-spacing: -0.5px;
   }
   .page-heading p {
     margin-top: 8px;
-    font-size: 11px;
     line-height: 1.9;
   }
   .page-heading > .button,
@@ -744,7 +633,6 @@
   }
   .page-heading > .button,
   .page-heading .button-row .button {
-    font-size: 11px;
     min-height: 31px;
     padding: 8px 11px;
   }
@@ -756,20 +644,14 @@
     max-width: 83%;
   }
   .hero-tag {
-    font-size: 11px;
     margin-bottom: 12px;
   }
-  .hero-copy h2 {
-    font-size: 20px;
-  }
   .hero-copy p {
-    font-size: 11px;
     line-height: 2;
     margin: 9px 0 18px;
     max-width: 85%;
   }
   .hero-copy .button {
-    font-size: 11px;
     min-height: 31px;
   }
   .mini-graph {
@@ -796,15 +678,10 @@
   .stat:nth-child(-n + 2) {
     border-bottom: 1px solid var(--surface-subtle);
   }
-  .stat > div > span {
-    font-size: 11px;
-  }
   .stat strong {
-    font-size: 21px;
     margin-top: 9px;
   }
   .stat small {
-    font-size: 11px;
     line-height: 1.9;
   }
   .dashboard-columns {
@@ -819,16 +696,9 @@
   .panel-head {
     margin-bottom: 18px;
   }
-  .panel h2 {
-    font-size: 14px;
-  }
   .panel-head p {
-    font-size: 11px;
     line-height: 1.9;
     max-width: 230px;
-  }
-  .panel-head .text-link {
-    font-size: 11px;
   }
   .course-grid {
     gap: 13px;
@@ -838,15 +708,6 @@
   }
   .course-info {
     padding: 14px;
-  }
-  .course-info > h3 {
-    font-size: 13px;
-  }
-  .course-info .progress-label {
-    font-size: 11px;
-  }
-  .course-bottom {
-    font-size: 11px;
   }
   .dashboard-aside {
     display: grid;
@@ -875,15 +736,10 @@
   .route-item > div > div {
     gap: 5px;
   }
-  .route-item h3 {
-    font-size: 11px;
-  }
   .route-item .pill {
-    font-size: 11px;
     padding: 1px 5px;
   }
   .route-item p {
-    font-size: 11px;
     line-height: 1.9;
   }
   .route-item > svg {
@@ -941,11 +797,7 @@
   .graph-label {
     top: 16px;
     left: 15px;
-    font-size: 11px;
     gap: 6px;
-  }
-  .graph-label .pill {
-    font-size: 11px;
   }
   .graph-label > svg {
     width: 14px;
@@ -958,7 +810,6 @@
     padding: 7px;
   }
   .graph-controls > span {
-    font-size: 11px;
     min-width: 35px;
   }
   .graph-help {
@@ -973,20 +824,8 @@
     width: 37px;
     margin-bottom: 17px;
   }
-  .node-detail h2 {
-    font-size: 20px;
-  }
   .node-actions {
     margin-top: 20px !important;
-  }
-  .node-description {
-    font-size: 11px;
-  }
-  .resource-links strong {
-    font-size: 11px;
-  }
-  .resource-links small {
-    font-size: 11px;
   }
   .practice-top .segmented {
     max-width: 100%;
@@ -996,15 +835,11 @@
     white-space: nowrap;
   }
   .practice-top .segmented button {
-    font-size: 11px;
     padding: 9px;
     flex-shrink: 0;
   }
   .practice-top {
     gap: 10px;
-  }
-  .practice-top select {
-    font-size: 11px;
   }
   .question-workspace {
     padding: 20px 18px;
@@ -1013,19 +848,11 @@
     gap: 6px;
     flex-wrap: wrap;
   }
-  .question-meta .pill {
-    font-size: 11px;
-  }
-  .question-meta > span:last-child {
-    font-size: 11px;
-  }
   .question-title {
-    font-size: 16px;
     line-height: 1.9;
     margin: 23px 0;
   }
   .answer-option {
-    font-size: 11px;
     padding: 13px 12px;
     gap: 10px;
     line-height: 1.9;
@@ -1033,7 +860,6 @@
   .option-letter {
     width: 24px;
     height: 24px;
-    font-size: 11px;
   }
   .answer-options {
     gap: 10px;
@@ -1042,17 +868,8 @@
     gap: 10px;
     flex-wrap: wrap;
   }
-  .question-submit .button {
-    font-size: 11px;
-  }
-  .question-submit > span {
-    font-size: 11px;
-  }
   .question-navigation > span {
     display: none;
-  }
-  .question-navigation .button {
-    font-size: 11px;
   }
   .practice-layout > aside {
     grid-template-columns: 1fr;
@@ -1061,32 +878,13 @@
   .answer-feedback {
     padding: 17px;
   }
-  .answer-feedback p {
-    font-size: 11px;
-  }
-  .answer-feedback .button {
-    font-size: 11px;
-  }
-  .answer-feedback h3 {
-    font-size: 13px;
-  }
   .question-bank > button {
     gap: 10px;
     padding: 15px 0;
   }
-  .question-bank h3 {
-    font-size: 11px;
-  }
-  .question-bank small {
-    font-size: 11px;
-  }
   .question-number {
     width: 26px;
     height: 26px;
-    font-size: 11px;
-  }
-  .question-bank .pill {
-    font-size: 11px;
   }
   .teacher-bank > .panel {
     padding: 18px;
@@ -1099,28 +897,13 @@
     max-height: 92vh;
     border-radius: 10px;
   }
-  .modal h2 {
-    font-size: 17px;
-  }
-  .modal label {
-    font-size: 11px;
-  }
-  .modal input,
-  .modal textarea,
-  .modal select {
-    font-size: 12px;
-  }
   .form-columns {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-  .checkbox-list label {
-    font-size: 11px;
-  }
   .toast {
     left: calc(50% + 20px);
     bottom: 18px;
-    font-size: 11px;
     padding: 12px 15px;
     max-width: calc(100vw - 75px);
     white-space: normal;
@@ -1134,12 +917,6 @@
   .chat-context > .pill {
     display: none;
   }
-  .chat-context strong {
-    font-size: 11px;
-  }
-  .chat-context small {
-    font-size: 11px;
-  }
   .chat-messages {
     padding: 18px 16px;
     max-height: 540px;
@@ -1148,25 +925,11 @@
   .chat-welcome {
     padding-top: 20px;
   }
-  .ai-welcome-icon {
-    height: 51px;
-    width: 51px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-  }
-  .ai-welcome-icon > svg {
-    width: 26px;
-  }
-  .chat-welcome h2 {
-    font-size: 17px;
-  }
   .chat-welcome > p {
-    font-size: 11px;
     line-height: 2.1;
     margin: 12px 0 22px;
   }
   .starter-prompts > button {
-    font-size: 11px;
     padding: 12px 10px;
     gap: 8px;
   }
@@ -1181,11 +944,7 @@
     margin-bottom: 22px;
   }
   .message-content {
-    font-size: 11px;
     line-height: 2;
-  }
-  .message-label {
-    font-size: 11px;
   }
   .chat-message > .message-avatar {
     height: 25px;
@@ -1195,18 +954,10 @@
     margin: 0 14px;
     padding: 10px;
   }
-  .chat-composer textarea {
-    font-size: 11px;
-  }
-  .chat-composer > div > span {
-    font-size: 7px;
-  }
   .chat-composer .button {
-    font-size: 11px;
     min-height: 28px;
   }
   .ai-disclosure {
-    font-size: 7px;
     padding: 11px 15px 14px;
   }
   .show-history .conversation-list {
@@ -1219,24 +970,12 @@
   .video-caption {
     padding: 20px 0;
   }
-  .video-caption h2 {
-    font-size: 16px;
-  }
-  .video-caption p {
-    font-size: 11px;
-  }
-  .video-caption > .button {
-    font-size: 11px;
-  }
   .video-timeline {
     grid-template-columns: 1fr 1fr;
     gap: 9px;
   }
   .video-timeline > button {
     padding: 12px;
-  }
-  .video-timeline > button strong {
-    font-size: 11px;
   }
   .transcript-list {
     grid-template-columns: 1fr;
@@ -1245,7 +984,6 @@
     padding: 0 10px;
   }
   .tab-line > button {
-    font-size: 11px;
     padding: 17px 10px;
   }
   .video-sidebar {
@@ -1253,18 +991,13 @@
     min-height: 250px;
   }
   .transcript-list > button {
-    font-size: 11px;
     padding: 14px 9px;
-  }
-  .video-checkpoints > button {
-    font-size: 11px;
   }
   .experiment-tabs {
     gap: 8px;
   }
   .experiment-tabs > button {
     flex: 1 0 40%;
-    font-size: 11px;
     padding: 11px;
     justify-content: flex-start;
   }
@@ -1279,12 +1012,6 @@
   .experiment-stage {
     padding: 18px 15px;
   }
-  .experiment-stage-head {
-    font-size: 11px;
-  }
-  .experiment-stage-head .pill {
-    font-size: 11px;
-  }
   .sort-bars {
     gap: 8px;
     height: 285px;
@@ -1294,25 +1021,17 @@
     width: 39px;
     max-height: 225px;
   }
-  .sort-bar strong {
-    font-size: 12px;
-  }
-  .sort-bar small {
-    font-size: 11px;
-  }
   .algorithm-explanation {
     padding: 12px;
     margin: 15px 0;
   }
   .algorithm-explanation p {
-    font-size: 11px;
     line-height: 1.9;
   }
   .experiment-controls {
     gap: 7px;
   }
   .experiment-controls .button {
-    font-size: 11px;
     padding: 9px 10px;
     min-height: 31px;
   }
@@ -1320,22 +1039,12 @@
     padding: 8px;
   }
   .experiment-controls select {
-    font-size: 11px;
     padding: 8px;
   }
   .prediction-form {
     flex-direction: column;
     align-items: stretch;
     gap: 15px;
-  }
-  .prediction-form label {
-    font-size: 11px;
-  }
-  .prediction-form input {
-    font-size: 11px;
-  }
-  .prediction-form > .button {
-    font-size: 11px;
   }
   .tree-stage {
     height: 260px;
@@ -1356,12 +1065,8 @@
   .collection-stage.stack .collection-values {
     overflow: visible;
   }
-  .collection-node > strong {
-    font-size: 11px;
-  }
   .collection-node > span {
     right: -42px;
-    font-size: 7px;
   }
   .management-course-tabs > button {
     min-width: 0;
@@ -1370,12 +1075,6 @@
   }
   .management-course-tabs {
     gap: 10px;
-  }
-  .management-course-tabs > button > span {
-    font-size: 11px;
-  }
-  .management-course-tabs small {
-    font-size: 11px;
   }
   .management-layout > .panel {
     display: block;
@@ -1395,17 +1094,7 @@
   .course-large-icon > svg {
     width: 23px;
   }
-  .course-summary h2 {
-    font-size: 16px;
-  }
-  .course-summary .pill {
-    font-size: 11px;
-  }
-  .course-summary p {
-    font-size: 11px;
-  }
   .course-summary .muted {
-    font-size: 11px;
     line-height: 1.8;
     display: block;
   }
@@ -1417,36 +1106,18 @@
   .chapter-list > div > div {
     flex-basis: calc(100% - 50px);
   }
-  .chapter-list h3 {
-    font-size: 11px;
-  }
-  .chapter-list p {
-    font-size: 11px;
-  }
   .chapter-list .text-link {
     margin-left: 40px;
-    font-size: 11px;
   }
   .resource-hero {
     padding: 20px;
     gap: 13px;
     align-items: flex-start;
   }
-  .resource-hero .ai-welcome-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 11px;
-    flex-shrink: 0;
-  }
-  .resource-hero .ai-welcome-icon > svg {
-    width: 21px;
-  }
   .resource-hero h2 {
-    font-size: 16px;
     line-height: 1.8;
   }
   .resource-hero p {
-    font-size: 11px;
     line-height: 2;
     margin-top: 8px;
   }
@@ -1457,14 +1128,12 @@
     width: 100%;
   }
   .resource-toolbar .segmented button {
-    font-size: 11px;
     padding: 8px;
     flex: 1;
     white-space: nowrap;
   }
   .resource-toolbar .search-field {
     width: 100%;
-    font-size: 11px;
   }
   .resource-grid {
     grid-template-columns: 1fr;
@@ -1474,17 +1143,7 @@
     padding: 20px;
   }
   .resource-card > p {
-    font-size: 11px;
     line-height: 2;
-  }
-  .resource-card h3 {
-    font-size: 14px;
-  }
-  .resource-card-meta {
-    font-size: 11px;
-  }
-  .resource-card-actions .button:first-child {
-    font-size: 11px;
   }
   .knowledge-analysis > div {
     grid-template-columns: minmax(100px, 1fr) 70px;
@@ -1494,18 +1153,10 @@
   .knowledge-analysis > div > .button {
     grid-column: 1/3;
     justify-self: start;
-    font-size: 11px;
     margin-top: 1px;
-  }
-  .knowledge-analysis h3 {
-    font-size: 11px;
-  }
-  .knowledge-analysis > div > div:first-child > span {
-    font-size: 11px;
   }
   .knowledge-analysis strong {
     width: 27px;
-    font-size: 11px;
   }
   .pending-reviews > div {
     gap: 12px;
@@ -1520,61 +1171,6 @@
   .classroom-grid {
     grid-template-columns: 1fr;
     gap: 0;
-  }
-  .classroom-card > h2 {
-    font-size: 17px;
-  }
-  .classroom-prompt {
-    font-size: 11px;
-  }
-  .classroom-meta {
-    font-size: 11px;
-  }
-  .login-page {
-    display: block;
-  }
-  .login-story {
-    display: none;
-  }
-  .login-side {
-    min-height: 100vh;
-    padding: 40px 32px;
-  }
-  .login-form {
-    width: 370px;
-  }
-  .login-form h2 {
-    font-size: 27px;
-  }
-  .login-form > p {
-    font-size: 12px;
-    margin-bottom: 30px;
-  }
-  .login-form > label {
-    font-size: 12px;
-  }
-  .login-form > input {
-    font-size: 13px;
-    padding: 13px;
-  }
-  .login-form > .button {
-    font-size: 13px;
-    min-height: 44px;
-  }
-  .welcome-icon {
-    width: 55px;
-    height: 55px;
-    margin-bottom: 25px;
-  }
-  .demo-logins > span {
-    font-size: 11px;
-  }
-  .demo-logins button {
-    font-size: 11px;
-    padding: 10px 6px;
-  }
-  .demo-logins small {
-    font-size: 11px;
   }
 }
 .plan-layout {
@@ -1613,11 +1209,9 @@
   gap: 13px;
 }
 .goal-title h3 {
-  font-size: 14px;
   color: var(--brand-primary);
 }
 .goal-card p {
-  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.9;
   margin: 8px 0 11px;
@@ -1628,7 +1222,6 @@
   gap: 15px;
   align-items: center;
   color: var(--text-muted);
-  font-size: 11px;
 }
 .goal-meta > span {
   display: flex;
@@ -1650,7 +1243,6 @@
   border-radius: 4px;
   padding: 3px 6px;
   color: var(--text-muted);
-  font-size: 11px;
 }
 .personal-plan-list > div {
   display: flex;
@@ -1665,10 +1257,8 @@
 }
 .personal-plan-list h3 {
   color: var(--brand-primary);
-  font-size: 13px;
 }
 .personal-plan-list p {
-  font-size: 11px;
   line-height: 1.9;
   color: var(--text-muted);
   margin-top: 6px;
@@ -1676,9 +1266,6 @@
 .personal-plan-list .goal-meta {
   margin-top: 11px;
   gap: 10px;
-}
-.personal-plan-list .pill {
-  font-size: 11px;
 }
 .plan-check {
   width: 22px;
@@ -1707,7 +1294,6 @@
   gap: 3px;
 }
 .plan-item-actions .button.small {
-  font-size: 11px;
   padding: 8px 10px;
 }
 .plan-recommendations > div {
@@ -1718,24 +1304,16 @@
   padding-top: 0;
 }
 .plan-recommendations h3 {
-  font-size: 13px;
   color: var(--text-muted);
   margin: 10px 0 8px;
 }
 .plan-recommendations p {
-  font-size: 11px;
   color: var(--text-muted);
   line-height: 2;
 }
 .plan-recommendations .button-row {
   margin-top: 12px;
   gap: 10px;
-}
-.plan-recommendations .button {
-  font-size: 11px;
-}
-.plan-recommendations .text-link {
-  font-size: 11px;
 }
 @media (max-width: 1020px) {
   .plan-layout {
@@ -1768,20 +1346,11 @@
     gap: 7px;
     flex-wrap: wrap;
   }
-  .goal-title h3 {
-    font-size: 13px;
-  }
-  .goal-card p {
-    font-size: 11px;
-  }
   .goal-actions {
     margin-left: 38px;
   }
   .goal-meta {
     gap: 9px;
-  }
-  .goal-knowledge > a {
-    font-size: 11px;
   }
   .personal-plan-list > div {
     gap: 10px;
@@ -1789,9 +1358,6 @@
   }
   .plan-item-actions {
     margin-left: 32px;
-  }
-  .personal-plan-list h3 {
-    font-size: 12px;
   }
   .plan-recommendations {
     grid-template-columns: 1fr;
@@ -1801,109 +1367,7 @@
   }
 }
 /* 中文学习内容保持可读对比度，辅助信息不以过浅灰色承载。 */
-.workspace .page-heading p,
-.workspace .panel-head p,
-.workspace .mini-text,
-.workspace .muted,
-.workspace small,
-.workspace .resource-card-meta,
-.workspace .classroom-meta,
-.workspace .course-meta,
-.workspace .course-bottom,
-.workspace .progress-label,
-.workspace .chart-note,
-.workspace .task-item small,
-.workspace .route-item p,
-.workspace .course-info > p,
-.workspace .video-caption p,
-.workspace .hero-copy p,
-.workspace .daily-focus > p,
-.workspace .course-summary p,
-.workspace .chapter-list p,
-.workspace .question-bank small,
-.workspace .message-label,
-.workspace .ai-disclosure,
-.workspace .classroom-answer label {
-  color: var(--text-primary);
-}
-.workspace .resource-card h3,
-.workspace .classroom-card > h2,
-.workspace .knowledge-analysis h3,
-.workspace .question-bank h3,
-.workspace .class-card-heading h3,
-.workspace .chapter-list h3,
-.workspace .pending-reviews h3,
-.workspace .course-info > h3,
-.workspace .task-item h3,
-.workspace .route-item h3,
-.workspace .message-content,
-.workspace .resource-document,
-.workspace .classroom-prompt,
-.workspace .resource-card > p,
-.workspace .node-description,
-.workspace .transcript-list > button,
-.workspace .table-person,
-.workspace td {
-  color: var(--brand-primary);
-}
-.workspace .stat small,
-.workspace .stat > div > span,
-.workspace .week-chart small,
-.workspace .graph-help,
-.workspace .video-timeline > button small,
-.workspace .resource-card-meta,
-.workspace .ai-invitation p {
-  color: var(--text-primary);
-}
-.workspace .resource-card-actions .button,
-.workspace .knowledge-analysis .button,
-.workspace .chapter-list .text-link,
-.workspace .course-bottom span:last-child,
-.workspace .text-link {
-  color: var(--brand-primary);
-}
-.login-form > p,
-.login-form > label,
-.demo-logins > span,
-.demo-logins small {
-  color: var(--text-primary);
-}
-.login-form > input {
-  color: var(--brand-primary);
-}
-.login-form .demo-logins button {
-  color: var(--brand-primary);
-}
-.login-form .demo-logins button.selected {
-  color: var(--brand-primary);
-}
-.workspace .message-content,
-.workspace .resource-document,
-.workspace .node-description,
-.workspace .classroom-prompt,
-.workspace .classroom-responses p,
-.workspace .answer-option,
-.workspace .answer-feedback p,
-.workspace .free-answer textarea,
-.workspace .student-answer p,
-.workspace .resource-card > p,
-.workspace .transcript-list > button,
-.workspace .course-summary p {
-  font-size: 13px;
-}
-.workspace .hero-copy p,
-.workspace .daily-focus > p,
-.workspace .route-item p,
-.workspace .hint-intro p,
-.workspace .hint-step p,
-.workspace .learning-tips,
-.workspace .plan-recommendations p,
-.workspace .goal-card p,
-.workspace .personal-plan-list p {
-  font-size: 12px;
-}
 .teacher-question-title {
-  font-size: 14px;
   color: var(--brand-primary);
   line-height: 1.9;
   margin: 16px 0;
@@ -1916,12 +1380,10 @@
   color: var(--text-muted);
 }
 .teacher-answer-preview > strong {
-  font-size: 11px;
   font-weight: 500;
   color: var(--text-muted);
 }
 .teacher-answer-preview > p {
-  font-size: 13px;
   line-height: 1.9;
   margin: 7px 0 15px;
   white-space: pre-wrap;
@@ -1933,11 +1395,7 @@
   margin: 20px 0;
   color: var(--text-muted);
 }
-.node-objectives h3 {
-  font-size: 12px;
-}
 .node-objectives ul {
-  font-size: 12px;
   line-height: 1.9;
   margin: 9px 0 0;
   padding-left: 17px;

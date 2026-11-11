@@ -22,10 +22,16 @@
   --primary: var(--brand-primary);
   --blue: var(--data);
   --line: var(--border);
-  --nav: var(--surface);
-  --shadow: none;
+  --nav: #173f3d;
+  --nav-text: #c3d9d2;
+  --nav-active: #315c58;
+  --shadow: 0 4px 18px #263a3707;
+  --shadow-float: 0 12px 36px #263a3718;
 }
 [data-role='teacher'] {
+  --nav: #463a32;
+  --nav-text: #dfcbbb;
+  --nav-active: #655345;
   --brand-primary: #7e6554;
   --brand-secondary: #a78a73;
   --brand-soft: #d4b79d;

@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom'
 import {
   Activity,
-  ArrowRight,
   BookOpen,
   ChartNoAxesCombined,
   CheckCheck,
@@ -19,7 +18,6 @@ import {
   CircleHelp,
   ClipboardList,
   FlaskConical,
-  GraduationCap,
   LayoutDashboard,
   Library,
   LogOut,
@@ -31,9 +29,9 @@ import {
   Users,
   Video,
 } from 'lucide-react'
-import { api, getSession, post, saveSession, useApi } from './api'
+import { api, getSession, saveSession, useApi } from './api'
 import type { Row } from './api'
-import { AppContext, Button } from './ui'
+import { AppContext } from './ui'
 const LearningPlan = lazy(() => import('./pages/Plan').then((m) => ({ default: m.LearningPlan })))
 const Dashboard = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Dashboard })))
 const Courses = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Courses })))
@@ -48,117 +46,8 @@ const Management = lazy(() => import('./pages/Management').then((m) => ({ defaul
 const Resources = lazy(() => import('./pages/Resources').then((m) => ({ default: m.Resources })))
 const Analytics = lazy(() => import('./pages/Analytics').then((m) => ({ default: m.Analytics })))
 const Classroom = lazy(() => import('./pages/Classroom').then((m) => ({ default: m.Classroom })))
+import { Login } from './pages/Login'
 import './styles.css'
-
-function Login({ onLogin }: { onLogin: () => void }) {
-  const [username, setUsername] = useState('student1')
-  const [password, setPassword] = useState('Xuemai123!')
-  const [busy, setBusy] = useState(false)
-  const [error, setError] = useState('')
-  async function login(e: React.FormEvent) {
-    e.preventDefault()
-    setError('')
-    setBusy(true)
-    try {
-      saveSession(await post('/auth/login', { username, password }))
-      onLogin()
-    } catch (e) {
-      setError((e as Error).message)
-    } finally {
-      setBusy(false)
-    }
-  }
-  return (
-    <div className="login-page" data-role={username === 'teacher' ? 'teacher' : 'student'}>
-      <section className="login-story">
-        <div className="brand">
-          <span className="brand-symbol">
-            <Activity size={27} />
-          </span>
-          <span>
-            学脉 <small>XueMai</small>
-          </span>
-        </div>
-        <div className="login-copy">
-          <h1>学脉</h1>
-          <p>XueMai</p>
-          <svg className="entry-network" viewBox="0 0 560 340" aria-label="从基础到应用的知识网络">
-            <path d="M75 175C140 175 120 75 210 75S300 175 320 175S390 85 480 85M75 175C150 175 120 275 210 275S290 175 320 175S390 275 480 275" />
-            {[
-              [75, 175, '基础'],
-              [210, 75, '理解'],
-              [210, 275, '实践'],
-              [320, 175, '连接'],
-              [480, 85, '应用'],
-              [480, 275, '迁移'],
-            ].map(([x, y, label]) => (
-              <g key={label} transform={`translate(${x},${y})`}>
-                <circle r={label === '连接' ? 45 : 34} />
-                <text textAnchor="middle" dy=".35em">
-                  {label}
-                </text>
-              </g>
-            ))}
-          </svg>
-        </div>
-      </section>
-      <div className="login-side">
-        <form className="login-form" onSubmit={login}>
-          <span className="welcome-icon">
-            <GraduationCap size={30} />
-          </span>
-          <h2>登录学脉</h2>
-          <label htmlFor="username">账号</label>
-          <input
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="username"
-            required
-          />
-          <label htmlFor="password">密码</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            required
-          />
-          {error ? (
-            <div className="error-box" role="alert">
-              {error}
-            </div>
-          ) : null}
-          <Button type="submit" disabled={busy}>
-            {busy ? '正在登录…' : '进入学脉'}
-            <ArrowRight size={18} />
-          </Button>
-          <div className="demo-logins">
-            <div>
-              {[
-                ['student1', '学生端'],
-                ['teacher', '教师端'],
-              ].map(([id, label]) => (
-                <button
-                  key={id}
-                  type="button"
-                  className={id === username ? 'selected' : ''}
-                  onClick={() => {
-                    setUsername(id)
-                    setPassword('Xuemai123!')
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
-}
 
 const studentNav = [
   ['/', '学习概览', LayoutDashboard],
