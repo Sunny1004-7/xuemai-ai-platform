@@ -1,90 +1,95 @@
-import ELK from 'elkjs/lib/elk.bundled.js'
-import type { ElkNode } from 'elkjs/lib/elk-api'
+import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY } from 'd3-force'
+import type { SimulationNodeDatum } from 'd3-force'
+
 export type GraphNode = { id: number; chapter_id?: number | null; chapter_title?: string; title: string }
 export type GraphEdge = { source: number; target: number }
 export type Position = { x: number; y: number }
-export type GraphLayout = { positions: Record<number, Position>; routes: {source: number; target: number; points: Position[]}[]; width: number; height: number; clusters?: {id: number; title: string; x: number; y: number; width: number; height: number}[] }
-const engine = new ELK()
+export type GraphLayout = {
+  positions: Record<number, Position>
+  routes: { source: number; target: number; points: Position[] }[]
+  width: number
+  height: number
+  clusters?: { id: number; title: string; x: number; y: number; width: number; height: number }[]
+}
+type ForceNode = SimulationNodeDatum & GraphNode & { anchorX: number; anchorY: number }
 
-// ELK计算避障走廊，渲染时将转角圆滑化，保持先修方向与节点间距。
-export async function layoutKnowledge(nodes: GraphNode[], edges: GraphEdge[]): Promise<GraphLayout> {
-  const ids = new Set(nodes.map(n => n.id))
-  const links = edges.filter(e => ids.has(e.source) && ids.has(e.target))
-  const chapters = [...new Set(nodes.map(n => n.chapter_id || 0))]
-  const clustered = nodes.length >= 16 && chapters.length > 1
-  const chapterOverview = nodes.every(n => n.id <= 0)
-  const leaf = (n: GraphNode) => ({ id: String(n.id), width: 112, height: 112,
-    layoutOptions: {'elk.portConstraints': 'FIXED_POS'}, ports: chapterOverview ? [
-      {id: `${n.id}-in`, x: 56, y: 0, width: 0, height: 0},
-      {id: `${n.id}-out`, x: 56, y: 112, width: 0, height: 0},
-    ] : [
-      {id: `${n.id}-in`, x: 0, y: 56, width: 0, height: 0},
-      {id: `${n.id}-out`, x: 112, y: 56, width: 0, height: 0},
-    ] })
-  const result = await engine.layout<ElkNode>({
-    id: 'root', layoutOptions: {
-      'elk.algorithm': 'layered', 'elk.direction': clustered || chapterOverview ? 'DOWN' : 'RIGHT', 'elk.edgeRouting': 'ORTHOGONAL',
-      'elk.hierarchyHandling': 'INCLUDE_CHILDREN',
-      'elk.spacing.nodeNode': '44', 'elk.layered.spacing.nodeNodeBetweenLayers': '76',
-      'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
-      'elk.layered.nodePlacement.strategy': 'BRANDES_KOEPF', 'elk.padding': '[top=45,left=45,bottom=45,right=45]',
-    },
-    children: clustered ? chapters.map(id => ({id: `chapter-${id}`, layoutOptions: {
-      'elk.padding': '[top=46,left=24,bottom=24,right=24]',
-      'elk.spacing.nodeNode': '28', 'elk.layered.spacing.nodeNodeBetweenLayers': '45',
-    }, children: nodes.filter(n => (n.chapter_id || 0) === id).map(leaf)})) : nodes.map(leaf),
-    edges: links.map((e,i) => ({id: String(i), sources: [`${e.source}-out`], targets: [`${e.target}-in`]})),
+/** 章节软吸引与确定性初始位置，碰撞半径包含标签与操作热点。 */
+export async function layoutKnowledge(nodes: GraphNode[], edges: GraphEdge[], aspect = 1.85, previous: Record<number, Position> = {}): Promise<GraphLayout> {
+  if (!nodes.length) return { positions: {}, routes: [], width: 1, height: 1 }
+  const sorted = [...nodes].sort((a, b) => a.id - b.id)
+  const ids = new Set(sorted.map(node => node.id))
+  const links = edges.filter(edge => ids.has(edge.source) && ids.has(edge.target)).map(edge => ({ ...edge }))
+  const chapters = [...new Set(sorted.map(node => node.chapter_id || 0))]
+  const area = Math.max(90000, nodes.length * 17500)
+  const width = Math.sqrt(area * Math.max(.7, Math.min(2.5, aspect)))
+  const height = area / width
+  const columns = Math.max(1, Math.ceil(Math.sqrt(chapters.length * aspect)))
+  const rows = Math.ceil(chapters.length / columns)
+  const points: ForceNode[] = sorted.map((node, index) => {
+    const group = chapters.indexOf(node.chapter_id || 0)
+    const anchorX = width * (.1 + .8 * ((group % columns + .5) / columns))
+    const anchorY = height * (.1 + .8 * ((Math.floor(group / columns) + .5) / rows))
+    const angle = index * 2.399963
+    return { ...node, anchorX: previous[node.id] ? previous[node.id].x * .75 + anchorX * .25 : anchorX,
+      anchorY: previous[node.id] ? previous[node.id].y * .75 + anchorY * .25 : anchorY,
+      x: previous[node.id]?.x ?? anchorX + Math.cos(angle) * 60,
+      y: previous[node.id]?.y ?? anchorY + Math.sin(angle) * 60 }
   })
-  const positions: Record<number,Position> = {}
-  const offsets: Record<string,Position> = {root: {x:0,y:0}}
-  const clusters: NonNullable<GraphLayout['clusters']> = []
-  function collect(parent: ElkNode, offset: Position) {
-    parent.children?.forEach(n => {
-      const point = {x: offset.x + (n.x || 0), y: offset.y + (n.y || 0)}
-      offsets[n.id] = point
-      if (n.children) {
-        const id = Number(n.id.replace('chapter-',''))
-        clusters.push({id, title: nodes.find(node => (node.chapter_id || 0) === id)?.chapter_title || `章节 ${id}`, ...point, width: n.width || 0, height: n.height || 0})
-        collect(n,point)
-      } else positions[Number(n.id)] = {x:point.x+56,y:point.y+56}
-    })
+  const simulation = forceSimulation(points).stop()
+    .force('links', forceLink<ForceNode, any>(links).id(node => node.id).distance(115).strength(.28))
+    .force('charge', forceManyBody().strength(-310))
+    .force('collision', forceCollide<ForceNode>(57).iterations(4))
+    .force('x', forceX<ForceNode>(node => node.anchorX).strength(.1))
+    .force('y', forceY<ForceNode>(node => node.anchorY).strength(.14))
+  simulation.tick(420)
+  simulation.stop()
+  const left = Math.min(...points.map(node => node.x!)) - 58
+  const top = Math.min(...points.map(node => node.y!)) - 58
+  const positions = Object.fromEntries(points.map(node => [node.id, { x: node.x! - left, y: node.y! - top }]))
+  return { positions, width: Math.max(...Object.values(positions).map(point => point.x)) + 58,
+    height: Math.max(...Object.values(positions).map(point => point.y)) + 58,
+    routes: edges.filter(edge => ids.has(edge.source) && ids.has(edge.target)).map(edge => ({ ...edge, points: edgePoints(positions[edge.source], positions[edge.target], Object.values(positions)) })) }
+}
+
+/** 起终点沿圆边缘留出箭头间距。 */
+export function edgePoints(source: Position, target: Position, obstacles: Position[] = []): Position[] {
+  const dx = target.x - source.x, dy = target.y - source.y
+  const distance = Math.max(1, Math.hypot(dx, dy))
+  let best: Position[] = [], bestCost = Infinity
+  for (const offset of [0, 35, -35, 70, -70, 110, -110, 160, -160, 230, -230, 320, -320]) {
+    for (const fraction of [.5, .3, .7]) {
+    const control = { x: source.x + dx * fraction - dy / distance * offset, y: source.y + dy * fraction + dx / distance * offset }
+    const a = Math.max(1, Math.hypot(control.x - source.x, control.y - source.y))
+    const b = Math.max(1, Math.hypot(control.x - target.x, control.y - target.y))
+    const start = { x: source.x + (control.x - source.x) * 45 / a, y: source.y + (control.y - source.y) * 45 / a }
+    const end = { x: target.x + (control.x - target.x) * 51 / b, y: target.y + (control.y - target.y) * 51 / b }
+    let cost = Math.abs(offset) / 1000
+    for (const obstacle of obstacles) {
+      if (obstacle === source || obstacle === target) continue
+      for (let index = 1; index < 65; index++) {
+        const t = index / 65
+        const x = (1 - t) ** 2 * start.x + 2 * t * (1 - t) * control.x + t ** 2 * end.x
+        const y = (1 - t) ** 2 * start.y + 2 * t * (1 - t) * control.y + t ** 2 * end.y
+        cost += Math.max(0, 51 - Math.hypot(x - obstacle.x, y - obstacle.y))
+      }
+    }
+    if (cost < bestCost) { best = [start, control, end]; bestCost = cost }
+    if (cost < 1) return best
+    }
   }
-  collect(result,{x:0,y:0})
-  return { positions, width: result.width || 400, height: result.height || 300,
-    clusters,
-    routes: (result.edges || []).map(e => {
-      const offset = offsets[e.container || 'root'] || {x:0,y:0}
-      return {...links[Number(e.id)], points: (e.sections || []).flatMap(s => [s.startPoint, ...(s.bendPoints || []), s.endPoint]).map(p => ({x:p.x+offset.x,y:p.y+offset.y}))}
-    }) }
+  return best
 }
 
 export function routePath(points: Position[]) {
-  if (!points.length) return ''
-  let path = `M${points[0].x},${points[0].y}`
-  for (let i = 1; i < points.length - 1; i++) {
-    const a = points[i - 1], b = points[i], c = points[i + 1]
-    const before = Math.hypot(b.x - a.x, b.y - a.y), after = Math.hypot(c.x - b.x, c.y - b.y)
-    if (!before || !after) continue
-    const radius = Math.min(16, before / 2, after / 2)
-    const start = { x: b.x + (a.x - b.x) * radius / before, y: b.y + (a.y - b.y) * radius / before }
-    const end = { x: b.x + (c.x - b.x) * radius / after, y: b.y + (c.y - b.y) * radius / after }
-    path += ` L${start.x},${start.y} Q${b.x},${b.y} ${end.x},${end.y}`
-  }
-  const last = points[points.length - 1]
-  return path + ` L${last.x},${last.y}`
+  if (points.length === 3) return `M${points[0].x},${points[0].y} Q${points[1].x},${points[1].y} ${points[2].x},${points[2].y}`
+  return points.map((point, index) => `${index ? 'L' : 'M'}${point.x},${point.y}`).join(' ')
 }
 
 export function relatedKnowledge(id: number, edges: GraphEdge[], ancestors = false) {
-  const result = new Set([id])
-  const queue = [id]
+  const result = new Set([id]), queue = [id]
   for (let index = 0; index < queue.length; index++) {
     for (const edge of edges) {
-      const neighbor =
-        edge.target === queue[index]
-          ? edge.source
-          : !ancestors && edge.source === id
-            ? edge.target
-            : 0
+      const neighbor = edge.target === queue[index] ? edge.source : !ancestors && edge.source === id ? edge.target : 0
       if (neighbor && !result.has(neighbor)) {
         result.add(neighbor)
         if (ancestors) queue.push(neighbor)

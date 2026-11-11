@@ -1,0 +1,137 @@
+[
+  {
+    "nodes": 6,
+    "edges": 6,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 66,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 1.15,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 1.15,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 1.15,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.5843198076260326,
+        "visible_nodes": 6,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "nodes": 31,
+    "edges": 39,
+    "collisions": 0,
+    "obstructions": 0,
+    "elapsed_ms": 219,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 0.8420535773240618,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.7053565680182077,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.7053565680182077,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.23310435777249658,
+        "visible_nodes": 31,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  },
+  {
+    "nodes": 80,
+    "edges": 104,
+    "collisions": 0,
+    "obstructions": 1,
+    "elapsed_ms": 890,
+    "cameras": [
+      {
+        "viewport": {
+          "width": 1620,
+          "height": 760
+        },
+        "fit_zoom": 0.5644012744716076,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1140,
+          "height": 660
+        },
+        "fit_zoom": 0.4727776909534894,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 1060,
+          "height": 660
+        },
+        "fit_zoom": 0.4727776909534894,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      },
+      {
+        "viewport": {
+          "width": 300,
+          "height": 520
+        },
+        "fit_zoom": 0.14535810012368708,
+        "visible_nodes": 80,
+        "anchor_error_below": 1e-7
+      }
+    ]
+  }
+]

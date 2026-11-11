@@ -21,10 +21,11 @@ import {
   X,
   PanelRightOpen,
   Scan,
+  RotateCcw,
 } from 'lucide-react'
 import { fitCamera, focusCamera, zoomCamera } from '../graph-camera'
 import type { Camera } from '../graph-camera'
-import { layoutKnowledge, relatedKnowledge, routePath } from '../graph-layout'
+import { edgePoints, relatedKnowledge, routePath } from '../graph-layout'
 import type { GraphLayout } from '../graph-layout'
 import { api, patch, percent, post, useApi } from '../api'
 import type { Row } from '../api'
@@ -47,7 +48,7 @@ export function Graph() {
   const [filter, setFilter] = useState('all')
   const prefKey = `xuemai-graph-view-${user.id}-${courseId}`
   const [focusMode, setFocusMode] = useState(() =>
-    params.get('knowledge')
+    params.get('knowledge') && (!params.has('course') || Number(params.get('course')) === courseId)
       ? 'neighbors'
       : ['all', 'chapters'].includes(localStorage.getItem(prefKey) || '')
         ? localStorage.getItem(prefKey)!
@@ -75,6 +76,12 @@ export function Graph() {
     height: 620,
   })
   const [layoutBusy, setLayoutBusy] = useState(false)
+  const [layoutRevision, setLayoutRevision] = useState(0)
+  const [hovered, setHovered] = useState(0)
+  const nodeDrag = useRef<{ id: number; x: number; y: number; startX: number; startY: number; moved: boolean } | null>(null)
+  const layoutRef = useRef(layout)
+  const previousLayoutKey = useRef('')
+  layoutRef.current = layout
   const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null)
   const teacher = user.role === 'teacher'
   const nodes: Row[] = graph.data.nodes || []
@@ -155,35 +162,32 @@ export function Graph() {
     '/' +
     shown.edges.map((e) => `${e.source}:${e.target}`).join(',')
   useEffect(() => {
-    let cancelled = false
     setLayoutBusy(true)
-    layoutKnowledge(
-      shown.nodes.map((n) => ({
+    const worker = new Worker(new URL('../graph-worker.ts', import.meta.url), { type: 'module' })
+    const existing = Object.fromEntries(shown.nodes.filter(node => layoutRef.current.positions[node.id]).map(node => [node.id, layoutRef.current.positions[node.id]]))
+    const preserve = previousLayoutKey.current !== layoutKey && Object.keys(existing).length >= shown.nodes.length * .8
+    previousLayoutKey.current = layoutKey
+    worker.postMessage({ nodes: shown.nodes.map((n) => ({
         ...n,
         chapter_title: course.data.chapters?.find((c: Row) => c.id === n.chapter_id)?.title,
-      })) as any,
-      shown.edges as any,
-    )
-      .then((next) => {
-        if (cancelled) return
+      })), edges: shown.edges, aspect: size.width / Math.max(1, size.height - 120), previous: preserve ? existing : {} })
+    worker.onmessage = ({ data: next }: MessageEvent<GraphLayout>) => {
         setLayout(next)
         if (readAfterLayout.current && next.positions[selected]) {
           readAfterLayout.current = false
           cameraMode.current = 'manual'
           applyCamera(focusCamera(next.positions[selected], size))
-        } else fitView(next)
+        } else if (cameraMode.current === 'fit') fitView(next)
         setLayoutBusy(false)
-      })
-      .catch(() => {
-        if (!cancelled) {
+    }
+    worker.onerror = () => {
           setLayoutBusy(false)
           notify('图谱布局暂不可用，请重试', true)
-        }
-      })
-    return () => {
-      cancelled = true
     }
-  }, [layoutKey])
+    return () => {
+      worker.terminate()
+    }
+  }, [layoutKey, layoutRevision, Math.round(size.width / Math.max(1, size.height - 120) * 2)])
   useEffect(() => {
     if (restoreCamera.current && savedCamera.current) {
       restoreCamera.current = false
@@ -464,21 +468,13 @@ export function Graph() {
                 </marker>
               </defs>
               <g transform={`translate(${pan.x} ${pan.y}) scale(${zoom})`}>
-                {layout.clusters?.map((c) => (
-                  <g className="knowledge-cluster" key={c.id}>
-                    <rect x={c.x} y={c.y} width={c.width} height={c.height} rx="20" />
-                    <text x={c.x + 22} y={c.y + 29}>
-                      {c.title}
-                    </text>
-                  </g>
-                ))}
                 {layout.routes.map((e, i) => (
                   <path
                     key={i}
-                    className={`network-edge ${e.source === selected || e.target === selected ? 'connected' : detailOpen ? 'muted-edge' : ''}`}
+                    className={`network-edge ${e.source === (hovered || selected) || e.target === (hovered || selected) ? 'connected' : detailOpen || hovered ? 'muted-edge' : ''}`}
                     d={routePath(e.points)}
                     markerEnd="url(#arrow)"
-                  />
+                  ><title>{nodes.find(n => n.id === e.source)?.title} → {nodes.find(n => n.id === e.target)?.title}，先修关系</title></path>
                 ))}
                 {shown.nodes.map((n) => {
                   const pos = layout.positions[n.id]
@@ -497,7 +493,7 @@ export function Graph() {
                     !isChapter &&
                     ((filter === 'weak' && tone !== 'weak') ||
                       (filter === 'mastered' && tone !== 'mastered'))
-                  const chunks = String(n.title).match(/.{1,5}/g) || []
+                  const chunks = String(n.title).match(/[A-Za-z_]{1,8}|[^A-Za-z_]{1,4}/g) || []
                   const lines =
                     chunks.length > 3
                       ? [...chunks.slice(0, 2), chunks[2].slice(0, 4) + '…']
@@ -519,8 +515,27 @@ export function Graph() {
                           ? `${n.title}，展开章节`
                           : `${n.title}，掌握度 ${observed ? value + '%' : '待学习'}`
                       }
-                      onPointerDown={(e) => e.stopPropagation()}
-                      onClick={choose}
+                      onPointerEnter={() => setHovered(n.id)}
+                      onPointerLeave={() => setHovered(0)}
+                      onPointerDown={(e) => {
+                        e.stopPropagation()
+                        e.currentTarget.setPointerCapture(e.pointerId)
+                        nodeDrag.current = { id: n.id, x: pos.x, y: pos.y, startX: e.clientX, startY: e.clientY, moved: false }
+                      }}
+                      onPointerMove={(e) => {
+                        const active = nodeDrag.current
+                        if (!active || active.id !== n.id) return
+                        const dx = (e.clientX - active.startX) / zoom, dy = (e.clientY - active.startY) / zoom
+                        if (Math.hypot(dx, dy) < 4 && !active.moved) return
+                        active.moved = true
+                        const positions = { ...layoutRef.current.positions, [n.id]: { x: active.x + dx, y: active.y + dy } }
+                        setLayout(previous => ({ ...previous, positions, routes: previous.routes.map(edge => ({ ...edge, points: edgePoints(positions[edge.source], positions[edge.target], Object.values(positions)) })) }))
+                      }}
+                      onPointerUp={() => {
+                        if (!nodeDrag.current?.moved) choose()
+                        nodeDrag.current = null
+                      }}
+                      onPointerCancel={() => { nodeDrag.current = null }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault()
@@ -528,16 +543,16 @@ export function Graph() {
                         }
                       }}
                     >
-                      <circle className="node-halo" r="62" />
-                      <circle className="node-body" r="51" />
+                      <circle className="node-halo" r="49" />
+                      <circle className="node-body" r="42" />
                       {!isChapter && observed ? (
-                        <circle className="node-ring-track" r="55" />
+                        <circle className="node-ring-track" r="45" />
                       ) : null}
                       {!isChapter && observed ? (
                         <circle
                           className="node-ring"
-                          r="55"
-                          strokeDasharray={`${value * 3.456} 345.6`}
+                          r="45"
+                          strokeDasharray={`${value * 2.827} 282.7`}
                           transform="rotate(-90)"
                         />
                       ) : null}
@@ -552,7 +567,7 @@ export function Graph() {
                                   : lines.length === 2
                                     ? -14
                                     : -24
-                                : 19
+                                : 17
                             }
                             key={i}
                           >
@@ -560,7 +575,7 @@ export function Graph() {
                           </tspan>
                         ))}
                       </text>
-                      <text textAnchor="middle" y="32" className="node-value">
+                      <text textAnchor="middle" y="30" className="node-value">
                         {isChapter
                           ? `${n.count} 个知识点`
                           : teacher
@@ -599,6 +614,7 @@ export function Graph() {
                 <Focus size={16} />
                 聚焦阅读
               </Button>
+              <Button variant="icon secondary" aria-label="重新布局知识网络" onClick={() => setLayoutRevision(v => v + 1)}><RotateCcw size={16} /></Button>
             </div>
             <svg
               className="graph-minimap"

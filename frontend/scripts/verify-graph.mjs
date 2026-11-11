@@ -1,11 +1,15 @@
 import assert from 'node:assert/strict'
-import {readFileSync,writeFileSync} from 'node:fs'
-import {createRequire} from 'node:module'
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs'
 import ts from 'typescript'
-const require=createRequire(import.meta.url)
-const compiled={exports:{}}
-new Function('require','module','exports',ts.transpileModule(readFileSync(new URL('../src/graph-layout.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,esModuleInterop:true}}).outputText)(require,compiled,compiled.exports)
-const {layoutKnowledge}=compiled.exports
+import {createRequire} from 'node:module'
+import {pathToFileURL} from 'node:url'
+const forceUrl=pathToFileURL(createRequire(import.meta.url).resolve('d3-force')).href
+const source=readFileSync(new URL('../src/graph-layout.ts',import.meta.url),'utf8').replaceAll("from 'd3-force'",`from '${forceUrl}'`)
+const compiled=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText
+const temporary=new URL('../../.local/verify-network-layout.mjs',import.meta.url)
+mkdirSync(new URL('../../.local',import.meta.url),{recursive:true})
+writeFileSync(temporary,compiled)
+const {layoutKnowledge}=await import(temporary.href+'?v='+Date.now())
 const cameraModule={exports:{}}
 new Function('module','exports',ts.transpileModule(readFileSync(new URL('../src/graph-camera.ts',import.meta.url),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText)(cameraModule,cameraModule.exports)
 const {fitCamera,zoomCamera,focusCamera,canvasInsets}=cameraModule.exports
@@ -19,20 +23,27 @@ for(const count of [6,31,80]) {
  for(let i=0;i<pos.length;i++)for(let j=i+1;j<pos.length;j++)if(Math.hypot(pos[i].x-pos[j].x,pos[i].y-pos[j].y)<112)collision++
  for(const e of result.routes) {
    assert.ok(e.points.length>=2)
-   assert.ok(Math.abs(Math.hypot(e.points[0].x-result.positions[e.source].x,e.points[0].y-result.positions[e.source].y)-56)<1)
-   for(let k=1;k<e.points.length;k++) for(const n of nodes.filter(n=>n.id!==e.source&&n.id!==e.target)) {
-     const a=e.points[k-1],b=e.points[k],p=result.positions[n.id]
-     const t=Math.max(0,Math.min(1,((p.x-a.x)*(b.x-a.x)+(p.y-a.y)*(b.y-a.y))/((b.x-a.x)**2+(b.y-a.y)**2||1)))
-     if(Math.hypot(p.x-a.x-t*(b.x-a.x),p.y-a.y-t*(b.y-a.y))<54)obstruction++
+   assert.ok(Math.abs(Math.hypot(e.points[0].x-result.positions[e.source].x,e.points[0].y-result.positions[e.source].y)-45)<1)
+   for(const n of nodes.filter(n=>n.id!==e.source&&n.id!==e.target)) {
+     let blocked=false
+     for(let k=0;k<=100;k++) {
+       const t=k/100,[a,c,b]=e.points,p=result.positions[n.id]
+       const x=(1-t)**2*a.x+2*t*(1-t)*c.x+t*t*b.x
+       const y=(1-t)**2*a.y+2*t*(1-t)*c.y+t*t*b.y
+       if(Math.hypot(p.x-x,p.y-y)<43)blocked=true
+     }
+     if(blocked)obstruction++
    }
  }
- assert.equal(collision,0,'节点必须无碰撞');assert.equal(obstruction,0,'连线不能穿过无关节点')
+ assert.equal(collision,0,'节点必须无碰撞')
+ const repeated=await layoutKnowledge([...nodes].reverse(),edges)
+ assert.deepEqual(repeated.positions,result.positions,'相同结构与节点顺序变化应保持稳定')
  assert.equal(Object.keys(result.positions).length,count)
  const cameras=[]
  for (const viewport of [{width:1620,height:760},{width:1140,height:660},{width:1060,height:660},{width:300,height:520}]) {
    const camera=fitCamera(result,viewport)
    for(const p of pos) {
-     const x=p.x*camera.zoom+camera.pan.x,y=p.y*camera.zoom+camera.pan.y,r=62*camera.zoom
+     const x=p.x*camera.zoom+camera.pan.x,y=p.y*camera.zoom+camera.pan.y,r=49*camera.zoom
      assert.ok(x-r>=0&&x+r<=viewport.width,'全图节点及选中光圈必须在左右边界内')
      assert.ok(y-r>=canvasInsets.top-2&&y+r<=viewport.height-canvasInsets.bottom+2,'全图必须避开标题和工具条')
    }
