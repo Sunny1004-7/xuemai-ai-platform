@@ -125,5 +125,6 @@ def record_feedback(db,check_id,result):
         shared['feedback']={'correct':result['correct'],'attempt_id':result['id'],'next_action':result['next_action']}
         shared['trace'].append({'role':'理解反馈','result':'安排间隔复测' if result['correct'] else '下一轮更换教学策略'})
         shared['transition']=run['status']+' → feedback'
+        shared['status']='feedback'
         db.execute("UPDATE teaching_runs SET state=?,status='feedback',updated_at=CURRENT_TIMESTAMP WHERE id=?",(json.dumps(shared,ensure_ascii=False),run['id']))
         return shared

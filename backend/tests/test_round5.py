@@ -104,6 +104,11 @@ def test_dia_verification_drives_persisted_workflow(full):
             assert status==expected
             assert plan['collaboration']['verification']['passed']==(variant in ('valid','no_check'))
             if variant in ('empty','no_check'):assert plan['check'] is None
+            if variant=='valid':
+                from backend.app.teaching_agents import record_feedback
+                feedback=record_feedback(db,plan['check']['id'],{'correct':True,'id':1,'next_action':'review'})
+                saved=db.execute('SELECT status,state FROM teaching_runs WHERE id=?',(plan['collaboration']['run_id'],)).fetchone()
+                assert saved['status']==feedback['status']==json.loads(saved['state'])['status']=='feedback'
 
 
 def test_assignment_plan_waits_for_all_graded_items(full):
