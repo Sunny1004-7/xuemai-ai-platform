@@ -8,6 +8,8 @@
 @import './styles/charts.css';
 @import './styles/login.css';
 
+@import './styles/round5.css';
+
 :root {
   font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
   color: var(--text-primary);
@@ -15,3 +17,4 @@
   font-size: 15px;
   font-synthesis: none;
 }
+

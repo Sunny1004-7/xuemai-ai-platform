@@ -1,3 +1,4 @@
+import { Pager, Tabs, usePage } from '../components/Workspace'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
@@ -58,6 +59,12 @@ export function Practice({ review = false }: { review?: boolean }) {
   const [draft, setDraft] = useState<Row | null>(null)
   const [generationBusy, setGenerationBusy] = useState(false)
   const list: Row[] = assignmentId ? assignment.data.questions || [] : questions.data
+  const [workspaceView, setWorkspaceView] = useState('work')
+  const [feedbackView, setFeedbackView] = useState(false)
+  const [support, setSupport] = useState('navigation')
+  const bankPage = usePage<Row>(list, 106, 310)
+  const taskPage = usePage<Row>(assignments.data, 102, 310)
+  const schedulePage = usePage<Row>(schedule.data, 88, 310)
   const q = list[index]
   const qid = q?.question_id || q?.id
   useEffect(() => {
@@ -66,13 +73,17 @@ export function Practice({ review = false }: { review?: boolean }) {
   useEffect(() => {
     setAnswer('')
     setResult(null)
+    setFeedbackView(false)
     setHints(0)
   }, [qid])
   useEffect(() => {
     const question = Number(params.get('question'))
     if (question) {
       const next = list.findIndex((q) => (q.question_id || q.id) === question)
-      if (next >= 0) setIndex(next)
+      if (next >= 0) {
+        setIndex(next)
+        if (teacher) bankPage.setPage(Math.floor(next / bankPage.size) + 1)
+      }
     }
   }, [params, list])
   async function submit(e: React.FormEvent) {
@@ -87,6 +98,7 @@ export function Practice({ review = false }: { review?: boolean }) {
         ...(assignmentId ? { assignment_id: assignmentId } : {}),
       })
       setResult(response)
+      setFeedbackView(true)
       notify(
         response.review_status === 'pending_review'
           ? '已提交，等待教师复核'
@@ -147,8 +159,13 @@ export function Practice({ review = false }: { review?: boolean }) {
         skill: f.get('skill') || 'concept',
         diagnostic_map: draft?.diagnostic_map || {},
       }
-      if (draft?.edit_existing) await patch(`/questions/${draft.id}`, body)
-      else await post('/questions', body)
+      const saved = draft?.edit_existing
+        ? await patch(`/questions/${draft.id}`, body)
+        : await post('/questions', body)
+      setParams((previous) => {
+        previous.set('question', String(saved.id))
+        return previous
+      })
       notify('题目已保存至课程题库')
       setQuestionForm(false)
       setDraft(null)
@@ -227,19 +244,25 @@ export function Practice({ review = false }: { review?: boolean }) {
           >
             {review ? '待复习错题' : '自主练习'}
           </button>
-          {assignments.data.slice(0, 4).map((a) => (
-            <button
-              key={a.id}
-              className={assignmentId === a.id ? 'active' : ''}
-              onClick={() => {
-                setParams({ assignment: String(a.id) })
-                setIndex(0)
-              }}
-            >
-              {a.title}
-              {a.completed ? <CheckCheck size={13} /> : null}
-            </button>
-          ))}
+          <select
+            aria-label="选择作业范围"
+            value={assignmentId || ''}
+            onChange={(e) => {
+              const next = new URLSearchParams()
+              next.set('course', String(courseId))
+              if (e.target.value) next.set('assignment', e.target.value)
+              setParams(next)
+              setIndex(0)
+            }}
+          >
+            <option value="">全部练习</option>
+            {assignments.data.map((a) => (
+              <option value={a.id} key={a.id}>
+                {a.title}
+                {a.completed ? ' · 已完成' : ''}
+              </option>
+            ))}
+          </select>
         </div>
         {!review && !assignmentId ? (
           <select aria-label="按题型筛选" value={type} onChange={(e) => setType(e.target.value)}>
@@ -260,17 +283,52 @@ export function Practice({ review = false }: { review?: boolean }) {
           assignment.reload()
         }}
       />
-      {teacher ? (
+      {knowledgeId ? (
+        <div className="scope-indicator">
+          专题：{graph.data.nodes?.find((n: Row) => n.id === knowledgeId)?.title} · {list.length} 题{' '}
+          <Link to={`/practice?course=${courseId}`}>全部练习</Link>
+        </div>
+      ) : null}
+      {teacher || review ? (
+        <Tabs
+          value={workspaceView}
+          onChange={setWorkspaceView}
+          items={
+            teacher
+              ? [
+                  ['work', '课程题库'],
+                  ['tasks', '作业记录'],
+                ]
+              : [
+                  ['work', '错题订正'],
+                  ['schedule', '复习日程'],
+                ]
+          }
+        />
+      ) : null}
+      {teacher && workspaceView === 'tasks' ? (
+        <Panel className="workspace-list">
+          <div className="workspace-list-body">
+            {taskPage.rows.map((a) => (
+              <AssignmentRow key={a.id} assignment={a} />
+            ))}
+          </div>
+          <Pager {...taskPage} onChange={taskPage.setPage} label="份作业" />
+        </Panel>
+      ) : null}
+      {teacher && workspaceView === 'work' ? (
         <div className="teacher-bank">
           <Panel title="课程题库" caption={`${list.length} 道题目 · 所有 AI 生成内容需教师审核`}>
             <div className="question-bank">
-              {list.map((item, i) => (
+              {bankPage.rows.map((item, j) => (
                 <button
                   key={item.id}
-                  className={index === i ? 'active' : ''}
-                  onClick={() => setIndex(i)}
+                  className={index === (bankPage.page - 1) * bankPage.size + j ? 'active' : ''}
+                  onClick={() => setIndex((bankPage.page - 1) * bankPage.size + j)}
                 >
-                  <span className="question-number">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="question-number">
+                    {String((bankPage.page - 1) * bankPage.size + j + 1).padStart(2, '0')}
+                  </span>
                   <div>
                     <Pill tone="blue">{typeLabels[item.type] || item.type}</Pill>
                     <h3>{item.title}</h3>
@@ -284,6 +342,7 @@ export function Practice({ review = false }: { review?: boolean }) {
                 </button>
               ))}
             </div>
+            <Pager {...bankPage} onChange={bankPage.setPage} label="道题" />
           </Panel>
           <div>
             {q ? (
@@ -346,18 +405,13 @@ export function Practice({ review = false }: { review?: boolean }) {
                 </div>
               </Panel>
             ) : null}
-            <Panel title="作业发布记录" caption="学生完成后结果实时写回">
-              {assignments.data.map((a) => (
-                <AssignmentRow key={a.id} assignment={a} />
-              ))}
-            </Panel>
           </div>
         </div>
       ) : null}
-      {review && !teacher ? (
+      {review && !teacher && workspaceView === 'schedule' ? (
         <Panel title="复习安排">
           <div className="review-schedule">
-            {schedule.data.map((item) => (
+            {schedulePage.rows.map((item) => (
               <Link
                 key={item.question_id}
                 className={item.due ? 'due' : ''}
@@ -371,9 +425,10 @@ export function Practice({ review = false }: { review?: boolean }) {
               </Link>
             ))}
           </div>
+          <Pager {...schedulePage} onChange={schedulePage.setPage} label="项复习" />
         </Panel>
       ) : null}
-      {!teacher && q ? (
+      {!teacher && (!review || workspaceView === 'work') && q ? (
         <div className="practice-layout">
           <Panel className="question-workspace">
             <div className="question-meta">
@@ -388,28 +443,42 @@ export function Practice({ review = false }: { review?: boolean }) {
                 第 {index + 1} / {list.length} 题
               </span>
             </div>
-            <h2 className="question-title">{q.title}</h2>
-            <form onSubmit={submit}>
-              <AnswerInput
-                question={q}
-                answer={answer}
-                setAnswer={setAnswer}
-                disabled={Boolean(result)}
-              />
-              {!result ? (
-                <div className="question-submit">
-                  <Button
-                    type="submit"
-                    disabled={busy || (Array.isArray(answer) ? !answer.length : !answer.trim())}
-                  >
-                    <CheckCheck size={17} />
-                    {busy ? '正在评阅…' : '提交答案'}
-                  </Button>
-                  <span>先独立完成，再查看解析</span>
-                </div>
-              ) : null}
-            </form>
             {result ? (
+              <Tabs
+                value={feedbackView ? 'feedback' : 'question'}
+                onChange={(v) => setFeedbackView(v === 'feedback')}
+                items={[
+                  ['question', '题目'],
+                  ['feedback', '作答反馈'],
+                ]}
+              />
+            ) : null}
+            {!feedbackView ? (
+              <>
+                <h2 className="question-title">{q.title}</h2>
+                <form onSubmit={submit}>
+                  <AnswerInput
+                    question={q}
+                    answer={answer}
+                    setAnswer={setAnswer}
+                    disabled={Boolean(result)}
+                  />
+                  {!result ? (
+                    <div className="question-submit">
+                      <Button
+                        type="submit"
+                        disabled={busy || (Array.isArray(answer) ? !answer.length : !answer.trim())}
+                      >
+                        <CheckCheck size={17} />
+                        {busy ? '正在评阅…' : '提交答案'}
+                      </Button>
+                      <span>先独立完成，再查看解析</span>
+                    </div>
+                  ) : null}
+                </form>
+              </>
+            ) : null}
+            {result && feedbackView ? (
               <div
                 className={`answer-feedback ${result.correct ? 'correct' : result.review_status === 'pending_review' ? 'pending' : 'incorrect'}`}
                 role="status"
@@ -433,10 +502,26 @@ export function Practice({ review = false }: { review?: boolean }) {
                   )}
                   {result.error_type ? <Pill tone="amber">{result.error_type}</Pill> : null}
                 </div>
-                {result.knowledge_change ? <div className="knowledge-change">
-                  <div><span>知识状态</span><strong>{result.knowledge_change.before}% <ArrowRight size={16}/> {result.knowledge_change.after}%</strong></div>
-                  <p>{result.knowledge_change.weight === 0 ? '本次重复成功保留原有证据' : result.knowledge_change.hints ? `使用 ${result.knowledge_change.hints} 次提示，已调整独立性权重` : result.knowledge_change.correlation < 1 ? '相近题证据已折减，继续尝试不同情境' : '独立作答已计入知识证据'}</p>
-                </div> : null}
+                {result.knowledge_change ? (
+                  <div className="knowledge-change">
+                    <div>
+                      <span>知识状态</span>
+                      <strong>
+                        {result.knowledge_change.before}% <ArrowRight size={16} />{' '}
+                        {result.knowledge_change.after}%
+                      </strong>
+                    </div>
+                    <p>
+                      {result.knowledge_change.weight === 0
+                        ? '本次重复成功保留原有证据'
+                        : result.knowledge_change.hints
+                          ? `使用 ${result.knowledge_change.hints} 次提示，已调整独立性权重`
+                          : result.knowledge_change.correlation < 1
+                            ? '相近题证据已折减，继续尝试不同情境'
+                            : '独立作答已计入知识证据'}
+                    </p>
+                  </div>
+                ) : null}
                 {result.evidence ? (
                   <p className="evidence-summary">
                     {result.evidence.sufficiency} · 有效证据{' '}
@@ -457,10 +542,21 @@ export function Practice({ review = false }: { review?: boolean }) {
                     {Array.isArray(result.answer) ? result.answer.join('、') : result.answer}
                   </p>
                 ) : null}
-                {result.recommendations?.length ? <div className="feedback-path">
-                  <h3>接下来</h3>
-                  {result.recommendations.slice(0,2).map((r:Row) => <Link key={r.id} to={r.href}><span>{r.path_position}</span><div><strong>{r.title}</strong><small>{r.reason}</small></div><ArrowRight size={16}/></Link>)}
-                </div> : null}
+                {result.recommendations?.length ? (
+                  <div className="feedback-path">
+                    <h3>接下来</h3>
+                    {result.recommendations.slice(0, 2).map((r: Row) => (
+                      <Link key={r.id} to={r.href}>
+                        <span>{r.path_position}</span>
+                        <div>
+                          <strong>{r.title}</strong>
+                          <small>{r.reason}</small>
+                        </div>
+                        <ArrowRight size={16} />
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
                 <div className="button-row">
                   <Link
                     to={`/tutor?question=${qid}&knowledge=${q.knowledge_id || ''}`}
@@ -509,59 +605,70 @@ export function Practice({ review = false }: { review?: boolean }) {
             </div>
           </Panel>
           <aside>
-            <Panel title="渐进提示" caption="只在需要时，迈出一小步">
-              <div className="hint-intro">
-                <Lightbulb size={23} />
-                <p>先说清楚题目在考什么，再尝试拆解。使用提示会记入本次学习证据。</p>
-              </div>
-              {(q.hints || []).slice(0, hints).map((h: string, i: number) => (
-                <div className="hint-step" key={i}>
-                  <strong>提示 {i + 1}</strong>
-                  <p>{h}</p>
+            <Tabs
+              value={support}
+              onChange={setSupport}
+              items={[
+                ['navigation', '题号导航'],
+                ['hints', '渐进提示'],
+              ]}
+            />
+            {support === 'hints' ? (
+              <Panel title="渐进提示" caption="只在需要时，迈出一小步">
+                <div className="hint-intro">
+                  <Lightbulb size={23} />
+                  <p>先说清楚题目在考什么，再尝试拆解。使用提示会记入本次学习证据。</p>
                 </div>
-              ))}
-              <Button
-                variant="secondary wide"
-                disabled={hints >= (q.hints?.length || 1) || Boolean(result)}
-                onClick={async () => {
-                  setHints((h) => h + 1)
-                  try {
-                    await post('/events', {
-                      course_id: courseId,
-                      knowledge_id: q.knowledge_id,
-                      kind: 'hint',
-                      payload: { question_id: qid, hint_index: hints },
-                    })
-                  } catch {
-                    /* 作答仍记录 hints_used */
-                  }
-                }}
-              >
-                <Lightbulb size={16} />
-                {hints ? '再给一点提示' : '查看第一条提示'}
-              </Button>
-              {!q.hints?.length && hints ? (
-                <p className="hint-step">从定义出发，思考结构的操作顺序与约束。</p>
-              ) : null}
-            </Panel>
-            <Panel title="练习导航">
-              <div className="question-dots">
-                {list.map((r, i) => (
-                  <button
-                    key={r.id || r.question_id}
-                    className={i === index ? 'active' : ''}
-                    onClick={() => setIndex(i)}
-                    aria-label={`跳转第${i + 1}题`}
-                  >
-                    {i + 1}
-                  </button>
+                {(q.hints || []).slice(0, hints).map((h: string, i: number) => (
+                  <div className="hint-step" key={i}>
+                    <strong>提示 {i + 1}</strong>
+                    <p>{h}</p>
+                  </div>
                 ))}
-              </div>
-              <Link to={`/graph?knowledge=${q.knowledge_id}`} className="text-link">
-                查看知识位置
-                <ArrowRight size={15} />
-              </Link>
-            </Panel>
+                <Button
+                  variant="secondary wide"
+                  disabled={hints >= (q.hints?.length || 1) || Boolean(result)}
+                  onClick={async () => {
+                    setHints((h) => h + 1)
+                    try {
+                      await post('/events', {
+                        course_id: courseId,
+                        knowledge_id: q.knowledge_id,
+                        kind: 'hint',
+                        payload: { question_id: qid, hint_index: hints },
+                      })
+                    } catch {
+                      /* 作答仍记录 hints_used */
+                    }
+                  }}
+                >
+                  <Lightbulb size={16} />
+                  {hints ? '再给一点提示' : '查看第一条提示'}
+                </Button>
+                {!q.hints?.length && hints ? (
+                  <p className="hint-step">从定义出发，思考结构的操作顺序与约束。</p>
+                ) : null}
+              </Panel>
+            ) : (
+              <Panel title="练习导航">
+                <div className="question-dots">
+                  {list.map((r, i) => (
+                    <button
+                      key={r.id || r.question_id}
+                      className={i === index ? 'active' : ''}
+                      onClick={() => setIndex(i)}
+                      aria-label={`跳转第${i + 1}题`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+                <Link to={`/graph?knowledge=${q.knowledge_id}`} className="text-link">
+                  查看知识位置
+                  <ArrowRight size={15} />
+                </Link>
+              </Panel>
+            )}
           </aside>
         </div>
       ) : null}
@@ -802,6 +909,7 @@ export function AnswerInput({
 export function AssignmentRow({ assignment }: { assignment: Row }) {
   const [open, setOpen] = useState(false)
   const result = useApi<Row[]>(open ? `/assignments/${assignment.id}/results` : null, [])
+  const results = usePage<Row>(Array.isArray(result.data) ? result.data : [], 100, 340)
   return (
     <div className="assignment-row">
       <div>
@@ -814,27 +922,31 @@ export function AssignmentRow({ assignment }: { assignment: Row }) {
         {open ? '收起结果' : '查看结果'}
       </Button>
       {open ? (
-        <div className="assignment-results">
-          <LoadState {...result} />
-          {(Array.isArray(result.data) ? result.data : []).map((r: Row, i: number) => (
-            <div key={r.student_id || i}>
-              <span>{r.name || r.student_name}</span>
-              <Pill>{r.completed ? '已完成' : '待完成'}</Pill>
-              <strong>{r.score ?? '—'}</strong>
-              {r.comparison?.length ? (
-                <div className="intervention-comparison">
-                  {r.comparison.map((c: Row) => (
-                    <p key={c.knowledge_id}>
-                      {c.title}：发布时 {c.baseline}% → 当前 {c.current}%（{c.delta > 0 ? '+' : ''}
-                      {c.delta}） · 新增有效证据 {c.new_evidence}
-                    </p>
-                  ))}
-                  <small>状态对照，尚不能据此证明教学效果。</small>
-                </div>
-              ) : null}
-            </div>
-          ))}
-        </div>
+        <Modal title={`${assignment.title} · 提交结果`} close={() => setOpen(false)}>
+          <div className="assignment-results">
+            <LoadState {...result} />
+            {results.rows.map((r: Row, i: number) => (
+              <div key={r.student_id || i}>
+                <span>{r.name || r.student_name}</span>
+                <Pill>{r.completed ? '已完成' : '待完成'}</Pill>
+                <strong>{r.score ?? '—'}</strong>
+                {r.comparison?.length ? (
+                  <div className="intervention-comparison">
+                    {r.comparison.map((c: Row) => (
+                      <p key={c.knowledge_id}>
+                        {c.title}：发布时 {c.baseline}% → 当前 {c.current}%（
+                        {c.delta > 0 ? '+' : ''}
+                        {c.delta}） · 新增有效证据 {c.new_evidence}
+                      </p>
+                    ))}
+                    <small>状态对照，尚不能据此证明教学效果。</small>
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <Pager {...results} onChange={results.setPage} label="位学生成绩" />
+        </Modal>
       ) : null}
     </div>
   )

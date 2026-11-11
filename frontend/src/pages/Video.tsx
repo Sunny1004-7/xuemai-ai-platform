@@ -1,3 +1,4 @@
+import { Tabs } from '../components/Workspace'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
@@ -251,56 +252,6 @@ export function VideoPage() {
                   问问这个片段
                 </Link>
               </div>
-              <Panel title="知识片段导航" caption="点击时间点，直接抵达对应的讲解">
-                <div className="video-timeline">
-                  {timeline.length ? (
-                    timeline.map((item, i) => (
-                      <button
-                        key={i}
-                        onClick={() => seek(Number(item.time ?? item.start ?? item.timestamp ?? 0))}
-                      >
-                        <span>
-                          <Play size={13} />
-                          {timeLabel(Number(item.time ?? item.start ?? item.timestamp ?? 0))}
-                        </span>
-                        <strong>{item.title || item.text || '知识片段'}</strong>
-                        <small>定位播放</small>
-                      </button>
-                    ))
-                  ) : (
-                    <button onClick={() => seek(0)}>
-                      <span>
-                        <Play size={13} />
-                        00:00
-                      </span>
-                      <strong>从课程开头开始</strong>
-                      <small>定位播放</small>
-                    </button>
-                  )}
-                </div>
-                {checkpoints.length ? (
-                  <div className="video-checkpoints">
-                    {checkpoints.map((cp, i) => (
-                      <button
-                        key={i}
-                        onClick={() => {
-                          const q = questions.data.find((q) => q.id === cp.question_id)
-                          if (q) {
-                            video.current?.pause()
-                            setCheckpoint(q)
-                            setResult(null)
-                            setAnswer('')
-                          } else seek(Number(cp.time ?? cp.timestamp ?? 15))
-                        }}
-                      >
-                        <CheckCheck size={16} />
-                        随堂理解检查 {i + 1}
-                        <ArrowRight size={14} />
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </Panel>
             </div>
             <Panel className="video-sidebar">
               <div className="tab-line">
@@ -308,6 +259,7 @@ export function VideoPage() {
                   ['transcript', '字幕检索'],
                   ['notes', `我的笔记 ${notes.data.length}`],
                   ['catalog', '课程目录'],
+                  ['segments', '片段与检查'],
                 ].map(([value, label]) => (
                   <button
                     key={value}
@@ -351,6 +303,62 @@ export function VideoPage() {
                       <Empty>教师尚未添加字幕，可先观看视频并记录笔记。</Empty>
                     ) : null}
                   </div>
+                </>
+              ) : tab === 'segments' ? (
+                <>
+                  {' '}
+                  <Panel title="知识片段导航" caption="点击时间点，直接抵达对应的讲解">
+                    <div className="video-timeline">
+                      {timeline.length ? (
+                        timeline.map((item, i) => (
+                          <button
+                            key={i}
+                            onClick={() =>
+                              seek(Number(item.time ?? item.start ?? item.timestamp ?? 0))
+                            }
+                          >
+                            <span>
+                              <Play size={13} />
+                              {timeLabel(Number(item.time ?? item.start ?? item.timestamp ?? 0))}
+                            </span>
+                            <strong>{item.title || item.text || '知识片段'}</strong>
+                            <small>定位播放</small>
+                          </button>
+                        ))
+                      ) : (
+                        <button onClick={() => seek(0)}>
+                          <span>
+                            <Play size={13} />
+                            00:00
+                          </span>
+                          <strong>从课程开头开始</strong>
+                          <small>定位播放</small>
+                        </button>
+                      )}
+                    </div>
+                    {checkpoints.length ? (
+                      <div className="video-checkpoints">
+                        {checkpoints.map((cp, i) => (
+                          <button
+                            key={i}
+                            onClick={() => {
+                              const q = questions.data.find((q) => q.id === cp.question_id)
+                              if (q) {
+                                video.current?.pause()
+                                setCheckpoint(q)
+                                setResult(null)
+                                setAnswer('')
+                              } else seek(Number(cp.time ?? cp.timestamp ?? 15))
+                            }}
+                          >
+                            <CheckCheck size={16} />
+                            随堂理解检查 {i + 1}
+                            <ArrowRight size={14} />
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+                  </Panel>
                 </>
               ) : tab === 'notes' ? (
                 <>
@@ -537,6 +545,7 @@ function VideoTimelineEditor({
         (Number.isFinite(measuredDuration) ? Math.round(measuredDuration * 10) / 10 : 0),
     ),
   )
+  const [editorView, setEditorView] = useState('subtitle')
   const [subtitles, setSubtitles] = useState<SubtitleDraft[]>(() =>
     initialSubtitles.map((s) => ({
       key: editorKey(),
@@ -695,7 +704,20 @@ function VideoTimelineEditor({
           </Button>
         ) : null}
       </div>
-      <section style={editorSectionStyle} aria-labelledby="subtitle-editor-heading">
+      <Tabs
+        value={editorView}
+        onChange={setEditorView}
+        items={[
+          ['subtitle', '字幕'],
+          ['segment', '知识片段'],
+          ['check', '理解检查'],
+        ]}
+      />
+      <section
+        hidden={editorView !== 'subtitle'}
+        style={editorSectionStyle}
+        aria-labelledby="subtitle-editor-heading"
+      >
         <div className="panel-head">
           <div>
             <h3 id="subtitle-editor-heading">字幕内容</h3>
@@ -788,7 +810,11 @@ function VideoTimelineEditor({
           ) : null}
         </div>
       </section>
-      <section style={editorSectionStyle} aria-labelledby="segment-editor-heading">
+      <section
+        hidden={editorView !== 'segment'}
+        style={editorSectionStyle}
+        aria-labelledby="segment-editor-heading"
+      >
         <div className="panel-head">
           <div>
             <h3 id="segment-editor-heading">知识片段导航</h3>
@@ -885,7 +911,11 @@ function VideoTimelineEditor({
           ) : null}
         </div>
       </section>
-      <section style={editorSectionStyle} aria-labelledby="checkpoint-editor-heading">
+      <section
+        hidden={editorView !== 'check'}
+        style={editorSectionStyle}
+        aria-labelledby="checkpoint-editor-heading"
+      >
         <div className="panel-head">
           <div>
             <h3 id="checkpoint-editor-heading">随堂互动检查</h3>

@@ -1,3 +1,5 @@
+import { Tabs } from '../components/Workspace'
+import { PythonLab } from '../components/PythonLab'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
@@ -24,8 +26,14 @@ import type { Row } from '../api'
 import { Button, Panel, Pill, Title, useApp } from '../ui'
 
 export function Experiments() {
+  const { courseId } = useApp()
+  const course = useApi<Row>(`/courses/${courseId}`, {})
+  return /python/i.test(course.data.title || '') ? <PythonLab /> : <StructureLab />
+}
+function StructureLab() {
   const { courseId, notify } = useApp()
   const [params] = useSearchParams()
+  const [side, setSide] = useState('prediction')
   const graph = useApi<Row>(`/courses/${courseId}/graph`, { nodes: [] })
   const [mode, setMode] = useState(
     ['sort', 'tree', 'bfs', 'stack', 'queue'].includes(params.get('mode') || '')
@@ -215,7 +223,7 @@ export function Experiments() {
                 {snapshot.values.map((n, i) => (
                   <div
                     className={`sort-bar ${snapshot.active.includes(i) ? 'comparing' : ''} ${snapshot.sorted.includes(i) ? 'sorted' : ''}`}
-                    style={{ height: `${n * 2.7}px` }}
+                    style={{ height: `${n}%` }}
                     key={i}
                   >
                     <strong>{n}</strong>
@@ -327,7 +335,25 @@ export function Experiments() {
               </div>
             )}
           </Panel>
-          {!manual ? (
+        </div>
+        <aside>
+          <Tabs
+            value={side}
+            onChange={setSide}
+            items={
+              manual
+                ? [
+                    ['settings', '参数'],
+                    ['links', '相关学习'],
+                  ]
+                : [
+                    ['prediction', '预测'],
+                    ['settings', '参数'],
+                    ['links', '相关学习'],
+                  ]
+            }
+          />
+          {side === 'prediction' && !manual ? (
             <Panel title="先预测，再执行" caption="把观察变成主动思考">
               <form
                 className="prediction-form"
@@ -359,46 +385,48 @@ export function Experiments() {
               ) : null}
             </Panel>
           ) : null}
-        </div>
-        <aside>
-          <Panel
-            title="实验参数"
-            caption={
-              mode === 'bfs' ? '示例图从 A 开始按队列顺序搜索' : '小规模数据，更容易看清每一步'
-            }
-          >
-            {!manual && mode !== 'bfs' ? (
-              <form className="form-stack" onSubmit={applyInput}>
-                <label>
-                  输入序列
-                  <textarea value={raw} onChange={(e) => setRaw(e.target.value)} rows={3} />
-                </label>
-                <p className="mini-text muted">2–12 个数字，范围 1–99，以逗号分隔。</p>
-                <Button variant="secondary" type="submit">
-                  应用这组数据
-                </Button>
-              </form>
-            ) : (
-              <p className="muted">
-                {mode === 'bfs'
-                  ? '节点在第一次发现时入队，在出队时被访问，避免重复搜索。'
-                  : `通过加入与移除元素，对照${mode === 'stack' ? '栈顶与后进先出' : '队首、队尾与先进先出'}规则。`}
-              </p>
-            )}
-          </Panel>
-          <Panel title="把实验连接回知识">
-            <p className="muted">操作只是开始。试着说明每一步为什么成立，再到练习里独立应用。</p>
-            <div className="form-stack">
-              <Link to={`/tutor?knowledge=${knowledgeId || ''}`} className="button secondary">
-                <Sparkles size={16} />
-                让学习伙伴解释
-              </Link>
-              <Link to={`/practice?knowledge=${knowledgeId || ''}`} className="button secondary">
-                做一道相关练习
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </Panel>
+          {side === 'settings' || (manual && side === 'prediction') ? (
+            <Panel
+              title="实验参数"
+              caption={
+                mode === 'bfs' ? '示例图从 A 开始按队列顺序搜索' : '小规模数据，更容易看清每一步'
+              }
+            >
+              {!manual && mode !== 'bfs' ? (
+                <form className="form-stack" onSubmit={applyInput}>
+                  <label>
+                    输入序列
+                    <textarea value={raw} onChange={(e) => setRaw(e.target.value)} rows={3} />
+                  </label>
+                  <p className="mini-text muted">2–12 个数字，范围 1–99，以逗号分隔。</p>
+                  <Button variant="secondary" type="submit">
+                    应用这组数据
+                  </Button>
+                </form>
+              ) : (
+                <p className="muted">
+                  {mode === 'bfs'
+                    ? '节点在第一次发现时入队，在出队时被访问，避免重复搜索。'
+                    : `通过加入与移除元素，对照${mode === 'stack' ? '栈顶与后进先出' : '队首、队尾与先进先出'}规则。`}
+                </p>
+              )}
+            </Panel>
+          ) : null}
+          {side === 'links' ? (
+            <Panel title="把实验连接回知识">
+              <p className="muted">操作只是开始。试着说明每一步为什么成立，再到练习里独立应用。</p>
+              <div className="form-stack">
+                <Link to={`/tutor?knowledge=${knowledgeId || ''}`} className="button secondary">
+                  <Sparkles size={16} />
+                  让学习伙伴解释
+                </Link>
+                <Link to={`/practice?knowledge=${knowledgeId || ''}`} className="button secondary">
+                  做一道相关练习
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </Panel>
+          ) : null}
         </aside>
       </div>
     </>

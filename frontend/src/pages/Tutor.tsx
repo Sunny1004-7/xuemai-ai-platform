@@ -43,6 +43,7 @@ export function Tutor() {
   const [citations, setCitations] = useState<Row[]>([])
   const [sideOpen, setSideOpen] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
+  const historyRequest = useRef<AbortController | null>(null)
   const end = useRef<HTMLDivElement>(null)
   const currentKnowledge = graph.data.nodes?.find((n: Row) => n.id === knowledgeId)
   useEffect(() => {
@@ -51,14 +52,25 @@ export function Tutor() {
     setCitations([])
     abortRef.current?.abort()
   }, [courseId])
-  useEffect(() => () => abortRef.current?.abort(), [])
+  useEffect(
+    () => () => {
+      abortRef.current?.abort()
+      historyRequest.current?.abort()
+    },
+    [],
+  )
   useEffect(() => {
-    end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    const box = end.current?.parentElement
+    if (box) box.scrollTo({ top: box.scrollHeight, behavior: 'smooth' })
   }, [messages])
   async function openConversation(id: number) {
     if (busy) return
     try {
-      const conversation = await api<Row>(`/ai/conversations/${id}`)
+      historyRequest.current?.abort()
+      const controller = new AbortController()
+      historyRequest.current = controller
+      const conversation = await api<Row>(`/ai/conversations/${id}`, { signal: controller.signal })
+      if (controller.signal.aborted) return
       const context = conversation.context || {}
       const next = new URLSearchParams()
       next.set('course', String(context.course_id || courseId))
@@ -73,7 +85,7 @@ export function Tutor() {
       setCitations(conversation.messages?.flatMap((m: Row) => m.citations || []).slice(-5) || [])
       setSideOpen(false)
     } catch (e) {
-      notify((e as Error).message, true)
+      if ((e as Error).name !== 'AbortError') notify((e as Error).message, true)
     }
   }
   async function send(text = input) {
@@ -141,7 +153,11 @@ export function Tutor() {
             )
           if (event === 'done') {
             setMessages((v) =>
-              v.map((m, i) => (i === v.length - 1 ? { ...m, teaching: data.teaching, content: data.content ?? m.content } : m)),
+              v.map((m, i) =>
+                i === v.length - 1
+                  ? { ...m, teaching: data.teaching, content: data.content ?? m.content }
+                  : m,
+              ),
             )
             completed = true
             setConversationId(data.conversation_id)
