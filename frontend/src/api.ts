@@ -42,7 +42,9 @@ export const post = <T = any>(path: string, body: unknown) =>
 export const patch = <T = any>(path: string, body: unknown) =>
   api<T>(path, { method: 'PATCH', body: JSON.stringify(body) })
 export function useApi<T>(path: string | null, initial: T) {
-  const [data, setData] = useState<T>(initial)
+  const [state, setState] = useState<{ path: string | null; data: T }>({ path, data: initial })
+  const data = state.path === path ? state.data : initial
+  const setData = useCallback((value: T) => setState({ path, data: value }), [path])
   const [loading, setLoading] = useState(Boolean(path))
   const [error, setError] = useState('')
   const [revision, setRevision] = useState(0)
@@ -56,16 +58,24 @@ export function useApi<T>(path: string | null, initial: T) {
     setLoading(true)
     setError('')
     api<T>(path, { signal: controller.signal })
-      .then(setData)
+      .then((value) => {
+        if (!controller.signal.aborted) setState({ path, data: value })
+      })
       .catch((e) => {
-        if (e.name !== 'AbortError') setError(e.message)
+        if (!controller.signal.aborted && e.name !== 'AbortError') setError(e.message)
       })
       .finally(() => {
         if (!controller.signal.aborted) setLoading(false)
       })
     return () => controller.abort()
   }, [path, revision])
-  return { data, setData, loading, error, reload }
+  return {
+    data,
+    setData,
+    loading: Boolean(path) && (state.path !== path || loading),
+    error: state.path === path ? error : '',
+    reload,
+  }
 }
 export function percent(value: unknown) {
   const n = Number(value) || 0

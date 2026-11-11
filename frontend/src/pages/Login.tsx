@@ -65,7 +65,6 @@ export function Login({ onLogin }: { onLogin: () => void }) {
             <span>学脉 <small>XueMai</small></span>
           </div>
           <div className="login-art"><LearningPages /></div>
-          <p>个性化学习与协作教学</p>
         </section>
         <section className="login-entry">
           <form className="login-form" onSubmit={login}>

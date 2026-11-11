@@ -11,10 +11,8 @@ import {
 } from 'react-router-dom'
 import {
   Activity,
-  BookOpen,
   ChartNoAxesCombined,
   CheckCheck,
-  ChevronDown,
   CircleHelp,
   ClipboardList,
   FlaskConical,
@@ -32,9 +30,9 @@ import {
 import { api, getSession, saveSession, useApi } from './api'
 import type { Row } from './api'
 import { AppContext } from './ui'
+import { CourseSelector } from './components/CourseSelector'
 const LearningPlan = lazy(() => import('./pages/Plan').then((m) => ({ default: m.LearningPlan })))
 const Dashboard = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Dashboard })))
-const Courses = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.Courses })))
 const Graph = lazy(() => import('./pages/Graph').then((m) => ({ default: m.Graph })))
 const Practice = lazy(() => import('./pages/Practice').then((m) => ({ default: m.Practice })))
 const Tutor = lazy(() => import('./pages/Tutor').then((m) => ({ default: m.Tutor })))
@@ -52,7 +50,8 @@ import './styles.css'
 const studentNav = [
   ['/', '学习概览', LayoutDashboard],
   ['/plan', '目标与计划', Target],
-  ['/courses', '我的课程', BookOpen],
+  ['/video', '视频学习', Video],
+  ['/resources', '课程资料', Library],
   ['/graph', '知识图谱', Network],
   ['/practice', '智能练习', ClipboardList],
   ['/tutor', 'AI 学习伙伴', Sparkles],
@@ -85,7 +84,17 @@ function Shell({ logout }: { logout: () => void }) {
   const courses = useApi<Row[]>('/courses', [])
   const location = useLocation()
   const navigate = useNavigate()
+  useEffect(() => {
+    const changed = (e: Event) => {
+      const target = e.target as HTMLElement
+      const form = target.closest('form')
+      if (form) form.dataset.unsaved = 'true'
+    }
+    document.addEventListener('input', changed)
+    return () => document.removeEventListener('input', changed)
+  }, [])
   function changeCourse(id: number) {
+    if (id === courseId) return
     setCourseId(id)
     sessionStorage.setItem(`xuemai-course-${user.id}`, String(id))
     const query = new URLSearchParams(location.search)
@@ -98,10 +107,14 @@ function Shell({ logout }: { logout: () => void }) {
       'assignment',
       't',
       'conversation',
+      'chapter',
+      'mode',
+      'plan',
+      'view',
     ])
       query.delete(key)
     query.set('course', String(id))
-    navigate({ pathname: location.pathname, search: query.toString() }, { replace: true })
+    navigate({ pathname: location.pathname, search: query.toString() })
   }
   useEffect(() => {
     if (!courses.data.length) return
@@ -185,21 +198,7 @@ function Shell({ logout }: { logout: () => void }) {
               <strong>{current}</strong>
             </div>
             <div className="top-actions">
-              <div className="course-switch">
-                <BookOpen size={15} />
-                <select
-                  aria-label="切换当前课程"
-                  value={courseId}
-                  onChange={(e) => changeCourse(Number(e.target.value))}
-                >
-                  {courses.data.map((c) => (
-                    <option value={c.id} key={c.id}>
-                      {c.title}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown size={13} />
-              </div>
+              <CourseSelector courses={courses.data} reload={courses.reload} />
               <button
                 className="icon-button"
                 title="查看学习伙伴"
@@ -212,11 +211,15 @@ function Shell({ logout }: { logout: () => void }) {
               </button>
             </div>
           </header>
-          <main className="workspace" key={user.id}>
+          <main
+            className="workspace"
+            data-module={location.pathname.slice(1) || 'dashboard'}
+            key={`${user.id}-${courseId}`}
+          >
             <Suspense fallback={<div className="loading">正在加载…</div>}>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/courses" element={<Courses />} />
+                <Route path="/courses" element={<Navigate to="/" replace />} />
                 <Route path="/plan" element={<LearningPlan />} />
                 <Route path="/graph" element={<Graph />} />
                 <Route path="/practice" element={<Practice />} />
@@ -269,4 +272,3 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
-
