@@ -1,11 +1,10 @@
 import { Tabs } from '../components/Workspace'
 import { PythonLab } from '../components/PythonLab'
+import { CollectionLab } from '../components/CollectionLab'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
-  ArrowDown,
   ArrowRight,
-  ArrowUp,
   CheckCheck,
   ChevronLeft,
   ChevronRight,
@@ -23,7 +22,7 @@ import { bubbleSteps, bfsSteps, bstSteps } from '../algorithms'
 import type { Snapshot } from '../algorithms'
 import { post, useApi } from '../api'
 import type { Row } from '../api'
-import { Button, Panel, Pill, Title, useApp } from '../ui'
+import { Button, Panel, Title, useApp } from '../ui'
 
 export function Experiments() {
   const { courseId } = useApp()
@@ -47,10 +46,7 @@ function StructureLab() {
   const [speed, setSpeed] = useState(900)
   const [prediction, setPrediction] = useState('')
   const [predFeedback, setPredFeedback] = useState('')
-  const [collection, setCollection] = useState([12, 24, 36])
-  const [newValue, setNewValue] = useState('48')
-  const [operation, setOperation] = useState('初始结构中有 3 个元素。')
-  const [operations, setOperations] = useState(0)
+  const [collectionState, setCollectionState] = useState<Row>({})
   const [saving, setSaving] = useState(false)
   const snapshots = useMemo(
     () => (mode === 'bfs' ? bfsSteps() : mode === 'tree' ? bstSteps(values) : bubbleSteps(values)),
@@ -76,8 +72,6 @@ function StructureLab() {
     setStep(0)
     setPlaying(false)
     setPredFeedback('')
-    setOperations(0)
-    setCollection([12, 24, 36])
   }, [mode, values])
   useEffect(() => {
     if (!playing) return
@@ -111,30 +105,6 @@ function StructureLab() {
     setValues(nums)
     setStep(0)
   }
-  function act(add: boolean) {
-    if (add) {
-      const n = Number(newValue)
-      if (!Number.isFinite(n) || n < 1 || n > 99 || collection.length >= 10) {
-        notify('请输入 1–99 之间的数字，最多容纳 10 个元素', true)
-        return
-      }
-      setCollection((c) => [...c, n])
-      setOperation(
-        `${mode === 'stack' ? '压栈' : '入队'} ${n}：从${mode === 'stack' ? '栈顶' : '队尾'}加入。`,
-      )
-    } else {
-      if (!collection.length) {
-        setOperation('结构为空，不能继续移除。')
-        return
-      }
-      const n = mode === 'stack' ? collection[collection.length - 1] : collection[0]
-      setCollection((c) => (mode === 'stack' ? c.slice(0, -1) : c.slice(1)))
-      setOperation(
-        `${mode === 'stack' ? '出栈' : '出队'} ${n}：遵循${mode === 'stack' ? '后进先出' : '先进先出'}。`,
-      )
-    }
-    setOperations((n) => n + 1)
-  }
   function predict() {
     const next = snapshots[Math.min(step + 1, snapshots.length - 1)]
     const expected =
@@ -162,9 +132,9 @@ function StructureLab() {
           input: values,
           steps_completed: step,
           total_steps: snapshots.length - 1,
-          operations,
+          ...collectionState,
           completed:
-            mode === 'stack' || mode === 'queue' ? operations >= 3 : step === snapshots.length - 1,
+            mode === 'stack' || mode === 'queue' ? Boolean(collectionState.participation_completed) : step === snapshots.length - 1,
           prediction_attempted: Boolean(predFeedback),
         },
       })
@@ -213,9 +183,8 @@ function StructureLab() {
         <div>
           <Panel className="experiment-stage">
             <div className="experiment-stage-head">
-              <Pill tone="green">确定性算法 · 真实状态</Pill>
               <span>
-                {manual ? `${operations} 次操作` : `步骤 ${step} / ${snapshots.length - 1}`}
+                {manual ? `${collectionState.operations || 0} 次操作` : `步骤 ${step} / ${snapshots.length - 1}`}
               </span>
             </div>
             {mode === 'sort' ? (
@@ -232,61 +201,17 @@ function StructureLab() {
                 ))}
               </div>
             ) : manual ? (
-              <div className={`collection-stage ${mode}`}>
-                <div className="collection-values">
-                  {collection.map((n, i) => (
-                    <div className="collection-node" key={`${i}-${n}`}>
-                      <strong>{n}</strong>
-                      {mode === 'stack' && i === collection.length - 1 ? (
-                        <span>栈顶</span>
-                      ) : mode === 'queue' && i === 0 ? (
-                        <span>队首</span>
-                      ) : null}
-                    </div>
-                  ))}
-                  {!collection.length ? <p>结构为空</p> : null}
-                </div>
-                <p>{mode === 'stack' ? '后进先出 LIFO' : '先进先出 FIFO'}</p>
-              </div>
+              <CollectionLab key={mode} mode={mode} onState={setCollectionState} />
             ) : (
               <TreeStage snapshot={snapshot} bfs={mode === 'bfs'} />
             )}
-            <div className="algorithm-explanation">
+            {!manual && <div className="algorithm-explanation">
               <span>
                 <LightbulbIcon />
               </span>
-              <p>{manual ? operation : snapshot.message}</p>
-            </div>
-            {manual ? (
-              <div className="experiment-controls">
-                <input
-                  type="number"
-                  min={1}
-                  max={99}
-                  aria-label="待加入元素"
-                  value={newValue}
-                  onChange={(e) => setNewValue(e.target.value)}
-                />
-                <Button onClick={() => act(true)}>
-                  <ArrowDown size={16} />
-                  {mode === 'stack' ? '压栈' : '入队'}
-                </Button>
-                <Button variant="secondary" onClick={() => act(false)}>
-                  <ArrowUp size={16} />
-                  {mode === 'stack' ? '出栈' : '出队'}
-                </Button>
-                <Button
-                  variant="icon secondary"
-                  aria-label="重置结构"
-                  onClick={() => {
-                    setCollection([12, 24, 36])
-                    setOperations(0)
-                  }}
-                >
-                  <RotateCcw size={16} />
-                </Button>
-              </div>
-            ) : (
+              <p>{snapshot.message}</p>
+            </div>}
+            {!manual && (
               <div className="experiment-controls">
                 <Button
                   variant="icon secondary"

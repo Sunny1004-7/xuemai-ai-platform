@@ -54,6 +54,7 @@ export function Practice({ review = false }: { review?: boolean }) {
   const [result, setResult] = useState<Row | null>(null)
   const [busy, setBusy] = useState(false)
   const [compose, setCompose] = useState(false)
+  const [teachingTask, setTeachingTask] = useState<Row | null>(null)
   const [questionForm, setQuestionForm] = useState(false)
   const [chosen, setChosen] = useState<number[]>([])
   const [draft, setDraft] = useState<Row | null>(null)
@@ -67,6 +68,30 @@ export function Practice({ review = false }: { review?: boolean }) {
   const schedulePage = usePage<Row>(schedule.data, 88, 310)
   const q = list[index]
   const qid = q?.question_id || q?.id
+  useEffect(() => {
+    const questionDraft = Number(params.get('question_draft'))
+    if (!teacher || !questionDraft) return
+    const controller = new AbortController()
+    api<Row>(`/ai/teacher-drafts/${questionDraft}`, { signal: controller.signal }).then(value => {
+      if (value.course_id !== courseId || value.kind !== 'question') return
+      setDraft(value.content)
+      setQuestionForm(true)
+    }).catch(error => { if (error.name !== 'AbortError') notify(error.message, true) })
+    return () => controller.abort()
+  }, [params.get('question_draft'), courseId])
+  useEffect(() => {
+    const draftId = Number(params.get('teaching_draft'))
+    if (!teacher || !draftId) return
+    const controller = new AbortController()
+    api<Row>(`/ai/teacher-drafts/${draftId}`, { signal: controller.signal }).then(value => {
+      const group = value.content.groups?.find((entry: Row) => entry.group_id === params.get('group'))
+      if (!group || value.course_id !== courseId) return
+      setTeachingTask(group)
+      setChosen(group.question_ids)
+      setCompose(true)
+    }).catch(error => { if (error.name !== 'AbortError') notify(error.message, true) })
+    return () => controller.abort()
+  }, [params.get('teaching_draft'), params.get('group'), courseId])
   useEffect(() => {
     setIndex(0)
   }, [courseId, review, knowledgeId, assignmentId, type])
@@ -125,6 +150,7 @@ export function Practice({ review = false }: { review?: boolean }) {
         class_id: Number(f.get('class_id')) || null,
         question_ids: chosen,
         due_at: f.get('due_at') || null,
+        student_ids: teachingTask?.student_ids || [],
       })
       notify('作业已发布，学生可立即接收')
       setCompose(false)
@@ -206,6 +232,7 @@ export function Practice({ review = false }: { review?: boolean }) {
         action={
           teacher ? (
             <div className="button-row">
+              <Link to={`/teacher-ai?course=${courseId}${qid ? `&question=${qid}` : ''}`} className="button secondary">教学研讨</Link>
               <Button variant="secondary" onClick={generate} disabled={generationBusy}>
                 <Sparkles size={16} />
                 {generationBusy ? '生成中…' : 'AI 出题'}
@@ -242,7 +269,7 @@ export function Practice({ review = false }: { review?: boolean }) {
               setIndex(0)
             }}
           >
-            {review ? '待复习错题' : '自主练习'}
+            {teacher ? '全部题库' : review ? '待复习错题' : '自主练习'}
           </button>
           <select
             aria-label="选择作业范围"
@@ -255,7 +282,7 @@ export function Practice({ review = false }: { review?: boolean }) {
               setIndex(0)
             }}
           >
-            <option value="">全部练习</option>
+            <option value="">{teacher ? '全部作业范围' : '全部练习'}</option>
             {assignments.data.map((a) => (
               <option value={a.id} key={a.id}>
                 {a.title}
@@ -319,7 +346,7 @@ export function Practice({ review = false }: { review?: boolean }) {
       {teacher && workspaceView === 'work' ? (
         <div className="teacher-bank">
           <Panel title="课程题库" caption={`${list.length} 道题目 · 所有 AI 生成内容需教师审核`}>
-            <div className="question-bank">
+            <div className="question-bank" ref={bankPage.listRef}>
               {bankPage.rows.map((item, j) => (
                 <button
                   key={item.id}
@@ -692,7 +719,7 @@ export function Practice({ review = false }: { review?: boolean }) {
           <form className="form-stack" onSubmit={publish}>
             <label>
               作业标题
-              <input name="title" required placeholder="例如：树结构基础巩固" />
+              <input name="title" required defaultValue={teachingTask?.name || ''} placeholder="例如：树结构基础巩固" />
             </label>
             <label>
               发布到班级
@@ -711,8 +738,9 @@ export function Practice({ review = false }: { review?: boolean }) {
             </label>
             <label>
               学习说明
-              <textarea name="description" rows={2} />
+              <textarea name="description" rows={2} defaultValue={teachingTask?.objective || ''} />
             </label>
+            {teachingTask && <p>当前任务面向{teachingTask.student_ids.length}位学生，发布前请核对班级与题目。</p>}
             <fieldset>
               <legend>选择题目（{chosen.length}）</legend>
               <div className="checkbox-list">

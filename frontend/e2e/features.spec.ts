@@ -123,7 +123,7 @@ test('原题进入 Mock 辅导，资料引用与历史可接续，服务故障�
     .click()
   await expect(page.locator('.chat-message.assistant .message-content')).not.toBeEmpty()
   await expect(page.getByRole('button', { name: '停止', exact: true })).toHaveCount(0)
-  await expect(page.locator('.message-sources>span').first()).toBeVisible()
+  await expect(page.locator('.message-sources>button').first()).toBeVisible()
   const answer = await page.locator('.chat-message.assistant .message-content').innerText()
   await page.reload()
   await page.locator('.conversation-list>button:not(.button)').first().click()
