@@ -1,12 +1,28 @@
 {
   "desktop": {
     "width": 1440,
-    "height": 1000
+    "height": 900
+  },
+  "desktop_wide": {
+    "width": 1920,
+    "height": 1080
+  },
+  "desktop_compact": {
+    "width": 1366,
+    "height": 768
+  },
+  "desktop_short": {
+    "width": 1366,
+    "height": 650
   },
   "mobile": {
     "width": 390,
     "height": 844
   },
+  "courses": [
+    "CS201",
+    "CS101"
+  ],
   "modules": [
     {
       "id": "login",
@@ -15,7 +31,7 @@
       "route": "/",
       "navigation": false,
       "details": [
-        "login-error"
+        "teacher"
       ]
     },
     {
@@ -24,7 +40,9 @@
       "label": "学习概览",
       "route": "/",
       "navigation": true,
-      "details": []
+      "details": [
+        "course-selector"
+      ]
     },
     {
       "id": "plan",
@@ -34,39 +52,19 @@
       "navigation": true,
       "details": [
         "goal-form",
-        "plan-form",
-        "populated"
-      ]
-    },
-    {
-      "id": "courses",
-      "role": "student",
-      "label": "我的课程",
-      "route": "/courses",
-      "navigation": true,
-      "details": [
-        "join"
+        "plan-form"
       ]
     },
     {
       "id": "graph",
       "role": "student",
       "label": "知识图谱",
-      "route": "/graph?knowledge=6",
+      "route": "/graph",
       "navigation": true,
       "details": [
-        "focused",
-        "searched",
-        "neighbors",
-        "ancestors",
-        "all-network",
-        "reading-focus",
-        "detail-collapsed",
-        "fit-network",
-        "chapters",
-        "chapter-network",
         "fullscreen",
-        "camera-restored"
+        "chapters",
+        "reading-focus"
       ]
     },
     {
@@ -76,31 +74,21 @@
       "route": "/practice",
       "navigation": true,
       "details": [
-        "hint",
         "incorrect",
         "correct",
-        "multiple",
-        "true-false",
-        "fill",
-        "short-pending",
-        "step-pending",
-        "assignment"
+        "question-navigation"
       ]
     },
     {
       "id": "tutor",
       "role": "student",
       "label": "AI学习伙伴",
-      "route": "/tutor?knowledge=2&question=1",
+      "route": "/tutor",
       "navigation": true,
       "details": [
-        "conversation",
         "history",
-        "service-error",
-        "understanding-check",
-        "check-result",
-        "conversation-start",
-        "collaboration"
+        "conversation",
+        "check-result"
       ]
     },
     {
@@ -120,11 +108,7 @@
       "route": "/experiments",
       "navigation": true,
       "details": [
-        "sort-running",
-        "stack",
-        "queue",
-        "tree",
-        "bfs"
+        "running"
       ]
     },
     {
@@ -134,6 +118,7 @@
       "route": "/classroom",
       "navigation": true,
       "details": [
+        "history",
         "submitted"
       ]
     },
@@ -141,11 +126,10 @@
       "id": "video",
       "role": "student",
       "label": "课程视频",
-      "route": "/video?resource=100&t=10",
-      "navigation": false,
+      "route": "/video",
+      "navigation": true,
       "details": [
-        "subtitle-search",
-        "notes",
+        "playing",
         "checkpoint"
       ]
     },
@@ -154,7 +138,7 @@
       "role": "student",
       "label": "课程资料",
       "route": "/resources",
-      "navigation": false,
+      "navigation": true,
       "details": [
         "document"
       ]
@@ -165,7 +149,9 @@
       "label": "教学工作台",
       "route": "/",
       "navigation": true,
-      "details": []
+      "details": [
+        "course-selector"
+      ]
     },
     {
       "id": "manage",
@@ -175,23 +161,20 @@
       "navigation": true,
       "details": [
         "course-form",
-        "course-edit",
         "chapter-form",
-        "class-form",
-        "member-form"
+        "class-form"
       ]
     },
     {
       "id": "graph",
       "role": "teacher",
       "label": "图谱编辑器",
-      "route": "/graph?knowledge=6",
+      "route": "/graph",
       "navigation": true,
       "details": [
-        "node-form",
-        "node-edit",
-        "prerequisites",
-        "fullscreen"
+        "fullscreen",
+        "chapters",
+        "reading-focus"
       ]
     },
     {
@@ -201,11 +184,9 @@
       "route": "/resources",
       "navigation": true,
       "details": [
+        "document",
         "upload",
-        "resource-edit",
-        "lesson-intent",
-        "lesson-draft",
-        "document"
+        "lesson-draft"
       ]
     },
     {
@@ -216,7 +197,6 @@
       "navigation": true,
       "details": [
         "question-edit",
-        "question-copy",
         "assignment-form",
         "assignment-results"
       ]
@@ -225,10 +205,12 @@
       "id": "video",
       "role": "teacher",
       "label": "视频教学",
-      "route": "/video?resource=100",
+      "route": "/video",
       "navigation": true,
       "details": [
-        "timeline-editor"
+        "timeline-editor",
+        "editor-segment",
+        "editor-check"
       ]
     },
     {
@@ -238,16 +220,8 @@
       "route": "/analytics",
       "navigation": true,
       "details": [
-        "targeted-task",
-        "subjective-review",
-        "rubric-advice",
-        "learning-evidence",
-        "intervention-results",
-        "matrix-filtered",
-        "group-task",
-        "intervention-workspace",
-        "student-trajectories",
-        "review-workspace"
+        "matrix-drill",
+        "review-form"
       ]
     },
     {
@@ -261,13 +235,5 @@
         "responses"
       ]
     }
-  ],
-  "desktop_compact": {
-    "width": 1366,
-    "height": 768
-  },
-  "desktop_wide": {
-    "width": 1920,
-    "height": 1080
-  }
+  ]
 }

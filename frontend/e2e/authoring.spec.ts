@@ -54,6 +54,7 @@ test('教师用视频表单保存字幕片段与检查点，学生可检索并�
     await dialog
       .getByLabel(`字幕 ${subtitleCount + 1} 文字`, { exact: true })
       .fill(`${marker}：比较相邻元素，让较大元素向右移动。`)
+    await dialog.getByRole('tab', { name: '知识片段', exact: true }).click()
     const segmentCount = await dialog.getByRole('textbox', { name: /^知识片段 \d+ 名称$/ }).count()
     await dialog.getByRole('button', { name: '添加知识片段', exact: true }).click()
     await dialog
@@ -63,6 +64,7 @@ test('教师用视频表单保存字幕片段与检查点，学生可检索并�
     await dialog
       .getByLabel(`知识片段 ${segmentCount + 1} 关联知识点`, { exact: true })
       .selectOption('6')
+    await dialog.getByRole('tab', { name: '理解检查', exact: true }).click()
     await dialog.getByLabel('互动检查 1 暂停时间（秒）', { exact: true }).fill('21')
     await dialog.getByLabel('互动检查 1 题目', { exact: true }).selectOption('3')
     const saving = teacher.waitForResponse(
@@ -97,6 +99,7 @@ test('教师用视频表单保存字幕片段与检查点，学生可检索并�
           .evaluateAll((elements) => elements.map((e) => (e as HTMLTextAreaElement).value)),
       )
       .toContain(`${marker}：比较相邻元素，让较大元素向右移动。`)
+    await dialog.getByRole('tab', { name: '知识片段', exact: true }).click()
     await expect
       .poll(() =>
         dialog
@@ -104,6 +107,7 @@ test('教师用视频表单保存字幕片段与检查点，学生可检索并�
           .evaluateAll((elements) => elements.map((e) => (e as HTMLInputElement).value)),
       )
       .toContain(segmentTitle)
+    await dialog.getByRole('tab', { name: '理解检查', exact: true }).click()
     await expect(dialog.getByLabel('互动检查 1 暂停时间（秒）', { exact: true })).toHaveValue('21')
     await dialog.getByRole('button', { name: '关闭', exact: true }).click()
     await login(student, 'student1')

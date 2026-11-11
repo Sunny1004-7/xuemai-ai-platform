@@ -45,7 +45,7 @@ def validate_screenshots(root: Path, directory: Path, record_name: str) -> tuple
         raise ValueError('截图与当前界面源码不一致，请重新截图。')
     if manifest.get('ai_mode') != 'mock' or manifest.get('real_ai_requests') != 0:
         raise ValueError('常规截图必须使用本地Mock且真实API请求为0。')
-    viewports = {k:v for k,v in plan.items() if k != 'modules'}
+    viewports = {k:v for k,v in plan.items() if k not in ('modules','courses')}
     if manifest.get('modules') != plan['modules'] or manifest.get('viewports') != viewports:
         raise ValueError('截图覆盖计划与当前模块或视口不一致。')
 
@@ -70,16 +70,21 @@ def validate_screenshots(root: Path, directory: Path, record_name: str) -> tuple
         viewport = entry['viewport']
         if viewport not in viewports or width != plan[viewport]['width'] or height <= 0:
             raise ValueError(f'截图视口尺寸不匹配 {name}。')
-        coverage.add((entry['role'], entry['module'], viewport, entry['state']))
+        coverage.add((entry['role'], entry['module'], entry.get('course'), viewport, entry['state']))
+        if viewport!='mobile' and entry.get('course') and entry['state']=='full':
+            layout=entry.get('layout',{})
+            if height!=viewports[viewport]['height'] or layout.get('height',height)>height+2 or layout.get('width',width)>width+2:
+                raise ValueError(f'桌面首屏尺寸或页面溢出 {name}。')
         seen.add(name)
         paths.append(path)
 
     for module in plan['modules']:
         required = [(viewport, 'full') for viewport in viewports]
         required.extend(('desktop', state) for state in module['details'])
-        for viewport, state in required:
-            if (module['role'], module['id'], viewport, state) not in coverage:
-                raise ValueError(f'截图覆盖不足 {module["role"]}/{module["id"]}/{viewport}/{state}。')
+        for course in ([None] if module['role']=='public' else plan.get('courses',[None])):
+            for viewport, state in required:
+                if (module['role'], module['id'], course, viewport, state) not in coverage:
+                    raise ValueError(f'截图覆盖不足 {module["role"]}/{module["id"]}/{course}/{viewport}/{state}。')
     for name in ('截图清单.json', '截图索引.md', '截图总览.html'):
         path = directory / name
         if not path.is_file() or path.is_symlink():

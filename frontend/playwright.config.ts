@@ -20,7 +20,7 @@ export default defineConfig({
       cwd: '..',
       url: 'http://127.0.0.1:8001/api/health',
       reuseExistingServer: !process.env.CI,
-      env: { AI_MODE: 'mock', DATABASE_PATH: '.local/e2e.db', PYTHONIOENCODING: 'utf-8' },
+      env: { AI_MODE: 'mock', DATABASE_PATH: `.local/e2e-round5-${Date.now()}.db`, PYTHONIOENCODING: 'utf-8' },
     },
     {
       command: 'npm run preview -- --port 5174 --strictPort',

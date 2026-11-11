@@ -137,7 +137,7 @@ def diaguide(client,headers):
         'interpretation':'策略规则和执行衔接检查，匹配率不代表学习收益'}
 
 
-def main():
+def main(output=None):
     report={'executed_at':datetime.now(timezone.utc).isoformat(),'seed':4011,
         'data':'固定种子的隔离合成案例；机制指标与业务回归，不估计真实学生成绩提升','real_api_requests':0,
         'K-TRACE':ktrace(),'PATH-G':pathg(),'CLASS-LOOP':classloop()}
@@ -153,9 +153,11 @@ def main():
                 db.set_trace_callback(None)
                 report['cohort_snapshot']={'students':len(members),'graded_attempts':snapshot['summary']['attempt_count'],
                     'selects':sum(q.lstrip().upper().startswith('SELECT') for q in queries),'elapsed_ms':round(elapsed*1000,2)}
-    output=ROOT/'docs/rounds/第四轮核心方法对照.json'
+    output=ROOT/(output or 'docs/rounds/第四轮核心方法对照.json')
     output.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({k:{a:b for a,b in v.items() if a not in ['cases','scenarios']} if isinstance(v,dict) else v for k,v in report.items()},ensure_ascii=False,indent=2))
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--output');args=parser.parse_args();main(args.output)
