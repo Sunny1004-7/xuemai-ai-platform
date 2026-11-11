@@ -1,9 +1,9 @@
 \begin{tikzpicture}[node distance=8mm and 10mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2pt,minimum width=43mm,minimum height=13mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick,draw=celadon}]
 \node[box](input){知识DAG与状态\\目标、任务、复习};
-\node[box,right=of input,fill=silver](candidate){活动候选\\成本与六项效用};
-\node[box,right=of candidate,fill=rice!65](search){先修与预算筛选\\束宽24搜索};
+\node[box,right=of input,fill=pale!28](candidate){活动候选\\成本与六项效用};
+\node[box,right=of candidate,fill=pale!75](search){先修与预算筛选\\束宽24搜索};
 \node[box,below=of search](path){当次学习顺序\\理由与后续候选};
-\node[box,left=of path,fill=silver](feedback){学生实际作答\\更新状态并重规划};
+\node[box,left=of path,fill=pale!28](feedback){学生实际作答\\更新状态并重规划};
 \draw[flow](input)--(candidate);\draw[flow](candidate)--(search);\draw[flow](search)--(path);\draw[flow](path)--(feedback);
 \draw[flow](feedback.west)-|(input.south);
 \end{tikzpicture}

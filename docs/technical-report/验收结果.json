@@ -1,5 +1,5 @@
 {
-  "pages": 26,
+  "pages": 29,
   "black_text": true,
   "fonts": [
     "CMEX10",
@@ -17,11 +17,11 @@
     "TimesNewRomanPS-BoldMT",
     "TimesNewRomanPSMT"
   ],
-  "figures_tikz": 8,
-  "screenshots": 10,
+  "figures_tikz": 9,
+  "screenshots": 11,
   "screenshot_width": "100%版心，彩色，不设高度缩放",
-  "frontend_capture_count": 319,
-  "backend_tests": 97,
-  "browser_tests": 14,
-  "references": 13
+  "frontend_capture_count": 327,
+  "backend_tests": 101,
+  "browser_tests": 16,
+  "references": 16
 }

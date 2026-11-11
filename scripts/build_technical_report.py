@@ -29,22 +29,21 @@ def build(screenshots,record,draft=False):
              'practice':'student/practice/desktop_correct.png','video':'student/video/desktop_full.png',
              'teacher-dashboard':'teacher/dashboard/desktop_full.png',
              'teacher-matrix':'teacher/analytics/desktop_full_part01.png',
-             'teacher-groups':'teacher/analytics/desktop_full_part02.png',
+             'teacher-groups':'teacher/analytics/desktop_intervention-workspace.png',
              'resources':'teacher/resources/desktop_full_part01.png',
-             'tutor':'student/tutor/desktop_collaboration.png'}
+             'tutor':'student/tutor/desktop_collaboration.png',
+             'login':'public/login/desktop_full.png'}
     for name,relative in mapping.items():
         img=Image.open(directory/relative).convert('RGB')
         # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
-        if name!='graph':
-            img=img.crop((216,72,img.width,min(img.height,1000)))
-        if name=='teacher-groups':
-            img=img.crop((0,135,img.width,img.height))
+        if name not in {'graph','login'}:
+            img=img.crop((232,72,img.width,min(img.height,1000)))
         img.save(images/(name+'.png'))
-    back=(ROOT/'.local/round3-pytest.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'.local/round3-e2e.txt').read_text(encoding='utf-8',errors='replace')
+    back=(ROOT/'.local/round4-pytest.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'.local/round4-e2e.txt').read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
-    summary=f"后端功能、算法与业务回归共{bm[1]}项通过；浏览器师生流程与新增交互回归共{em[1]}项通过。界面检查覆盖20个模块、四种视口，保存{len(manifest['files'])}张截图，浏览器页面运行错误为0。常规验证使用本地示例模式。另以四次官方DeepSeek请求抽样辅导、出题、备课与量规评阅，四次均成功、零重试，累计输入3744 Tokens、输出724 Tokens。\n"
+    summary=f"后端功能、算法与业务回归共{bm[1]}项通过；浏览器师生流程与新增交互回归共{em[1]}项通过。界面检查覆盖20个模块、四种视口，保存{len(manifest['files'])}张截图，浏览器页面运行错误为0。常规验证使用本地示例模式，不消耗官方接口额度。官方服务抽样已覆盖辅导、出题、备课与量规评阅，四次均成功、零重试，累计输入3744 Tokens、输出724 Tokens。\n"
     (source/'validation-summary.tex').write_text(summary,encoding='utf-8')
     compiled=ROOT/'.local/technical-report-build';compiled.mkdir(exist_ok=True,parents=True)
     for index in range(3):
@@ -68,7 +67,8 @@ def build(screenshots,record,draft=False):
     outputs=[ROOT/'最终参赛提交材料/学脉XueMai-技术文档.pdf',ROOT/'docs/deliverables/xuemai-technical-report.pdf']
     for output in outputs:output.parent.mkdir(exist_ok=True,parents=True);shutil.copy2(compiled/'main.pdf',output)
     diagram_count=len(re.findall(r'\\diagram\{', (source/'main.tex').read_text('utf-8')))
-    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':len(mapping),'screenshot_width':'100%版心，彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':13}
+    reference_count=len(re.findall(r'\\bibitem\{',(source/'main.tex').read_text('utf-8')))
+    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':len(mapping),'screenshot_width':'100%版心，彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':reference_count}
     (ROOT/'docs/technical-report/验收结果.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))
 
