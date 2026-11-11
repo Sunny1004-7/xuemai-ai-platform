@@ -8,7 +8,7 @@ import os
 import re
 import time
 from collections import defaultdict, deque
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import AsyncIterator
@@ -16,6 +16,18 @@ from typing import AsyncIterator
 import httpx
 
 ROOT = Path(__file__).resolve().parents[2]
+MODEL_CAPABILITIES = {
+    'deepseek-flash': {'name': 'DeepSeek Flash', 'input_modalities': ['text', 'image']},
+    'deepseek-v4-pro': {'name': 'DeepSeek Pro', 'input_modalities': ['text']},
+}
+
+
+def selected_config(model: str | None = None) -> 'AIConfig':
+    config = AIConfig.from_env()
+    selected = model or 'deepseek-flash'
+    if selected not in MODEL_CAPABILITIES:
+        raise AIError('请选择 DeepSeek Flash 或 Pro', 422, 'invalid_model')
+    return replace(config, model=selected)
 
 
 class AIError(Exception):
@@ -96,7 +108,7 @@ limiter = RateLimiter()
 def safe_usage(usage: dict | None, messages: list[dict], content: str) -> dict:
     usage = usage or {}
     return {
-        "prompt_tokens": int(usage.get("prompt_tokens", sum(len(m["content"]) for m in messages) // 2)),
+        "prompt_tokens": int(usage.get("prompt_tokens", sum(len(str(m["content"])) for m in messages) // 2)),
         "completion_tokens": int(usage.get("completion_tokens", len(content) // 2)),
         "estimated": not bool(usage),
     }
@@ -174,6 +186,8 @@ class AIService:
         await limiter.acquire(user_key, self.config.requests_per_minute)
         content = ""
         status = "error"
+        from .ai_budget import reserve, finish
+        reservation = reserve(self.config.model) if self.config.mode == 'real' else None
         try:
             if self.config.mode == "mock":
                 content = mock_content or "这是本地演示回答。先确定输入和边界条件，再逐步验证你的思路。"
@@ -200,6 +214,9 @@ class AIService:
                     raise AIError("AI 结构化结果未通过 JSON 校验，草稿未保存", 502, "invalid_json") from error
             status = "ok"
             return content
+        except AIError as error:
+            status=error.code
+            raise
         except httpx.TimeoutException as error:
             raise AIError("AI 响应超时，可稍后重新提问；本次不会自动重发", 504, "timeout") from error
         except httpx.HTTPError as error:
@@ -209,6 +226,7 @@ class AIService:
                 self.last_usage = safe_usage(None, messages, content)
             log_usage(self.config, "json" if json_mode else "chat", self.last_usage,
                       status, time.monotonic() - started)
+            finish(reservation,status,self.last_usage)
 
     async def stream(self, messages: list[dict], *, user_key: str = "system", mock_content: str = "",
                      max_tokens: int | None = None) -> AsyncIterator[str]:
@@ -219,6 +237,8 @@ class AIService:
         usage = None
         status = "error"
         finish_reason = None
+        from .ai_budget import reserve, finish
+        reservation = reserve(self.config.model) if self.config.mode == 'real' else None
         try:
             if self.config.mode == "mock":
                 answer = mock_content or "先确定问题的输入，再用一个小例子逐步验证。你认为第一步应该做什么？"
@@ -256,6 +276,9 @@ class AIService:
                 if finish_reason == "length":
                     raise AIError("回答达到输出长度上限，尚未完整结束；请缩小问题范围后继续", 502, "truncated")
             status = "ok"
+        except AIError as error:
+            status=error.code
+            raise
         except httpx.TimeoutException as error:
             raise AIError("AI 响应超时，已保留提问，可稍后重试", 504, "timeout") from error
         except httpx.HTTPError as error:
@@ -265,3 +288,4 @@ class AIService:
                 self.last_usage = safe_usage(usage, messages, content)
             log_usage(self.config, "stream", self.last_usage,
                       status, time.monotonic() - started)
+            finish(reservation,status,self.last_usage)

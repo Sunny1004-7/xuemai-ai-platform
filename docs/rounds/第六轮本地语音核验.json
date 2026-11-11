@@ -1,0 +1,27 @@
+{
+  "sample_kind": "项目编写句子的中文合成音频",
+  "reference": "请解释栈和队列的区别，为什么广度优先搜索使用队列？",
+  "recognized": "请解释栈和队列的区别,为什么广度优先搜索使用队列。",
+  "raw_recognized": "请解释站和队列的区别,为什么广度优先搜索使用队列。",
+  "term_corrections": [
+    {
+      "from": "请解释站和队列的区别,为什么广度优先搜索使用队列。",
+      "to": "请解释栈和队列的区别,为什么广度优先搜索使用队列。",
+      "rule": "栈与队列课程术语"
+    }
+  ],
+  "engine": "faster-whisper-small",
+  "local": true,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 6.0,
+      "text": "请解释站和队列的区别,为什么广度优先搜索使用队列。"
+    }
+  ],
+  "checks": {
+    "stack": true,
+    "queue": true
+  },
+  "model_requests": 0
+}
