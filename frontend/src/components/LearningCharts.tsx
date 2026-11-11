@@ -6,11 +6,11 @@ import { Panel, Button } from '../ui'
 export function TrendChart({ rows = [] }: { rows?: Row[] }) {
   const top = Math.max(1, ...rows.map(r => r.count))
   return <div className="trend-chart" aria-label="近十四天练习趋势">
-    {rows.map(r => <Link to="/practice" key={r.day} title={`${r.day}：${r.count} 次作答，正确率 ${r.accuracy ?? '—'}%`}>
-      <span className="trend-column"><i style={{height:`${Math.max(3,r.count/top*100)}%`}}/><b style={{bottom:`${r.accuracy ?? 0}%`}}/></span>
-      <small>{r.day.slice(5)}</small>
+    {rows.map((r,index) => <Link aria-label={`${r.day}，${r.count}次作答，正确率${r.accuracy ?? '待观测'}${r.accuracy == null ? '' : '%'}`} to="/practice" key={r.day} title={`${r.day}：${r.count} 次作答，正确率 ${r.accuracy ?? '—'}%`}>
+      <span className="trend-column"><i style={{height:`${r.count ? Math.max(3,r.count/top*100) : 0}%`}}/>{r.accuracy != null ? <b style={{bottom:`${r.accuracy}%`}}/> : null}</span>
+      <small>{index%3===0 && index<rows.length-2 || index===rows.length-1 ? r.day.slice(5) : ''}</small>
     </Link>)}
-    <div className="chart-key"><span>柱：作答次数</span><span>点：正确率</span></div>
+    <div className="chart-key"><span>柱：作答次数（最高 {Math.max(0,...rows.map(r=>r.count))} 次）</span><span>点：正确率</span></div>
   </div>
 }
 
@@ -34,14 +34,15 @@ export function PersonalCharts({ data, courseId }: {data: Row; courseId: number}
   </div>
 }
 
-export function CohortCharts({data,onCell,onGroup}: {data: Row; onCell:(node:Row,student:Row)=>void; onGroup:(group:Row)=>void}) {
+export function CohortCharts({data,onCell,onGroup,view = 'matrix'}: {data: Row; view?: 'matrix' | 'groups'; onCell:(node:Row,student:Row)=>void; onGroup:(group:Row)=>void}) {
   const [chapter,setChapter] = useState('all')
   const [student,setStudent] = useState('')
   const [state,setState] = useState('all')
   const nodes:Row[]=(data.knowledge || []).filter((n:Row)=>chapter==='all'||String(n.chapter_id)===chapter)
   const chapters:Row[]=[...new Map((data.knowledge || []).map((n:Row)=>[n.chapter_id,{id:n.chapter_id,title:n.chapter_title}])).values()] as Row[]
   return <>
-    <Panel title="班级知识矩阵" action={<span className="mini-text">已评分证据 · 点击查看</span>}>
+    {view==='matrix' ? <>
+    <Panel title="班级知识矩阵">
       <div className="matrix-filters">
         <select aria-label="筛选学情章节" value={chapter} onChange={e=>setChapter(e.target.value)}><option value="all">全部章节</option>{chapters.map(c=><option key={c.id} value={c.id}>{c.title}</option>)}</select>
         <input aria-label="筛选学生" placeholder="查找学生" value={student} onChange={e=>setStudent(e.target.value)}/>
@@ -59,6 +60,7 @@ export function CohortCharts({data,onCell,onGroup}: {data: Row; onCell:(node:Row
       <Panel title="班级练习趋势"><TrendChart rows={data.trend}/></Panel>
       <Panel title="知识状态分布"><div className="distribution-bars">{nodes.slice(0,6).map(n=><button key={n.id} onClick={()=>onCell(n,data.students?.[0] || {})}><span>{n.title}</span><i>{['mastered','learning','weak','unknown'].map(t=><b className={t} key={t} style={{width:`${(n.distribution?.[t]||0)/Math.max(1,data.students?.length)*100}%`}} title={`${t}：${n.distribution?.[t] || 0}人`}/>)}</i></button>)}</div></Panel>
     </div>
-    <Panel title="动态教学群组"><div className="teaching-groups">{(data.groups || []).map((g:Row)=><article key={g.id}><span className="group-size">{g.student_ids.length}<small>人</small></span><h3>{g.name}</h3><p>{g.strategy}</p><div className="group-features">{Object.entries(g.features).slice(0,4).map(([label,v])=><div key={label}><span>{label}</span><i style={{width:`${Number(v)*100}%`}}/></div>)}</div><Button variant="secondary small" onClick={()=>onGroup(g)}>安排匹配任务</Button></article>)}</div></Panel>
+    </> : null}
+    {view==='groups' ? <Panel title="动态教学群组"><div className="teaching-groups">{(data.groups || []).map((g:Row)=><article key={g.id}><span className="group-size">{g.student_ids.length}<small>人</small></span><h3>{g.name}</h3><p>{g.strategy}</p><div className="group-features">{Object.entries(g.features).slice(0,4).map(([label,v])=><div key={label}><span>{label}</span><i style={{width:`${Number(v)*100}%`}}/></div>)}</div><Button variant="secondary small" onClick={()=>onGroup(g)}>安排匹配任务</Button></article>)}</div></Panel> : null}
   </>
 }

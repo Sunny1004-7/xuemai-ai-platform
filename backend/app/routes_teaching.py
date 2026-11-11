@@ -125,14 +125,19 @@ def personal_insights(course_id:int=1,user=Depends(current_user)):
 
 
 @router.get("/dashboard")
-def dashboard(user=Depends(current_user)):
+def dashboard(course_id:int|None=None,user=Depends(current_user)):
     with get_db() as db:
         courses=course_rows(db,user)
         course_ids=[c["id"] for c in courses]
+        if course_id is not None:
+            require_course(db,user,course_id)
+            course_ids=[course_id]
         tasks=[assignment_item(db,user,r) for r in db.execute("SELECT * FROM assignments ORDER BY id DESC") if r["course_id"] in course_ids and assignment_visible(db,user,r)]
         query="SELECT e.*,k.title knowledge_title,u.name student_name FROM learning_events e LEFT JOIN knowledge_points k ON k.id=e.knowledge_id JOIN users u ON u.id=e.student_id WHERE e.student_id=? ORDER BY e.id DESC LIMIT 8"
         if user["role"]=="teacher":query="SELECT e.*,k.title knowledge_title,u.name student_name FROM learning_events e JOIN courses c ON c.id=e.course_id LEFT JOIN knowledge_points k ON k.id=e.knowledge_id JOIN users u ON u.id=e.student_id WHERE c.teacher_id=? ORDER BY e.id DESC LIMIT 8"
-        recent=[json_fields(r,["payload"]) for r in db.execute(query,(user["id"],))]
+        if course_id is not None:
+            query=query.replace(' ORDER BY', ' AND e.course_id=? ORDER BY')
+        recent=[json_fields(r,["payload"]) for r in db.execute(query,(user["id"],course_id) if course_id is not None else (user["id"],))]
         minutes=0
         for r in db.execute("SELECT payload FROM learning_events WHERE student_id=? AND kind='video_progress'",(user["id"],)):
             payload=json.loads(r[0])
@@ -146,7 +151,9 @@ def dashboard(user=Depends(current_user)):
             stats["students"]=db.execute("SELECT COUNT(DISTINCT m.student_id) FROM class_members m JOIN users u ON u.id=m.student_id AND u.active=1 JOIN classes cl ON cl.id=m.class_id JOIN courses c ON c.id=cl.course_id WHERE c.teacher_id=?",(user["id"],)).fetchone()[0]
             stats["mastery"]=round(sum(c["progress"] for c in courses)/len(courses)) if courses else 0
         else:
-            for course in courses:recs.extend(recommendations(db,user,course["id"]))
+            for course in courses:
+                if course["id"] not in course_ids:continue
+                recs.extend(recommendations(db,user,course["id"]))
         return {"user":user,"stats":stats,"courses":courses,"recommendations":sorted(recs,key=lambda r:-r["priority"])[:6],"assignments":tasks,"recent_events":recent,"weekly_activity":activity,"synthetic_data":True}
 
 

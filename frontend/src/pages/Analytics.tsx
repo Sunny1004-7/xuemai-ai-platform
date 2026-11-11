@@ -23,6 +23,7 @@ export function Analytics() {
   const { user, courseId, notify } = useApp()
   const [params] = useSearchParams()
   const [classId, setClassId] = useState('')
+  const [view, setView] = useState(params.get('knowledge') ? 'intervention' : params.get('view') || 'matrix')
   const classes = useApi<Row[]>(`/classes?course_id=${courseId}`, [])
   useEffect(() => setClassId(''), [courseId])
   const query = useApi<Row>(user.role === 'teacher' ? `/analytics?course_id=${courseId}${classId ? `&class_id=${classId}` : ''}` : null, {})
@@ -164,7 +165,14 @@ export function Analytics() {
         })}
       </div>
       <div className="matrix-filters"><select aria-label="筛选教学班级" value={classId} onChange={e=>setClassId(e.target.value)}><option value="">课程全部班级</option>{classes.data.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
-      <CohortCharts data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
+      <div className="analytics-tabs" role="tablist" aria-label="学情工作区">
+        {[['matrix','知识矩阵'],['intervention','教学干预'],['students','学生轨迹'],['review','作答复核']].map(([id,label]) => <button key={id} id={`tab-${id}`} role="tab" aria-selected={view===id} aria-controls={`view-${id}`} onClick={()=>setView(id)}>{label}{id==='review' && pending.length ? <span>{pending.length}</span> : null}</button>)}
+      </div>
+      <div id="view-matrix" role="tabpanel" aria-labelledby="tab-matrix" hidden={view!=='matrix'}>
+      <CohortCharts view="matrix" data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
+      </div>
+      <div id="view-intervention" role="tabpanel" aria-labelledby="tab-intervention" hidden={view!=='intervention'}>
+      <CohortCharts view="groups" data={d} onCell={(node,student)=>setDrill({node,student})} onGroup={g=>{setTarget({id:g.knowledge_id,title:g.name,question_ids:g.question_ids});setSelected(g.student_ids)}}/>
       <div className="analytics-layout">
         <Panel title="知识掌握与教学关注" caption="按知识点识别需要巩固的学生，直接形成教学行动">
           <div className="knowledge-analysis">
@@ -246,6 +254,11 @@ export function Analytics() {
           {!d.error_distribution?.length ? <Empty>暂时没有已记录的错因。</Empty> : null}
         </Panel>
       </div>
+      <Panel title="教学干预跟踪">
+        {(d.assignments || []).map((a: Row) => <AssignmentRow key={a.id} assignment={a} />)}
+      </Panel>
+      </div>
+      <div id="view-students" role="tabpanel" aria-labelledby="tab-students" hidden={view!=='students'}>
       <Panel title="学生学习轨迹概览" caption="掌握度来自可解释的学习证据，观看时长不直接代表理解">
         <div className="table-scroll">
           <table>
@@ -292,6 +305,8 @@ export function Analytics() {
           </table>
         </div>
       </Panel>
+      </div>
+      <div id="view-review" role="tabpanel" aria-labelledby="tab-review" hidden={view!=='review'}>
       <Panel
         title="主观题待复核"
         caption="AI 可给出量规建议，最终评分由教师确认"
@@ -329,11 +344,7 @@ export function Analytics() {
           <Empty>当前没有等待复核的主观题。</Empty>
         )}
       </Panel>
-      <Panel title="教学干预跟踪">
-        {(d.assignments || []).map((a: Row) => (
-          <AssignmentRow key={a.id} assignment={a} />
-        ))}
-      </Panel>
+      </div>
       {drill ? (
         <Modal title={`${drill.student.name} · ${drill.node.title}`} close={() => setDrill(null)}>
           <LoadState {...evidence} />

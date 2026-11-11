@@ -145,15 +145,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   border-top: 1px solid var(--border);
 }
 .ai-welcome h2 {
-  font-family: 'SimSun', serif;
 }
 .course-art {
   background: var(--surface-subtle);
-  height: 110px;
+  height: 130px;
+  border-radius: 9px;
+  overflow: hidden;
 }
-.course-art svg {
-  color: var(--brand-primary);
-}
+.course-art svg { color: var(--brand-primary); width: 100%; height: 100%; }
+.course-art.art-code { background: var(--surface); color: var(--data); }
+.course-art.art-code svg { color: var(--data); }
 .class-card {
   background: transparent;
   border: 0;
@@ -176,12 +177,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   gap: 28px;
 }
 .next-study {
-  border-top: 3px solid var(--brand-primary);
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 18px;
   padding: 30px;
   background: var(--surface-raised);
+  box-shadow: var(--shadow);
 }
 .next-study h2 {
-  font-family: 'SimSun', serif;
   font-size: 32px;
   margin: 12px 0;
 }
@@ -222,7 +225,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   margin-bottom: 18px;
 }
 .desk-section h2 {
-  font-family: 'SimSun', serif;
   font-size: 21px;
 }
 .course-shelf {
@@ -231,8 +233,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   gap: 20px;
 }
 .course-shelf > a {
-  border-top: 1px solid var(--border);
-  padding: 20px 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-neutral);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -244,8 +249,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   color: var(--text-muted);
 }
 .desk-side {
-  border-left: 1px solid var(--border);
-  padding-left: 25px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-neutral);
+  border-radius: 16px;
+  padding: 24px;
+  align-self: start;
+  box-shadow: var(--shadow);
 }
 .desk-side h2 {
   margin-bottom: 16px;
@@ -284,9 +293,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   gap: 30px;
 }
 .teacher-command {
-  padding: 24px 0;
-  border-top: 3px solid var(--brand-primary);
-  border-bottom: 1px solid var(--border);
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -294,7 +304,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
 }
 .teacher-command h2 {
   font-size: 25px;
-  font-family: 'SimSun', serif;
 }
 .teacher-shortcuts {
   display: flex;
@@ -346,10 +355,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
   .teacher-desk {
     grid-template-columns: 1fr;
   }
-  .desk-side {
-    border-left: 0;
-    padding-left: 0;
-  }
+  .desk-side { padding: 24px; }
   .workspace {
     padding: 25px 20px;
   }
@@ -570,3 +576,28 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
 }
 @media (max-width: 850px) {
 }
+
+.analytics-tabs { display:flex; gap:6px; border-bottom:1px solid var(--border); margin: 8px 0 24px; overflow-x:auto; }
+.analytics-tabs button { background:transparent; border:0; border-bottom:3px solid transparent; padding:14px 20px; color:var(--text-muted); white-space:nowrap; font-size:16px; }
+.analytics-tabs button[aria-selected='true'] { border-color:var(--brand-primary); color:var(--brand-primary); font-weight:600; }
+.analytics-tabs button span { margin-left:8px; font-size:13px; padding:2px 6px; border-radius:5px; background:var(--surface-subtle); }
+[hidden] { display:none !important; }
+.knowledge-change { margin:20px 0; padding:18px 20px; border:1px solid var(--border); border-radius:12px; background:var(--surface-raised); }
+.knowledge-change > div { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; }
+.knowledge-change strong { display:flex; align-items:center; gap:13px; font-size:22px; color:var(--brand-primary); font-variant-numeric:tabular-nums; }
+.knowledge-change p { margin:10px 0 0; font-size:14px; color:var(--text-muted); }
+.feedback-path { margin:23px 0; }
+.feedback-path > a { display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); }
+.feedback-path > a > span { display:grid; place-items:center; width:26px; height:26px; border-radius:50%; color:var(--brand-primary); background:var(--surface-raised); }
+.feedback-path > a > div { flex:1; }
+.feedback-path small { display:block; margin-top:5px; color:var(--text-muted); font-size:13px; }
+@media(max-width:700px) { .analytics-tabs button { padding:12px 13px; font-size:14px; } .desk-side { padding:20px; } }
+
+.course-mastery { position:absolute; top:42px; right:32px; width:128px; height:128px; }
+.course-mastery svg { width:100%; height:100%; }
+.course-mastery > div { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.course-mastery strong { font-size:30px; color:var(--brand-primary); font-weight:500; font-variant-numeric:tabular-nums; }
+.course-mastery small { font-size:14px; margin-left:2px; }
+.course-mastery span { font-size:12px; color:var(--text-muted); margin-top:4px; }
+.next-study > h2, .next-study > p { max-width:calc(100% - 145px); }
+@media(max-width:700px) { .course-mastery { width:95px; height:95px; right:15px; top:30px; } .course-mastery strong { font-size:23px; } .course-mastery span { font-size:10px; } .next-study .study-meta { padding-right:95px; font-size:13px; } .next-study > h2, .next-study > p { max-width:calc(100% - 90px); } .next-study h2 { font-size:25px; } }

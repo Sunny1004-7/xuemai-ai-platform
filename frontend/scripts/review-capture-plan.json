@@ -241,7 +241,10 @@
         "learning-evidence",
         "intervention-results",
         "matrix-filtered",
-        "group-task"
+        "group-task",
+        "intervention-workspace",
+        "student-trajectories",
+        "review-workspace"
       ]
     },
     {

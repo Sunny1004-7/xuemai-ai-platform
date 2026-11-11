@@ -7,7 +7,7 @@
 .domain-bars strong {text-align:right;font-size:15px;}
 .trend-chart {height:200px;display:flex;gap:8px;align-items:stretch;position:relative;padding:10px 0 36px;}
 .trend-chart>a {flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.trend-column {display:block;height:140px;width:100%;position:relative;background:var(--surface);border-bottom:1px solid var(--border);}
+.trend-column {display:block;height:140px;width:100%;position:relative;background:none;border-bottom:1px solid var(--border);}
 .trend-column i {position:absolute;bottom:0;left:15%;width:70%;background:var(--brand-soft);border-radius:3px 3px 0 0;}
 .trend-column b {position:absolute;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:var(--data);border:1px solid var(--surface-raised);}
 .trend-chart small {font-size:13px;white-space:nowrap;}
@@ -36,7 +36,7 @@
 .distribution-bars i {height:15px;display:flex;background:var(--surface);}
 .distribution-bars b {height:100%;}
 .teaching-groups {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
-.teaching-groups article {border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;gap:12px;}
+.teaching-groups article {border:1px solid var(--border-neutral);border-radius:12px;padding:22px;background:var(--surface);display:flex;flex-direction:column;gap:12px;}
 .group-size {font-size:28px;color:var(--brand-primary);}.group-size small {font-size:14px;margin-left:5px;}
 .teaching-groups h3 {font-size:16px;}.teaching-groups p {font-size:15px;line-height:1.8;color:var(--text-muted);min-height:44px;}
 .group-features {display:grid;gap:10px;margin-bottom:10px;}.group-features div {position:relative;padding-bottom:6px;border-bottom:3px solid var(--surface-subtle);font-size:13px;}.group-features i {position:absolute;left:0;bottom:-3px;height:3px;background:var(--data);}

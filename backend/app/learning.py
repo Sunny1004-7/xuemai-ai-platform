@@ -119,6 +119,7 @@ def record_attempt(db, user, question, answer, hints_used=0, assignment_id=None,
     cur = db.execute('INSERT INTO attempts(student_id,question_id,assignment_id,answer,correct,score,hints_used,error_type,review_status,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)',
                      (user['id'], question['id'], assignment_id, json.dumps(answer, ensure_ascii=False), None if correct is None else int(correct), score, hints_used, error_type, review_status, now.isoformat()))
     state = knowledge_state(db, user['id'], question['knowledge_id'], now)
+    before_state = state
     update, schedule = None, None
     if correct is not None:
         update, schedule = apply_evidence(db, user['id'], question, cur.lastrowid, correct, hints_used, previous, now)
@@ -135,4 +136,7 @@ def record_attempt(db, user, question, answer, hints_used=0, assignment_id=None,
     return {'id': cur.lastrowid, 'correct': correct, 'score': score, 'answer': json.loads(question['answer']),
             'explanation': question['explanation'], 'error_type': error_type, 'mastery': round(state['value']*100),
             'review_status': review_status, 'rubric': json.loads(question['rubric']), 'evidence': state,
+            'knowledge_change': {'before': round(before_state['value']*100,1), 'after': round(state['value']*100,1),
+                                 'weight': update['weight'], 'hints': hints_used,
+                                 'novelty': update['parameters']['novelty'], 'correlation': update['parameters']['correlation']} if update else None,
             'review_schedule': schedule, 'recommendations': recommendations(db, user, question['course_id'])[:3] if include_recommendations else []}

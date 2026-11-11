@@ -134,6 +134,7 @@ test('教师根据学情发布定向任务，学生完成后再次分析作答�
     sp = await sc.newPage()
   await login(tp, 'teacher')
   await tp.getByRole('link', { name: '学情与分层', exact: true }).click()
+  await tp.getByRole('tab',{name:'教学干预',exact:true}).click()
   const attemptStat = tp
     .locator('.stats-row .stat')
     .filter({ hasText: '累计作答' })

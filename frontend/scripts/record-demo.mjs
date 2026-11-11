@@ -165,6 +165,7 @@ try {
   await page.locator('.matrix-cell').first().click()
   await until(226)
   await page.getByRole('dialog').getByRole('button', { name: '关闭', exact: true }).click()
+  await page.getByRole('tab',{name:'教学干预',exact:true}).click()
   await page.locator('.teaching-groups').scrollIntoViewIfNeeded()
   await scene(230, '针对性任务', '', async () => {
     await page
@@ -196,7 +197,7 @@ try {
   await page.getByRole('button', { name: '提交答案', exact: true }).click()
   await scene(265, '任务结果', '', async () => {
     await login('teacher')
-    await page.goto(`${base}/analytics`)
+    await page.goto(`${base}/analytics?view=intervention`)
     await page
       .locator('.assignment-row')
       .filter({ hasText: taskTitle })

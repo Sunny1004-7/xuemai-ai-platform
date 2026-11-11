@@ -6,38 +6,29 @@ import { post, percent, useApi } from '../api'
 import type { Row } from '../api'
 import { Button, Empty, LoadState, Modal, Pill, Progress, Title, useApp, dateLabel } from '../ui'
 
-function CourseArt({ variant = 0 }: { variant?: number }) {
-  return (
-    <div className={`course-art art-${variant % 2}`} aria-hidden="true">
-      <svg viewBox="0 0 260 110">
-        <path
-          d="M25 70Q75 0 130 55T235 35M25 70Q85 110 130 55T235 85"
-          fill="none"
-          stroke="currentColor"
-        />
-        {[
-          [25, 70],
-          [80, 32],
-          [130, 55],
-          [185, 47],
-          [235, 35],
-        ].map(([x, y], i) => (
-          <circle
-            key={i}
-            cx={x}
-            cy={y}
-            r={i === 2 ? 16 : 8}
-            fill="var(--surface-raised)"
-            stroke="currentColor"
-          />
-        ))}
-      </svg>
-    </div>
-  )
+function CourseArt({ title = '' }: { title?: string }) {
+  const coding = /python|程序/i.test(title)
+  return <div className={`course-art ${coding ? 'art-code' : 'art-structure'}`} aria-hidden="true">
+    <svg viewBox="0 0 400 150">
+      {coding ? <>
+        <path d="M83 40 57 75l26 35M317 40l26 35-26 35" fill="none" stroke="currentColor" strokeWidth="3"/>
+        <rect x="115" y="26" width="170" height="98" rx="9" fill="var(--surface-raised)" stroke="currentColor"/>
+        <path d="M137 50h55m-42 19h105m-105 19h72m-85 19h100" stroke="currentColor" strokeWidth="4" opacity=".65"/>
+        <path d="m215 44-20 66" stroke="var(--brand-secondary)" strokeWidth="2"/>
+      </> : <>
+        <g fill="var(--surface-raised)" stroke="currentColor" strokeWidth="1.5">
+          <rect x="48" y="30" width="80" height="36" rx="7"/><rect x="160" y="30" width="80" height="36" rx="7"/><rect x="272" y="30" width="80" height="36" rx="7"/>
+          <rect x="104" y="98" width="80" height="30" rx="7"/><rect x="216" y="98" width="80" height="30" rx="7"/>
+        </g>
+        <path d="M128 48h32m80 0h32M200 66v18m0 0h-56v14m56-14h56v14" fill="none" stroke="currentColor" strokeWidth="1.8"/>
+        <g fill="currentColor" opacity=".65"><circle cx="72" cy="48" r="4"/><circle cx="88" cy="48" r="4"/><circle cx="104" cy="48" r="4"/><circle cx="184" cy="48" r="4"/><circle cx="200" cy="48" r="4"/><circle cx="216" cy="48" r="4"/><circle cx="296" cy="48" r="4"/><circle cx="312" cy="48" r="4"/><circle cx="328" cy="48" r="4"/></g>
+      </>}
+    </svg>
+  </div>
 }
 export function Dashboard() {
   const { user, courseId, setCourseId } = useApp()
-  const query = useApi<Row>('/dashboard', {})
+  const query = useApi<Row>(`/dashboard?course_id=${courseId}`, {})
   const teacher = user.role === 'teacher'
   const analysis = useApi<Row>(teacher ? `/analytics?course_id=${courseId}` : '', {})
   const attempts = useApi<Row[]>(teacher ? `/attempts?course_id=${courseId}` : '', [])
@@ -58,7 +49,6 @@ export function Dashboard() {
     <>
       <Title title={teacher ? '教学工作台' : '学习概览'} />
       <LoadState {...query} retry={query.reload} />
-      {!teacher ? <PersonalCharts data={insights.data} courseId={courseId}/> : null}
       {teacher ? (
         <div className="teacher-desk">
           <div>
@@ -140,7 +130,7 @@ export function Dashboard() {
               待复核 <span>{pending.length}</span>
             </h2>
             {pending.slice(0, 3).map((a) => (
-              <Link className="desk-task" to="/analytics" key={a.id}>
+              <Link className="desk-task" to="/analytics?view=review" key={a.id}>
                 <strong>
                   {a.student_name} · {a.title}
                 </strong>
@@ -162,7 +152,7 @@ export function Dashboard() {
                 </div>
               ))}
             </section>
-            <Link className="button secondary" to="/analytics">
+            <Link className="button secondary" to="/analytics?view=intervention">
               跟踪教学任务
             </Link>
           </aside>
@@ -171,11 +161,15 @@ export function Dashboard() {
         <div className="study-desk">
           <div>
             <section className="next-study">
+              <div className="course-mastery" aria-label={`当前课程掌握估计 ${percent(courses.find(c=>c.id===courseId)?.progress)}%`}>
+                <svg viewBox="0 0 128 128" aria-hidden="true"><circle cx="64" cy="64" r="51" fill="none" stroke="var(--surface-subtle)" strokeWidth="6"/><circle cx="64" cy="64" r="51" fill="none" stroke="var(--brand-secondary)" strokeWidth="6" strokeLinecap="round" strokeDasharray={`${percent(courses.find(c=>c.id===courseId)?.progress)*3.204} 320.4`} transform="rotate(-90 64 64)"/></svg>
+                <div><strong>{percent(courses.find(c=>c.id===courseId)?.progress)}<small>%</small></strong><span>课程掌握估计</span></div>
+              </div>
               <div className="study-meta">
                 <span>
                   {new Date().toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })}
                 </span>
-                <span>下一项学习</span>
+                <span>{courses.find(c=>c.id===courseId)?.title}</span>
                 {next ? <span>预计 {next.estimated_minutes || 15} 分钟</span> : null}
               </div>
               <h2>{next?.title || '开始课程学习'}</h2>
@@ -198,15 +192,16 @@ export function Dashboard() {
                 </div>
               ) : null}
             </section>
+            <PersonalCharts data={insights.data} courseId={courseId}/>
             <section className="desk-section">
               <header>
                 <h2>我的课程</h2>
                 <Link to="/courses">全部课程</Link>
               </header>
               <div className="course-shelf">
-                {courses.map((c, i) => (
+                {courses.map((c) => (
                   <Link key={c.id} to="/graph" onClick={() => setCourseId(c.id)}>
-                    <CourseArt variant={i} />
+                    <CourseArt title={c.title} />
                     <strong>{c.title}</strong>
                     <small>
                       {c.knowledge_count} 个知识点 · 掌握估计 {percent(c.progress)}%
@@ -307,9 +302,9 @@ export function Courses() {
       />
       <LoadState {...query} retry={query.reload} />
       <div className="course-grid full">
-        {query.data.map((c, i) => (
+        {query.data.map((c) => (
           <Link to="/video" className="course-card" key={c.id} onClick={() => setCourseId(c.id)}>
-            <CourseArt variant={i} />
+            <CourseArt title={c.title} />
             <div className="course-info">
               <Pill tone="blue">{c.code || '课程'}</Pill>
               <h3>{c.title}</h3>

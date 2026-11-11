@@ -433,6 +433,10 @@ export function Practice({ review = false }: { review?: boolean }) {
                   )}
                   {result.error_type ? <Pill tone="amber">{result.error_type}</Pill> : null}
                 </div>
+                {result.knowledge_change ? <div className="knowledge-change">
+                  <div><span>知识状态</span><strong>{result.knowledge_change.before}% <ArrowRight size={16}/> {result.knowledge_change.after}%</strong></div>
+                  <p>{result.knowledge_change.weight === 0 ? '本次重复成功保留原有证据' : result.knowledge_change.hints ? `使用 ${result.knowledge_change.hints} 次提示，已调整独立性权重` : result.knowledge_change.correlation < 1 ? '相近题证据已折减，继续尝试不同情境' : '独立作答已计入知识证据'}</p>
+                </div> : null}
                 {result.evidence ? (
                   <p className="evidence-summary">
                     {result.evidence.sufficiency} · 有效证据{' '}
@@ -453,6 +457,10 @@ export function Practice({ review = false }: { review?: boolean }) {
                     {Array.isArray(result.answer) ? result.answer.join('、') : result.answer}
                   </p>
                 ) : null}
+                {result.recommendations?.length ? <div className="feedback-path">
+                  <h3>接下来</h3>
+                  {result.recommendations.slice(0,2).map((r:Row) => <Link key={r.id} to={r.href}><span>{r.path_position}</span><div><strong>{r.title}</strong><small>{r.reason}</small></div><ArrowRight size={16}/></Link>)}
+                </div> : null}
                 <div className="button-row">
                   <Link
                     to={`/tutor?question=${qid}&knowledge=${q.knowledge_id || ''}`}
@@ -549,7 +557,6 @@ export function Practice({ review = false }: { review?: boolean }) {
                   </button>
                 ))}
               </div>
-              <p className="mini-text muted">题目与课程知识点相连，作答后可回到图谱查看变化。</p>
               <Link to={`/graph?knowledge=${q.knowledge_id}`} className="text-link">
                 查看知识位置
                 <ArrowRight size={15} />
