@@ -53,6 +53,27 @@ def test_round4_database_upgrade(tmp_path,monkeypatch):
         assert db.execute('SELECT COUNT(*) FROM attempts').fetchone()[0]>=previous
 
 
+def test_sample_text_upgrade_preserves_edited_conversation(tmp_path,monkeypatch):
+    from backend.app import sample_dialogues
+    refine=sample_dialogues.refine_sample_text
+    monkeypatch.setenv('DATABASE_PATH',str(tmp_path/'text-upgrade.db'))
+    monkeypatch.setenv('XUEMAI_DEMO_COHORT','1')
+    monkeypatch.setattr(sample_dialogues,'refine_sample_text',lambda db:None)
+    init_db()
+    with get_db() as db:
+        conv=db.execute("SELECT entity_id FROM sample_entities WHERE sample_key='v5:CS101:conversation:0'").fetchone()[0]
+        messages=db.execute('SELECT id,content FROM ai_messages WHERE conversation_id=? ORDER BY id',(conv,)).fetchall()
+        db.execute('UPDATE ai_messages SET content=? WHERE id=?',('学生补充了自己的思考，请保留',messages[0]['id']))
+        before=[dict(r) for r in db.execute('SELECT * FROM ai_messages WHERE conversation_id=? ORDER BY id',(conv,))]
+    monkeypatch.setattr(sample_dialogues,'refine_sample_text',refine)
+    init_db();init_db()
+    with get_db() as db:
+        assert [dict(r) for r in db.execute('SELECT * FROM ai_messages WHERE conversation_id=? ORDER BY id',(conv,))]==before
+        untouched=db.execute("SELECT c.title FROM ai_conversations c JOIN sample_entities e ON e.entity_id=c.id WHERE e.sample_key='v5:CS101:conversation:1'").fetchone()[0]
+        assert untouched=='修改副本为何影响原列表'
+        assert db.execute('SELECT COUNT(*) FROM sample_packages WHERE version=5002').fetchone()[0]==1
+
+
 @pytest.mark.parametrize('minutes',[10,30,60])
 def test_goal_budget_reaches_pathg(full,monkeypatch,minutes):
     with get_db() as db:

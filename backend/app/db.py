@@ -53,6 +53,8 @@ def init_db():
         seed_cohort(db)
         from .sample_package import install_samples
         install_samples(db)
+        from .sample_dialogues import refine_sample_text
+        refine_sample_text(db)
         from .retrieval import sync_index
         sync_index(db)
 
