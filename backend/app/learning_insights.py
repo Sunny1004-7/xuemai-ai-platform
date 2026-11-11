@@ -55,12 +55,13 @@ def dynamic_groups(students, questions, max_groups=4):
             continue
         center = [sum(vectors[i][j]*confidence[i][j] for i in members)/max(.001,sum(confidence[i][j] for i in members)) for j in range(len(FEATURES))]
         focus = max(range(len(center)),key=lambda j:center[j])
-        candidates = sorted(questions,key=lambda q:(-(2 if focus<4 and q['skill']==SKILLS[focus] else 0),q['difficulty'] if focus>=4 else abs(q['difficulty']-2),q['id']))
+        weak=Counter(kid for s in students if s['id'] in members for kid in s.get('weak_knowledge_ids',[]))
+        candidates = sorted(questions,key=lambda q:(-weak[q['knowledge_id']],-(2 if focus<4 and q['skill']==SKILLS[focus] else 0),q['difficulty'] if focus>=4 else abs(q['difficulty']-2),q['id']))
         qids = [q['id'] for q in candidates[:3]]
         strategies = ['用反例区分概念边界','逐步追踪状态并检查操作顺序','补齐推理依据与边界条件','更换输入检验知识迁移','减少提示后进行独立复测','安排短任务恢复学习节奏']
         output.append({'id':f'group-{m}', 'name':FEATURES[focus]+'关注组', 'student_ids':members,
                        'features':dict(zip(FEATURES,[round(v,3) for v in center])), 'focus':FEATURES[focus],
-                       'strategy':strategies[focus], 'question_ids':qids,
+                       'strategy':strategies[focus], 'question_ids':qids,'weak_knowledge_ids':[k for k,_ in weak.most_common(5)],
                        'knowledge_id':candidates[0]['knowledge_id'] if candidates else None,
                        'method':'CLASS-LOOP', 'medoid':m, 'dispersion':round(sum(distance(i,m) for i in members)/len(members),3)})
     return output + observation_groups
@@ -96,6 +97,7 @@ def learning_snapshot(db, course_id, student_ids, now=None):
                  attempts=len(graded),accuracy=round(sum(a['correct'] for a in graded)/len(graded)*100) if graded else 0,
                  evidence_sufficiency=sum(v['effective_count']>=2 for v in observed),coverage=len(observed),features=features,
                  recent_graded_count=len(recent),feature_confidence=feature_confidence)
+        s['weak_knowledge_ids']=[n['id'] for n in nodes if states[(s['id'],n['id'])]['observed'] and states[(s['id'],n['id'])]['value']<.6]
         heatmap.append({'student_id':s['id'],'name':s['name'],'cells':[{'knowledge_id':n['id'],'value':round(states[(s['id'],n['id'])]['value']*100) if states[(s['id'],n['id'])]['observed'] else None,'count':round(states[(s['id'],n['id'])]['effective_count'],1)} for n in nodes]})
     knowledge=[]
     for n in nodes:

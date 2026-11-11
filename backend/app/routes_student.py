@@ -24,6 +24,8 @@ def event(body:EventBody,user=Depends(current_user)):
                 if not isinstance(value,(float,int)) or isinstance(value,bool) or not math.isfinite(value) or not 0<=value<=86400:raise HTTPException(422,"视频学习时间必须是0到86400秒之间的数值")
         if rid and not db.execute("SELECT 1 FROM resources WHERE id=? AND course_id=?",(rid,body.course_id)).fetchone():raise HTTPException(422,"资源不属于当前课程")
         cur=db.execute("INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload) VALUES(?,?,?,?,?)",(user["id"],body.course_id,body.knowledge_id,body.kind,json.dumps(body.payload,ensure_ascii=False)))
+        from .plan_targets import complete_matching_plans
+        if user['role']=='student':complete_matching_plans(db,user['id'],body.course_id,cur.lastrowid,body.kind,body.payload)
         # Exposure is logged, not converted into a claimed independent success.
         if body.knowledge_id and user["role"]=="student":
             db.execute("INSERT OR IGNORE INTO mastery(student_id,knowledge_id,value,level) VALUES(?,?,.2,'exposed')",(user["id"],body.knowledge_id))

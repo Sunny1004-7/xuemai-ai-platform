@@ -17,11 +17,11 @@ def plan_path(candidates, parents, states, budget=30, beam_width=24):
     beam = [((), 0, 0.)]
     best = beam[0]
     expanded = 0
-    for _ in range(min(len(by_id), max(1, budget // 4))):
+    for _ in range(min(len(by_id), max(1, budget))):
         next_beam = []
         for path, cost, score in beam:
             for kid, c in by_id.items():
-                minutes = max(4, c.get('estimated_minutes', 8))
+                minutes = max(1, c.get('estimated_minutes', 8))
                 if kid in path or cost + minutes > budget:
                     continue
                 if any(p not in ready and p not in path for p in parents.get(kid, [])):

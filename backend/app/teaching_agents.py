@@ -48,20 +48,37 @@ class StrategyAgent:
 class VerificationAgent:
     name = '教学校验代理'
 
-    def run(self, plan, content, citations):
+    def run(self, plan, content, citations, db=None):
+        from urllib.parse import urlsplit,parse_qs
         valid=[]
         rejected=[]
+        run=db.execute('SELECT * FROM teaching_runs WHERE id=?',((plan.get('collaboration') or {}).get('run_id'),)).fetchone() if db else None
+        def mapped(action):
+            if not db or not run:return False
+            if action.get('kind')=='check':
+                return bool(db.execute('SELECT 1 FROM tutoring_checks t JOIN questions q ON q.id=t.question_id WHERE t.id=? AND t.user_id=? AND t.conversation_id=? AND q.course_id=? AND q.knowledge_id=?',(action.get('check_id'),run['user_id'],run['conversation_id'],run['course_id'],run['knowledge_id'])).fetchone()) and action.get('check_id')==(plan.get('check') or {}).get('id')
+            url=urlsplit(action.get('href','')); query=parse_qs(url.query)
+            if url.scheme or url.netloc or url.path not in ('/graph','/video','/experiments'):return False
+            try:
+                if int(query.get('course',[0])[0])!=run['course_id'] or int(query.get('knowledge',[0])[0])!=run['knowledge_id']:return False
+                if not db.execute('SELECT 1 FROM knowledge_points WHERE id=? AND course_id=?',(run['knowledge_id'],run['course_id'])).fetchone():return False
+                if action['kind']=='video':return bool(db.execute("SELECT 1 FROM resources WHERE id=? AND course_id=? AND knowledge_id=? AND kind='video'",(int(query.get('resource',[0])[0]),run['course_id'],run['knowledge_id'])).fetchone()) and url.path=='/video'
+                if action['kind']=='experiment':
+                    from .plan_targets import EXPERIMENTS
+                    return url.path=='/experiments' and query.get('mode',[''])[0] in EXPERIMENTS
+                return action['kind']=='contrast' and url.path=='/graph'
+            except (TypeError,ValueError):return False
         for action in plan['actions']:
-            if action['kind'] in ('contrast','video','experiment') and str(action.get('href','')).startswith(('/graph?','/video?','/experiments?')):
-                valid.append(action)
-            elif action['kind']=='check' and action.get('check_id')==(plan.get('check') or {}).get('id'):
+            if mapped(action):
                 valid.append(action)
             else:
                 rejected.append(action.get('kind','unknown'))
         import re
         refs=[int(r) for r in re.findall(r'\[(\d+)\]',content)]
         bad_refs=[r for r in refs if r<1 or r>len(citations)]
-        return {'role':self.name,'passed':bool(valid) and not bad_refs,'actions':valid,
+        if db and run:
+            bad_refs += [i for i,c in enumerate(citations,1) if not db.execute('SELECT 1 FROM resources WHERE id=? AND course_id=?',(c.get('resource_id'),run['course_id'])).fetchone()]
+        return {'role':self.name,'passed':bool(valid) and not bad_refs and not rejected,'actions':valid,
                 'rejected_actions':rejected,'invalid_references':bad_refs,
                 'checks':['课程对象映射','可执行动作类型','理解检查关联','资料引用编号']}
 
@@ -85,15 +102,19 @@ def finalize_collaboration(db,plan,content,citations):
     shared=plan.get('collaboration')
     if not shared:
         return content,plan
-    verification=VerificationAgent().run(plan,content,citations)
+    verification=VerificationAgent().run(plan,content,citations,db)
     shared['verification']={k:v for k,v in verification.items() if k!='actions'}
     shared['trace'].append({'role':verification['role'],'result':'动作与引用已校验' if verification['passed'] else '已移除未通过校验的引用或动作'})
-    shared['transition']='planned → verified → awaiting_check'
+    has_check=any(a['kind']=='check' for a in verification['actions'])
+    status='awaiting_check' if verification['passed'] and has_check else 'verified' if verification['passed'] else 'partial' if verification['actions'] else 'needs_revision'
+    shared['transition']='planned → '+status
+    shared['status']=status
     plan['actions']=verification['actions']
+    if not has_check:plan['check']=None
     if verification['invalid_references']:
         for r in verification['invalid_references']:
             content=content.replace(f'[{r}]','')
-    db.execute("UPDATE teaching_runs SET state=?,status='verified',updated_at=CURRENT_TIMESTAMP WHERE id=?",(json.dumps(shared,ensure_ascii=False),shared['run_id']))
+    db.execute("UPDATE teaching_runs SET state=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?",(json.dumps(shared,ensure_ascii=False),status,shared['run_id']))
     return content,plan
 
 
@@ -103,6 +124,6 @@ def record_feedback(db,check_id,result):
         shared=json.loads(run['state'])
         shared['feedback']={'correct':result['correct'],'attempt_id':result['id'],'next_action':result['next_action']}
         shared['trace'].append({'role':'理解反馈','result':'安排间隔复测' if result['correct'] else '下一轮更换教学策略'})
-        shared['transition']='awaiting_check → feedback'
+        shared['transition']=run['status']+' → feedback'
         db.execute("UPDATE teaching_runs SET state=?,status='feedback',updated_at=CURRENT_TIMESTAMP WHERE id=?",(json.dumps(shared,ensure_ascii=False),run['id']))
         return shared

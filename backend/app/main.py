@@ -17,7 +17,7 @@ async def lifespan(app):
     yield
 
 
-app=FastAPI(title="学脉 XueMai API",version="0.2.0",lifespan=lifespan)
+app=FastAPI(title="学脉 XueMai API",version="0.5.0",lifespan=lifespan)
 app.add_middleware(CORSMiddleware,allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],allow_methods=["*"],allow_headers=["Authorization","Content-Type"])
 media=Path(__file__).resolve().parents[1]/"media"
 media.mkdir(exist_ok=True)

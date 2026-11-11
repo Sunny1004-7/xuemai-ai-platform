@@ -164,6 +164,8 @@ def test_assignment_teacher_student_loop(client):
 
 def test_targeted_assignment_and_new_analysis(client):
     teacher=login(client,"teacher");student=login(client);other=login(client,"student2")
+    # 显式建立刚发生的独立正确证据，避免依赖样例历史的相对时间。
+    client.post("/api/attempts",headers=student,json={"question_id":1,"answer":"3"})
     analysis=client.get("/api/analytics",headers=teacher).json()
     weak=next(n for n in analysis["knowledge"] if n["id"]==2)["weak_students"]
     assert any(s["id"]==2 for s in weak)

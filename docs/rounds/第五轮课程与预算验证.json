@@ -1,0 +1,377 @@
+{
+  "courses": [
+    {
+      "course_id": 2,
+      "code": "CS101",
+      "title": "Python 程序设计",
+      "chapters": 6,
+      "knowledge": 27,
+      "edges": 30,
+      "questions": 34,
+      "question_types": {
+        "fill": 1,
+        "multiple": 2,
+        "short": 1,
+        "single": 28,
+        "step": 1,
+        "true_false": 1
+      },
+      "resources": {
+        "document": 29,
+        "lesson_plan": 6,
+        "video": 3
+      },
+      "assignments": 3,
+      "goals": 4,
+      "plans": 12,
+      "attempts": 25,
+      "mistakes": 10,
+      "conversations": 5,
+      "classroom": 4,
+      "responses": 40,
+      "notes": 3,
+      "experiments": 1,
+      "students": 14,
+      "invalid_relations": 0,
+      "attempts_before_publication": 0,
+      "checks": {
+        "chapters": true,
+        "knowledge": true,
+        "questions": true,
+        "types": true,
+        "videos": true,
+        "goals": true,
+        "plans": true,
+        "history": true,
+        "classroom": true,
+        "integrity": true
+      },
+      "passed": true
+    },
+    {
+      "course_id": 1,
+      "code": "CS201",
+      "title": "数据结构与算法",
+      "chapters": 6,
+      "knowledge": 31,
+      "edges": 38,
+      "questions": 39,
+      "question_types": {
+        "fill": 1,
+        "multiple": 1,
+        "short": 1,
+        "single": 35,
+        "true_false": 1
+      },
+      "resources": {
+        "document": 31,
+        "lesson_plan": 6,
+        "video": 3
+      },
+      "assignments": 6,
+      "goals": 4,
+      "plans": 12,
+      "attempts": 31,
+      "mistakes": 11,
+      "conversations": 5,
+      "classroom": 5,
+      "responses": 63,
+      "notes": 3,
+      "experiments": 1,
+      "students": 28,
+      "invalid_relations": 0,
+      "attempts_before_publication": 0,
+      "checks": {
+        "chapters": true,
+        "knowledge": true,
+        "questions": true,
+        "types": true,
+        "videos": true,
+        "goals": true,
+        "plans": true,
+        "history": true,
+        "classroom": true,
+        "integrity": true
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "foreign_key_errors": [],
+  "sample_packages": [
+    {
+      "version": 5001,
+      "seed": 20261111,
+      "time_base": "2026-11-11T00:00:00+00:00",
+      "imported_at": "2026-11-11 13:15:39"
+    }
+  ],
+  "generated_at": "2026-11-11T13:15:39.876382+00:00",
+  "api_requests": 0,
+  "budget_cases": [
+    {
+      "course": "CS101",
+      "budget": 10,
+      "used": 10,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "变量与类型",
+          "href": "/review?course=2&knowledge=9&question=9"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "输入与类型转换",
+          "href": "/review?course=2&knowledge=36&question=44"
+        }
+      ]
+    },
+    {
+      "course": "CS101",
+      "budget": 30,
+      "used": 30,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "变量与类型",
+          "href": "/review?course=2&knowledge=9&question=9"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "数值运算",
+          "href": "/review?course=2&knowledge=34&question=42"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "布尔表达式",
+          "href": "/review?course=2&knowledge=35&question=43"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "分支边界",
+          "href": "/review?course=2&knowledge=37&question=46"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "循环与条件",
+          "href": "/review?course=2&knowledge=10&question=45"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "累加与循环不变量",
+          "href": "/review?course=2&knowledge=38&question=47"
+        }
+      ]
+    },
+    {
+      "course": "CS101",
+      "budget": 60,
+      "used": 60,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "变量与类型",
+          "href": "/review?course=2&knowledge=9&question=9"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "数值运算",
+          "href": "/review?course=2&knowledge=34&question=42"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "布尔表达式",
+          "href": "/review?course=2&knowledge=35&question=43"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "分支边界",
+          "href": "/review?course=2&knowledge=37&question=46"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "循环与条件",
+          "href": "/review?course=2&knowledge=10&question=45"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "累加与循环不变量",
+          "href": "/review?course=2&knowledge=38&question=47"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "输入与类型转换",
+          "href": "/review?course=2&knowledge=36&question=44"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "break与continue",
+          "href": "/review?course=2&knowledge=39&question=48"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "字符串与切片",
+          "href": "/review?course=2&knowledge=40&question=49"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "列表遍历",
+          "href": "/review?course=2&knowledge=41&question=50"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "字典计数",
+          "href": "/review?course=2&knowledge=44&question=53"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "列表切片与别名",
+          "href": "/review?course=2&knowledge=42&question=51"
+        }
+      ]
+    },
+    {
+      "course": "CS201",
+      "budget": 10,
+      "used": 10,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "数组与链表",
+          "href": "/review?course=1&knowledge=1&question=8"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "栈与队列",
+          "href": "/review?course=1&knowledge=2&question=1"
+        }
+      ]
+    },
+    {
+      "course": "CS201",
+      "budget": 30,
+      "used": 29,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "数组与链表",
+          "href": "/review?course=1&knowledge=1&question=8"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "栈与队列",
+          "href": "/review?course=1&knowledge=2&question=1"
+        },
+        {
+          "kind": "review",
+          "minutes": 9,
+          "title": "括号匹配",
+          "href": "/review?course=1&knowledge=15&question=22"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "时间复杂度",
+          "href": "/review?course=1&knowledge=16&question=23"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "二分查找",
+          "href": "/review?course=1&knowledge=8&question=5"
+        }
+      ]
+    },
+    {
+      "course": "CS201",
+      "budget": 60,
+      "used": 60,
+      "activities": [
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "数组与链表",
+          "href": "/review?course=1&knowledge=1&question=8"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "栈与队列",
+          "href": "/review?course=1&knowledge=2&question=1"
+        },
+        {
+          "kind": "practice",
+          "minutes": 5,
+          "title": "递归终止条件",
+          "href": "/practice?course=1&knowledge=18&question=25"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "二叉树",
+          "href": "/review?course=1&knowledge=4&question=7"
+        },
+        {
+          "kind": "review",
+          "minutes": 7,
+          "title": "递归与分治",
+          "href": "/review?course=1&knowledge=3&question=12"
+        },
+        {
+          "kind": "review",
+          "minutes": 9,
+          "title": "括号匹配",
+          "href": "/review?course=1&knowledge=15&question=22"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "时间复杂度",
+          "href": "/review?course=1&knowledge=16&question=23"
+        },
+        {
+          "kind": "review",
+          "minutes": 5,
+          "title": "二分查找",
+          "href": "/review?course=1&knowledge=8&question=5"
+        },
+        {
+          "kind": "review",
+          "minutes": 7,
+          "title": "空间复杂度",
+          "href": "/review?course=1&knowledge=17&question=24"
+        },
+        {
+          "kind": "review",
+          "minutes": 7,
+          "title": "单链表链接操作",
+          "href": "/review?course=1&knowledge=12&question=19"
+        }
+      ]
+    }
+  ]
+}

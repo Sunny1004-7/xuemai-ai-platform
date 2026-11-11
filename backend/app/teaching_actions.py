@@ -23,6 +23,9 @@ def prepare_actions(db, user, request, conversation_id):
     if video:
         candidates.append({'kind':'video','title':'定位关键视频片段','href':f"/video?{query}&resource={video[0]}&t=0"})
     mode = 'sort' if '排序' in point['title'] else 'stack' if any(t in point['title'] for t in ['栈','队列','括号']) else None
+    code=db.execute('SELECT code FROM courses WHERE id=?',(request.course_id,)).fetchone()[0]
+    if code=='CS101':
+        mode='py-loop' if '循环' in point['title'] else 'py-list' if any(t in point['title'] for t in ['列表','切片']) else 'py-function' if any(t in point['title'] for t in ['函数','参数','作用域']) else 'py-branch' if any(t in point['title'] for t in ['分支','布尔']) else None
     if mode:
         candidates.append({'kind':'experiment','title':'逐步运行交互实验','href':f'/experiments?{query}&mode={mode}'})
     question = db.execute("SELECT * FROM questions WHERE knowledge_id=? AND status='approved' AND type NOT IN ('short','step') ORDER BY CASE WHEN id=? THEN 1 ELSE 0 END,difficulty,id LIMIT 1", (kid, request.question_id or 0)).fetchone()

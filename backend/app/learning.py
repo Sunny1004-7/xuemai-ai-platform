@@ -1,5 +1,6 @@
 """可解释学习路径：证据更新与复习调度由同一套模型驱动。"""
 import json
+import math
 from fastapi import HTTPException
 from .evidence import knowledge_state, apply_evidence, diagnose_error, utc_now, estimate_state, parse_time
 from .path_planner import order_recommendations
@@ -23,12 +24,16 @@ def recommendations(db, user, course_id):
     for task in db.execute("SELECT a.* FROM assignments a LEFT JOIN class_members m ON m.class_id=a.class_id AND m.student_id=? WHERE a.course_id=? AND a.status='published' AND (a.class_id IS NULL OR m.student_id IS NOT NULL)",(user['id'],course_id)):
         assigned = json.loads(task['student_ids'])
         if not assigned or user['id'] in assigned:
-            teacher_focus.update(json.loads(task['question_ids']))
+            done={r[0] for r in db.execute('SELECT DISTINCT question_id FROM attempts WHERE student_id=? AND assignment_id=?',(user['id'],task['id']))}
+            teacher_focus.update(q for q in json.loads(task['question_ids']) if q not in done)
     by_id = {n['id']: n for n in nodes}
     parents = {n['id']: [] for n in nodes}
     for edge in db.execute('SELECT source,target FROM knowledge_edges WHERE course_id=?', (course_id,)):
         parents[edge['target']].append(edge['source'])
-    goals = [dict(r) for r in db.execute("SELECT title,knowledge_ids FROM learning_goals WHERE student_id=? AND course_id=? AND status='active'", (user['id'], course_id))]
+    goals = [dict(r) for r in db.execute("SELECT title,knowledge_ids,daily_minutes FROM learning_goals WHERE student_id=? AND course_id=? AND status='active'", (user['id'], course_id))]
+    # 多目标共享当天学习时段，采用最大日投入，避免把重合目标的时间重复相加。
+    budget=max((g['daily_minutes'] for g in goals),default=30)
+    completed={json.loads(r['target']).get('question_id') for r in db.execute("SELECT target FROM study_plans WHERE student_id=? AND course_id=? AND status='completed' AND date(updated_at)=date('now')",(user['id'],course_id))}
 
     def weak_ancestors(kid, visited=None):
         visited = set() if visited is None else visited
@@ -80,15 +85,23 @@ def recommendations(db, user, course_id):
         if related_goal:
             reason += f"；对应目标：{related_goal['title']}"
         kind = 'review' if wrong or due else 'video' if video and state['value'] < .45 else 'practice'
-        href = f'/review?{query}' if wrong or due else steps[0]['href']
+        href = f'/review?{query}&question={question["id"]}' if wrong or due else next((s['href'] for s in steps if s['kind']==kind),f'/practice?{query}&question={question["id"]}')
+        target={'question_id':question['id'],'completion_kind':'attempt'}
+        minutes=3+question['difficulty']*2+(2 if question['type']=='multiple' else 0)
+        if kind=='video':
+            metadata=json.loads(video['metadata']); minutes=max(1,math.ceil(metadata.get('duration',180)/60))+2
+            target={'resource_id':video['id'],'video_timestamp':0,'required_seconds':min(20,metadata.get('duration',20)),'completion_kind':'video_progress'}
+        if question['id'] in completed and not due and not wrong:continue
         priority = (1-state['value'])*50 + min(wrong, 3)*35 + due*20 + bool(related_goal)*10 - min(len(weak), 5)*2
         result.append({'id': f'{kind}-{kid}', 'course_id': course_id, 'knowledge_id': kid, 'title': node['title'],
                        'reason': reason, 'kind': kind, 'href': href, 'priority': round(priority, 2),
                        'mastery': round(state['value']*100), 'evidence': state, 'steps': steps,
                        'goal': bool(related_goal), 'teacher_task': question['id'] in teacher_focus, 'due': due, 'wrong': wrong,
                        'prerequisite_ids': weak, 'next_review_at': schedule['next_due'] if schedule else None,
-                       'expected_change': '完成后补充独立作答证据；以实际结果更新状态', 'estimated_minutes': 8})
-    return order_recommendations(result, parents, states)
+                       'expected_change': '完成后补充独立作答证据；以实际结果更新状态', 'estimated_minutes': minutes,'target':target})
+    result=order_recommendations(result, parents, states,budget)
+    for item in result:item['path_plan']['budget_policy']='活跃目标最大日投入；无目标为30分钟'
+    return result
 
 
 def normalize(answer):
@@ -129,10 +142,12 @@ def record_attempt(db, user, question, answer, hints_used=0, assignment_id=None,
                        (user['id'], question['id'], error_type, json.dumps(answer, ensure_ascii=False), schedule['next_due']))
         else:
             db.execute('UPDATE mistakes SET corrected=1,next_review_at=?,last_answer=? WHERE student_id=? AND question_id=?', (schedule['next_due'], json.dumps(answer, ensure_ascii=False), user['id'], question['id']))
-    payload = {'attempt_id': cur.lastrowid, 'question_id': question['id'], 'correct': correct, 'hints_used': hints_used,
+    payload = {'attempt_id': cur.lastrowid, 'assignment_id': assignment_id, 'question_id': question['id'], 'correct': correct, 'hints_used': hints_used,
                'review_status': review_status, 'evidence': update, 'schedule': schedule}
-    db.execute('INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload,created_at) VALUES(?,?,?,?,?,?)',
-               (user['id'], question['course_id'], question['knowledge_id'], 'attempt', json.dumps(payload, ensure_ascii=False), now.isoformat()))
+    event_id=db.execute('INSERT INTO learning_events(student_id,course_id,knowledge_id,kind,payload,created_at) VALUES(?,?,?,?,?,?)',
+               (user['id'], question['course_id'], question['knowledge_id'], 'attempt', json.dumps(payload, ensure_ascii=False), now.isoformat())).lastrowid
+    from .plan_targets import complete_matching_plans
+    complete_matching_plans(db,user['id'],question['course_id'],event_id,'attempt',payload)
     return {'id': cur.lastrowid, 'correct': correct, 'score': score, 'answer': json.loads(question['answer']),
             'explanation': question['explanation'], 'error_type': error_type, 'mastery': round(state['value']*100),
             'review_status': review_status, 'rubric': json.loads(question['rubric']), 'evidence': state,
