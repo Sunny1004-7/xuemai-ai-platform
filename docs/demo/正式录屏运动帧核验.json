@@ -1,0 +1,14 @@
+{
+  "source": "media/system-native.webm",
+  "window_seconds": [
+    20,
+    23
+  ],
+  "native_frames": 80,
+  "unique_frames": 80,
+  "observed_motion_fps": 29.445,
+  "capture": "Chromium原生标签页媒体流，静止时采用可变帧间隔",
+  "requested_track_fps": 30,
+  "unique_frames_per_window_second": 26.6667,
+  "observed_motion_fps_definition": "首个至最后一个采集帧的时间跨度；同时提供完整3秒窗口的不同帧均值"
+}

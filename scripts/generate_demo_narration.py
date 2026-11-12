@@ -75,7 +75,7 @@ async def synthesize():
     final=ROOT/'最终参赛提交材料';final.mkdir(exist_ok=True)
     (final/'学脉XueMai-演示字幕.srt').write_text('\n'.join(subtitles),encoding='utf8')
     (ROOT/'docs/demo').mkdir(exist_ok=True)
-    (ROOT/'docs/demo/讲解稿与分镜.md').write_text('# 学脉系统演示分镜\n\n总时长7分30秒，1920×1080。0:00—4:40展示系统操作，4:40—6:40回放三组原始AI协作记录，6:40—7:20说明五项方法、机制实验与官方联调，最后10秒为片尾。配音采用晓晓中文神经合成语音，逐句生成；底部字幕读取同次合成的WordBoundary，随音频适配速度一同换算时间。系统操作使用隔离数据库和本地示例模式。音频缓存以完整文案、声音、语速和边界方式的摘要匹配，修改文案后重新生成。\n\n'+'\n\n'.join(f'## {s["name"]}（{s["start"]}—{s["start"]+s["duration"]}秒）\n\n{s["text"]}' for s in scenes),encoding='utf8')
+    (ROOT/'docs/demo/讲解稿与分镜.md').write_text('# 学脉系统演示分镜\n\n本片采用原生标签页媒体流连续采集，在真实操作和剪辑完成后生成逐句解说。实际剪辑时间轴见“第七轮演示源/edit-timeline.json”。学生辅导和教师教学规划共2次官方请求，其余操作读取同一教学任务与会话。三条真实开发链回放约135秒，原始协作日期分别标识。晓晓中文神经合成语音逐句生成，底部字幕按同次WordBoundary换算，文案修改后按摘要重新生成缓存。\n\n'+'\n\n'.join(f'## {s["name"]}（{s["start"]}—{s["start"]+s["duration"]}秒）\n\n{s["text"]}' for s in scenes),encoding='utf8')
     print('完成',len(segments),'句配音、',len(subtitles),'条字幕')
 
 if __name__=='__main__':asyncio.run(synthesize())
