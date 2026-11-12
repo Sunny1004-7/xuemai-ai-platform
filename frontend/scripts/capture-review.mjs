@@ -642,6 +642,11 @@ try {
       if (module.role === 'public') {
         await button(page, '教师端').click()
         await full(page, 'teacher', '教师登录')
+        await page.setViewportSize(plan.mobile)
+        await full(page, 'teacher-mobile', '教师登录 · 手机窄屏', 'mobile')
+        await page.setViewportSize(plan.desktop_short)
+        await full(page, 'teacher-short', '教师登录 · 短窗口', 'desktop_short')
+        await page.setViewportSize(plan.desktop)
         await button(page, '学生端').click()
       } else await details(page, module, tokens)
     }

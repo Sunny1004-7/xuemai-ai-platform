@@ -32,7 +32,11 @@
       "navigation": false,
       "details": [
         "teacher"
-      ]
+      ],
+      "viewport_details": {
+        "mobile": ["teacher-mobile"],
+        "desktop_short": ["teacher-short"]
+      }
     },
     {
       "id": "dashboard",

@@ -81,6 +81,7 @@ def validate_screenshots(root: Path, directory: Path, record_name: str) -> tuple
     for module in plan['modules']:
         required = [(viewport, 'full') for viewport in viewports]
         required.extend(('desktop', state) for state in module['details'])
+        required.extend((viewport, state) for viewport, states in module.get('viewport_details', {}).items() for state in states)
         for course in ([None] if module['role']=='public' else plan.get('courses',[None])):
             course_required=required + [('desktop',state) for state in module.get('course_details',{}).get(course,[])]
             for viewport, state in course_required:

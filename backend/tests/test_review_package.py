@@ -116,6 +116,28 @@ def test_secret_in_source_rejects_archive_without_disclosing_value(tmp_path):
     assert not list((tmp_path / '交付审阅包').glob('*.zip*'))
 
 
+def test_viewport_specific_state_is_required_in_its_own_viewport(tmp_path):
+    screenshots = make_screenshots(tmp_path)
+    plan_path = tmp_path / 'frontend/scripts/review-capture-plan.json'
+    plan = json.loads(plan_path.read_text())
+    plan['modules'][0]['viewport_details'] = {'mobile': ['teacher-mobile']}
+    plan_path.write_text(json.dumps(plan), encoding='utf8')
+    manifest_path = tmp_path / screenshots / '截图清单.json'
+    manifest = json.loads(manifest_path.read_text())
+    manifest['source_fingerprint'] = source_fingerprint(tmp_path)
+    manifest['modules'] = plan['modules']
+    manifest_path.write_text(json.dumps(manifest), encoding='utf8')
+    with pytest.raises(ValueError, match='mobile/teacher-mobile'):
+        validate_screenshots(tmp_path, screenshots, 'docs/rounds/current.md')
+    original = next(row for row in manifest['files'] if row['viewport'] == 'mobile')
+    entry = original | {'state': 'teacher-mobile', 'path': 'public/login/mobile_teacher.png'}
+    make_file(tmp_path, (screenshots / entry['path']).as_posix(), (tmp_path / screenshots / original['path']).read_bytes())
+    manifest['files'].append(entry)
+    manifest_path.write_text(json.dumps(manifest), encoding='utf8')
+    validated, _ = validate_screenshots(tmp_path, screenshots, 'docs/rounds/current.md')
+    assert len(validated['files']) == 4
+
+
 def test_second_precision_collision_preserves_existing_archive(tmp_path):
     make_file(tmp_path, 'docs/rounds/current.md')
     at = datetime(2026, 11, 10, 15, 20, 30, tzinfo=BEIJING)
