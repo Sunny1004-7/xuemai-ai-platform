@@ -100,13 +100,13 @@ async def synthesize(round_number=None):
         raise ValueError('存在过短字幕，请结合语义合并讲稿片段')
     encoded='\n'.join(f'{index+1}\n{timestamp(row["start"])} --> {timestamp(row["end"])}\n{row["text"]}\n' for index,row in enumerate(subtitles))
     final=ROOT/'最终参赛提交材料';final.mkdir(exist_ok=True)
-    (final/'学脉XueMai-演示字幕.srt').write_text(encoded,encoding='utf8')
+    (final/'学脉XueMai-演示字幕.srt').write_text(encoded,encoding='utf8',newline='\n')
     (ROOT/'docs/demo').mkdir(exist_ok=True)
     description = '本片采用原生标签页媒体流连续采集，先确定实际画面与剪辑，再制作完整语段旁白。时间轴见第八轮演示源/edit-timeline.json。开场、痛点、框架、界面、开发过程与感谢依次展开。复用两次既有官方请求，本次新增DeepSeek请求0次。三条真实开发档案回放135秒，分别标明2026年11月3日与12日。云希中文神经合成人声按语段生成，字幕使用同次WordBoundary。字幕为透明背景，保留轻描边。完整可编辑源、录屏、边界、音轨和字幕随包提供。' if latest else '原生标签页连续采集，逐句旁白与WordBoundary字幕，实际时间轴见第七轮演示源。'
     if latest:
-        (project/'subtitles.srt').write_text(encoded,encoding='utf8')
+        (project/'subtitles.srt').write_text(encoded,encoding='utf8',newline='\n')
     if round_number == current['round']:
-        (ROOT/'docs/demo/学脉XueMai-演示字幕.srt').write_text(encoded,encoding='utf8')
+        (ROOT/'docs/demo/学脉XueMai-演示字幕.srt').write_text(encoded,encoding='utf8',newline='\n')
         (project/'subtitle-layout.json').write_text(json.dumps({'font':current['subtitle_font'],
             'font_size':current['subtitle_font_size'],'measured_max_width':1440,
             'safe_width':current['subtitle_safe_width'],'single_line':True,'cues':subtitles},ensure_ascii=False,indent=2),encoding='utf8')

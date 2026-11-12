@@ -85,11 +85,11 @@ def build():
     for block in srt.strip().split('\n\n'):
         lines=block.splitlines();a,b=lines[1].split(' --> ')
         ass.append(f'Dialogue: 0,{ass_time(seconds(a))},{ass_time(seconds(b))},Default,,0,0,0,,'+''.join(lines[2:]))
-    (local/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
+    (local/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
     if LATEST:
-        (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
+        (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
     if ROUND == CURRENT['round']:
-        (ROOT/'docs/demo/学脉XueMai-演示字幕.ass').write_text('\n'.join(ass),encoding='utf8')
+        (ROOT/'docs/demo/学脉XueMai-演示字幕.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
     subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(source),'-i',str(local/'complete.wav'),'-vf','ass=subtitles.ass','-map','0:v','-map','1:a','-c:v','libx264','-preset','fast','-crf','22','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(target)],cwd=local,check=True)
     print(json.dumps(inspect_output(target,segments),ensure_ascii=False))
     if LATEST:
