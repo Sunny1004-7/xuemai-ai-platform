@@ -1,0 +1,307 @@
+{
+  "duration_seconds": 473.466341,
+  "fps": 30,
+  "development_evidence_seconds": 135.0,
+  "system_interface_seconds": 259.5,
+  "real_api_calls_new": 0,
+  "reused_round7_real_calls": 2,
+  "edits": [
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-continuous.mp4",
+      "in": 2.220892299999973,
+      "out": 18.220892299999974,
+      "start": 0,
+      "duration": 16.0,
+      "frames": 480,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-continuous.mp4",
+      "in": 18.22564879999997,
+      "out": 40.22564879999997,
+      "start": 16.0,
+      "duration": 22.0,
+      "frames": 660,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 2.2938883999999984,
+      "out": 29.2938884,
+      "start": 38.0,
+      "duration": 27.0,
+      "frames": 810,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 0.3100803000000001,
+      "out": 8.669303200000002,
+      "start": 65.0,
+      "duration": 8.366666666666667,
+      "frames": 251,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 0.31,
+      "out": 59,
+      "start": 73.36666666666667,
+      "duration": 58.7,
+      "frames": 1761,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/student-review-continuous.mp4",
+      "in": 0.31,
+      "out": 18.5,
+      "start": 132.06666666666666,
+      "duration": 18.2,
+      "frames": 546,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 13.4931527,
+      "out": 24.4982968,
+      "start": 150.26666666666665,
+      "duration": 11.0,
+      "frames": 330,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 59,
+      "out": 89.46,
+      "start": 161.26666666666665,
+      "duration": 30.466666666666665,
+      "frames": 914,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/review-continuous.mp4",
+      "in": 21.1,
+      "out": 40.7,
+      "start": 191.73333333333332,
+      "duration": 19.6,
+      "frames": 588,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 89.46,
+      "out": 100.3,
+      "start": 211.33333333333331,
+      "duration": 10.833333333333334,
+      "frames": 325,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/follow-continuous.mp4",
+      "in": 1.5,
+      "out": 32.2,
+      "start": 222.16666666666666,
+      "duration": 30.7,
+      "frames": 921,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 24.4982968,
+      "out": 47.98764,
+      "start": 252.86666666666665,
+      "duration": 23.5,
+      "frames": 705,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 47.98764,
+      "out": 70.8395294,
+      "start": 276.3666666666667,
+      "duration": 22.866666666666667,
+      "frames": 686,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 70.8395294,
+      "out": 96.11526400000001,
+      "start": 299.23333333333335,
+      "duration": 25.266666666666666,
+      "frames": 758,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 29.3191229,
+      "out": 36.819122899999996,
+      "start": 324.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 36.92073799999999,
+      "out": 44.42073799999999,
+      "start": 332.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 44.4805839,
+      "out": 51.9805839,
+      "start": 339.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 52.047957399999994,
+      "out": 59.547957399999994,
+      "start": 347.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 59.6363869,
+      "out": 67.13638689999999,
+      "start": 354.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 67.21033899999999,
+      "out": 74.71033899999999,
+      "start": 362.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 74.7896755,
+      "out": 82.2896755,
+      "start": 369.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 82.36783689999999,
+      "out": 89.86783689999999,
+      "start": 377.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 89.93623170000001,
+      "out": 97.43623170000001,
+      "start": 384.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 97.5130164,
+      "out": 105.0130164,
+      "start": 392.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 105.09702339999998,
+      "out": 112.59702339999998,
+      "start": 399.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 112.66592010000001,
+      "out": 120.16592010000001,
+      "start": 407.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 120.2332977,
+      "out": 127.7332977,
+      "start": 414.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 127.8373345,
+      "out": 135.3373345,
+      "start": 422.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 135.4341379,
+      "out": 142.9341379,
+      "start": 429.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 143.00430300000002,
+      "out": 150.50430300000002,
+      "start": 437.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 150.5911791,
+      "out": 158.0911791,
+      "start": 444.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-patch-continuous.mp4",
+      "in": 158.1768909,
+      "out": 165.6768909,
+      "start": 452.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/boards-continuous.mp4",
+      "in": 203.59783549999997,
+      "out": 217.59783549999997,
+      "start": 459.5,
+      "duration": 14.0,
+      "frames": 420,
+      "category": "作品说明"
+    }
+  ]
+}
