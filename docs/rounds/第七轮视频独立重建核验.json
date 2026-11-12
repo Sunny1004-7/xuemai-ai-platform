@@ -1,0 +1,8 @@
+{
+  "isolated_rebuild_without_private_recording_directories": true,
+  "real_model_calls": 0,
+  "network_calls": 0,
+  "duration_seconds": 393.799674,
+  "edits_equal": true,
+  "source_clip_count": 6
+}

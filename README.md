@@ -2,7 +2,7 @@
 
 面向师生的 AI 个性化智慧教育平台，为第九届传智杯 AI 创新应用挑战赛原创开发。课程、知识图谱、视频、习题、辅导和分层教学共享真实 SQLite 数据。
 
-当前主分支为0.6：宋瓷青绿学生端、茶烟米褐教师端，共用课程选择器与首屏工作区。双端分组导航、力导向知识网络和栈操作实验连接现有课程数据。师生可逐条选择Flash或Pro，上传材料或用本地语音输入，教师通过独立DIA-TEACH助手组织教学草稿与群组任务。两门演示课程均包含六个单元、多题型练习、三段原创视频、目标计划和教学历史，通过正常启动自动初始化。预算路径连接具体学习对象，理解检查与教师干预共享学习证据。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[30页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[7分30秒1080p配音字幕演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V6.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
+当前主分支为0.6，第七轮更新了侧栏文案、教师混合意图路由、方法对照、技术报告与连续教学演示。宋瓷青绿学生端、茶烟米褐教师端，共用课程选择器与首屏工作区。双端分组导航、力导向知识网络和栈操作实验连接现有课程数据。师生可逐条选择Flash或Pro，上传材料或用本地语音输入，教师通过独立DIA-TEACH助手组织教学草稿与群组任务。两门演示课程均包含六个单元、多题型练习、三段原创视频、目标计划和教学历史，通过正常启动自动初始化。预算路径连接具体学习对象，理解检查与教师干预共享学习证据。平台面向课程学习、课后巩固与教学协作，数据结构和Python课程用于演示；教师可以创建其他课程。可阅读[29页技术文档](docs/deliverables/xuemai-technical-report.pdf)、观看[6分34秒1080p连续录屏演示](docs/deliverables/xuemai-demo-1080p.mp4)，或查看[方法定义与对照](docs/ALGORITHMS_V7.md)、[本轮验证](docs/VALIDATION.md)和[设计规范](docs/DESIGN_TOKENS.md)。[0.1发行历史](https://github.com/Sunny1004-7/xuemai-ai-platform/releases/tag/v0.1.0)保留，内容对应旧版。
 
 ![学脉课程知识图谱](docs/screenshots/knowledge-graph.png)
 

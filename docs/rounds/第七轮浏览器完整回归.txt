@@ -1,0 +1,44 @@
+[WebServer] INFO:     Started server process [38412]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+[WebServer] (node:24268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:25956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 31 tests using 1 worker
+
+  ok  1 e2e\authoring.spec.ts:31:1 › 教师用视频表单保存字幕片段与检查点，学生可检索并定位新字幕 (4.1s)
+  ok  2 e2e\authoring.spec.ts:138:1 › Mock 备课草稿编辑发布形成可检索版本，AI 题目审核后学生可独立作答 (3.9s)
+  ok  3 e2e\features.spec.ts:12:1 › 教师创建课程章节知识班级，学生邀请码加入后读取同一图谱 (3.8s)
+  ok  4 e2e\features.spec.ts:80:1 › 从图谱进入视频，完成互动检查并真实写回事件 (1.7s)
+  ok  5 e2e\features.spec.ts:113:1 › 原题进入 Mock 辅导，资料引用与历史可接续，服务故障反馈明确 (2.2s)
+  ok  6 e2e\features.spec.ts:145:1 › 教师根据学情发布定向任务，学生完成后再次分析作答增量 (3.3s)
+  ok  7 e2e\features.spec.ts:205:1 › 个人目标计划编辑持久化，课堂互动回答同步给教师 (10.8s)
+  ok  8 e2e\features.spec.ts:269:1 › 真实算法状态支持预测与执行，实验操作保存到学习事件 (2.5s)
+  ok  9 e2e\platform.spec.ts:11:1 › 教师发布作业，学生真实提交，教师查看结果与学情 (2.6s)
+  ok 10 e2e\platform.spec.ts:59:1 › 知识图谱定位视频、真实播放、时间戳笔记持久化 (995ms)
+  ok 11 e2e\platform.spec.ts:88:1 › 双端主要页面无崩溃，窄屏无横向溢出 (1.4s)
+  ok 12 e2e\round4.spec.ts:3:1 › 课程切换更新学习首项且作答反馈显示状态变化与后续路径 (1.1s)
+  ok 13 e2e\round4.spec.ts:20:1 › 教师四个学情工作区保持筛选并可分别完成任务 (1.3s)
+  ok 14 e2e\round5.spec.ts:12:5 › 第五轮首屏 student 课程1 (7.6s)
+  ok 15 e2e\round5.spec.ts:12:5 › 第五轮首屏 student 课程2 (7.7s)
+  ok 16 e2e\round5.spec.ts:12:5 › 第五轮首屏 teacher 课程1 (7.1s)
+  ok 17 e2e\round5.spec.ts:12:5 › 第五轮首屏 teacher 课程2 (6.3s)
+  ok 18 e2e\round5.spec.ts:88:1 › 第五轮课程选择器键盘操作和课程上下文清理 (975ms)
+  ok 19 e2e\round5.spec.ts:106:1 › 第五轮Python导航、辅导历史、实验和归档回答 (2.9s)
+  ok 20 e2e\round5.spec.ts:130:1 › 第五轮窄屏计划正文保留足够阅读宽度 (1.0s)
+  ok 21 e2e\round6.spec.ts:12:1 › 分组导航与教师帮助保留课程上下文，短窗口导航可达 (898ms)
+  ok 22 e2e\round6.spec.ts:26:1 › 模型与文档附件进入问答，引用位置和历史消息可重开 (2.3s)
+  ok 23 e2e\round6.spec.ts:46:1 › 教师从班级证据生成草稿，编辑保存并带群组进入作业发布 (3.2s)
+  ok 24 e2e\round6.spec.ts:65:1 › 栈操作回放与边界处理保存前后状态，预测与参与分开 (2.4s)
+  ok 25 e2e\round6.spec.ts:92:1 › 教师题库最后一行与分页边界及控件命中正常 (1.8s)
+  ok 26 e2e\round6.spec.ts:113:1 › 真实音频经本地识别进入可编辑输入框 (5.2s)
+  ok 27 e2e\round7.spec.ts:4:3 › 侧栏精简保留学生导航与面包屑 (720ms)
+  ok 28 e2e\round7.spec.ts:4:3 › 侧栏精简保留教师导航与面包屑 (771ms)
+  ok 29 e2e\upgrade.spec.ts:3:1 › 双端主题保持指定色值，登录布局在桌面完整可见 (964ms)
+  ok 30 e2e\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (2.1s)
+  ok 31 e2e\upgrade.spec.ts:108:1 › 辅导结构化动作执行理解检查并在历史保留评分 (2.3s)
+
+  31 passed (1.8m)

@@ -1,0 +1,18 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "frontend_http": 200,
+  "model_calls_for_check": 0,
+  "integrity": "ok",
+  "counts": {
+    "questions": 73,
+    "attempts": 2439,
+    "resources": 78,
+    "ai_conversations": 19,
+    "study_plans": 24
+  }
+}

@@ -1,0 +1,22 @@
+F.                                                                       [100%]
+================================== FAILURES ===================================
+______ test_teacher_design_keeps_requested_artifact_with_class_evidence _______
+
+client = <starlette.testclient.TestClient object at 0x000001EBF8BE52B0>
+
+    def test_teacher_design_keeps_requested_artifact_with_class_evidence(client):
+        teacher = headers(client, 'teacher')
+        result = events(client.post('/api/ai/chat', headers=teacher, json={
+            'course_id': 1, 'class_id': 1, 'knowledge_id': 2,
+            'message': '请基于这个班栈与队列的错误，设计一节30分钟讲评课。',
+        }))[-1]
+>       assert result['teaching']['task'] == 'design'
+E       AssertionError: assert 'analysis' == 'design'
+E         
+E         - design
+E         + analysis
+
+backend\tests\test_round7_workflow.py:10: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_round7_workflow.py::test_teacher_design_keeps_requested_artifact_with_class_evidence
+1 failed, 1 passed in 21.52s
