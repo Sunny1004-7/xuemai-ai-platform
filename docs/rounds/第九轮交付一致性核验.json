@@ -1,0 +1,26 @@
+{
+  "round": 9,
+  "base": "4fa0fa6064f82abb931b4b9dd84d541f1e28753d",
+  "artifact_sha256": {
+    "docs/deliverables/xuemai-technical-report.pdf": "2efea5d310725fdbf389bd8a9595f5b4444d109b1922744f396f2b46b1b67d3e",
+    "docs/deliverables/xuemai-demo-1080p.mp4": "26f56d681f110674cdd1f68e7a8597b513d7b99308d4298a5da2627f5ea23ae2",
+    "docs/figures/xuemai-framework.png": "2c9e1d16c1fc77c8c6a693b9bcc1aa036e4ea18da3eaaea8659beed95bc11092",
+    "docs/figures/xuemai-framework.pdf": "0a0854332d7d9fdeb84350fc577efce40af7a9fe1e9f1be8922ff36747359df5",
+    "docs/figures/xuemai-framework.svg": "eff638407f8e824199c11c80e0ee2657c3e6f61240c6dceca2c6d1196e31212c",
+    "docs/figures/xuemai-framework-regions.json": "21fe4dbba6349652108ca261539af4b8e15a2ca23d42463ffca8008e52a03eab",
+    "docs/demo/第九轮演示源/subtitles.srt": "7d918697036f3acf128c1cb6d1215cebbceaeb5d6535119c5425baf642818583",
+    "docs/demo/第九轮演示源/subtitles.ass": "6a7e08b2aafd236d6f3d6e90c2de50b188743f245ce51add0fc531a1a32d1d27"
+  },
+  "formal_repository_copies_identical": true,
+  "relative_links_valid": true,
+  "method_names_and_focus_consistent": true,
+  "all_edit_sources_present": true,
+  "all_current_subtitle_copies_identical": true,
+  "screenshots": 480,
+  "source_fingerprint": "c507d041e8a2be6f49db203113dbc0193f8eaf2c68e93f27456179a24c65c760",
+  "pdf_pages": 29,
+  "video_seconds": 473.47,
+  "new_deepseek_requests": 0,
+  "key_ignored_and_untracked": true,
+  "human_listening_review": false
+}

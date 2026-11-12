@@ -49,18 +49,25 @@
     "development_seconds": 135,
     "system_ui_seconds": 259.5,
     "voice_paragraphs": 20,
-    "subtitles": 93,
+    "subtitles": 72,
     "screenshots": 480,
-    "backend_tests": 157,
-    "browser_tests": 33,
-    "screenshot_directory": "交付审阅包/界面截图_20261112_174842"
+    "backend_tests": 162,
+    "browser_tests": 34,
+    "screenshot_directory": "交付审阅包/界面截图_20261112_195005",
+    "figures_tikz": 12,
+    "references": 17,
+    "visual_review_frames": 43,
+    "whisper_character_similarity": 0.9223
   },
   "artifacts": {
-    "docs/deliverables/xuemai-technical-report.pdf": "428b2d3d324e8a4e57925ff32a9a2e0ae094cece4802db7bb18dbb09c6e09c4a",
-    "docs/deliverables/xuemai-demo-1080p.mp4": "695b4020e3be1e0eee54e2d9bbc8895796ac83c944a8b174e6b718621b70ad03",
-    "docs/figures/xuemai-framework.png": "08eb2add0ecf94f41813109e66991a08d0c484b2ae511f9a79bad67ede5204d1",
-    "docs/figures/xuemai-framework.pdf": "56877c50a5692613acf8d58c02e4547c99123a93559dada78dfdd7770a4a0e7f",
-    "docs/figures/xuemai-framework.svg": "b3a70276a7813ef49fc0daa1d1352e7e8db77f2830a0a9cf96816b9d5a370938"
+    "docs/deliverables/xuemai-technical-report.pdf": "2efea5d310725fdbf389bd8a9595f5b4444d109b1922744f396f2b46b1b67d3e",
+    "docs/deliverables/xuemai-demo-1080p.mp4": "26f56d681f110674cdd1f68e7a8597b513d7b99308d4298a5da2627f5ea23ae2",
+    "docs/figures/xuemai-framework.png": "2c9e1d16c1fc77c8c6a693b9bcc1aa036e4ea18da3eaaea8659beed95bc11092",
+    "docs/figures/xuemai-framework.pdf": "0a0854332d7d9fdeb84350fc577efce40af7a9fe1e9f1be8922ff36747359df5",
+    "docs/figures/xuemai-framework.svg": "eff638407f8e824199c11c80e0ee2657c3e6f61240c6dceca2c6d1196e31212c",
+    "docs/figures/xuemai-framework-regions.json": "21fe4dbba6349652108ca261539af4b8e15a2ca23d42463ffca8008e52a03eab",
+    "docs/demo/第九轮演示源/subtitles.srt": "7d918697036f3acf128c1cb6d1215cebbceaeb5d6535119c5425baf642818583",
+    "docs/demo/第九轮演示源/subtitles.ass": "6a7e08b2aafd236d6f3d6e90c2de50b188743f245ce51add0fc531a1a32d1d27"
   },
   "method_definitions": [
     {

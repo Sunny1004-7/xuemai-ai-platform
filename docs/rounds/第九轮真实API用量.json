@@ -1,0 +1,11 @@
+{
+  "round": 9,
+  "actual_new_deepseek_requests": 0,
+  "reused_round7_requests": 2,
+  "reused_prompt_tokens": 3650,
+  "reused_completion_tokens": 637,
+  "automatic_retries": 0,
+  "tests_and_screenshots": "mock",
+  "real_request_source": "docs/rounds/第七轮真实API用量.json",
+  "recording_ai_generation_routes_blocked": true
+}

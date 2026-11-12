@@ -25,5 +25,10 @@
   "frontend_capture_count": 480,
   "backend_tests": 162,
   "browser_tests": 34,
-  "references": 17
+  "references": 17,
+  "fonts_embedded": true,
+  "reference_style": "自动编号、可点击的小号上标",
+  "code_spacing_verified": true,
+  "unresolved_references": false,
+  "overfull_boxes": 0
 }

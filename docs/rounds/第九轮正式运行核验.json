@@ -1,0 +1,12 @@
+{
+  "backend_port": 8000,
+  "frontend_port": 5173,
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "sqlite_integrity_check": "ok",
+  "real_model_calls_during_check": 0
+}

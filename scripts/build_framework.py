@@ -68,7 +68,7 @@ def build():
                'source':'docs/technical-report/figures/overall-framework.tex',
                'source_sha256':hashlib.sha256((ROOT/'docs/technical-report/figures/overall-framework.tex').read_text('utf8').encode('utf8')).hexdigest(),
                'source_digest_encoding':'UTF-8 with LF line endings'}
-    (OUT / 'xuemai-framework-regions.json').write_text(json.dumps(regions,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    (OUT / 'xuemai-framework-regions.json').write_text(json.dumps(regions,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n')
     author = facts['author']
     current = json.loads((ROOT / 'docs/demo/current.json').read_text('utf8'))
     video_project = ROOT / current['project']

@@ -102,7 +102,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。第六轮实际调用13次，Flash 10次、Pro 3次，输入16527、输出2540 Tokens，覆盖师生双角色、文档、图片、语音、出题、备课与评阅，全部成功。见[第六轮真实联调](docs/rounds/第六轮DeepSeek真实联调.json)。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
+常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。第六轮实际调用13次，Flash 10次、Pro 3次，输入16527、输出2540 Tokens，覆盖师生双角色、文档、图片、语音、出题、备课与评阅，全部成功。第七轮另保留两次Flash教学请求，第八、九轮材料制作复用这些响应，新增DeepSeek请求均为0次。见[第六轮真实联调](docs/rounds/第六轮DeepSeek真实联调.json)。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
 
 ## 结构与验证
 

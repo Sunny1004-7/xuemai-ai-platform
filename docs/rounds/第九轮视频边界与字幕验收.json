@@ -1,0 +1,316 @@
+{
+  "source_sha256": "26f56d681f110674cdd1f68e7a8597b513d7b99308d4298a5da2627f5ea23ae2",
+  "frame_count": 43,
+  "highlight_groups": 7,
+  "highlight_margins_min_pixels": 8,
+  "all_targets_contained": true,
+  "highlight_frames_per_group": 3,
+  "frame_points": [
+    {
+      "name": "问候与介绍",
+      "requested_seconds": 8.0,
+      "actual_seconds": 8.0,
+      "file": "01-问候与介绍.png",
+      "delivered": false
+    },
+    {
+      "name": "真实教学痛点",
+      "requested_seconds": 27.0,
+      "actual_seconds": 27.0,
+      "file": "02-真实教学痛点.png",
+      "delivered": false
+    },
+    {
+      "name": "总体方法框架",
+      "requested_seconds": 51.5,
+      "actual_seconds": 51.5,
+      "file": "03-总体方法框架.png",
+      "delivered": false
+    },
+    {
+      "name": "双角色入口",
+      "requested_seconds": 69.183,
+      "actual_seconds": 69.2,
+      "file": "04-双角色入口.png",
+      "delivered": false
+    },
+    {
+      "name": "从错题到学习路径",
+      "requested_seconds": 82.907,
+      "actual_seconds": 82.933,
+      "file": "05-从错题到学习路径.png",
+      "delivered": false
+    },
+    {
+      "name": "知识网络与操作实验",
+      "requested_seconds": 102.042,
+      "actual_seconds": 102.067,
+      "file": "06-知识网络与操作实验.png",
+      "delivered": false
+    },
+    {
+      "name": "真实辅导与理解检查",
+      "requested_seconds": 121.847,
+      "actual_seconds": 121.867,
+      "file": "07-真实辅导与理解检查.png",
+      "delivered": false
+    },
+    {
+      "name": "学生辅导结果",
+      "requested_seconds": 141.167,
+      "actual_seconds": 141.2,
+      "file": "08-学生辅导结果.png",
+      "delivered": false
+    },
+    {
+      "name": "会话与证据延续",
+      "requested_seconds": 155.767,
+      "actual_seconds": 155.8,
+      "file": "09-会话与证据延续.png",
+      "delivered": false
+    },
+    {
+      "name": "教师分析与教学规划",
+      "requested_seconds": 176.497,
+      "actual_seconds": 176.5,
+      "file": "10-教师分析与教学规划.png",
+      "delivered": false
+    },
+    {
+      "name": "教师方案结果",
+      "requested_seconds": 201.533,
+      "actual_seconds": 201.533,
+      "file": "11-教师方案结果.png",
+      "delivered": false
+    },
+    {
+      "name": "审核发布",
+      "requested_seconds": 216.75,
+      "actual_seconds": 216.767,
+      "file": "12-审核发布.png",
+      "delivered": false
+    },
+    {
+      "name": "学生完成与教师反馈",
+      "requested_seconds": 237.517,
+      "actual_seconds": 237.533,
+      "file": "13-学生完成与教师反馈.png",
+      "delivered": false
+    },
+    {
+      "name": "学生回应与教师回看",
+      "requested_seconds": 264.617,
+      "actual_seconds": 264.633,
+      "file": "14-学生回应与教师回看.png",
+      "delivered": false
+    },
+    {
+      "name": "正常接入新内容",
+      "requested_seconds": 287.8,
+      "actual_seconds": 287.833,
+      "file": "15-正常接入新内容.png",
+      "delivered": false
+    },
+    {
+      "name": "另一门课程与方法验证",
+      "requested_seconds": 311.867,
+      "actual_seconds": 311.867,
+      "file": "16-另一门课程与方法验证.png",
+      "delivered": false
+    },
+    {
+      "name": "真实开发链1",
+      "requested_seconds": 347.0,
+      "actual_seconds": 347.0,
+      "file": "17-真实开发链1.png",
+      "delivered": false
+    },
+    {
+      "name": "真实开发链2",
+      "requested_seconds": 392.0,
+      "actual_seconds": 392.0,
+      "file": "18-真实开发链2.png",
+      "delivered": false
+    },
+    {
+      "name": "真实开发链3",
+      "requested_seconds": 437.0,
+      "actual_seconds": 437.0,
+      "file": "19-真实开发链3.png",
+      "delivered": false
+    },
+    {
+      "name": "总结与感谢",
+      "requested_seconds": 466.5,
+      "actual_seconds": 466.5,
+      "file": "20-总结与感谢.png",
+      "delivered": false
+    },
+    {
+      "name": "inputs-开始",
+      "requested_seconds": 38.086,
+      "actual_seconds": 38.1,
+      "file": "21-inputs-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "inputs-淡入中间",
+      "requested_seconds": 38.186,
+      "actual_seconds": 38.2,
+      "file": "22-inputs-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "inputs-稳定",
+      "requested_seconds": 38.706,
+      "actual_seconds": 38.733,
+      "file": "23-inputs-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "shared-evidence-开始",
+      "requested_seconds": 41.162,
+      "actual_seconds": 41.167,
+      "file": "24-shared-evidence-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "shared-evidence-淡入中间",
+      "requested_seconds": 41.262,
+      "actual_seconds": 41.267,
+      "file": "25-shared-evidence-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "shared-evidence-稳定",
+      "requested_seconds": 41.782,
+      "actual_seconds": 41.8,
+      "file": "26-shared-evidence-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "student-methods-开始",
+      "requested_seconds": 44.656,
+      "actual_seconds": 44.667,
+      "file": "27-student-methods-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "student-methods-淡入中间",
+      "requested_seconds": 44.756,
+      "actual_seconds": 44.767,
+      "file": "28-student-methods-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "student-methods-稳定",
+      "requested_seconds": 45.276,
+      "actual_seconds": 45.3,
+      "file": "29-student-methods-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "teacher-methods-开始",
+      "requested_seconds": 51.438,
+      "actual_seconds": 51.467,
+      "file": "30-teacher-methods-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "teacher-methods-淡入中间",
+      "requested_seconds": 51.538,
+      "actual_seconds": 51.567,
+      "file": "31-teacher-methods-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "teacher-methods-稳定",
+      "requested_seconds": 52.058,
+      "actual_seconds": 52.067,
+      "file": "32-teacher-methods-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "services-开始",
+      "requested_seconds": 55.734,
+      "actual_seconds": 55.767,
+      "file": "33-services-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "services-淡入中间",
+      "requested_seconds": 55.834,
+      "actual_seconds": 55.867,
+      "file": "34-services-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "services-稳定",
+      "requested_seconds": 56.354,
+      "actual_seconds": 56.367,
+      "file": "35-services-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "workspaces-开始",
+      "requested_seconds": 58.89,
+      "actual_seconds": 58.9,
+      "file": "36-workspaces-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "workspaces-淡入中间",
+      "requested_seconds": 58.99,
+      "actual_seconds": 59.0,
+      "file": "37-workspaces-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "workspaces-稳定",
+      "requested_seconds": 59.51,
+      "actual_seconds": 59.533,
+      "file": "38-workspaces-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "feedback-开始",
+      "requested_seconds": 61.239,
+      "actual_seconds": 61.267,
+      "file": "39-feedback-开始.png",
+      "delivered": true
+    },
+    {
+      "name": "feedback-淡入中间",
+      "requested_seconds": 61.339,
+      "actual_seconds": 61.367,
+      "file": "40-feedback-淡入中间.png",
+      "delivered": true
+    },
+    {
+      "name": "feedback-稳定",
+      "requested_seconds": 61.859,
+      "actual_seconds": 61.867,
+      "file": "41-feedback-稳定.png",
+      "delivered": true
+    },
+    {
+      "name": "学生新背景",
+      "requested_seconds": 68,
+      "actual_seconds": 68.0,
+      "file": "42-学生新背景.png",
+      "delivered": true
+    },
+    {
+      "name": "教师新背景",
+      "requested_seconds": 72,
+      "actual_seconds": 72.0,
+      "file": "43-教师新背景.png",
+      "delivered": true
+    }
+  ],
+  "subtitle_cues": 72,
+  "single_line_width_measurement_passed": true,
+  "current_srt_ass_script_copies_identical": true,
+  "max_subtitle_width_pixels": 1312.0,
+  "min_subtitle_duration_seconds": 1.865
+}
