@@ -1,0 +1,116 @@
+{
+  "pages": 29,
+  "figures_tikz": 12,
+  "duplicate_architecture_removed": true,
+  "internal_figure_title_removed": true,
+  "distribution_stem_without_arrow": true,
+  "five_method_arrows_retained": true,
+  "references": 17,
+  "small_superscript_clickable_links": 16,
+  "citation_links": [
+    {
+      "source_page": 4,
+      "destination": "cite.bloom",
+      "target_page": 28,
+      "height": 8.3
+    },
+    {
+      "source_page": 4,
+      "destination": "cite.hattie",
+      "target_page": 28,
+      "height": 8.3
+    },
+    {
+      "source_page": 4,
+      "destination": "cite.vanlehn",
+      "target_page": 29,
+      "height": 8.3
+    },
+    {
+      "source_page": 7,
+      "destination": "cite.d3force",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 9,
+      "destination": "cite.corbett",
+      "target_page": 29,
+      "height": 8.3
+    },
+    {
+      "source_page": 9,
+      "destination": "cite.piech",
+      "target_page": 29,
+      "height": 8.3
+    },
+    {
+      "source_page": 9,
+      "destination": "cite.stan",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 12,
+      "destination": "cite.reactpaper",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 13,
+      "destination": "cite.kaufman",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 14,
+      "destination": "cite.sm2",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 14,
+      "destination": "cite.settles",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 20,
+      "destination": "cite.sqlite",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 20,
+      "destination": "cite.rag",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 21,
+      "destination": "cite.whisper",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 22,
+      "destination": "cite.deepseek",
+      "target_page": 29,
+      "height": 8.31
+    },
+    {
+      "source_page": 22,
+      "destination": "cite.react",
+      "target_page": 29,
+      "height": 8.31
+    }
+  ],
+  "unresolved_references": false,
+  "overfull_boxes": 0,
+  "code_physical_page": 27,
+  "code_printed_page": 26,
+  "preceding_text_gap_pt": 18.63,
+  "following_text_gap_pt": 21.5,
+  "all_pages_rendered_and_visually_reviewed": true,
+  "method_definitions": "docs/METHOD_TERMS.md"
+}

@@ -12,6 +12,10 @@
 \usetikzlibrary{arrows.meta,positioning,calc,fit}
 \usepackage{xcolor,setspace,fancyhdr,caption,hyperref,enumitem,listings,tocloft,placeins}
 \hypersetup{hidelinks}
+% 保留LaTeX文献键与hyperref目标，方括号和自动编号整体缩小为上标。
+\makeatletter
+\renewcommand\@cite[2]{\textsuperscript{\normalfont\scriptsize[#1\if@tempswa, #2\fi]}}
+\makeatother
 \setstretch{1.3}
 \setlength{\parindent}{2em}
 \setlength{\parskip}{1pt}
@@ -24,10 +28,12 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\pagechapter}[1]{\section{#1}}
 \newcommand{\diagram}[2]{\begin{figure}[htbp]\centering\input{figures/#1.tex}\caption{#2}\end{figure}}
+\newcommand{\frameworkdiagram}[1]{\begin{figure}[htbp]\centering\resizebox{\linewidth}{!}{\input{figures/overall-framework.tex}}\caption{#1}\end{figure}}
 \newcommand{\screen}[2]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\caption{#2}\end{figure}}
 \newcommand{\pairedscreen}[4]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\\[-2pt]{\small (a) #2}\par\vspace{5pt}\includegraphics[width=\linewidth]{images/#3.png}\\[-2pt]{\small (b) #4}\caption{#2与#4的应用对应}\label{fig:#1}\end{figure}}
 \input{submission-author.tex}
-\lstset{basicstyle=\normalsize\ttfamily,keywordstyle=\color{black}\bfseries,commentstyle=\color{black},stringstyle=\color{black},breaklines=true,frame=single,rulecolor=\color{black!35},columns=fullflexible,keepspaces=true,showstringspaces=false}
+\input{method-names.tex}
+\lstset{basicstyle=\normalsize\ttfamily,keywordstyle=\color{black}\bfseries,commentstyle=\color{black},stringstyle=\color{black},breaklines=true,frame=single,rulecolor=\color{black!35},columns=fullflexible,keepspaces=true,showstringspaces=false,aboveskip=10pt,belowskip=10pt,framesep=6pt,xleftmargin=7pt,xrightmargin=7pt}
 
 \definecolor{celadon}{HTML}{2E6A67}
 \definecolor{pale}{HTML}{D7E6DB}
@@ -63,7 +69,7 @@
 专业名称：&\underline{\makebox[9cm][c]{\authorMajor}}\\[12pt]
 参赛作者：&\underline{\makebox[9cm][c]{\authorName}}\\[12pt]
 参赛赛道：&\underline{\makebox[9cm][c]{AI创新应用挑战赛}}\\[12pt]
-应用场景：&\underline{\makebox[9cm][c]{课后巩固与教师循证分层指导}}\\[12pt]
+应用场景：&\underline{\makebox[9cm][c]{\applicationFocus}}\\[12pt]
 系统版本：&\underline{\makebox[9cm][c]{0.6.0}}\\[12pt]
 文档日期：&\underline{\makebox[9cm][c]{2026年11月}}
 \end{tabular}
@@ -71,7 +77,7 @@
 \end{titlepage}
 {\fontsize{10.5pt}{12.6pt}\selectfont\setstretch{1}\tableofcontents}
 \clearpage\section*{摘要}\addcontentsline{toc}{section}{摘要}
-从课堂学习到课后巩固，学生遇到的困难往往分散在不同位置：一道题暴露出概念混淆，一段视频留下未解的问题，一次课堂回答反映了先修知识缺口。教师看到这些材料后，还需要判断应当帮助谁、安排什么内容，以及后续学习是否出现变化。学脉围绕这一过程，把课程知识结构、学生作答、AI辅导和教师任务组织在同一套教学平台中。
+学脉面向课程学习、个性化辅导与教学协作，连接课前准备、课中互动和课后学习。学生遇到的困难往往分散在不同位置，一道题暴露出概念混淆，一段视频留下未解的问题，一次课堂回答反映了先修知识缺口。教师看到这些材料后，还需要判断应当帮助谁、安排什么内容，以及后续学习是否出现变化。学脉把课程知识结构、学生作答、AI辅导和教师任务组织在同一套教学平台中。
 
 学生端以当前学习任务为入口，连接知识图谱、讲义、视频片段、交互实验和习题。系统根据题目难度、提示使用、部分得分、相近题相关性与时间间隔更新知识状态，同时呈现证据充分度。对于需要巩固的知识，平台沿先修关系组织学习路径，并把复习时间安排到学生的学习工作区。
 
@@ -99,7 +105,7 @@
 \subsubsection{设计目标}
 项目设置三个相互关联的目标。第一，使每个学习建议都能进入明确的课程对象，减少材料检索和页面切换的成本。第二，使用有明确定义的状态估计与复习规则，保留计算依据，使学习建议具有可解释性。第三，使教师的任务发布与学生的完成结果能够相互对应，便于跟踪后续学习表现。
 
-平台当前聚焦高校课程的个性化课后巩固，以及教师依据学习证据开展分层指导。本文采用数据结构与Python课程展示概念、操作步骤与迁移练习之间的联系。学生端帮助学习者在错题之后找到适合的材料与练习；教师端把班级共性困难落实为可审核的任务，并持续查看完成结果。反馈质量与后续行动之间的联系也是教学研究的重要议题\cite{bloom,hattie,vanlehn}。
+平台面向高校课程的课前准备、课中互动与课后学习，连接学生个性化学习和教师教学支持。课前，教师组织课程资料、知识结构与教学安排，学生查看目标计划和材料。课中，师生通过课堂问题、回答与交互实验开展活动。课后，学生练习、辅导和复习，教师依据作答组织针对性任务并持续查看结果。本文采用数据结构与Python课程展示这些活动之间的联系。反馈质量与后续行动之间的联系也是教学研究的重要议题\cite{bloom,hattie,vanlehn}。
 
 课程内容通过章节、知识、资源与习题配置。新增的“信息素养微单元”以来源交叉核验为主题，通过普通接口完成建课、入班、讲义入库、学生辅导、独立练习、任务发布与课堂反馈。该过程沿用同一组业务服务，说明新的课程内容可以接入已有的教学组织方式。
 
@@ -122,10 +128,9 @@
 \subsection{系统总体架构}
 
 总体方法沿学生与教师两条业务线组织。知识状态为个人路径提供依据，个人辅导调用课程资料并安排理解检查；班级错因形成关注群组，教师助手据此编排教学环节。共享服务处理检索、模型生成、对象校验和持久化，实际作答与教学反馈再形成下一轮判断的依据。
-\diagram{overall-framework}{学脉总体方法与教学协同框架}
+\frameworkdiagram{学脉总体方法与教学协同框架}
 
 系统采用模块化单体架构。前端负责交互、课程对象定位和结果呈现；后端统一处理身份、课程访问范围、确定性评分、学习证据与AI调用。SQLite保存课程内容、学习事件和版本信息。对于本机体验和课程规模的演示，这一方案能够以较少的运行依赖贯通主要业务。
-\diagram{architecture}{学脉总体架构与模块关系}
 前端按学习和教学任务分成独立页面，通过路由按需加载。知识图谱布局、算法实验、富文本渲染和理解检查分别封装，减少页面之间的重复实现。主题样式由共享设计变量控制，学生和教师使用不同主色与页面结构。
 
 后端将课程管理、练习评阅、资源、学生计划、教学分析和AI服务分开实现。学习证据引擎提供统一的状态查询与更新方法，首页、图谱、推荐和教师分析使用同一套计算规则。原始作答、证据变化和复习安排分别保存，以支持过程追踪。
@@ -137,7 +142,7 @@ AI适配层区分本地示例与官方服务。两种方式使用相同的会话
 
 \subsection{课程知识结构与内容建设}
 
-课程知识结构采用有向无环图。节点代表知识点，先修边从基础知识指向依赖它的后续内容。章节提供主题组织，知识点保存定义、难度和学习目标，资源与题目通过知识点关联。修改先修关系时，后端检查是否形成循环，使课程路径保持可解释的顺序。
+课程知识结构采用有向无环图（Directed Acyclic Graph，DAG）。节点代表知识点，先修边从基础知识指向依赖它的后续内容。章节提供主题组织，知识点保存定义、难度和学习目标，资源与题目通过知识点关联。修改先修关系时，后端检查是否形成循环，使课程路径保持可解释的顺序。
 
 \begin{table}[H]\centering\caption{数据结构与算法课程的六个主题}\begin{tabularx}{\linewidth}{p{2.5cm}Y}\toprule 主题&知识点\\\midrule 线性结构&数组与链表、栈与队列、顺序表操作、单链表、双向链表、循环队列、括号匹配\\递归与复杂度&时间复杂度、空间复杂度、递归终止条件、递归与分治、循环边界与不变量\\树结构&二叉树、二叉树遍历、二叉搜索树、堆与堆调整、优先队列\\图结构&邻接表与邻接矩阵、图的遍历、深度优先搜索、广度优先搜索、拓扑排序\\排序方法&冒泡排序、快速排序、插入排序、归并排序、排序稳定性\\查找与索引&顺序查找、二分查找、哈希表、哈希冲突处理\\\bottomrule\end{tabularx}\end{table}
 
@@ -164,7 +169,7 @@ Python课程按变量与表达式、条件与循环、组合数据、函数、�
 
 \section{五项核心教学方法}
 
-五项方法围绕同一批课程对象和学习证据分工。K-TRACE负责估计，PATH-G负责顺序安排，CLASS-LOOP形成班级教学关注，两个DIA流程分别组织个人辅导与教师教学行动。规则计算负责确定性评分、对象范围和约束校验，DeepSeek负责结合课程材料生成解释与可编辑教学内容。每次辅导或教学规划最多进行一次模型生成。
+五项方法围绕同一批课程对象和学习证据分工，分别处理知识状态估计、学习顺序安排、班级教学关注、个人辅导与教师教学行动。规则计算负责确定性评分、对象范围和约束校验，DeepSeek负责结合课程材料生成解释与可编辑教学内容。每次辅导或教学规划最多进行一次模型生成。下文统一给出各项方法在本项目中的中英文定义。
 
 \begin{table}[htbp]\centering\caption{方法输入、输出与可观察产品行为}\begin{tabularx}{\linewidth}{p{2.9cm}YYY}\toprule 方法&主要输入&计算输出&产品中的观察位置\\\midrule
 \mbox{K-TRACE}&评分、提示、时间、同类作答&知识估计、区间、证据量&练习反馈、图谱状态、学情矩阵\\
@@ -175,6 +180,7 @@ Python课程按变量与表达式、条件与循环、组合数据、函数、�
 
 
 \subsection{K-TRACE：相关性修正的多维知识证据追踪}
+\methodKTrace{}将作答、提示使用与时间变化转为可追溯的知识状态。
 固定加减分会把“独立答对”“多次提示后答对”和“密集重复”视为近似结果。K-TRACE按知识点维护带时间的Beta证据，输入为实际得分、难度、技能、提示、时间与历史作答，输出知识估计、有效证据量、近似区间和复习依据。知识追踪研究说明了按学习过程维护状态的价值\cite{corbett,piech}；本系统选择参数少、计算依据清楚的更新方式，适合课程规模的交互反馈。
 
 设先验为$(\alpha_0,\beta_0)=(1,3)$，距上次有效证据$d$天，半衰期为30天。时间保留比例与折减后参数为
@@ -199,6 +205,7 @@ Beta方差为$\alpha'\beta'/[(\alpha'+\beta')^2(\alpha'+\beta'+1)]$，系统使�
 二级独立题权重为1.4；在8次同技能近期其他作答后，权重降为0.68313。同一先验下，独立正确的后验为0.44444，两次提示后正确为0.27160。零权重重复成功保留历史，但不刷新有效证据时间。上述参数为明确的工程设定，课程应用时可结合题目质量逐步标定。
 
 \subsection{PATH-G：先修约束的多目标学习路径规划}
+\methodPathG{}根据学习者的状态和可用时间选择下一组活动。
 PATH-G把“推荐哪项内容”扩展为“先后完成哪些内容”。输入包含知识有向图、K-TRACE状态、个人目标、教师任务、到期复习、错题和可用资源；输出当次计划、预计用时、后续候选和推荐分项。只有具备已审核可评分题的知识点才形成练习候选，知识卡、视频和实验沿该知识的实际资源组织。
 
 知识$v$已有准备状态的条件设为$N_v\ge2\land \hat p_v\ge0.6$。路径$P=(k_1,\ldots,k_t)$需满足时间预算$B$和先修顺序：
@@ -223,6 +230,7 @@ J(P)=\sum_{i=1}^{t}\left(0.92^{i-1}U_{k_i}-0.06c_{k_i}\right).
 先修条件同样适用于计划之后的候选排序。某个目标缺少可执行先修资源、且先修尚无充分证据支持时，该目标继续等待，避免出现无法顺序完成的学习建议。学生作答后重新生成路径，先修得到支持便可将当次时间用于后续内容。有限束宽控制搜索规模，活动用时采用明确的估计值；约束满足与动态重规划的对照结果见第六节。
 
 \subsection{DIA-GUIDE：诊断—干预—校验协作教学编排}
+\methodDiaGuide{}把学生问题组织成带有教学行动与理解反馈的辅导过程。
 普通单轮回答往往止于解释。DIA-GUIDE把解释置于具有输入、职责、工具和反馈的教学过程内。它采用混合代理机制：规则诊断代理读取证据，策略代理选择教学表征并指导一次语言模型生成，规则校验代理核对对象和动作。每轮最多一次模型调用，三个角色通过结构化状态传递结果。
 
 共享状态写为$S=(E,D,P,V,F)$，依次表示学习证据、诊断、策略、校验与理解反馈。诊断输入包括当前题、提示情况、近期错误、先修缺口和上轮检查；输出教学关注和支持证据。策略根据这些结果选择概念对照、渐进提示、实验表征或独立检查，再将课程片段和动作候选传给模型。
@@ -237,6 +245,7 @@ E\rightarrow D\rightarrow P\rightarrow V\rightarrow F\rightarrow E_{\mathrm{next
 自动化案例验证了三个角色的顺序、检查评分、持久反馈以及失败后的策略改变。一次正式DeepSeek抽样也完成协作输出与有效理解检查。相较于纯文本回答，本方法增加了课程内动作执行和反馈状态，帮助辅导从“说完”继续走向“检验并调整”。规则诊断用于可检查的常见困难，开放误解仍由教师结合原始答案判断。教学工具与行动结合的思路亦可见于语言模型行动研究\cite{reactpaper}。
 
 \subsection{DIA-TEACH：教学目标与班级证据双约束编排}
+\methodDiaTeach{}同时读取教师目标与授权班级证据，形成可编辑教学产物。
 教师助手把教学讨论、学情分析、教学设计、分层干预、出题与量规建议识别为不同任务。简短教学讨论直接进入资料检索；需要班级判断时，才读取授权班级的作答、错因与知识状态。专题问题进一步限定知识范围，使“栈与队列的典型错误”读取该专题的统计。
 
 设教师目标为$g$、授权证据为$E$、课程题目集合为$Q$，教学方案为$D=(S,G)$，其中$S$是活动序列，$G$是分层任务。校验要求活动时间满足$\sum_{s\in S}t_s\leq B$，群组来自本次CLASS-LOOP计算，且每组题目$Q_j\subseteq Q$。群组学生标识由服务端补入。统计数字逐句核对授权证据，无法支持的统计表述使用实际查询摘要替换。
@@ -244,6 +253,7 @@ E\rightarrow D\rightarrow P\rightarrow V\rightarrow F\rightarrow E_{\mathrm{next
 一次模型生成形成解释和结构化草稿。教师可修改标题、目标与教学活动，再保存为教案草稿；群组任务进入作业审核表单，题目草稿进入现有题目编辑器。每个写入步骤需要教师确认，重复保存返回同一产物。学生DIA-GUIDE以理解检查调整个人辅导，教师DIA-TEACH以班级证据与课程目标组织教学安排，两者共享资源和权限校验。
 
 \subsection{CLASS-LOOP：基于错因距离的动态教学分层}
+\methodClassLoop{}把近期学习困难转为动态关注群组与对应任务。
 相同总分可能对应不同困难。CLASS-LOOP从最近14天的已评分作答形成六维向量$x_s=(e_c,e_p,e_r,e_t,h,a)$，依次表示概念、步骤、推理和迁移的平均失分、提示比例与参与间隔。缺少某类作答时取中性值0.5；参与间隔$a=\min(1,\Delta d/14)$。输入为班级证据，输出临时群组、代表学生、关注类型、离散度、匹配题目和目标学生。
 
 为避免把“没有观察到”当作“没有困难”，系统为每维增加支持度$c_{sj}$：四类技能取$\min(1,n_{sj}/4)$，提示维度取$\min(1,n_s/6)$，参与维度有评分记录时为1。采用带支持度的加权L1距离和k-medoids聚类\cite{kaufman}：
@@ -322,7 +332,7 @@ I_n&=\begin{cases}1,&n=1,\\6,&n=2,\\I_{n-1}E',&n>2.\end{cases}
 
 AI解释联合使用授权课程资料与本次会话附件作为来源。讲义、字幕和教学资料上传或编辑后，系统保存版本，并通过资源变化队列更新全文检索片段。未变化的资源保留原索引，使重复提问不再导致整门课程资料重新建立索引。
 \diagram{retrieval}{资源增量索引与课程范围内检索}
-检索采用SQLite FTS5\cite{sqlite,rag}。资料按标题和段落切分，每片段最多800字符，PDF保留页码，DOCX、Markdown和CSV保留段落、标题或行号。中文使用连续二字组合。候选片段排序为$R(c,q)=L(c,q)+0.5I_k+0.2I_n+A(c,q)$，其中$L$为词项重合得分，$I_k$与$I_n$分别表示当前知识与相邻知识关联。每份材料最多取2段，总共最多5段、5200字符。
+课程辅导采用检索增强生成（Retrieval-Augmented Generation，RAG）组织可定位的资料片段。检索采用SQLite FTS5\cite{sqlite,rag}。资料按标题和段落切分，每片段最多800字符，PDF保留页码，DOCX、Markdown和CSV保留段落、标题或行号。中文使用连续二字组合。候选片段排序为$R(c,q)=L(c,q)+0.5I_k+0.2I_n+A(c,q)$，其中$L$为词项重合得分，$I_k$与$I_n$分别表示当前知识与相邻知识关联。每份材料最多取2段，总共最多5段、5200字符。
 
 对栈与队列的明确顺序描述，查询侧将FIFO与“先进先出”“先放入先取出”等表述关联，LIFO对应后进先出。单一顺序意图与片段正文一致时$A=0.35$，正文仅表达对立顺序时$A=-0.35$，其他情况取0。比较问题保留两种概念，直接否定的术语先从意图判断中去除。这项定向改进在6种顺序问法中均将相关正文排到首位，另有比较、否定与无关命名检查。
 
@@ -422,8 +432,8 @@ DIA-TEACH专项包含10项检查，覆盖轻量讨论、混合意图设计、专
 这段提示来自2026年11月3日Codex根代理向后端代理的协作指令。后续反馈先固定get\_db、current\_user和require\_course，再协调AI与前端。接口与权限作为共同上下文，降低了不同模块对同一课程对象作出不同解释的风险。
 
 测试承担意图校验。教师助手专项将一句自然语言要求转成三个可验证条件，即返回教学设计类型、包含教学环节、时间不超过30分钟。实际代码片段体现从任务目标到执行优先级的转换。
-\par\noindent\begin{minipage}{\linewidth}
-\begin{lstlisting}[language=Python]
+\par\addvspace{12pt}\noindent\begin{minipage}[t]{\linewidth}\vspace{0pt}
+\begin{lstlisting}[language=Python,aboveskip=0pt]
 task_rules = [
     ('intervention', ['分层', '两组', '后续练习']),
     ('question', ['出题', '设计题目', '生成一道']),
@@ -432,7 +442,7 @@ task_rules = [
     ('analysis', ['学情', '这个班', '错误', '掌握']),
 ]
 \end{lstlisting}
-\end{minipage}\par
+\end{minipage}\par\addvspace{10pt}
 上例为当前路由关键词的节选，完整规则保存在teacher\_assistant.py。产物关键词优先于一般证据词；课程与授权班级校验在工具读取前完成，方案的时间、群组和题目则在生成后再次校验。
 
 \subsection{三条可核对的实际开发链}

@@ -46,8 +46,9 @@ def build(screenshots,record,draft=False):
     for name,(original,box) in crops.items():
         Image.open(images/(original+'.png')).crop(box).save(images/(name+'.png'))
     (source/'组合截图来源.json').write_text(json.dumps(crops,ensure_ascii=False,indent=2),encoding='utf8')
-    back=(ROOT/'docs/rounds/第八轮后端完整回归.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'docs/rounds/第八轮浏览器完整回归.txt').read_text(encoding='utf-8',errors='replace')
+    facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
+    back=(ROOT/facts['validation_sources']['backend']).read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/facts['validation_sources']['browser']).read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
     summary=f"后端业务、算法、权限及交付校验{bm[1]}项通过，浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规回归使用本地示例模式，连续教学演示中的学生辅导与教师教学规划保留两次官方接口响应。本次材料制作复用已有真实会话，新增模型请求0次。\n"
@@ -57,6 +58,9 @@ def build(screenshots,record,draft=False):
         r=subprocess.run(['xelatex','-interaction=nonstopmode','-halt-on-error','-output-directory='+str(compiled),'main.tex'],cwd=source,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
         (ROOT/'.local'/f'report-compile-{index+1}.log').write_bytes(r.stdout)
         if r.returncode:raise RuntimeError('文档编译失败，请检查编译输出')
+    final_log=r.stdout.decode('utf8',errors='replace')
+    if re.search(r'(Citation|Reference).*undefined|There were undefined references',final_log):
+        raise RuntimeError('文档存在未解析引用')
     document=fitz.open(compiled/'main.pdf')
     text='\n'.join(p.get_text() for p in document)
     for word in ['PROJECT_STATE','CODEX_TASK','本地工作区','本轮记录','D:\\','C:\\']:
@@ -73,7 +77,7 @@ def build(screenshots,record,draft=False):
     if len(document)>30:raise RuntimeError(f'文档{len(document)}页，超过30页；已输出预览供修订')
     outputs=[ROOT/'最终参赛提交材料/学脉XueMai-技术文档.pdf',ROOT/'docs/deliverables/xuemai-technical-report.pdf']
     for output in outputs:output.parent.mkdir(exist_ok=True,parents=True);shutil.copy2(compiled/'main.pdf',output)
-    diagram_count=len(re.findall(r'\\diagram\{', (source/'main.tex').read_text('utf-8')))
+    diagram_count=len(re.findall(r'\\(?:diagram|frameworkdiagram)\{', (source/'main.tex').read_text('utf-8')))
     reference_count=len(re.findall(r'\\bibitem\{',(source/'main.tex').read_text('utf-8')))
     main=(source/'main.tex').read_text('utf8')
     single_count=len(re.findall(r'\\screen\{',main))
