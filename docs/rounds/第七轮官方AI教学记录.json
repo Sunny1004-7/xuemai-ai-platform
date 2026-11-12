@@ -1,0 +1,500 @@
+[
+  {
+    "role": "学生",
+    "message": "我在题目中选了1。请根据附件丙牌记录解释为什么先出栈的是3，用简短反例引导我，并检查理解。",
+    "done": {
+      "conversation_id": 11,
+      "usage": {
+        "prompt_tokens": 1538,
+        "completion_tokens": 205,
+        "estimated": false
+      },
+      "model": "deepseek-flash",
+      "artifact": {},
+      "status": "complete",
+      "teaching": {
+        "strategy": "hint",
+        "intent": "contrast",
+        "actions": [
+          {
+            "kind": "contrast",
+            "title": "查看概念与先修关系",
+            "href": "/graph?course=1&knowledge=2"
+          },
+          {
+            "kind": "check",
+            "title": "完成理解检查",
+            "check_id": 1
+          }
+        ],
+        "check": {
+          "id": 1,
+          "title": "1、2、3依次入队，首先出队的是？",
+          "type": "single",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "knowledge_id": 2
+        },
+        "knowledge_id": 2,
+        "knowledge_title": "栈与队列",
+        "concept": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+        "collaboration": {
+          "method": "DIA-GUIDE",
+          "version": 3,
+          "diagnosis": {
+            "role": "学习诊断代理",
+            "knowledge_id": 2,
+            "concern": "先修缺口",
+            "evidence_count": 5.19,
+            "uncertainty": [
+              0,
+              0.504
+            ],
+            "prerequisites": [
+              {
+                "id": 1,
+                "title": "数组与链表",
+                "observed": true,
+                "value": 0.332
+              }
+            ],
+            "recent_errors": [
+              "入栈与出栈顺序混淆",
+              "先修知识待巩固",
+              "入栈与出栈顺序混淆",
+              "入栈与出栈顺序混淆"
+            ],
+            "previous_feedback": null,
+            "tools": [
+              "knowledge_state",
+              "recent_attempts",
+              "prerequisite_lookup",
+              "check_feedback"
+            ],
+            "intent": "contrast"
+          },
+          "decision": {
+            "role": "教学策略代理",
+            "strategy": "contrast",
+            "actions": [
+              {
+                "kind": "contrast",
+                "title": "查看概念与先修关系",
+                "href": "/graph?course=1&knowledge=2"
+              },
+              {
+                "kind": "check",
+                "title": "完成理解检查",
+                "check_id": 1
+              }
+            ],
+            "objective": "先修缺口",
+            "instruction": "教学关注：先修缺口。采用contrast策略，一次只处理一个困难。"
+          },
+          "trace": [
+            {
+              "role": "学习诊断代理",
+              "result": "先修缺口"
+            },
+            {
+              "role": "教学策略代理",
+              "result": "先修缺口"
+            },
+            {
+              "role": "教学校验代理",
+              "result": "动作与引用已校验"
+            }
+          ],
+          "model_calls_limit": 1,
+          "transition": "planned → awaiting_check",
+          "run_id": 1,
+          "verification": {
+            "role": "教学校验代理",
+            "passed": true,
+            "rejected_actions": [],
+            "invalid_references": [],
+            "citation_support": [
+              {
+                "id": 1,
+                "supported": true,
+                "matched_terms": [
+                  "先出",
+                  "入栈",
+                  "在栈",
+                  "栈",
+                  "栈顶"
+                ],
+                "locator": "段落1"
+              },
+              {
+                "id": 4,
+                "supported": true,
+                "matched_terms": [
+                  "先出",
+                  "操作",
+                  "栈",
+                  "栈顶"
+                ],
+                "locator": "第1段"
+              }
+            ],
+            "checks": [
+              "课程对象映射",
+              "可执行动作类型",
+              "理解检查关联",
+              "资料引用位置与词项支持"
+            ]
+          },
+          "status": "awaiting_check"
+        }
+      },
+      "content": "你选了 1，说明把“入栈顺序”和“出栈顺序”看成了同一条线。先只抓一个关键点：**栈只在栈顶操作，最后压进去的元素在栈顶**。\n\n用附件里的丙牌记录做个简短反例：甲、乙、丙依次入栈后，栈顶是丙；第一次弹出的是丙，不是甲。若先出甲，就等于从栈底抽牌，那不符合“只在栈顶操作”的栈规则 [4]。同理，1、2、3 依次入栈后，先看谁在栈顶，再决定谁先出 [1]。\n\n检查一下：如果把入栈顺序改成 1、2、3、4，按同样规则，**第一个出栈的应该是几？** 请只回答这个数，并说一句“它在不在栈顶”。",
+      "next_action": "/practice?course=1&knowledge=2"
+    }
+  },
+  {
+    "role": "教师",
+    "message": "请依据这个班栈与队列的错误安排30分钟讲评课和后续练习。请纳入陈星河所在的迁移应用关注组（group-6），每组只选1道合法候选题，目标和三个教学环节简短具体。",
+    "done": {
+      "conversation_id": 12,
+      "usage": {
+        "prompt_tokens": 2112,
+        "completion_tokens": 432,
+        "estimated": false
+      },
+      "model": "deepseek-flash",
+      "artifact": {
+        "id": 1,
+        "kind": "intervention",
+        "draft": {
+          "title": "栈与队列：状态追踪与迁移讲评课",
+          "objective": "对照具体作答，区分入栈与出栈的操作顺序，用相同输入比较栈与队列的差异，并在更换输入后独立完成迁移复测。",
+          "steps": [
+            {
+              "title": "发现问题",
+              "minutes": 5,
+              "activity": "展示匿名错例，让学生先独立预测1、2、3依次入栈与入队后的首个出栈/出队元素，暴露顺序混淆。"
+            },
+            {
+              "title": "对照追踪",
+              "minutes": 15,
+              "activity": "用相同输入分别逐步追踪栈与队列的每次操作，标注栈顶与队首变化，说明限制操作如何决定应用场景。"
+            },
+            {
+              "title": "迁移练习与复测",
+              "minutes": 10,
+              "activity": "各组完成指定候选题，迁移应用组更换输入解释同一条规则，记录错误步骤供后续复测。"
+            }
+          ],
+          "groups": [
+            {
+              "group_id": "group-6",
+              "objective": "更换输入检验栈与队列规则的迁移应用",
+              "question_ids": [
+                2
+              ],
+              "student_ids": [
+                2,
+                6,
+                12,
+                18,
+                24
+              ],
+              "name": "迁移应用关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-8",
+              "objective": "逐步追踪状态并检查操作顺序",
+              "question_ids": [
+                1
+              ],
+              "student_ids": [
+                5,
+                7,
+                8,
+                11,
+                13,
+                14,
+                17,
+                20,
+                23,
+                25,
+                26,
+                29
+              ],
+              "name": "操作步骤关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-3",
+              "objective": "用反例区分概念边界",
+              "question_ids": [
+                11
+              ],
+              "student_ids": [
+                3,
+                9,
+                10,
+                15,
+                19,
+                21,
+                27
+              ],
+              "name": "概念辨析关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-4",
+              "objective": "用反例区分概念边界",
+              "question_ids": [
+                1
+              ],
+              "student_ids": [
+                4,
+                16,
+                22,
+                28
+              ],
+              "name": "概念辨析关注组",
+              "knowledge_id": 2
+            }
+          ]
+        },
+        "status": "draft"
+      },
+      "status": "complete",
+      "teaching": {
+        "method": "DIA-TEACH",
+        "task": "intervention",
+        "minutes": 30,
+        "topic": "栈与队列",
+        "evidence": {
+          "summary": {
+            "student_count": 28,
+            "average_mastery": 42,
+            "attempt_count": 2196,
+            "accuracy": 76,
+            "coverage": 767,
+            "possible_evidence": 868
+          },
+          "errors": [
+            {
+              "name": "入栈与出栈顺序混淆",
+              "value": 30
+            },
+            {
+              "name": "程序步骤偏差",
+              "value": 29
+            },
+            {
+              "name": "迁移应用待检验",
+              "value": 10
+            },
+            {
+              "name": "错因待确认",
+              "value": 6
+            },
+            {
+              "name": "先修知识待巩固",
+              "value": 5
+            }
+          ],
+          "scope": "栈与队列、循环队列、优先队列",
+          "knowledge": [
+            {
+              "id": 2,
+              "title": "栈与队列",
+              "observed_count": 28,
+              "average_mastery": 47,
+              "distribution": {
+                "weak": 8,
+                "learning": 20,
+                "unknown": 0
+              }
+            },
+            {
+              "id": 14,
+              "title": "循环队列",
+              "observed_count": 22,
+              "average_mastery": 38,
+              "distribution": {
+                "learning": 10,
+                "weak": 12,
+                "unknown": 6
+              }
+            },
+            {
+              "id": 22,
+              "title": "优先队列",
+              "observed_count": 24,
+              "average_mastery": 46,
+              "distribution": {
+                "learning": 15,
+                "weak": 9,
+                "unknown": 4
+              }
+            }
+          ],
+          "groups": [
+            {
+              "id": "group-4",
+              "name": "概念辨析关注组",
+              "student_ids": [
+                4,
+                16,
+                22,
+                28
+              ],
+              "focus": "概念辨析",
+              "strategy": "用反例区分概念边界",
+              "question_ids": [
+                1,
+                11,
+                2
+              ],
+              "knowledge_id": 2
+            },
+            {
+              "id": "group-3",
+              "name": "概念辨析关注组",
+              "student_ids": [
+                3,
+                9,
+                10,
+                15,
+                19,
+                21,
+                27
+              ],
+              "focus": "概念辨析",
+              "strategy": "用反例区分概念边界",
+              "question_ids": [
+                1,
+                11,
+                2
+              ],
+              "knowledge_id": 2
+            },
+            {
+              "id": "group-8",
+              "name": "操作步骤关注组",
+              "student_ids": [
+                5,
+                7,
+                8,
+                11,
+                13,
+                14,
+                17,
+                20,
+                23,
+                25,
+                26,
+                29
+              ],
+              "focus": "操作步骤",
+              "strategy": "逐步追踪状态并检查操作顺序",
+              "question_ids": [
+                1,
+                11,
+                2
+              ],
+              "knowledge_id": 2
+            },
+            {
+              "id": "group-6",
+              "name": "迁移应用关注组",
+              "student_ids": [
+                2,
+                6,
+                12,
+                18,
+                24
+              ],
+              "focus": "迁移应用",
+              "strategy": "更换输入检验知识迁移",
+              "question_ids": [
+                1,
+                11,
+                2
+              ],
+              "knowledge_id": 2
+            }
+          ],
+          "assignments": [
+            {
+              "id": 9,
+              "title": "薄弱知识巩固任务",
+              "submission_count": 0
+            },
+            {
+              "id": 8,
+              "title": "边界条件阶段测验",
+              "submission_count": 0
+            },
+            {
+              "id": 7,
+              "title": "基础概念与执行追踪",
+              "submission_count": 28
+            },
+            {
+              "id": 3,
+              "title": "图遍历与查找复测",
+              "submission_count": 17
+            },
+            {
+              "id": 2,
+              "title": "线性结构阶段练习",
+              "submission_count": 22
+            }
+          ],
+          "generated_at": "2026-11-12T07:18:17.941652+00:00"
+        },
+        "trace": [
+          {
+            "role": "教学任务规划",
+            "result": {
+              "task": "intervention",
+              "minutes": 30,
+              "class_id": 1
+            }
+          },
+          {
+            "role": "班级证据工具",
+            "result": {
+              "tool": "analytics_data / CLASS-LOOP",
+              "student_count": 28,
+              "graded_attempts": 2196
+            }
+          },
+          {
+            "role": "草稿质量校验",
+            "result": "结构、课时及课程对象范围通过"
+          }
+        ],
+        "conversation_id": 12,
+        "model_calls_limit": 1,
+        "citation_support": [],
+        "numeric_validation": {
+          "checked": [
+            "28",
+            "47",
+            "8",
+            "20",
+            "30",
+            "29"
+          ],
+          "unsupported": [],
+          "scope": "栈与队列、循环队列、优先队列"
+        },
+        "status": "draft_ready"
+      },
+      "content": "本班共28人，栈与队列平均掌握度47%，其中薄弱8人、学习中20人；错误集中在“入栈与出栈顺序混淆”（30次）和“程序步骤偏差”（29次），说明讲评应先做状态追踪、再辨析概念边界，最后用更换输入的练习检验迁移。迁移应用关注组（group-6）需在讲评后安排变式练习，检验规则能否迁移到新输入。以下草稿需教师确认后发布。",
+      "next_action": "/practice?course=1&knowledge="
+    }
+  }
+]

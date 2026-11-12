@@ -1,0 +1,27 @@
+{
+  "request_limit": 6,
+  "calls": [
+    {
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 1538,
+        "completion_tokens": 205,
+        "estimated": false
+      },
+      "created_at": "2026-11-12 07:17:46"
+    },
+    {
+      "model": "deepseek-flash",
+      "status": "ok",
+      "usage": {
+        "prompt_tokens": 2112,
+        "completion_tokens": 432,
+        "estimated": false
+      },
+      "created_at": "2026-11-12 07:18:17"
+    }
+  ],
+  "count": 2,
+  "automatic_retries": 0
+}
