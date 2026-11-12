@@ -19,9 +19,11 @@
   ],
   "figures_tikz": 13,
   "screenshots": 10,
-  "screenshot_width": "100%版心，完整导航与顶部栏，彩色，不设高度缩放",
-  "frontend_capture_count": 478,
-  "backend_tests": 124,
-  "browser_tests": 31,
+  "full_application_screenshots": 8,
+  "detail_subfigures": 2,
+  "screenshot_width": "100%版心；完整应用与局部细节分别标注；彩色，不设高度缩放",
+  "frontend_capture_count": 480,
+  "backend_tests": 157,
+  "browser_tests": 33,
   "references": 17
 }

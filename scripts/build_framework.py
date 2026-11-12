@@ -38,6 +38,9 @@ def build():
     # 字形路径化 SVG 在浏览器及离线阅读中保持一致。可编辑文本和连线保留于 TikZ 母版。
     subprocess.run(['pdftocairo', '-svg', str(OUT / 'xuemai-framework.pdf'), str(OUT / 'xuemai-framework.svg')], check=True)
     author = facts['author']
+    video_project = ROOT / 'docs/demo/第八轮演示源'
+    video_project.mkdir(parents=True, exist_ok=True)
+    (video_project / 'product.json').write_text(json.dumps(facts, ensure_ascii=False, indent=2), encoding='utf8')
     (ROOT / 'docs/technical-report/submission-author.tex').write_text('\n'.join([
         r'\newcommand{\authorSchool}{' + author['school'] + '}',
         r'\newcommand{\authorMajor}{' + author['major'] + '}',

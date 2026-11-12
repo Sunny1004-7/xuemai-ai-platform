@@ -25,6 +25,8 @@
 \newcommand{\pagechapter}[1]{\section{#1}}
 \newcommand{\diagram}[2]{\begin{figure}[htbp]\centering\input{figures/#1.tex}\caption{#2}\end{figure}}
 \newcommand{\screen}[2]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\caption{#2}\end{figure}}
+\newcommand{\pairedscreen}[4]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\\[-2pt]{\small (a) #2}\par\vspace{5pt}\includegraphics[width=\linewidth]{images/#3.png}\\[-2pt]{\small (b) #4}\caption{#2与#4的应用对应}\label{fig:#1}\end{figure}}
+\input{submission-author.tex}
 \lstset{basicstyle=\normalsize\ttfamily,keywordstyle=\color{black}\bfseries,commentstyle=\color{black},stringstyle=\color{black},breaklines=true,frame=single,rulecolor=\color{black!35},columns=fullflexible,keepspaces=true,showstringspaces=false}
 
 \definecolor{celadon}{HTML}{2E6A67}
@@ -50,17 +52,19 @@
 \vspace*{1.3cm}
 {\zihao{3}\bfseries 第九届传智杯全国大学生数智创新与AI应用大赛\par}
 \vspace{.6cm}{\zihao{4}AI创新应用挑战赛\par}
-\vspace{2.5cm}
+\vspace{1.5cm}
 {\zihao{0}\bfseries 学脉 XueMai\par}
 \vspace{.6cm}{\zihao{2}\bfseries 师生双端AI个性化智慧教育平台\par}
-\vspace{1.5cm}{\zihao{2}作品技术文档\par}
+\vspace{1cm}{\zihao{2}作品技术文档\par}
 \vfill
 \begin{tabular}{rl}
 作品名称：&\underline{\makebox[9cm][c]{学脉 XueMai}}\\[15pt]
-作品类型：&\underline{\makebox[9cm][c]{师生双端AI个性化智慧教育平台}}\\[15pt]
-参赛赛道：&\underline{\makebox[9cm][c]{AI创新应用挑战赛}}\\[15pt]
-应用场景：&\underline{\makebox[9cm][c]{课程学习、课后巩固与教学协作}}\\[15pt]
-系统版本：&\underline{\makebox[9cm][c]{0.6}}\\[15pt]
+参赛学校：&\underline{\makebox[9cm][c]{\authorSchool}}\\[12pt]
+专业名称：&\underline{\makebox[9cm][c]{\authorMajor}}\\[12pt]
+参赛作者：&\underline{\makebox[9cm][c]{\authorName}}\\[12pt]
+参赛赛道：&\underline{\makebox[9cm][c]{AI创新应用挑战赛}}\\[12pt]
+应用场景：&\underline{\makebox[9cm][c]{课后巩固与教师循证分层指导}}\\[12pt]
+系统版本：&\underline{\makebox[9cm][c]{0.6.0}}\\[12pt]
 文档日期：&\underline{\makebox[9cm][c]{2026年11月}}
 \end{tabular}
 \vspace{1.6cm}
@@ -95,7 +99,9 @@
 \subsubsection{设计目标}
 项目设置三个相互关联的目标。第一，使每个学习建议都能进入明确的课程对象，减少材料检索和页面切换的成本。第二，使用有明确定义的状态估计与复习规则，保留计算依据，使学习建议具有可解释性。第三，使教师的任务发布与学生的完成结果能够相互对应，便于跟踪后续学习表现。
 
-平台以课程、章节、知识点和学习活动组织内容，可承载不同学段的学科学习、职业技能训练与课后巩固。教师根据教学目标配置知识依赖、题目与资源，学生沿相应课程开展学习。本文采用数据结构与Python课程展示具体过程，它们是便于观察概念、步骤与迁移差异的演示内容。个性化教学关注学习者的具体反馈，反馈质量与后续行动之间的联系也是教学研究的重要议题\cite{bloom,hattie,vanlehn}。
+平台当前聚焦高校课程的个性化课后巩固，以及教师依据学习证据开展分层指导。本文采用数据结构与Python课程展示概念、操作步骤与迁移练习之间的联系。学生端帮助学习者在错题之后找到适合的材料与练习；教师端把班级共性困难落实为可审核的任务，并持续查看完成结果。反馈质量与后续行动之间的联系也是教学研究的重要议题\cite{bloom,hattie,vanlehn}。
+
+课程内容通过章节、知识、资源与习题配置。新增的“信息素养微单元”以来源交叉核验为主题，通过普通接口完成建课、入班、讲义入库、学生辅导、独立练习、任务发布与课堂反馈。该过程沿用同一组业务服务，说明新的课程内容可以接入已有的教学组织方式。
 
 
 \subsection{角色分工与学习活动组织}
@@ -114,6 +120,9 @@
 
 
 \subsection{系统总体架构}
+
+总体方法沿学生与教师两条业务线组织。知识状态为个人路径提供依据，个人辅导调用课程资料并安排理解检查；班级错因形成关注群组，教师助手据此编排教学环节。共享服务处理检索、模型生成、对象校验和持久化，实际作答与教学反馈再形成下一轮判断的依据。
+\diagram{overall-framework}{学脉总体方法与教学协同框架}
 
 系统采用模块化单体架构。前端负责交互、课程对象定位和结果呈现；后端统一处理身份、课程访问范围、确定性评分、学习证据与AI调用。SQLite保存课程内容、学习事件和版本信息。对于本机体验和课程规模的演示，这一方案能够以较少的运行依赖贯通主要业务。
 \diagram{architecture}{学脉总体架构与模块关系}
@@ -156,7 +165,6 @@ Python课程按变量与表达式、条件与循环、组合数据、函数、�
 \section{五项核心教学方法}
 
 五项方法围绕同一批课程对象和学习证据分工。K-TRACE负责估计，PATH-G负责顺序安排，CLASS-LOOP形成班级教学关注，两个DIA流程分别组织个人辅导与教师教学行动。规则计算负责确定性评分、对象范围和约束校验，DeepSeek负责结合课程材料生成解释与可编辑教学内容。每次辅导或教学规划最多进行一次模型生成。
-\diagram{method-map}{五项方法与师生产品模块的关联}
 
 \begin{table}[htbp]\centering\caption{方法输入、输出与可观察产品行为}\begin{tabularx}{\linewidth}{p{2.9cm}YYY}\toprule 方法&主要输入&计算输出&产品中的观察位置\\\midrule
 \mbox{K-TRACE}&评分、提示、时间、同类作答&知识估计、区间、证据量&练习反馈、图谱状态、学情矩阵\\
@@ -286,15 +294,15 @@ I_n&=\begin{cases}1,&n=1,\\6,&n=2,\\I_{n-1}E',&n>2.\end{cases}
 
 \subsection{学生学习工作区}
 学生首页将当前任务置于中心，目标、知识图谱、练习、复习、视频和实验提供连续入口。课程选择器集中管理两门课程，切换时取消旧请求并清理题目与会话上下文。桌面采用正常字号与分页，移动端按阅读顺序展开。
-\screen{student-dashboard}{学生完整工作区与课程入口}
+图\ref{fig:student-dashboard}把整体工作区与一次作答的反馈放在一起。学生首页提供继续学习的入口，题目提交后保留解析、错因和证据变化，使学习安排与实际表现相互对应。
+\pairedscreen{student-dashboard}{完整学生工作区}{practice-detail}{独立作答后的评分与证据反馈}
 
-题目提交后呈现评分、解析、错因和证据变化。客观题确定性评分，主观题由教师按量规复核。错题、复习与教师作业保留原始作答和关联任务，学生能够从反馈继续进入具体知识活动。
-\screen{practice}{独立作答与知识证据反馈}
+图中24.1\%至26.9\%是该次作答前后知识估计的变化，100分对应本次客观题得分。有效证据量与估计区间同时展示，教师能够进一步追溯原始作答。错题、复习与教师作业保留关联任务，学生可从反馈进入下一项课程活动。主观题由教师依据量规复核。
 
 \subsection{视频、实验与个人辅导}
 视频字幕、知识片段和笔记共享时间戳，学生可带着当前片段进入AI辅导。栈实验将操作、结构、返回值和历史轨迹放在同一视图，支持输入、压栈、出栈、查看栈顶、空栈边界与回放。Python实验展示分支、循环、列表和函数的受控执行状态。
-\screen{video}{Python课程视频、片段和学习笔记}
-\screen{stack-experiment}{栈实验的操作端、返回值与真实轨迹}
+\pairedscreen{stack-experiment}{完整栈操作实验}{video-detail}{Python视频学习的时间定位与笔记细节}
+栈实验中，学生可以对照结构变化、返回值与逐步轨迹，检查自己对操作顺序的理解。视频笔记保留所在片段，重新打开即可继续讨论当时的问题。两类活动提供不同的观察方式，并将后续练习连接到相应知识。
 学习事件记录观看、实验和辅导经历；独立作答提供知识更新证据。学生辅导接收题目、附件或视频片段，给出课程内引用、实验入口和理解检查。检查失败后，下一轮策略读取持久反馈并调整表征。
 
 \subsection{教师判断与任务组织}
@@ -314,7 +322,9 @@ I_n&=\begin{cases}1,&n=1,\\6,&n=2,\\I_{n-1}E',&n>2.\end{cases}
 
 AI解释联合使用授权课程资料与本次会话附件作为来源。讲义、字幕和教学资料上传或编辑后，系统保存版本，并通过资源变化队列更新全文检索片段。未变化的资源保留原索引，使重复提问不再导致整门课程资料重新建立索引。
 \diagram{retrieval}{资源增量索引与课程范围内检索}
-检索采用SQLite FTS5\cite{sqlite,rag}。资料按标题和段落切分，每片段最多800字符，PDF保留页码，DOCX、Markdown和CSV保留段落、标题或行号。中文使用连续二字组合。候选片段的排序为$R(c,q)=L(c,q)+0.5I_k+0.2I_n$，其中$L$为词项重合得分，$I_k$与$I_n$分别表示当前知识与相邻知识关联。每份材料最多取2段，总共最多5段、5200字符，避免长文档占满上下文。
+检索采用SQLite FTS5\cite{sqlite,rag}。资料按标题和段落切分，每片段最多800字符，PDF保留页码，DOCX、Markdown和CSV保留段落、标题或行号。中文使用连续二字组合。候选片段排序为$R(c,q)=L(c,q)+0.5I_k+0.2I_n+A(c,q)$，其中$L$为词项重合得分，$I_k$与$I_n$分别表示当前知识与相邻知识关联。每份材料最多取2段，总共最多5段、5200字符。
+
+对栈与队列的明确顺序描述，查询侧将FIFO与“先进先出”“先放入先取出”等表述关联，LIFO对应后进先出。单一顺序意图与片段正文一致时$A=0.35$，正文仅表达对立顺序时$A=-0.35$，其他情况取0。比较问题保留两种概念，直接否定的术语先从意图判断中去除。这项定向改进在6种顺序问法中均将相关正文排到首位，另有比较、否定与无关命名检查。
 
 引用保存标题、片段、版本和定位快照。资源变化队列更新变更资料的片段，历史回答仍可查看原引用。当前权限在每次检索前检查，教师教案草稿与未发布题目始终限定在授权教学范围。附件采用私有随机标识，限定上传者、课程和会话，删除时同步撤销其检索片段。
 
@@ -392,7 +402,7 @@ DIA-TEACH专项包含10项检查，覆盖轻量讨论、混合意图设计、专
 \subsection{检索消歧、图谱与运行检查}
 “受控同词歧义场景下的知识上下文消歧实验”使用20例，固定词项和候选，仅切换知识关联加权。词项排序Top-1和Top-3均1/20，关联加权均20/20，引用定位完整。这衡量当前知识在同词歧义中的作用。
 
-扩展5例包含同义表达、无知识上下文、相近材料、上传附件及证据不足。所有返回定位合法，证据不足例返回空集。同义表达“先放入先取出”Top-1仍为栈视频，队列讲义进入Top-3，显示二字词项方法对语义改写的不足。该结果与20例受控消歧分别保留，后续可在相同基准中检验语义检索。
+扩展5例包含同义表达、无知识上下文、相近材料、上传附件及证据不足。初次结果中，所有定位合法，证据不足例返回空集；“先放入先取出”首位仍为栈视频，队列讲义进入前三。保留这组原始结果后，系统补充顺序术语扩展与正文一致性排序，并另设6种顺序问法定向回归，相关正文均进入首位。新增比较、否定和无关命名检查通过。这组小规模回归用于检验已发现的问题。
 
 图谱几何验证覆盖两门实际课程和6、31、80节点合成网络，最终节点碰撞与连线遮挡均为0。浏览器在100\%缩放检查搜索、拖动、适配、全屏恢复、附件与模型切换及两端任务操作。自动化截图保留导航、顶部栏与完整工作区，补充移动端长页和关键结果。
 

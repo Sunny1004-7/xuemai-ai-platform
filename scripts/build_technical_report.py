@@ -15,6 +15,7 @@ from review_screenshots import validate_screenshots
 
 
 def build(screenshots,record,draft=False):
+    subprocess.run([sys.executable,str(ROOT/'scripts/build_framework.py')],check=True)
     subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
     subprocess.run([sys.executable,str(ROOT/'scripts/report_round7_evidence.py')],check=True)
     source=ROOT/'docs/technical-report'
@@ -40,11 +41,16 @@ def build(screenshots,record,draft=False):
         img=Image.open(directory/relative).convert('RGB')
         # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
         img.save(images/(name+'.png'))
-    back=(ROOT/'docs/rounds/第七轮后端完整回归.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'docs/rounds/第七轮浏览器完整回归.txt').read_text(encoding='utf-8',errors='replace')
+    crops={'practice-detail':('practice',(275,305,1110,547)),
+           'video-detail':('video',(256,490,1415,835))}
+    for name,(original,box) in crops.items():
+        Image.open(images/(original+'.png')).crop(box).save(images/(name+'.png'))
+    (source/'组合截图来源.json').write_text(json.dumps(crops,ensure_ascii=False,indent=2),encoding='utf8')
+    back=(ROOT/'docs/rounds/第八轮后端完整回归.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'docs/rounds/第八轮浏览器完整回归.txt').read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
-    summary=f"后端业务、算法与交付校验{bm[1]}项通过，浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规回归使用本地示例模式，连续教学演示中的学生辅导与教师教学规划使用官方接口。\n"
+    summary=f"后端业务、算法、权限及交付校验{bm[1]}项通过，浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规回归使用本地示例模式，连续教学演示中的学生辅导与教师教学规划保留两次官方接口响应。本次材料制作复用已有真实会话，新增模型请求0次。\n"
     (source/'validation-summary.tex').write_text(summary,encoding='utf-8')
     compiled=ROOT/'.local/technical-report-build';compiled.mkdir(exist_ok=True,parents=True)
     for index in range(3):
@@ -69,8 +75,10 @@ def build(screenshots,record,draft=False):
     for output in outputs:output.parent.mkdir(exist_ok=True,parents=True);shutil.copy2(compiled/'main.pdf',output)
     diagram_count=len(re.findall(r'\\diagram\{', (source/'main.tex').read_text('utf-8')))
     reference_count=len(re.findall(r'\\bibitem\{',(source/'main.tex').read_text('utf-8')))
-    screen_count=len(re.findall(r'\\screen\{',(source/'main.tex').read_text('utf8')))
-    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':screen_count,'screenshot_width':'100%版心，完整导航与顶部栏，彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':reference_count}
+    main=(source/'main.tex').read_text('utf8')
+    single_count=len(re.findall(r'\\screen\{',main))
+    paired_count=len(re.findall(r'\\pairedscreen\{',main))
+    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':single_count+paired_count*2,'full_application_screenshots':single_count+paired_count,'detail_subfigures':paired_count,'screenshot_width':'100%版心；完整应用与局部细节分别标注；彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':reference_count}
     (ROOT/'docs/technical-report/验收结果.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))
 
