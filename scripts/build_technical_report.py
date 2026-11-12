@@ -40,8 +40,8 @@ def build(screenshots,record,draft=False):
         img=Image.open(directory/relative).convert('RGB')
         # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
         img.save(images/(name+'.png'))
-    back=(ROOT/'.local/round7-backend.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'.local/round7-e2e.txt').read_text(encoding='utf-8',errors='replace')
+    back=(ROOT/'docs/rounds/第七轮后端完整回归.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'docs/rounds/第七轮浏览器完整回归.txt').read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
     summary=f"后端业务、算法与交付校验{bm[1]}项通过，浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规回归使用本地示例模式，连续教学演示中的学生辅导与教师教学规划使用官方接口。\n"
