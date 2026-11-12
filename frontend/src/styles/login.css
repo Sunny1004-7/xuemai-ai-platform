@@ -31,7 +31,8 @@
 .login-identity > p { color: var(--brand-primary); font-size: 16px; letter-spacing: 2px; padding-left: 4px; }
 .login-entry { display: grid; align-items: center; padding: 56px 64px; }
 .login-form { display: flex; flex-direction: column; min-width: 0; width: 100%; }
-.login-form h1 { font: 600 30px/1.5 'Microsoft YaHei', sans-serif; letter-spacing: 0; margin-bottom: 30px; }
+.login-form h1 { display: flex; flex-wrap: wrap; font: 600 30px/1.6 'SimSun', 'Songti SC', serif; letter-spacing: 0; margin-bottom: 30px; }
+.login-form h1 span { white-space: nowrap; }
 .login-roles { display: grid; grid-template-columns: 1fr 1fr; padding: 5px; background: var(--surface); border-radius: 12px; margin-bottom: 28px; gap: 4px; }
 .login-roles button { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 8px; border: 0; border-radius: 9px; background: transparent; color: var(--text-muted); }
 .login-roles button.selected { background: var(--surface-raised); color: var(--brand-primary); box-shadow: 0 2px 7px #18353112; font-weight: 600; }
@@ -56,6 +57,6 @@
   .login-identity .brand-symbol { width: 42px; height: 42px; }
   .login-art, .login-identity > p { display: none; }
   .login-entry { padding: 28px 28px 36px; }
-  .login-form h1 { font-size: 25px; margin-bottom: 22px; }
+  .login-form h1 { font-size: 25px; min-height: 3.2em; margin-bottom: 22px; }
   .login-roles { margin-bottom: 14px; }
 }

@@ -68,7 +68,7 @@ export function Login({ onLogin }: { onLogin: () => void }) {
         </section>
         <section className="login-entry">
           <form className="login-form" onSubmit={login}>
-            <h1>欢迎回来</h1>
+            <h1>{(role === 'student' ? ['读书破万卷，', '下笔如有神。'] : ['随风潜入夜，', '润物细无声。']).map(line => <span key={line}>{line}</span>)}</h1>
             <div className="login-roles" aria-label="选择身份">
               {(['student', 'teacher'] as const).map((item) => {
                 const Icon = item === 'student' ? GraduationCap : BookOpen
