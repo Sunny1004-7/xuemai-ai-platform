@@ -18,21 +18,28 @@ def duration(path):
 def timestamp(seconds):
     ms=round(seconds*1000);return f'{ms//3600000:02}:{ms//60000%60:02}:{ms//1000%60:02},{ms%1000:03}'
 
-async def synthesize():
+async def synthesize(round_number=7):
     import edge_tts
-    scenes=json.loads((ROOT/'scripts/demo-scenes.json').read_text(encoding='utf-8-sig'))
-    output=ROOT/'.local/narration';output.mkdir(exist_ok=True,parents=True)
+    latest = round_number == 8
+    project = ROOT/'docs/demo/第八轮演示源'
+    scene_file = project/'scenes.json' if latest else ROOT/'scripts/demo-scenes.json'
+    scenes=json.loads(scene_file.read_text(encoding='utf-8-sig'))
+    output=project/'audio' if latest else ROOT/'.local/narration'
+    output.mkdir(exist_ok=True,parents=True)
+    voice = 'zh-CN-YunxiNeural' if latest else 'zh-CN-XiaoxiaoNeural'
+    rate = '-3%' if latest else '+4%'
     segments=[];subtitles=[]
+    pacing_issues=[]
     for scene in scenes:
-        sentences=[s for s in re.split(r'(?<=[。！？；])',scene['text']) if s.strip()]
+        sentences=[scene['text']] if latest else [s for s in re.split(r'(?<=[。！？；])',scene['text']) if s.strip()]
         waves=[]
         for i,text in enumerate(sentences):
             base=output/f'{scene["id"]}-{i+1:02}'
             mp3=base.with_suffix('.mp3');wav=base.with_suffix('.wav')
             metadata=base.with_suffix('.jsonl');cache=base.with_suffix('.sha256')
-            digest=hashlib.sha256((text+'|zh-CN-XiaoxiaoNeural|+4%|WordBoundary').encode('utf-8')).hexdigest()
+            digest=hashlib.sha256((text+'|'+voice+'|'+rate+'|WordBoundary').encode('utf-8')).hexdigest()
             if not (mp3.exists() and metadata.exists() and cache.exists() and cache.read_text('utf-8')==digest):
-                await edge_tts.Communicate(text,'zh-CN-XiaoxiaoNeural',rate='+4%',boundary='WordBoundary').save(str(mp3),str(metadata))
+                await edge_tts.Communicate(text,voice,rate=rate,boundary='WordBoundary').save(str(mp3),str(metadata))
                 cache.write_text(digest,'utf-8')
             subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(mp3),'-ar','24000','-ac','1',str(wav)],check=True)
             boundaries=[];cursor=0
@@ -48,6 +55,8 @@ async def synthesize():
         required=sum(s for _,_,s,_ in waves)+.16*(len(waves)-1)
         available=scene['duration']-1.3
         tempo=max(1,required/available)
+        if latest and tempo>1.06:
+            pacing_issues.append({'scene':scene['name'],'tempo':round(tempo,4),'text':scene['text']})
         at=scene['start']+.6
         for text,wav,seconds,boundaries in waves:
             if tempo>1.001:
@@ -56,7 +65,8 @@ async def synthesize():
                 wav=adjusted;seconds=duration(wav)
             segments.append({'scene':scene['name'],'text':text,'start':round(at,3),'duration':round(seconds,3),'file':wav.relative_to(ROOT).as_posix(),'word_boundary_count':len(boundaries),'tempo':round(tempo,5)})
             clauses=[];current=''
-            for clause in re.split(r'(?<=[，：、])',text):
+            clauses_source = re.split(r'(?<=[，。！？；：、])',text) if latest else re.split(r'(?<=[，：、])',text)
+            for clause in clauses_source:
                 if len(current+clause)>27 and current:clauses.append(current);current=''
                 current+=clause
             if current:clauses.append(current)
@@ -71,11 +81,21 @@ async def synthesize():
             at+=seconds+.16
         if at>scene['start']+scene['duration']:raise ValueError('配音超出场景：'+scene['name'])
         print(scene['name'],len(waves),'sentences',round(at-scene['start'],2),'seconds',flush=True)
+    if pacing_issues:
+        (output/'pacing-issues.json').write_text(json.dumps(pacing_issues,ensure_ascii=False,indent=2),encoding='utf8')
+        raise ValueError('有'+str(len(pacing_issues))+'个语段需要调整讲稿或画面时长，详见pacing-issues.json')
     (output/'segments.json').write_text(json.dumps(segments,ensure_ascii=False,indent=2),encoding='utf8')
     final=ROOT/'最终参赛提交材料';final.mkdir(exist_ok=True)
     (final/'学脉XueMai-演示字幕.srt').write_text('\n'.join(subtitles),encoding='utf8')
     (ROOT/'docs/demo').mkdir(exist_ok=True)
-    (ROOT/'docs/demo/讲解稿与分镜.md').write_text('# 学脉系统演示分镜\n\n本片采用原生标签页媒体流连续采集，在真实操作和剪辑完成后生成逐句解说。实际剪辑时间轴见“第七轮演示源/edit-timeline.json”。学生辅导和教师教学规划共2次官方请求，其余操作读取同一教学任务与会话。三条真实开发链回放约135秒，原始协作日期分别标识。晓晓中文神经合成语音逐句生成，底部字幕按同次WordBoundary换算，文案修改后按摘要重新生成缓存。\n\n'+'\n\n'.join(f'## {s["name"]}（{s["start"]}—{s["start"]+s["duration"]}秒）\n\n{s["text"]}' for s in scenes),encoding='utf8')
-    print('完成',len(segments),'句配音、',len(subtitles),'条字幕')
+    description = '本片采用原生标签页媒体流连续采集，先确定实际画面与剪辑，再制作完整语段旁白。时间轴见第八轮演示源/edit-timeline.json。开场、痛点、框架、界面、开发过程与感谢依次展开。复用两次既有官方请求，本次新增DeepSeek请求0次。三条真实开发档案回放135秒，分别标明2026年11月3日与12日。云希中文神经合成人声按语段生成，字幕使用同次WordBoundary。字幕为透明背景，保留轻描边。完整可编辑源、录屏、边界、音轨和字幕随包提供。' if latest else '原生标签页连续采集，逐句旁白与WordBoundary字幕，实际时间轴见第七轮演示源。'
+    (ROOT/'docs/demo/讲解稿与分镜.md').write_text('# 学脉系统演示分镜\n\n'+description+'\n\n'+'\n\n'.join(f'## {s["name"]}（{s["start"]}—{s["start"]+s["duration"]}秒）\n\n{s["text"]}' for s in scenes),encoding='utf8')
+    if latest:
+        (project/'subtitles.srt').write_text('\n'.join(subtitles),encoding='utf8')
+    print('完成',len(segments),'语段配音、' if latest else '句配音、',len(subtitles),'条字幕')
 
-if __name__=='__main__':asyncio.run(synthesize())
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--round',type=int,choices=[7,8],default=7)
+    asyncio.run(synthesize(parser.parse_args().round))

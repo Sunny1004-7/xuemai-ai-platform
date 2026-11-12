@@ -1,7 +1,7 @@
 // Chromium标签页原生媒体流连续录制，保留真实动画与流式变化。
 import { chromium, expect } from '@playwright/test'
 import { execFileSync } from 'node:child_process'
-import { mkdir, writeFile, appendFile } from 'node:fs/promises'
+import { mkdir, writeFile, appendFile, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -84,6 +84,10 @@ export async function createRecorder({ base, directory }) {
     if (metrics.width !== 1920 || metrics.height < 900 || metrics.dpr !== 1 || metrics.zoom !== '1') throw new Error('采集时视口或100%缩放发生变化')
     started = performance.now()
     await pause(300)
+    await expect.poll(async () => (await readFile(nativeFile)).subarray(0, 4).toString('hex'), {
+      timeout: 10000,
+      message: '原生录制首块必须包含有效WebM文件头',
+    }).toBe('1a45dfa3')
   }
   async function mark(name, operation) {
     const at = (performance.now() - started) / 1000

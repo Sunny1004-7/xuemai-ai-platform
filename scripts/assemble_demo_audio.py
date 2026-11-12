@@ -4,11 +4,14 @@ from pathlib import Path
 import hashlib
 import re
 import subprocess
+import os
 import imageio_ffmpeg
 
 ROOT=Path(__file__).resolve().parents[1]
 FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
-EDIT=json.loads((ROOT/'docs/demo/第七轮演示源/edit-timeline.json').read_text('utf8'))
+LATEST = os.environ.get('XUEMAI_VIDEO_ROUND') == '8'
+PROJECT = ROOT/('docs/demo/第八轮演示源' if LATEST else 'docs/demo/第七轮演示源')
+EDIT=json.loads((PROJECT/'edit-timeline.json').read_text('utf8'))
 DURATION=EDIT['duration_seconds']
 
 def ass_time(t):
@@ -36,11 +39,12 @@ def inspect_output(target, segments):
     record={'output':target.name,'duration_seconds':duration,'resolution':f'{int(width)}x{int(height)}','fps':fps,
             'video_codec':'H.264','audio_codec':'AAC','full_decode_passed':True,
             'development_record_replay_seconds':EDIT['development_evidence_seconds'],'development_records_dates':['2026-11-03','2026-11-12'],
-            'narration':'晓晓中文神经合成语音','narration_segments':len(segments),
+            'narration':'云希中文神经合成人声，完整语段' if LATEST else '晓晓中文神经合成语音','narration_segments':len(segments),
             'narration_timeline_no_overlap':True,'subtitle_timing':'同次TTS WordBoundary经音频速度换算','audio_mean_db':mean,'audio_peak_db':peak,
-            'audio_auditory_review':'完整解码与分句检查已完成，自动语音转写另存核验记录',
+            'audio_auditory_review':'完整解码与语段边界检查已完成，自动语音转写另存核验记录',
+            'human_listening_review':False,
             'subtitles_burned_in':True,'subtitle_entries':len((ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8').strip().split('\n\n')),
-            'real_api_calls_during_recording':2,'sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
+            'real_api_calls_during_recording':0 if LATEST else 2,'reused_real_api_calls':2 if LATEST else 0,'subtitle_background':'透明，无底色块' if LATEST else '深色底色','sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
     encoded=json.dumps(record,ensure_ascii=False,indent=2)
     (ROOT/'最终参赛提交材料/视频验收记录.json').write_text(encoded,encoding='utf8')
     (ROOT/'docs/demo').mkdir(exist_ok=True)
@@ -48,8 +52,9 @@ def inspect_output(target, segments):
     return record
 
 def build():
-    local=ROOT/'.local/narration'
-    segments=json.loads((local/'segments.json').read_text(encoding='utf8'))
+    local=ROOT/('.local/narration-round8' if LATEST else '.local/narration')
+    local.mkdir(exist_ok=True)
+    segments=json.loads(((PROJECT/'audio' if LATEST else local)/'segments.json').read_text(encoding='utf8'))
     source=ROOT/'最终参赛提交材料/学脉XueMai-演示视频.mp4'
     target=ROOT/'最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
     groups=[]
@@ -71,7 +76,7 @@ def build():
     srt=(ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8')
     ass=['[Script Info]','ScriptType: v4.00+','PlayResX: 1920','PlayResY: 1080','[V4+ Styles]',
          'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
-         'Style: Default,Microsoft YaHei,32,&H00FFFFFF,&H00FFFFFF,&H00372F26,&H20372F26,0,0,0,0,100,100,0,0,3,8,0,2,100,100,24,1',
+         ('Style: Default,Microsoft YaHei,32,&H003D3F20,&H003D3F20,&H00F8F8F5,&HFF000000,0,0,0,0,100,100,0,0,1,1.1,0.4,2,100,100,24,1' if LATEST else 'Style: Default,Microsoft YaHei,32,&H00FFFFFF,&H00FFFFFF,&H00372F26,&H20372F26,0,0,0,0,100,100,0,0,3,8,0,2,100,100,24,1'),
          '[Events]','Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text']
     def seconds(s):
         h,m,v=s.replace(',','.').split(':');return int(h)*3600+int(m)*60+float(v)
@@ -79,7 +84,12 @@ def build():
         lines=block.splitlines();a,b=lines[1].split(' --> ')
         ass.append(f'Dialogue: 0,{ass_time(seconds(a))},{ass_time(seconds(b))},Default,,0,0,0,,'+''.join(lines[2:]))
     (local/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
+    if LATEST:
+        (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
     subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(source),'-i',str(local/'complete.wav'),'-vf','ass=subtitles.ass','-map','0:v','-map','1:a','-c:v','libx264','-preset','fast','-crf','22','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(target)],cwd=local,check=True)
     print(json.dumps(inspect_output(target,segments),ensure_ascii=False))
+    if LATEST:
+        import shutil
+        shutil.copy2(local/'complete.wav', PROJECT/'audio/narration-complete.wav')
 
 if __name__=='__main__':build()
