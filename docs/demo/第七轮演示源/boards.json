@@ -1,0 +1,227 @@
+[
+  {
+    "chain": "学脉 XueMai",
+    "stage": "教学场景",
+    "title": "一道错题之后，怎样继续教与学",
+    "text": "陈星河把入栈顺序当成出栈顺序。\n\n从实际作答出发，连接学习路径、交互实验、个人辅导和教师的后续安排。",
+    "source": "当前系统真实操作 / 数据结构课程为教学示例",
+    "date": "师生双端AI个性化智慧教育平台",
+    "duration": 20
+  },
+  {
+    "chain": "五项核心方法",
+    "stage": "方法分工",
+    "title": "共享学习证据，分别承担教学判断",
+    "text": "K-TRACE　独立性、相关性与时间修正\nPATH-G　先修约束与个人时间预算\nDIA-GUIDE　个人诊断、动作与理解检查\nCLASS-LOOP　错因群组与匹配题目\nDIA-TEACH　教师目标、班级证据与方案",
+    "source": "课程、题目、学生和任务使用统一标识",
+    "date": "规则计算与一次模型生成协作",
+    "duration": 17.5
+  },
+  {
+    "chain": "方法实验",
+    "stage": "实际对照",
+    "title": "约束满足与教学动作逐项验证",
+    "text": "PATH-G 对可行贪心　36胜 / 9平 / 3负\n平均目标值提升3.49%，先修与预算违规0\n\nCLASS-LOOP　缺失维度与0.06噪声检查\nDIA-TEACH　10项教学工具与流程验证通过",
+    "source": "种子7011 / 原始输入与逐例结果随源码提供",
+    "date": "合成案例的机制对照",
+    "duration": 17.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "原始协作指令",
+    "title": "同一课程对象贯通三层实现",
+    "text": "立即实现 FastAPI + sqlite3 后端业务，拥有 backend/app 下除 ai.py/ai_routes.py 之外文件及 backend/tests/test_domain.py、requirements.txt。先读取 CODEX_TASK.md。根目录已有 Git 与安全忽略，不读/输出密钥，不真实调用 API，不做 Git 提交。请尽快写 docs/API_CONTRACT.md 并通知前端。约定端口8000，/api前缀；登录 POST /api/auth/login {username,password} -",
+    "source": "004-核心功能实际协作逐字转存.md / 根代理→后端代理原文节选",
+    "date": "2026-11-03",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "Codex实现反馈",
+    "title": "接口契约先行",
+    "text": "已写 docs/API_CONTRACT.md 并通知frontend。后端使用 sqlite3 版本迁移，FastAPI依赖固定在 backend/requirements.txt。AI集成将提供 backend.app.db.get_db() 上下文连接、backend.app.auth.current_user Depends（dict）、backend.app.auth.require_course(db,user,course_id)；AI可用这些校验并检索资源。请通知AI agent。",
+    "source": "004记录 / 后端代理→根代理",
+    "date": "2026-11-03",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "实际联测问题",
+    "title": "初始化阻断AI路由测试",
+    "text": "AI传输/服务和SSE会话/FTS检索/教学草稿接口、硬上限烟测脚本已落地。首次离线测试16通过，3个路由测试被后端seed占位符错误阻断，已通知backend修复；当前真实调用仍0。脚本可由你唯一执行：.venv/Scripts/python scripts/ai_smoke.py --kind connectivity|stream|structured --run；每次发送前持久预留，单进程锁、5次硬上限，任何异常停止后续。准备联测通过后通知提交。",
+    "source": "004记录 / AI代理实际联测反馈",
+    "date": "2026-11-03",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "修复差异",
+    "title": "字段与占位符数量一致",
+    "text": "刚实际初始化成功；登录200、2课程/8节点、作答201、dashboard200。已修复AI联测发现knowledge_points占位符8→7。业务routes已完整落地资源PDF/视频上传、版本、班级、课堂、分析；马上新增pytest。可先提交 db.py/auth.py/main.py/__init__.py + learning.py作为数据/认证/证据引擎阶段（main依赖routes，故若一起提交routes会有很多业务，可等我马上测试后按文件模块拆分）。我将routes按内容拆成router文件以细粒度提交。",
+    "source": "004记录 / 后端代理修复反馈",
+    "date": "2026-11-03",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "实际运行结果",
+    "title": "登录、图谱与作答进入同一数据库",
+    "text": "登录 200\n2门课程 / 初期8个知识节点\n作答 201\n学习概览 200\n\n知识点种子占位符 8 → 7\n课程、章节与资源共享标识",
+    "source": "004记录中“实际结果”原文对应结果；当前课程已扩充",
+    "date": "2026-11-03",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "课程对象与权限",
+    "stage": "中文提交",
+    "title": "保留架构演进",
+    "text": "e040be6\n建立版本化数据库、师生认证和多课程合成教学数据\n\n9b40105\n实现课程班级授权和知识图谱先修关系校验\n",
+    "source": "Git原始提交对象；同源契约与课程授权代码",
+    "date": "2026-11-03",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "原始需求",
+    "title": "从拥挤流程图转向课程网络",
+    "text": "学脉 XueMai 第六轮：导航重组、知识网络重构、双角色 AI 工作流与交互质量升级\n2. 知识图谱仍像拥挤的工程流程图，必须重新设计展示方式。\n四、知识图谱：摒弃当前设计，重新构建知识网络\n默认采用“轻量圆形知识网络＋自然分布＋局部关系聚焦”。\n先修图在算法上仍然有方向和约束，但视觉上不必画成严格的工程流程图。\n重点查看默认首屏：它应是一张清楚、有层次、具有表现力的知识网络，而不是若干缩小的流程框。\n图谱明显摆脱当前拥挤流程图式设计；",
+    "source": "第六轮任务书原文节选",
+    "date": "2026-11-12",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "实际几何检查",
+    "title": "节点已分开，连线仍有遮挡",
+    "text": "6节点 / 6关系　遮挡 0\n31节点 / 39关系　遮挡 0\n80节点 / 104关系　遮挡 1\n31节点 / 38关系　遮挡 9\n27节点 / 30关系　遮挡 0\n\n输入与旧结果保留在对应Git版本。",
+    "source": "第六轮实际课程初次几何日志 / CS201遮挡9处",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "代码差异",
+    "title": "受阻时搜索空白通道",
+    "text": "@@ -77,12 +77,84 @@ export function edgePoints(source: Position, target: Position, obstacles: Positi\n     if (cost < 1) return best\n     }\n   }\n-  return best\n+  return obstacleRoute(source, target, obstacles) || best\n+}\n+\n+/** 曲线无法绕开密集节点时，用连续方向的网格搜索寻找空白通道。 */\n+function obstacleRoute(source: Position, target: Position, obstacles: Position[]): Position[] | undefined {\n+  const blocked = obstacles.filter(point => point !== source && point !== target)\n+  const step = 26\n+  const left = Math.min(source.x, target.x, ...blocked.map(point => point.x)) - 90\n+  const top = Math.min(source.y, target.y, ...blocked.map(point => point.y)) - 90\n+  const columns = Math.ceil((Math.max(source.x, target.x, ...blocked.map(point => point.x)) - left + 90) / step)\n+  const rows = Math.ceil((Math.max(source.y, target.y, ...blocked.map(point => point.y)) - top + 90) / step)\n+  const point = (id: number) => ({ x: left + id % columns * step, y: top + Math.floor(id / columns) * step })\n+  const cell = (p: Position) => Math.round((p.y - top) / step) * columns + Math.round((p.x - left) / step)\n+  const clear = (a: Position, b: Position) => blocked.every(obstacle => {\n+    const dx = b.x - a.x, dy = b.y - a.y\n+    const t = Math.max(0, Math.min(1, ((obstacle.x - a.x) * dx + (obstacle.y - a.y) * dy) / Math.max(1, dx * dx + dy * dy)))\n+    return Math.hypot(obstacle.x - a.x - t * dx, obstacle.y - a.y - t * dy) >= 56\n+  })\n+  const start = cell(source), end = cell(target)\n+  const open = new Set([start]), pa",
+    "source": "a3b89fe / graph-layout.ts实际差异节选",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "验证输入",
+    "title": "两门真实课程与不同规模网络",
+    "text": "合成6　6节点 / 6关系\n合成31　31节点 / 39关系\n合成80　80节点 / 104关系\nCS201　31节点 / 38关系\nCS101　27节点 / 30关系\n\n节点碰撞、曲线遮挡、重排稳定、相机锚点分别校验。",
+    "source": "知识网络固定样例与实际几何结果",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "改进结果",
+    "title": "全部案例连线遮挡为零",
+    "text": "合成6　碰撞 0 / 遮挡 0\n合成31　碰撞 0 / 遮挡 0\n合成80　碰撞 0 / 遮挡 0\nCS201　碰撞 0 / 遮挡 0\nCS101　碰撞 0 / 遮挡 0",
+    "source": "第六轮知识网络几何验证.json / 已执行结果",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "知识网络遮挡",
+    "stage": "中文提交",
+    "title": "布局与固定输入一起保存",
+    "text": "a3b89fe\n为密集课程网络补充空白通道搜索并验证曲线遮挡与布局稳定性\n\n\n浏览器继续验证搜索、拖动、适配全图与全屏恢复。",
+    "source": "a3b89fe / 代码、样例、验证结果同次提交",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "本次原始任务",
+    "title": "核查教师助手是否完成教学要求",
+    "text": "新增DIA-TEACH专项验证。\n\n核对任务路由、专题证据、时间预算、群组题目、编辑保存与任务发布。\n\n实际请求\n“请基于这个班栈与队列的错误，设计一节30分钟讲评课。”",
+    "source": "第七轮任务书要求摘要与test_round7_workflow.py实际输入",
+    "date": "2026-11-12",
+    "code": false,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "实际失败",
+    "title": "设计请求落入学情分析",
+    "text": "============ FAILURES ===================================\n______ test_teacher_design_keeps_requested_artifact_with_class_evidence _______\n\nclient = <starlette.testclient.TestClient object at 0x000001EBF8BE52B0>\n\n    def test_teacher_design_keeps_requested_artifact_with_class_evidence(client):\n        teacher = headers(client, 'teacher')\n        result = events(client.post('/api/ai/chat', headers=teacher, json={\n            'course_id': 1, 'class_id': 1, 'knowledge_id': 2,\n            'message': '请基于这个班栈与队列的错误，设计一节30分钟讲评课。',\n        }))[-1]\n>       assert result['teaching']['task'] == 'design'\nE       AssertionError: assert 'analysis' == 'design'\nE         \nE         - design\nE         + analysis\n\nbackend\\tests\\test_round7_workflow.py:10: AssertionError\n=========================== short test summary info ===========================\nFAILED backend/tests/test_round7_workflow.py::test_teacher_design_keeps_requested_artifact_with_class_evidence\n1 failed, 1 passed in 21.52s\n",
+    "source": "初次专项测试原始日志 / 1失败、1通过",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "定位与差异",
+    "title": "先识别教师要求的教学产物",
+    "text": " def prepare_teacher(db, user, request, conversation_id):\n     require_teacher_course(db, user, request.course_id)\n     from .routes_teaching import analytics_data\n     message = request.message\n-    task = 'intervention' if any(term in message for term in ['分层','两组','后续练习']) else 'question' if any(term in message for term in ['出题','设计题目','生成一道']) else 'rubric' if any(term in message for term in ['量规','评分标准','评阅']) else 'analysis' if any(term in message for term in ['学情','这个班','错误','掌握']) else 'design' if any(term in message for term in ['教案','安排','设计一节','备课','教学设计','准备一节']) else 'discussion'\n+    # 先识别教师要求的产物，班级与错因词作为备课证据上下文。\n+    task_rules = [\n+        ('intervention', ['分层', '两组', '后续练习']),\n+        ('question', ['出题', '设计题目', '生成一道']),\n+        ('rubric', ['量规', '评分标准', '评阅']),\n+        ('design', ['教案', '安排', '设计一节', '备课', '教学设计', '准备一节']),\n+        ('analysis', ['学情', '这个班', '错误', '掌握']),\n+    ]\n+    task = next((kind for kind, terms in task_rules if any(term in message for term in terms)), 'discussion')\n     matched = re.search(r'(\\d{1,3})\\s*分钟', message)\n     minutes = min(120,max(5,int(matched.group(1)))) if matched else 40\n     trace=[{'role':'教学任务规划','result':{'task':task,'minutes':minutes,'class_id':request.class_id}}]\n",
+    "source": "85d731e / teacher_assistant.py实际差异",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "专项复核",
+    "title": "讲评课草稿与轻量讨论均通过",
+    "text": "..                                                                       [100%]\n2 passed in 20.95s\n",
+    "source": "修复后同一专项测试输出",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "完整回归",
+    "title": "验证既有业务与两端页面",
+    "text": "........................................................................ [ 58%]\n....................................................                     [100%]\n124 passed in 230.05s (0:03:50)\n\n\ns)\n  ok 22 e2e\\round6.spec.ts:26:1 › 模型与文档附件进入问答，引用位置和历史消息可重开 (2.3s)\n  ok 23 e2e\\round6.spec.ts:46:1 › 教师从班级证据生成草稿，编辑保存并带群组进入作业发布 (3.2s)\n  ok 24 e2e\\round6.spec.ts:65:1 › 栈操作回放与边界处理保存前后状态，预测与参与分开 (2.4s)\n  ok 25 e2e\\round6.spec.ts:92:1 › 教师题库最后一行与分页边界及控件命中正常 (1.8s)\n  ok 26 e2e\\round6.spec.ts:113:1 › 真实音频经本地识别进入可编辑输入框 (5.2s)\n  ok 27 e2e\\round7.spec.ts:4:3 › 侧栏精简保留学生导航与面包屑 (720ms)\n  ok 28 e2e\\round7.spec.ts:4:3 › 侧栏精简保留教师导航与面包屑 (771ms)\n  ok 29 e2e\\upgrade.spec.ts:3:1 › 双端主题保持指定色值，登录布局在桌面完整可见 (964ms)\n  ok 30 e2e\\upgrade.spec.ts:39:1 › 渐进图谱支持章节展开搜索全屏小地图与平移 (2.1s)\n  ok 31 e2e\\upgrade.spec.ts:108:1 › 辅导结构化动作执行理解检查并在历史保留评分 (2.3s)\n\n  31 passed (1.8m)\n",
+    "source": "完整业务回归124项 / 浏览器31项",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "教师混合意图",
+    "stage": "提交与真实演示",
+    "title": "方案进入同一教学任务",
+    "text": "85d731e\n修复班级证据与教学设计混合请求的任务优先级\n\n\n真实Flash生成30分钟方案\n教师编辑保存并发布\n同一学生完成复测\n教师查看完成结果并反馈",
+    "source": "85d731e / 第七轮官方AI记录与教学闭环结果",
+    "date": "2026-11-12",
+    "code": true,
+    "duration": 7.5
+  },
+  {
+    "chain": "运行与复现",
+    "stage": "工程交付",
+    "title": "从统一入口进入完整系统",
+    "text": "双击“启动学脉”\n\n两门课程正常初始化\n前后端源码、可编辑报告与视频源\n124项后端回归 / 31项浏览器回归\n478张完整界面截图",
+    "source": "GitHub / Sunny1004-7 / xuemai-ai-platform",
+    "date": "课程示例可扩充至不同学段与学科",
+    "duration": 25
+  },
+  {
+    "chain": "学脉 XueMai",
+    "stage": "完整教学闭环",
+    "title": "让下一步学习与教学安排相互连接",
+    "text": "学生留下证据，系统提供行动。\n教师作出判断，结果继续回到课堂。",
+    "source": "真实业务记录、方法实验与源代码共同呈现",
+    "date": "师生双端AI个性化智慧教育平台",
+    "duration": 10
+  }
+]
