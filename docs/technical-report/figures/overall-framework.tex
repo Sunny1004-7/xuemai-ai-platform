@@ -1,0 +1,31 @@
+% 总框架唯一母版。独立矢量导出、报告与视频均由此文件生成。
+\begin{tikzpicture}[x=1cm,y=1cm,font=\fontsize{9.5}{13}\selectfont,
+  line cap=round,line join=round,
+  panel/.style={rounded corners=3pt,draw=black!20,line width=.6pt,align=center},
+  flow/.style={-{Stealth[length=2mm,width=1.3mm]},draw=black!65,line width=.7pt},
+  student/.style={panel,draw=celadon!65,fill=pale!45},
+  teacher/.style={panel,draw=tea!65,fill=rice!40}]
+\node[font=\fontsize{14}{17}\selectfont\bfseries] at (8,12.15) {学脉 XueMai 总体方法与教学协同框架};
+\node[student,minimum width=7.55cm,minimum height=1cm] (si) at (3.8,11.1) {\textbf{学生学习输入}\\作答与提示记录\quad 学习目标\quad 问题与附件};
+\node[teacher,minimum width=7.55cm,minimum height=1cm] (ti) at (12.2,11.1) {\textbf{教师教学输入}\\教学目标\quad 课程资料\quad 班级任务与反馈};
+\node[panel,fill=black!3,minimum width=16cm,minimum height=1.1cm] (data) at (8,9.45) {\textbf{共享课程与学习证据}\\知识关系\quad 资源与题目\quad 作答与理解检查\quad 学习事件\quad 班级任务\quad 会话与版本};
+\draw[flow] (si.south)--(3.8,10.0);\draw[flow] (ti.south)--(12.2,10.0);
+\draw[draw=black!45] (1.4,8.5)--(14.6,8.5);
+\draw[flow] (data.south)--(8,8.5);
+\node[student,text width=2.5cm,minimum height=1.5cm] (k) at (1.4,7.35) {\textbf{K-TRACE}\\证据权重折减\\状态与证据量};
+\node[student,text width=2.5cm,minimum height=1.5cm] (p) at (4.7,7.35) {\textbf{PATH-G}\\先修时间约束\\学习活动序列};
+\node[student,text width=2.5cm,minimum height=1.5cm] (g) at (8,7.35) {\textbf{DIA-GUIDE}\\个人诊断提示\\引用理解检查};
+\node[teacher,text width=2.5cm,minimum height=1.5cm] (c) at (11.3,7.35) {\textbf{CLASS-LOOP}\\错因学习支持\\群组题目匹配};
+\node[teacher,text width=2.5cm,minimum height=1.5cm] (t) at (14.6,7.35) {\textbf{DIA-TEACH}\\目标解析编排\\教案任务草稿};
+\foreach \x in {1.4,4.7,8,11.3,14.6} {\draw[flow] (\x,8.5)--(\x,8.12);}
+\draw[flow] (k.east)--(p.west);\draw[flow] (c.east)--(t.west);
+\node[panel,fill=black!3,minimum width=16cm,minimum height=1.55cm] (service) at (8,5.2) {\textbf{课程工具与模型服务}\\课程检索与版本引用\quad DeepSeek解释与结构化生成\quad 文档解析、图片与本地Whisper语音\\\textbf{权限与对象校验}\quad 客观题确定性评分\quad 教师编辑审核\quad 事务持久化};
+\foreach \x in {1.4,4.7,8,11.3,14.6} {\draw[flow] (\x,6.58)--(\x,6.0);}
+\node[student,minimum width=7.55cm,minimum height=1.2cm] (so) at (3.8,3.15) {\textbf{学生工作区}\\计划与学习活动\quad 课程辅导\quad 独立检查与复习};
+\node[teacher,minimum width=7.55cm,minimum height=1.2cm] (to) at (12.2,3.15) {\textbf{教师工作区}\\学情分析\quad 教案编辑\quad 审核发布与结果反馈};
+\draw[flow] (3.8,4.42)--(so.north);\draw[flow] (12.2,4.42)--(to.north);
+\node[panel,fill=black!3,minimum width=14.8cm,minimum height=.85cm] (feedback) at (8,1.35) {\textbf{新证据回流}\quad 实际作答\quad 理解检查\quad 任务完成\quad 教师反馈};
+\draw[flow] (so.south)--(3.8,1.8);\draw[flow] (to.south)--(12.2,1.8);
+\draw[flow] (feedback.west)--(-.45,1.35)--(-.45,9.45)--(data.west);
+\node[fill=white,rotate=90,font=\fontsize{9}{12}\selectfont,inner sep=3pt] at (-.45,5.3) {更新共享记录与下一轮教学判断};
+\end{tikzpicture}

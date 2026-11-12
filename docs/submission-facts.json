@@ -1,0 +1,13 @@
+{
+  "product": "学脉 XueMai",
+  "subtitle": "师生双端AI个性化智慧教育平台",
+  "version": "0.6.0",
+  "track": "AI创新应用挑战赛",
+  "author": {"school": "西安交通大学", "major": "软件工程", "name": "刘嘉程"},
+  "focus": "课程课后巩固与教师循证分层指导",
+  "examples": ["数据结构与算法", "Python程序设计"],
+  "methods": ["K-TRACE", "PATH-G", "DIA-GUIDE", "CLASS-LOOP", "DIA-TEACH"],
+  "framework": "docs/figures/xuemai-framework",
+  "real_ai": {"round8_new_requests": 0, "reused_round7_requests": 2, "source": "docs/rounds/第七轮真实API用量.json"},
+  "baseline_commit": "72bd36bfe06436687fd8af413f05797170dc11fc"
+}
