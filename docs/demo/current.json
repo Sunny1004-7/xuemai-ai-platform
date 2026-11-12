@@ -1,0 +1,10 @@
+{
+  "round": 9,
+  "project": "docs/demo/第九轮演示源",
+  "scenes": "docs/demo/第九轮演示源/scenes.json",
+  "subtitle_font": "Microsoft YaHei",
+  "subtitle_font_size": 32,
+  "subtitle_safe_width": 1720,
+  "voice": "zh-CN-YunxiNeural",
+  "rate": "-3%"
+}

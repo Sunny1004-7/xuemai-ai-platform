@@ -8,7 +8,7 @@
     "major": "软件工程",
     "name": "刘嘉程"
   },
-  "focus": "课程课后巩固与教师循证分层指导",
+  "focus": "课程学习、个性化辅导与教学协作",
   "examples": [
     "数据结构与算法",
     "Python程序设计"
@@ -24,9 +24,10 @@
   "real_ai": {
     "round8_new_requests": 0,
     "reused_round7_requests": 2,
-    "source": "docs/rounds/第七轮真实API用量.json"
+    "source": "docs/rounds/第七轮真实API用量.json",
+    "round9_new_requests": 0
   },
-  "baseline_commit": "72bd36bfe06436687fd8af413f05797170dc11fc",
+  "baseline_commit": "4fa0fa6064f82abb931b4b9dd84d541f1e28753d",
   "evidence": {
     "method_source": "docs/rounds/第七轮方法实验.json",
     "fixed_seed": 7011,
@@ -60,5 +61,41 @@
     "docs/figures/xuemai-framework.png": "08eb2add0ecf94f41813109e66991a08d0c484b2ae511f9a79bad67ede5204d1",
     "docs/figures/xuemai-framework.pdf": "56877c50a5692613acf8d58c02e4547c99123a93559dada78dfdd7770a4a0e7f",
     "docs/figures/xuemai-framework.svg": "b3a70276a7813ef49fc0daa1d1352e7e8db77f2830a0a9cf96816b9d5a370938"
+  },
+  "method_definitions": [
+    {
+      "name": "K-TRACE",
+      "tex_key": "KTrace",
+      "english": "Knowledge Tracing with Relevance-Adjusted Cumulative Evidence",
+      "chinese": "相关性修正的多维知识证据追踪"
+    },
+    {
+      "name": "PATH-G",
+      "tex_key": "PathG",
+      "english": "Prerequisite-Aware Multi-Objective Learning Path Planning",
+      "chinese": "先修约束的多目标学习路径规划"
+    },
+    {
+      "name": "DIA-GUIDE",
+      "tex_key": "DiaGuide",
+      "english": "Diagnosis–Intervention–Assessment Orchestration for Guided Learning",
+      "chinese": "诊断—干预—校验协作教学编排"
+    },
+    {
+      "name": "CLASS-LOOP",
+      "tex_key": "ClassLoop",
+      "english": "Learning-Error-Based Dynamic Classroom Stratification",
+      "chinese": "基于错因距离的动态教学分层"
+    },
+    {
+      "name": "DIA-TEACH",
+      "tex_key": "DiaTeach",
+      "english": "Diagnosis–Intervention–Assessment Orchestration with Teaching Goals and Class Evidence",
+      "chinese": "教学目标与班级证据双约束编排"
+    }
+  ],
+  "validation_sources": {
+    "backend": "docs/rounds/第九轮后端完整回归.txt",
+    "browser": "docs/rounds/第九轮浏览器完整回归.txt"
   }
 }

@@ -5,13 +5,12 @@
   flow/.style={-{Stealth[length=2mm,width=1.3mm]},draw=black!65,line width=.7pt},
   student/.style={panel,draw=celadon!65,fill=pale!45},
   teacher/.style={panel,draw=tea!65,fill=rice!40}]
-\node[font=\fontsize{14}{17}\selectfont\bfseries] at (8,12.15) {学脉 XueMai 总体方法与教学协同框架};
 \node[student,minimum width=7.55cm,minimum height=1cm] (si) at (3.8,11.1) {\textbf{学生学习输入}\\作答与提示记录\quad 学习目标\quad 问题与附件};
 \node[teacher,minimum width=7.55cm,minimum height=1cm] (ti) at (12.2,11.1) {\textbf{教师教学输入}\\教学目标\quad 课程资料\quad 班级任务与反馈};
 \node[panel,fill=black!3,minimum width=16cm,minimum height=1.1cm] (data) at (8,9.45) {\textbf{共享课程与学习证据}\\知识关系\quad 资源与题目\quad 作答与理解检查\quad 学习事件\quad 班级任务\quad 会话与版本};
 \draw[flow] (si.south)--(3.8,10.0);\draw[flow] (ti.south)--(12.2,10.0);
 \draw[draw=black!45] (1.4,8.5)--(14.6,8.5);
-\draw[flow] (data.south)--(8,8.5);
+\draw[draw=black!65,line width=.7pt] (data.south)--(8,8.5);
 \node[student,text width=2.5cm,minimum height=1.5cm] (k) at (1.4,7.35) {\textbf{K-TRACE}\\证据权重折减\\状态与证据量};
 \node[student,text width=2.5cm,minimum height=1.5cm] (p) at (4.7,7.35) {\textbf{PATH-G}\\先修时间约束\\学习活动序列};
 \node[student,text width=2.5cm,minimum height=1.5cm] (g) at (8,7.35) {\textbf{DIA-GUIDE}\\个人诊断提示\\引用理解检查};
@@ -28,4 +27,13 @@
 \draw[flow] (so.south)--(3.8,1.8);\draw[flow] (to.south)--(12.2,1.8);
 \draw[flow] (feedback.west)--(-.45,1.35)--(-.45,9.45)--(data.west);
 \node[fill=white,rotate=90,font=\fontsize{9}{12}\selectfont,inner sep=3pt] at (-.45,5.3) {更新共享记录与下一轮教学判断};
-\end{tikzpicture}
+% 独立导出时记录实际节点锚点。报告直接使用同一图源，无额外绘制元素。
+\ifdefined\frameworkregionsfile
+  \foreach \name in {si,ti,data,k,p,g,c,t,service,so,to,feedback} {
+    \path let \p1=(\name.south west),\p2=(\name.north east) in
+      \pgfextra{\immediate\write\frameworkregionsfile{\name,\x1,\y1,\x2,\y2}};
+  }
+  \path let \p1=(current bounding box.south west),\p2=(current bounding box.north east) in
+    \pgfextra{\immediate\write\frameworkregionsfile{canvas,\x1,\y1,\x2,\y2}};
+\fi
+\end{tikzpicture}%

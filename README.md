@@ -1,19 +1,31 @@
 # 学脉 XueMai
 
-**课程课后巩固与教师循证分层指导，让一道错题接上下一步学习。**
+**课程学习、个性化辅导与教学协作。**
 
 西安交通大学 · 软件工程 · 刘嘉程  
 第九届传智杯 AI创新应用挑战赛 · 系统版本0.6.0
 
-学生知道答案错了，却常常需要自己翻讲义、找视频、判断先补什么。教师面对全班作答，还要把共性困难转化为适合不同学生的练习，并持续查看后续结果。学脉把这些工作连接起来，让学习反馈对应到课程知识、可执行活动和教师任务。
+课前，教师组织资料、知识结构与教学安排，学生查看目标和学习内容。课中，师生围绕课堂问题、回答与交互实验开展活动。课后，学生继续练习、辅导与复习，教师从具体作答识别困难，发布针对性任务并查看后续结果。学脉将这些活动连接到同一课程与学习证据，让每次反馈接上下一步行动。
 
 ![学脉总体方法与教学协同框架](docs/figures/xuemai-framework.svg)
 
-学生从原题进入课程辅导，结合资料引用、操作实验和理解检查继续学习。教师从知识矩阵追溯实际作答，由独立教学助手组织教学环节，编辑教案、审核任务，再查看同一批学生的完成结果。K-TRACE估计知识状态，PATH-G安排先修与预算内路径，DIA-GUIDE支持个人辅导，CLASS-LOOP组织教学群组，DIA-TEACH编排教学方案。客观评分、课程权限与内容发布由业务服务执行。
+学生从原题进入课程辅导，结合资料引用、操作实验和理解检查继续学习。教师从知识矩阵追溯实际作答，由独立教学助手组织教学环节，编辑教案、审核任务，再查看同一批学生的完成结果。知识状态、路径规划、个人辅导、班级分层与教学编排分别承担明确职责。客观评分、课程权限与内容发布由业务服务执行。
 
 当前以数据结构与算法、Python程序设计展示课程学习，分别提供31个与27个知识点、完整资料与题目、班级历史及六段原创教学视频。教师还可通过正常课程建设流程接入新单元，本次“信息素养微单元”已完成资料入库、学生辅导、练习、任务和教师反馈验证。演示账号与班级记录为合成教学数据，真实DeepSeek会话保留请求用量及教学结果。
 
 技术文档、连续演示与可运行验证共同展示作品。学生端采用宋瓷青绿，教师端采用茶烟米褐，支持Flash/Pro、私有附件和本地语音输入。阅读[技术文档](docs/deliverables/xuemai-technical-report.pdf)，观看[1080p演示视频](docs/deliverables/xuemai-demo-1080p.mp4)，查看[方法与对照实验](docs/ALGORITHMS_V7.md)、[实际验证记录](docs/VALIDATION.md)和[框架图可编辑母版](docs/technical-report/figures/overall-framework.tex)。
+
+## 核心方法
+
+- K-TRACE（Knowledge Tracing with Relevance-Adjusted Cumulative Evidence，相关性修正的多维知识证据追踪）。
+
+- PATH-G（Prerequisite-Aware Multi-Objective Learning Path Planning，先修约束的多目标学习路径规划）。
+
+- DIA-GUIDE（Diagnosis–Intervention–Assessment Orchestration for Guided Learning，诊断—干预—校验协作教学编排）。
+
+- CLASS-LOOP（Learning-Error-Based Dynamic Classroom Stratification，基于错因距离的动态教学分层）。
+
+- DIA-TEACH（Diagnosis–Intervention–Assessment Orchestration with Teaching Goals and Class Evidence，教学目标与班级证据双约束编排）。
 
 ## 人工审阅一键启动
 
