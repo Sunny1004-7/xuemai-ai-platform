@@ -39,7 +39,15 @@ def prepare_teacher(db, user, request, conversation_id):
     require_teacher_course(db, user, request.course_id)
     from .routes_teaching import analytics_data
     message = request.message
-    task = 'intervention' if any(term in message for term in ['分层','两组','后续练习']) else 'question' if any(term in message for term in ['出题','设计题目','生成一道']) else 'rubric' if any(term in message for term in ['量规','评分标准','评阅']) else 'analysis' if any(term in message for term in ['学情','这个班','错误','掌握']) else 'design' if any(term in message for term in ['教案','安排','设计一节','备课','教学设计','准备一节']) else 'discussion'
+    # 先识别教师要求的产物，班级与错因词作为备课证据上下文。
+    task_rules = [
+        ('intervention', ['分层', '两组', '后续练习']),
+        ('question', ['出题', '设计题目', '生成一道']),
+        ('rubric', ['量规', '评分标准', '评阅']),
+        ('design', ['教案', '安排', '设计一节', '备课', '教学设计', '准备一节']),
+        ('analysis', ['学情', '这个班', '错误', '掌握']),
+    ]
+    task = next((kind for kind, terms in task_rules if any(term in message for term in terms)), 'discussion')
     matched = re.search(r'(\d{1,3})\s*分钟', message)
     minutes = min(120,max(5,int(matched.group(1)))) if matched else 40
     trace=[{'role':'教学任务规划','result':{'task':task,'minutes':minutes,'class_id':request.class_id}}]
