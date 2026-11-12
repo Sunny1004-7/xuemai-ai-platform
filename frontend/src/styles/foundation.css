@@ -586,21 +586,6 @@ legend {
   margin-left: 13px;
   margin-bottom: 41px;
 }
-.workspace-label {
-  font-size: 13px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 15px 13px;
-}
-.workspace-label span {
-  font-size: 13px;
-  background: var(--brand-primary);
-  color: var(--text-muted);
-  padding: 2px 5px;
-  border-radius: 4px;
-}
 .sidebar nav {
   display: flex;
   flex-direction: column;
@@ -791,7 +776,6 @@ legend {
   margin-left: 10px;
 }
 .nav-collapsed .brand-name,
-.nav-collapsed .workspace-label,
 .nav-collapsed .sidebar nav span,
 .nav-collapsed .sidebar nav i,
 .nav-collapsed .sidebar-note,

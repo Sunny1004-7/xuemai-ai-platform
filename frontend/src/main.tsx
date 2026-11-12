@@ -173,10 +173,6 @@ function Shell({ logout }: { logout: () => void }) {
               学脉 <small>XueMai</small>
             </span>
           </a>
-          <div className="workspace-label">
-            {user.role === 'teacher' ? '教学空间' : '学习空间'}
-            <span>{user.role === 'teacher' ? '教师端' : '学生端'}</span>
-          </div>
           <nav aria-label="主导航">
             {groups.map(([name, paths]) => (
               <section className="nav-group" key={name} aria-label={name}>

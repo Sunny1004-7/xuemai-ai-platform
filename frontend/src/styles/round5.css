@@ -355,10 +355,6 @@
   .app-shell .sidebar .brand {
     margin-bottom: 20px;
   }
-  .app-shell .workspace-label {
-    padding-top: 15px;
-    margin-bottom: 10px;
-  }
   .app-shell .sidebar nav {
     min-height: 0;
     overflow: auto;

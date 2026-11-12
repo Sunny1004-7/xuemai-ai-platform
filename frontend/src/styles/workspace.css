@@ -21,8 +21,6 @@
 .sidebar nav a.active { box-shadow: inset 3px 0 var(--brand-soft); }
 .sidebar nav a.active:before, .sidebar nav a i { display: none; }
 .sidebar nav a:hover:not(.active), .sidebar nav a:hover:not(.active) svg { background: var(--nav-active); color: white; }
-.workspace-label { color: var(--nav-text); border-top: 1px solid #ffffff21; padding-top: 23px; margin: 0 13px 15px; }
-.workspace-label span { background: transparent; color: var(--nav-text); }
 .profile { color: #fffdf8; border-top: 1px solid #ffffff21; font-size: 15px; }
 .profile small, .profile > svg { color: var(--nav-text); }
 .avatar { background: var(--nav-active); color: #fffdf8; }
@@ -64,7 +62,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); 
  .app-shell { --sidebar-width: 77px; }
  .sidebar { padding-inline: 10px; }
  .sidebar .brand { margin-left: 10px; }
- .sidebar .brand-name, .sidebar .workspace-label, .sidebar nav span, .sidebar nav i, .sidebar-note, .profile > span:nth-child(2), .profile > svg { display: none; }
+ .sidebar .brand-name, .sidebar nav span, .sidebar nav i, .sidebar-note, .profile > span:nth-child(2), .profile > svg { display: none; }
  .sidebar nav a { justify-content: center; padding: 13px 10px; }
  .profile { justify-content: center; }
 }
