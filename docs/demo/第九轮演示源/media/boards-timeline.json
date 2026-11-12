@@ -1,0 +1,26 @@
+[
+  {
+    "name": "intro",
+    "at": 3.243,
+    "duration": 16,
+    "capture_at": 3.4745050999999925
+  },
+  {
+    "name": "pain",
+    "at": 19.283,
+    "duration": 22,
+    "capture_at": 19.514505099999994
+  },
+  {
+    "name": "framework",
+    "at": 41.34,
+    "duration": 27,
+    "capture_at": 41.571505099999996
+  },
+  {
+    "name": "outro",
+    "at": 68.354,
+    "duration": 14,
+    "capture_at": 68.58550509999999
+  }
+]

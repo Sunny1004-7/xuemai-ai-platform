@@ -1,0 +1,37 @@
+[
+  {
+    "name": "inputs",
+    "at": 0,
+    "spoken_phrase": "这张图"
+  },
+  {
+    "name": "shared-evidence",
+    "at": 3.078,
+    "spoken_phrase": "汇集"
+  },
+  {
+    "name": "student-methods",
+    "at": 6.567,
+    "spoken_phrase": "学生侧"
+  },
+  {
+    "name": "teacher-methods",
+    "at": 13.344,
+    "spoken_phrase": "教师侧"
+  },
+  {
+    "name": "services",
+    "at": 17.641,
+    "spoken_phrase": "课程工具"
+  },
+  {
+    "name": "workspaces",
+    "at": 20.808,
+    "spoken_phrase": "师生在"
+  },
+  {
+    "name": "feedback",
+    "at": 23.153,
+    "spoken_phrase": "新的作答"
+  }
+]

@@ -17,8 +17,9 @@ LOCAL = ROOT/'.local/round9-edit'
 def prepare():
     PROJECT.mkdir(exist_ok=True)
     scenes = json.loads((PREVIOUS/'scenes.json').read_text('utf8'))
+    author = json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))['author']
     replacements = {
-        '问候与介绍':'各位评委老师好，我是西安交通大学软件工程专业的刘嘉程。学脉连接课程学习、个性化辅导与教学协作。',
+        '问候与介绍':f'各位评委老师好，我是{author["school"]}{author["major"]}专业的{author["name"]}。学脉连接课程学习、个性化辅导与教学协作。',
         '真实教学痛点':'课前要准备材料，课堂需要收集回答，课后还要跟进学习。学生往往不清楚下一步先补什么，教师则要从全班作答中判断谁需要帮助。学脉把资料、活动、辅导和任务关联起来，让每次反馈都能接上后续学习与教学安排。',
         '总体方法框架':'这张图从师生输入出发，汇集课程结构、资料和学习证据。学生侧用知识追踪更新状态，路径规划安排先修与时间，个人辅导检验理解。教师侧依据错因分层，再结合目标编排教学。课程工具与模型服务支持这些操作，师生在各自工作区执行活动，新的作答和反馈继续回流。',
     }
