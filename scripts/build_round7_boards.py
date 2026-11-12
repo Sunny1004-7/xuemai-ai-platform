@@ -67,7 +67,25 @@ def build():
                dict(chain='学脉 XueMai',stage='完整教学闭环',title='让下一步学习与教学安排相互连接',text='学生留下证据，系统提供行动。\n教师作出判断，结果继续回到课堂。',source='真实业务记录、方法实验与源代码共同呈现',date='师生双端AI个性化智慧教育平台',duration=10)]
     (OUT / 'boards.json').write_text(json.dumps(boards, ensure_ascii=False, indent=2), encoding='utf8')
     (ROOT / 'docs/development-process/008-第七轮三条开发证据链.json').write_text(json.dumps(stages, ensure_ascii=False, indent=2), encoding='utf8')
+    render_method_map()
     print(len(stages), 'stages /', sum(x['duration'] for x in stages), 'seconds')
+
+
+def render_method_map():
+    import pymupdf
+    local = ROOT / '.local/demo-method-figure'
+    local.mkdir(exist_ok=True, parents=True)
+    preamble = r'''\documentclass[tikz,border=12pt]{standalone}
+\usepackage[UTF8,fontset=none]{ctex}
+\setCJKmainfont{SimSun}\setmainfont{Times New Roman}
+\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\definecolor{celadon}{HTML}{2E6A67}\definecolor{pale}{HTML}{D7E6DB}\definecolor{tea}{HTML}{7E6554}
+\begin{document}\input{figures/method-map.tex}\end{document}'''
+    (local / 'figure.tex').write_text(preamble, encoding='utf8')
+    subprocess.run(['xelatex', '-interaction=batchmode', '-halt-on-error', '-output-directory=' + str(local),
+                    str(local / 'figure.tex')], cwd=ROOT / 'docs/technical-report', check=True, stdout=subprocess.DEVNULL)
+    with pymupdf.open(local / 'figure.pdf') as document:
+        document[0].get_pixmap(matrix=pymupdf.Matrix(3, 3), alpha=True).save(OUT / 'method-map.png')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,33 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://5:14",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 943,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "回看学生解释与附件引用",
+      "at": 0.304
+    },
+    {
+      "name": "回看教师证据与方案",
+      "at": 20.785
+    }
+  ],
+  "elapsed_seconds": 40.80386420000001
+}

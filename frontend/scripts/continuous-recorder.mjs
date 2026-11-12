@@ -37,7 +37,7 @@ export async function createRecorder({ base, directory }) {
   await session.send('Browser.setWindowBounds', { windowId, bounds: { windowState: 'normal', left: 80, top: 80,
     width: bounds.width + 1920 - initial.width, height: bounds.height + 1000 - initial.height } })
   await expect.poll(() => page.evaluate(() => [innerWidth, innerHeight])).toEqual([1920, 1000])
-  const metrics = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, dpr: devicePixelRatio, zoom: getComputedStyle(document.documentElement).zoom }))
+  let metrics = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, dpr: devicePixelRatio, zoom: getComputedStyle(document.documentElement).zoom }))
   if (metrics.dpr !== 1 || metrics.zoom !== '1') throw new Error('录制必须使用100%缩放和1倍像素比')
   const nativeFile = path.join(directory, 'continuous.webm')
   await writeFile(nativeFile, '')
@@ -79,6 +79,9 @@ export async function createRecorder({ base, directory }) {
     settings = await controller.evaluate(() => window.captureSettings)
     if (settings.width !== 1920 || settings.height !== 1000 || settings.displaySurface !== 'browser') throw new Error('采集源尺寸或类型不符合专用标签页要求')
     await page.bringToFront()
+    // 共享提示条会占用窗口高度，记录采集时实际视口，完整保留应用外壳。
+    metrics = await page.evaluate(() => ({ width: innerWidth, height: innerHeight, dpr: devicePixelRatio, zoom: getComputedStyle(document.documentElement).zoom }))
+    if (metrics.width !== 1920 || metrics.height < 900 || metrics.dpr !== 1 || metrics.zoom !== '1') throw new Error('采集时视口或100%缩放发生变化')
     started = performance.now()
     await pause(300)
   }

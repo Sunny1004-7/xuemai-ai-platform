@@ -1,0 +1,97 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://5:8",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 1000,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "学生进入",
+      "at": 0.314
+    },
+    {
+      "name": "首次作答",
+      "at": 1.097
+    },
+    {
+      "name": "知识证据反馈",
+      "at": 5.009
+    },
+    {
+      "name": "预算内路径",
+      "at": 12.57
+    },
+    {
+      "name": "课程知识网络",
+      "at": 19.399
+    },
+    {
+      "name": "栈操作实验",
+      "at": 25.984
+    },
+    {
+      "name": "学生题目与附件",
+      "at": 32.556
+    },
+    {
+      "name": "学生请求发出",
+      "at": 38.59
+    },
+    {
+      "name": "学生回答完成",
+      "at": 41.601
+    },
+    {
+      "name": "学生引用定位",
+      "at": 46.616
+    },
+    {
+      "name": "学生理解检查",
+      "at": 52.263
+    },
+    {
+      "name": "教师查看专题证据",
+      "at": 59.152
+    },
+    {
+      "name": "教师教学规划输入",
+      "at": 68.499
+    },
+    {
+      "name": "教师请求发出",
+      "at": 70.515
+    },
+    {
+      "name": "教师回答完成",
+      "at": 74.379
+    },
+    {
+      "name": "教师编辑教案",
+      "at": 80.386
+    },
+    {
+      "name": "教师审核发布",
+      "at": 89.46
+    },
+    {
+      "name": "学生接收复测任务",
+      "at": 96.415
+    }
+  ],
+  "elapsed_seconds": 131.9519426
+}

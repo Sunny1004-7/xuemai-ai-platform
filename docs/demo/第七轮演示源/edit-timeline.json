@@ -1,0 +1,97 @@
+{
+  "duration_seconds": 393.799674,
+  "fps": 30,
+  "development_evidence_seconds": 135.26666666666668,
+  "edits": [
+    {
+      "source": "board",
+      "in": 0.31593150000000014,
+      "out": 20.330458099999998,
+      "start": 0,
+      "duration": 20.0,
+      "frames": 600
+    },
+    {
+      "source": "system",
+      "in": 0.31,
+      "out": 59.0,
+      "start": 20.0,
+      "duration": 58.7,
+      "frames": 1761
+    },
+    {
+      "source": "student-review",
+      "in": 0.31,
+      "out": 18.5,
+      "start": 78.7,
+      "duration": 18.2,
+      "frames": 546
+    },
+    {
+      "source": "system",
+      "in": 59.0,
+      "out": 89.46,
+      "start": 96.9,
+      "duration": 30.466666666666665,
+      "frames": 914
+    },
+    {
+      "source": "review",
+      "in": 21.1,
+      "out": 40.7,
+      "start": 127.36666666666667,
+      "duration": 19.6,
+      "frames": 588
+    },
+    {
+      "source": "system",
+      "in": 89.46,
+      "out": 100.3,
+      "start": 146.96666666666667,
+      "duration": 10.833333333333334,
+      "frames": 325
+    },
+    {
+      "source": "follow",
+      "in": 1.5,
+      "out": 32.2,
+      "start": 157.8,
+      "duration": 30.7,
+      "frames": 921
+    },
+    {
+      "source": "method",
+      "in": 0.31,
+      "out": 35.34191750000001,
+      "start": 188.5,
+      "duration": 35.03333333333333,
+      "frames": 1051
+    },
+    {
+      "source": "board",
+      "in": 55.3623756,
+      "out": 190.6435667,
+      "start": 223.53333333333333,
+      "duration": 135.26666666666668,
+      "frames": 4058
+    },
+    {
+      "source": "board",
+      "in": 190.6435667,
+      "out": 215.66057,
+      "start": 358.8,
+      "duration": 25.033333333333335,
+      "frames": 751
+    },
+    {
+      "source": "board",
+      "in": 215.66057,
+      "out": 225.66057,
+      "start": 383.83333333333337,
+      "duration": 10.0,
+      "frames": 300
+    }
+  ],
+  "real_model_calls": 2,
+  "automatic_retries": 0
+}
