@@ -147,5 +147,6 @@
     }
   },
   "source": "docs/technical-report/figures/overall-framework.tex",
-  "source_sha256": "1d0ec2f1912d3bde35de6c72c55b7aaefc9b35795051c4783d8e5bc581221264"
+  "source_sha256": "170c5d9eaeaa263945ab30515e9fb83419bf8e35cf732aa01fdd94253983d671",
+  "source_digest_encoding": "UTF-8 with LF line endings"
 }
