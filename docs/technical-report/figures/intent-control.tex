@@ -1,0 +1,10 @@
+\begin{tikzpicture}[box/.style={draw=celadon!65,fill=pale!45,rounded corners=2pt,text width=42mm,minimum height=15mm,align=center,font=\small},node distance=9mm and 6mm,flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box](need){原始需求\\角色、对象、教学闭环};
+\node[box,right=of need](context){相关上下文\\源码、契约、已完成状态};
+\node[box,right=of context](work){Codex实现\\真实代码与分阶段提交};
+\node[box,below=of work](test){实际验证\\测试、页面、原始返回};
+\node[box,left=of test](repair){问题定位与修复\\复现、差异、专项复核};
+\node[box,left=of repair](result){可检查交付\\源码、实验、教学结果};
+\draw[flow](need)--(context);\draw[flow](context)--(work);\draw[flow](work)--(test);\draw[flow](test)--(repair);\draw[flow](repair)--(result);
+\draw[flow](repair.north)--(context.south);
+\end{tikzpicture}

@@ -1,0 +1,16 @@
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,box/.style={draw=celadon!65,fill=pale!45,rounded corners=2pt,align=center,minimum height=13mm,text width=40mm},flow/.style={-{Stealth[length=2mm]},thick}]
+\node[box] (e) at (2.3,5.7) {课程对象与实际作答\\题目、知识、时间、评分};
+\node[box] (k) at (2.3,3.8) {K-TRACE\\个人知识状态与证据量};
+\node[box] (p) at (2.3,1.8) {PATH-G\\先修与预算内学习路径};
+\node[box] (s) at (2.3,0) {学生工作区\\计划、练习、图谱、复习};
+\node[box] (g) at (7.5,3.8) {DIA-GUIDE\\个人诊断与理解检查};
+\node[box,fill=tea!12,draw=tea] (c) at (12.7,3.8) {CLASS-LOOP\\错因群组与匹配题目};
+\node[box,fill=tea!12,draw=tea] (t) at (12.7,1.8) {DIA-TEACH\\教学目标、班级证据、草稿};
+\node[box,fill=tea!12,draw=tea] (r) at (12.7,0) {教师工作区\\分析、编辑、发布、反馈};
+\node[align=center] at (7.5,.5) {共享课程标识、资料检索与权限\\AI生成受课程对象和工具校验约束};
+\draw[flow](e)--(k);\draw[flow](k)--(p);\draw[flow](p)--(s);
+\draw[flow](k)--(g);\draw[flow](e.east)--(12.7,5.7)--(c.north);\draw[flow](c)--(t);\draw[flow](t)--(r);
+\draw[flow](g.south)--++(0,-.6)-|(s.north east);
+\draw[flow](r.south)--++(0,-.7)-|(s.south);
+\node[fill=white] at (7.5,-.7) {任务发布、实际作答与结果回流};
+\end{tikzpicture}

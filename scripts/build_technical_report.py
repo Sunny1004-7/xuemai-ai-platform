@@ -16,6 +16,7 @@ from review_screenshots import validate_screenshots
 
 def build(screenshots,record,draft=False):
     subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
+    subprocess.run([sys.executable,str(ROOT/'scripts/report_round7_evidence.py')],check=True)
     source=ROOT/'docs/technical-report'
     directory=ROOT/screenshots
     if not draft:
@@ -38,14 +39,12 @@ def build(screenshots,record,draft=False):
     for name,relative in mapping.items():
         img=Image.open(directory/relative).convert('RGB')
         # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
-        if name not in {'graph-overview','login'}:
-            img=img.crop((232,72,img.width,min(img.height,1000)))
         img.save(images/(name+'.png'))
-    back=(ROOT/'.local/round6-backend-final.txt').read_text(encoding='utf-8',errors='replace')
-    browser=(ROOT/'.local/round6-e2e-final.txt').read_text(encoding='utf-8',errors='replace')
+    back=(ROOT/'.local/round7-backend.txt').read_text(encoding='utf-8',errors='replace')
+    browser=(ROOT/'.local/round7-e2e.txt').read_text(encoding='utf-8',errors='replace')
     bm=re.search(r'(\d+) passed',back);em=re.search(r'(\d+) passed',browser)
     if not bm or not em:raise RuntimeError('缺少本轮完整回归结果')
-    summary=f"后端业务、算法与交付校验{bm[1]}项通过；浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规自动化、内容建设和录制使用本地示例模式。官方联调共13次，Flash 10次、Pro 3次，全部成功、无自动重试，累计输入16527 Tokens、输出2540 Tokens。\n"
+    summary=f"后端业务、算法与交付校验{bm[1]}项通过，浏览器师生流程与交互回归共{em[1]}项通过。界面检查覆盖两门课程的师生19个业务模块及登录入口，采用四种桌面视口与手机窄屏，共保存{len(manifest['files'])}张截图，页面运行错误为0。常规回归使用本地示例模式，连续教学演示中的学生辅导与教师教学规划使用官方接口。\n"
     (source/'validation-summary.tex').write_text(summary,encoding='utf-8')
     compiled=ROOT/'.local/technical-report-build';compiled.mkdir(exist_ok=True,parents=True)
     for index in range(3):
@@ -70,7 +69,8 @@ def build(screenshots,record,draft=False):
     for output in outputs:output.parent.mkdir(exist_ok=True,parents=True);shutil.copy2(compiled/'main.pdf',output)
     diagram_count=len(re.findall(r'\\diagram\{', (source/'main.tex').read_text('utf-8')))
     reference_count=len(re.findall(r'\\bibitem\{',(source/'main.tex').read_text('utf-8')))
-    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':len(mapping),'screenshot_width':'100%版心，彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':reference_count}
+    screen_count=len(re.findall(r'\\screen\{',(source/'main.tex').read_text('utf8')))
+    result={'pages':len(document),'black_text':True,'fonts':sorted(fonts),'figures_tikz':diagram_count,'screenshots':screen_count,'screenshot_width':'100%版心，完整导航与顶部栏，彩色，不设高度缩放','frontend_capture_count':len(manifest['files']),'backend_tests':int(bm[1]),'browser_tests':int(em[1]),'references':reference_count}
     (ROOT/'docs/technical-report/验收结果.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(result,ensure_ascii=False))
 

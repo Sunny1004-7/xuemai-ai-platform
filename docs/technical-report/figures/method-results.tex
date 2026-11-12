@@ -1,22 +1,13 @@
 \begin{tikzpicture}[x=1cm,y=1cm,font=\small]
-% 灰色为静态对照，青绿为学脉方法；颜色仅用于区分比较对象。
-\node[anchor=west,font=\normalsize\bfseries] at (0,3.8){先修违规步骤（越少越好）};
-\node[anchor=east] at (2.0,2.9){静态排序};
-\node[anchor=east] at (2.0,2.1){PATH-G};
-\fill[black!16] (2.2,2.68) rectangle (6.1,3.12);
-\draw[celadon,line width=2pt] (2.2,1.87)--(2.2,2.33);
-\node[anchor=west] at (6.2,2.9){36};
-\node[anchor=west] at (2.35,2.1){0};
-\node[anchor=west,font=\footnotesize] at (0,.85){12个DAG、4种预算，48个案例};
-\node[anchor=west,font=\footnotesize] at (0,.25){两种方法使用相同候选与目标};
-\draw[black!15] (7.25,0)--(7.25,4.1);
-\node[anchor=west,font=\normalsize\bfseries] at (7.65,3.8){错因原型纯度（越高越好）};
-\node[anchor=east] at (10.1,2.9){等分编号组};
-\node[anchor=east] at (10.1,2.1){CLASS-LOOP};
-\fill[black!16] (10.3,2.68) rectangle (11.45,3.12);
-\fill[celadon!55] (10.3,1.88) rectangle (13.75,2.32);
-\node[anchor=west] at (11.52,2.9){0.333};
-\node[anchor=west] at (13.82,2.1){1.000};
-\node[anchor=west,font=\footnotesize] at (7.65,.85){24名等均分学生、4类已知错因};
-\node[anchor=west,font=\footnotesize] at (7.65,.25){各6人，特征含固定种子小幅扰动};
+\node[anchor=east] at (3.5,3){目标优先排序};
+\fill[black!18] (3.7,2.78) rectangle (9.473108790000001,3.22);
+\node[anchor=west] at (9.62310879,3){25.100};
+\node[anchor=east] at (3.5,2){可行效用密度贪心};
+\fill[black!18] (3.7,1.78) rectangle (10.109868850000002,2.22);
+\node[anchor=west] at (10.25986885,2){27.869};
+\node[anchor=east] at (3.5,1){PATH-G};
+\fill[celadon!60] (3.7,0.78) rectangle (10.33342425,1.22);
+\node[anchor=west] at (10.48342425,1){28.841};
+\node[anchor=west,font=\normalsize\bfseries] at (0,4){平均路径目标值（相同目标函数）};
+\node[anchor=west] at (0,0){PATH-G相对可行贪心：36胜、9平、3负；两者先修与预算违规均为0。};
 \end{tikzpicture}
