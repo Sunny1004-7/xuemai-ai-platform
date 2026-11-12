@@ -1,0 +1,8 @@
+{
+  "identities": 2,
+  "viewports": 5,
+  "card_form_controls_bounds_identical": true,
+  "source_commit_before": "4fa0fa6064f82abb931b4b9dd84d541f1e28753d",
+  "standalone_browser_test_passed": 1,
+  "real_api_calls": 0
+}

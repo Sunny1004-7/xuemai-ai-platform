@@ -1,10 +1,34 @@
 .login-page {
+  --backdrop-base: #122f30;
+  --backdrop-light: #5caa98;
+  --backdrop-side: #426f7b;
+  --backdrop-trace: #a6d1bd;
+  --backdrop-land-back: #29534e;
+  --backdrop-land-front: #355c52;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: 54px 5vw;
-  background: var(--nav);
+  background: var(--backdrop-base);
 }
+.login-page[data-role="teacher"] {
+  --backdrop-base: #342b26;
+  --backdrop-light: #b99c72;
+  --backdrop-side: #8c7867;
+  --backdrop-trace: #d7c7a6;
+  --backdrop-land-back: #514638;
+  --backdrop-land-front: #655342;
+}
+.login-backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; color: var(--backdrop-trace); }
+.login-ambient { position: absolute; inset: 0; background: radial-gradient(ellipse at 15% 13%, color-mix(in srgb, var(--backdrop-light) 27%, transparent), transparent 47%), radial-gradient(ellipse at 91% 72%, color-mix(in srgb, var(--backdrop-side) 30%, transparent), transparent 48%), linear-gradient(135deg, transparent 30%, #07151424); }
+.login-traces { width: 100%; height: 100%; position: absolute; inset: 0; }
+.login-contours { stroke-width: 1.1; opacity: .17; }
+.login-trace-nodes { stroke-width: 1.2; opacity: .4; }
+.login-landscape-back { fill: var(--backdrop-land-back); opacity: .45; }
+.login-landscape-front { fill: var(--backdrop-land-front); opacity: .48; }
 .login-scene {
   width: min(1160px, 100%);
   min-height: 670px;
@@ -50,6 +74,8 @@
   .login-identity { padding: 38px 30px; }
 }
 @media (max-width: 700px) {
+  .login-contours { opacity: .09; }
+  .login-trace-nodes { opacity: .2; }
   .login-page { padding: 24px 20px; }
   .login-scene { display: block; min-height: auto; max-width: 440px; border-radius: 22px; }
   .login-identity { padding: 25px 28px 20px; }

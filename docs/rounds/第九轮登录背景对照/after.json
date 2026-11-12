@@ -1,0 +1,432 @@
+[
+  {
+    "role": "student",
+    "width": 1920,
+    "height": 1080,
+    "bounds": {
+      ".login-scene": {
+        "x": 380,
+        "y": 205,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 1056.828125,
+        "y": 326,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 1056.828125,
+        "y": 326,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 1056.828125,
+        "y": 529,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 1056.828125,
+        "y": 622,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 1056.828125,
+        "y": 704,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "teacher",
+    "width": 1920,
+    "height": 1080,
+    "bounds": {
+      ".login-scene": {
+        "x": 380,
+        "y": 205,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 1056.828125,
+        "y": 326,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 1056.828125,
+        "y": 326,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 1056.828125,
+        "y": 529,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 1056.828125,
+        "y": 622,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 1056.828125,
+        "y": 704,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "student",
+    "width": 1440,
+    "height": 900,
+    "bounds": {
+      ".login-scene": {
+        "x": 140,
+        "y": 115,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 816.828125,
+        "y": 236,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 816.828125,
+        "y": 236,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 816.828125,
+        "y": 439,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 816.828125,
+        "y": 532,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 816.828125,
+        "y": 614,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "teacher",
+    "width": 1440,
+    "height": 900,
+    "bounds": {
+      ".login-scene": {
+        "x": 140,
+        "y": 115,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 816.828125,
+        "y": 236,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 816.828125,
+        "y": 236,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 816.828125,
+        "y": 439,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 816.828125,
+        "y": 532,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 816.828125,
+        "y": 614,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "student",
+    "width": 1366,
+    "height": 768,
+    "bounds": {
+      ".login-scene": {
+        "x": 103,
+        "y": 54,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 779.828125,
+        "y": 378,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 779.828125,
+        "y": 471,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 779.828125,
+        "y": 553,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "teacher",
+    "width": 1366,
+    "height": 768,
+    "bounds": {
+      ".login-scene": {
+        "x": 103,
+        "y": 54,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 779.828125,
+        "y": 378,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 779.828125,
+        "y": 471,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 779.828125,
+        "y": 553,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "student",
+    "width": 1366,
+    "height": 650,
+    "bounds": {
+      ".login-scene": {
+        "x": 103,
+        "y": 54,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 779.828125,
+        "y": 378,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 779.828125,
+        "y": 471,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 779.828125,
+        "y": 553,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "teacher",
+    "width": 1366,
+    "height": 650,
+    "bounds": {
+      ".login-scene": {
+        "x": 103,
+        "y": 54,
+        "width": 1160,
+        "height": 670
+      },
+      ".login-form": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 428
+      },
+      "h1": {
+        "x": 779.828125,
+        "y": 175,
+        "width": 419.171875,
+        "height": 48
+      },
+      "#username": {
+        "x": 779.828125,
+        "y": 378,
+        "width": 419.171875,
+        "height": 50
+      },
+      "#password": {
+        "x": 779.828125,
+        "y": 471,
+        "width": 419.171875,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 779.828125,
+        "y": 553,
+        "width": 419.171875,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "student",
+    "width": 390,
+    "height": 844,
+    "bounds": {
+      ".login-scene": {
+        "x": 20,
+        "y": 122,
+        "width": 350,
+        "height": 600
+      },
+      ".login-form": {
+        "x": 48,
+        "y": 248,
+        "width": 294,
+        "height": 438
+      },
+      "h1": {
+        "x": 48,
+        "y": 248,
+        "width": 294,
+        "height": 80
+      },
+      "#username": {
+        "x": 48,
+        "y": 461,
+        "width": 294,
+        "height": 50
+      },
+      "#password": {
+        "x": 48,
+        "y": 554,
+        "width": 294,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 48,
+        "y": 636,
+        "width": 294,
+        "height": 50
+      }
+    }
+  },
+  {
+    "role": "teacher",
+    "width": 390,
+    "height": 844,
+    "bounds": {
+      ".login-scene": {
+        "x": 20,
+        "y": 122,
+        "width": 350,
+        "height": 600
+      },
+      ".login-form": {
+        "x": 48,
+        "y": 248,
+        "width": 294,
+        "height": 438
+      },
+      "h1": {
+        "x": 48,
+        "y": 248,
+        "width": 294,
+        "height": 80
+      },
+      "#username": {
+        "x": 48,
+        "y": 461,
+        "width": 294,
+        "height": 50
+      },
+      "#password": {
+        "x": 48,
+        "y": 554,
+        "width": 294,
+        "height": 50
+      },
+      ".login-form > .button": {
+        "x": 48,
+        "y": 636,
+        "width": 294,
+        "height": 50
+      }
+    }
+  }
+]

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Activity, ArrowRight, BookOpen, Eye, EyeOff, GraduationCap } from 'lucide-react'
 import { post, saveSession } from '../api'
 import { Button } from '../ui'
+import { LoginBackdrop } from '../components/LoginBackdrop'
 
 /** 原创书页结构：知识沿着书脊汇合，双端共用构图与各自的宋式色板。 */
 function LearningPages() {
@@ -58,6 +59,7 @@ export function Login({ onLogin }: { onLogin: () => void }) {
   }
   return (
     <main className="login-page" data-role={role}>
+      <LoginBackdrop />
       <div className="login-scene">
         <section className="login-identity">
           <div className="brand">
