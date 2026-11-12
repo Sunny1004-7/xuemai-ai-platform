@@ -11,6 +11,23 @@ def search_tokens(text):
     return list(dict.fromkeys(tokens))
 
 
+def ordering_concepts(text):
+    """识别取出顺序的明确表述，比较问题同时保留两种概念。"""
+    value = re.sub(r'(?:不是|并非|不遵循|不采用)\s*(?:先进先出|后进先出|fifo|lifo)', '', text.lower())
+    patterns = {
+        'queue': r'先进先出|\bfifo\b|先(?:放入|入队|进入)[^，。！？\n]{0,12}先(?:取出|出队|处理)|按到达先后',
+        'stack': r'后进先出|\blifo\b|(?:最后|后)(?:放入|入栈|进入)[^，。！？\n]{0,12}先(?:取出|出栈|处理)|先(?:放入|入栈|进入)[^，。！？\n]{0,12}最后(?:取出|出栈|处理)',
+    }
+    return {name for name, pattern in patterns.items() if re.search(pattern, value)}
+
+
+def ordering_score(intent, text):
+    concepts = ordering_concepts(text)
+    if len(intent) != 1 or not concepts:
+        return 0
+    return .35 if intent & concepts else -.35
+
+
 def paragraph_chunks(text):
     heading = ''
     result = []
@@ -47,7 +64,10 @@ def visible_resource(resource, role):
 
 def retrieve(db, course_id, query, knowledge_id=None, *, user=None, conversation_id=None, attachment_ids=(), knowledge_boost=True):
     sync_index(db)
-    terms = search_tokens(query)[:40]
+    intent = ordering_concepts(query)
+    aliases = {'queue': '先进先出 FIFO 队列', 'stack': '后进先出 LIFO 栈'}
+    expanded = query + ' ' + ' '.join(aliases[name] for name in sorted(intent))
+    terms = search_tokens(expanded)[:40]
     candidate_ids = []
     if terms:
         expression = ' OR '.join('"'+token+'"' for token in terms)
@@ -64,7 +84,7 @@ def retrieve(db, course_id, query, knowledge_id=None, *, user=None, conversation
             continue
         overlap = len(set(terms) & set(search_tokens(row['title']+' '+row['content']))) / max(1,len(terms))
         association = (.5 if row['knowledge_id']==knowledge_id else .2 if row['knowledge_id'] in neighbors else 0) if knowledge_boost else 0
-        ranked.append((overlap + association, {'resource_id':row['resource_id'],'passage_id':row['id'],'title':row['title'],'excerpt':row['content'],'locator':row['locator'],'version':row['version'],
+        ranked.append((overlap + association + ordering_score(intent, row['content']), {'resource_id':row['resource_id'],'passage_id':row['id'],'title':row['title'],'excerpt':row['content'],'locator':row['locator'],'version':row['version'],
             'url':f"/resources?course={course_id}&resource={row['resource_id']}&passage={row['id']}&version={row['version']}", 'source_kind':'course'}))
     if user:
         for attachment_id in attachment_ids:
@@ -73,7 +93,7 @@ def retrieve(db, course_id, query, knowledge_id=None, *, user=None, conversation
                 continue
             for chunk in db.execute('SELECT * FROM ai_attachment_chunks WHERE attachment_id=?',(attachment_id,)):
                 overlap=len(set(terms)&set(search_tokens(chunk['content']))) / max(1,len(terms))
-                ranked.append((overlap+.15, {'attachment_id':attachment_id,'passage_id':chunk['id'],'title':attachment['filename'],'excerpt':chunk['content'],'locator':chunk['locator'],'version':attachment['sha256'][:12],
+                ranked.append((overlap+.15+ordering_score(intent, chunk['content']), {'attachment_id':attachment_id,'passage_id':chunk['id'],'title':attachment['filename'],'excerpt':chunk['content'],'locator':chunk['locator'],'version':attachment['sha256'][:12],
                     'url':f"/ai/attachments/{attachment_id}?chunk={chunk['id']}",'source_kind':'attachment'}))
     citations=[]
     per_document={}

@@ -1,0 +1,498 @@
+{
+  "type": "6例术语定向回归",
+  "scoring": "单一顺序意图与正文匹配加0.35，对立概念减0.35，混合比较不加分",
+  "cases": [
+    {
+      "query": "先放入的元素先取出，用于按到达先后处理",
+      "top3": [
+        {
+          "id": 1,
+          "score": 0.75,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5625,
+          "resource_id": 2,
+          "passage_id": 8,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 例子\n输入1、2、3，全部入栈后依次弹出3、2、1；全部入队后依次取出1、2、3。",
+          "locator": "例子 · 段落5",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=8&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 6,
+          "title": "栈与队列学习讲义",
+          "excerpt": "# 栈与队列",
+          "locator": "栈与队列 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=6&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.0405,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5952,
+          "resource_id": 2,
+          "passage_id": 8,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 例子\n输入1、2、3，全部入栈后依次弹出3、2、1；全部入队后依次取出1、2、3。",
+          "locator": "例子 · 段落5",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=8&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.4357,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "queue"
+      ]
+    },
+    {
+      "query": "FIFO",
+      "top3": [
+        {
+          "id": 1,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 6,
+          "title": "栈与队列学习讲义",
+          "excerpt": "# 栈与队列",
+          "locator": "栈与队列 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=6&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.65,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.9,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.55,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "queue"
+      ]
+    },
+    {
+      "query": "先进先出",
+      "top3": [
+        {
+          "id": 1,
+          "score": 1.5,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 1.1667,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.8333,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.65,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.9,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.55,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "queue"
+      ]
+    },
+    {
+      "query": "最后放入的元素先取出",
+      "top3": [
+        {
+          "id": 1,
+          "score": 0.9444,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.6111,
+          "resource_id": 2,
+          "passage_id": 8,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 例子\n输入1、2、3，全部入栈后依次弹出3、2、1；全部入队后依次取出1、2、3。",
+          "locator": "例子 · 段落5",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=8&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 6,
+          "title": "栈与队列学习讲义",
+          "excerpt": "# 栈与队列",
+          "locator": "栈与队列 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=6&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.4214,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 1.1357,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.6429,
+          "resource_id": 2,
+          "passage_id": 8,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 例子\n输入1、2、3，全部入栈后依次弹出3、2、1；全部入队后依次取出1、2、3。",
+          "locator": "例子 · 段落5",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=8&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "stack"
+      ]
+    },
+    {
+      "query": "LIFO",
+      "top3": [
+        {
+          "id": 1,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 6,
+          "title": "栈与队列学习讲义",
+          "excerpt": "# 栈与队列",
+          "locator": "栈与队列 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=6&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.65,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 1.65,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.9,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "stack"
+      ]
+    },
+    {
+      "query": "后进先出",
+      "top3": [
+        {
+          "id": 1,
+          "score": 1.5,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 1.5,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.8333,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "after_top3": [
+        {
+          "id": 1,
+          "score": 1.65,
+          "resource_id": 2,
+          "passage_id": 7,
+          "title": "栈与队列学习讲义",
+          "excerpt": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。",
+          "locator": "栈与队列 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=7&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 1.65,
+          "resource_id": 101,
+          "passage_id": 44,
+          "title": "看见算法：栈的入栈与出栈",
+          "excerpt": "栈是后进先出的结构，只在栈顶操作。\n将1压入栈顶，已有元素保持不变。\n将2压入栈顶，已有元素保持不变。\n将3压入栈顶，已有元素保持不变。\n弹出栈顶3，后进入的元素先离开。\n弹出栈顶2，后进入的元素先离开。\n弹出栈顶1，后进入的元素先离开。\n空栈不能弹出。请区分操作顺序和数据本身的大小。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=1&resource=101&passage=44&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.9,
+          "resource_id": 2,
+          "passage_id": 10,
+          "title": "栈与队列学习讲义",
+          "excerpt": "## 自测\n1、2、3依次入队，首先出队的是？\n完成练习后，尝试更换输入解释同一条规则。",
+          "locator": "自测 · 段落9",
+          "version": 2,
+          "url": "/resources?course=1&resource=2&passage=10&version=2",
+          "source_kind": "course"
+        }
+      ],
+      "expected_concepts": [
+        "stack"
+      ]
+    }
+  ]
+}

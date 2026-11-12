@@ -1,0 +1,145 @@
+{
+  "ai_mode": "mock",
+  "real_api_calls": 0,
+  "setup": "正常课程、班级、知识、资源、习题及任务接口，动态对象ID",
+  "checks_passed": true,
+  "requests": [
+    {
+      "method": "post",
+      "url": "/api/courses",
+      "status": 201,
+      "result": {
+        "id": 3,
+        "title": "信息素养微单元"
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/classes",
+      "status": 201,
+      "result": {
+        "id": 3,
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/classes/join",
+      "status": 200,
+      "result": {
+        "id": 3,
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/courses/3/chapters",
+      "status": 201,
+      "result": {
+        "id": 14,
+        "title": "来源交叉核验"
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/courses/3/knowledge",
+      "status": 201,
+      "result": {
+        "id": 59,
+        "title": "交叉核验",
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/resources",
+      "status": 201,
+      "result": {
+        "id": 168,
+        "title": "校园节水消息核验讲义",
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/questions",
+      "status": 201,
+      "result": {
+        "id": 74,
+        "title": "三个网站转载同一则消息，可以视为三个独立来源吗？",
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/attempts",
+      "status": 201,
+      "result": {
+        "id": 2436,
+        "score": 0
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/ai/chat",
+      "status": 200
+    },
+    {
+      "method": "get",
+      "url": "/api/ai/conversations/11",
+      "status": 200,
+      "result": {
+        "id": 11,
+        "title": "根据蓝鹭讲义，我把转载当成独立来源，请给我核验提示。",
+        "course_id": 3
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/assignments",
+      "status": 201,
+      "result": {
+        "id": 10,
+        "title": "核验来源练习",
+        "course_id": 3,
+        "completed": false
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/attempts",
+      "status": 201,
+      "result": {
+        "id": 2437,
+        "score": 100
+      }
+    },
+    {
+      "method": "get",
+      "url": "/api/assignments/10/results",
+      "status": 200
+    },
+    {
+      "method": "post",
+      "url": "/api/classroom",
+      "status": 201,
+      "result": {
+        "id": 10,
+        "title": "核验结论反馈",
+        "course_id": 3,
+        "response_count": 0
+      }
+    },
+    {
+      "method": "post",
+      "url": "/api/classroom/10/responses",
+      "status": 200,
+      "result": {}
+    },
+    {
+      "method": "get",
+      "url": "/api/classroom",
+      "status": 200
+    }
+  ]
+}
