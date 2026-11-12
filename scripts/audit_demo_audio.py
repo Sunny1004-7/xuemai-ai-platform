@@ -18,8 +18,11 @@ def normalize(text):
 def main():
     source = ROOT / '最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
-    latest = os.environ.get('XUEMAI_VIDEO_ROUND') == '8'
-    target = ROOT / ('docs/demo/第八轮语音转写回验.json' if latest else 'docs/demo/第七轮语音转写回验.json')
+    current = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
+    round_number = int(os.environ.get('XUEMAI_VIDEO_ROUND', current['round']))
+    title = {7:'第七轮',8:'第八轮',9:'第九轮'}[round_number]
+    project = ROOT/('docs/demo/'+title+'演示源')
+    target = ROOT / ('docs/demo/'+title+'语音转写回验.json')
     model = WhisperModel(str(ROOT / '.local/models/faster-whisper-small'), device='cpu', compute_type='int8', cpu_threads=6)
     segments, info = model.transcribe(str(source), language='zh', beam_size=3, vad_filter=True,
                                      word_timestamps=True, condition_on_previous_text=False,
@@ -30,13 +33,14 @@ def main():
         decoded.append({'start': segment.start, 'end': segment.end, 'text': segment.text})
         words.extend({'start': word.start, 'end': word.end, 'text': word.word} for word in segment.words)
         print(round(segment.start, 1), segment.text, flush=True)
-    scenes = json.loads((ROOT / ('docs/demo/第八轮演示源/scenes.json' if latest else 'scripts/demo-scenes.json')).read_text('utf8'))
+    scenes = json.loads((project/'scenes.json').read_text('utf8'))
     per_scene = []
     for scene in scenes:
         actual = ''.join(word['text'] for word in words if scene['start']-.12 <= word['start'] < scene['start']+scene['duration']-.1)
         per_scene.append({'scene': scene['name'], 'start': scene['start'], 'expected': scene['text'], 'transcribed': actual,
                           'character_similarity': round(SequenceMatcher(None, normalize(scene['text']), normalize(actual)).ratio(), 4)})
-    voices = json.loads((ROOT / ('docs/demo/第八轮演示源/audio/segments.json' if latest else '.local/narration/segments.json')).read_text('utf8'))
+    voices_path = project/'audio/segments.json' if round_number >= 8 else ROOT/'.local/narration/segments.json'
+    voices = json.loads(voices_path.read_text('utf8'))
     gaps = [right['start'] - left['start'] - left['duration'] for left, right in zip(voices, voices[1:])]
     expected = ''.join(scene['text'] for scene in scenes)
     actual = ''.join(segment['text'] for segment in decoded)

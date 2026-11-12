@@ -1,4 +1,4 @@
-"""按逐句时间轴合入配音和底部字幕，输出1080p正式演示。"""
+"""按整段旁白时间轴合入声音与透明单行字幕。"""
 import json
 from pathlib import Path
 import hashlib
@@ -9,8 +9,10 @@ import imageio_ffmpeg
 
 ROOT=Path(__file__).resolve().parents[1]
 FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
-LATEST = os.environ.get('XUEMAI_VIDEO_ROUND') == '8'
-PROJECT = ROOT/('docs/demo/第八轮演示源' if LATEST else 'docs/demo/第七轮演示源')
+CURRENT = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
+ROUND = int(os.environ.get('XUEMAI_VIDEO_ROUND', CURRENT['round']))
+LATEST = ROUND >= 8
+PROJECT = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮'}[ROUND] + '演示源')
 EDIT=json.loads((PROJECT/'edit-timeline.json').read_text('utf8'))
 DURATION=EDIT['duration_seconds']
 
@@ -52,7 +54,7 @@ def inspect_output(target, segments):
     return record
 
 def build():
-    local=ROOT/('.local/narration-round8' if LATEST else '.local/narration')
+    local=ROOT/(f'.local/narration-round{ROUND}' if LATEST else '.local/narration')
     local.mkdir(exist_ok=True)
     segments=json.loads(((PROJECT/'audio' if LATEST else local)/'segments.json').read_text(encoding='utf8'))
     source=ROOT/'最终参赛提交材料/学脉XueMai-演示视频.mp4'
@@ -74,7 +76,7 @@ def build():
               '-map','[out]','-ar','24000','-t',str(DURATION),str(local/'complete.wav')]
     subprocess.run(command,check=True)
     srt=(ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8')
-    ass=['[Script Info]','ScriptType: v4.00+','PlayResX: 1920','PlayResY: 1080','[V4+ Styles]',
+    ass=['[Script Info]','ScriptType: v4.00+','PlayResX: 1920','PlayResY: 1080','WrapStyle: 2','[V4+ Styles]',
          'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
          ('Style: Default,Microsoft YaHei,32,&H003D3F20,&H003D3F20,&H00F8F8F5,&HFF000000,0,0,0,0,100,100,0,0,1,1.1,0.4,2,100,100,24,1' if LATEST else 'Style: Default,Microsoft YaHei,32,&H00FFFFFF,&H00FFFFFF,&H00372F26,&H20372F26,0,0,0,0,100,100,0,0,3,8,0,2,100,100,24,1'),
          '[Events]','Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text']
@@ -86,6 +88,8 @@ def build():
     (local/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
     if LATEST:
         (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8')
+    if ROUND == CURRENT['round']:
+        (ROOT/'docs/demo/学脉XueMai-演示字幕.ass').write_text('\n'.join(ass),encoding='utf8')
     subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(source),'-i',str(local/'complete.wav'),'-vf','ass=subtitles.ass','-map','0:v','-map','1:a','-c:v','libx264','-preset','fast','-crf','22','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(target)],cwd=local,check=True)
     print(json.dumps(inspect_output(target,segments),ensure_ascii=False))
     if LATEST:
