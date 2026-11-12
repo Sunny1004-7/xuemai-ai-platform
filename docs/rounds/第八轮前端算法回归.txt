@@ -1,0 +1,4 @@
+> xuemai-web@0.6.0 test:algorithms
+> node scripts/verify-algorithms.mjs
+
+算法验证通过：110 组排序输入及 4 个边界样本、每步元素/索引不变量、BFS 层序与 BST 去重中序。真实 AI 请求 0 次。

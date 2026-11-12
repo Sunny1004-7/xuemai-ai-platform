@@ -1,0 +1,50 @@
+{
+  "round": 8,
+  "source_base": "72bd36bfe06436687fd8af413f05797170dc11fc",
+  "artifact_sha256_matches": {
+    "docs/deliverables/xuemai-technical-report.pdf": "428b2d3d324e8a4e57925ff32a9a2e0ae094cece4802db7bb18dbb09c6e09c4a",
+    "docs/deliverables/xuemai-demo-1080p.mp4": "695b4020e3be1e0eee54e2d9bbc8895796ac83c944a8b174e6b718621b70ad03",
+    "docs/figures/xuemai-framework.png": "08eb2add0ecf94f41813109e66991a08d0c484b2ae511f9a79bad67ede5204d1",
+    "docs/figures/xuemai-framework.pdf": "56877c50a5692613acf8d58c02e4547c99123a93559dada78dfdd7770a4a0e7f",
+    "docs/figures/xuemai-framework.svg": "b3a70276a7813ef49fc0daa1d1352e7e8db77f2830a0a9cf96816b9d5a370938"
+  },
+  "formal_and_repository_copies_identical": true,
+  "relative_markdown_links_checked": [
+    "README.md",
+    "docs/TECHNICAL_REPORT.md",
+    "docs/rounds/2026-11-12-第八轮教学价值与参赛表达升级.md"
+  ],
+  "broken_relative_links": [],
+  "screenshots": {
+    "png_count": 480,
+    "modules": 20,
+    "fingerprint_coverage_dimensions_sha256_passed": true,
+    "contact_sheets_reviewed": 24,
+    "key_originals_reviewed": true
+  },
+  "pdf": {
+    "pages": 29,
+    "all_pages_rendered_and_visually_reviewed": true,
+    "key_original_pages": [
+      1,
+      6,
+      17,
+      18
+    ],
+    "fonts_embedded": true
+  },
+  "video": {
+    "seconds": 473.47,
+    "system_seconds": 259.5,
+    "development_seconds": 135,
+    "visual_frames": 42,
+    "full_decode_passed": true,
+    "whisper_character_similarity": 0.9584,
+    "human_listening_review": false
+  },
+  "backend_tests": 157,
+  "browser_tests": 33,
+  "new_deepseek_requests": 0,
+  "reused_round7_requests": 2,
+  "local_key_ignored_and_untracked": true
+}

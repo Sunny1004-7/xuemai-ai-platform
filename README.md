@@ -79,7 +79,7 @@ cd xuemai-ai-platform
 
 ## AI 模式与额度
 
-默认 `AI_MODE=auto`，后端有Key时使用DeepSeek，无Key时使用Mock；`AI_MODE=mock` 明确覆盖自动模式。辅导功能区显示当前模式。Mock为固定教学样例，普通测试、截图和录制均显式使用Mock。
+默认 `AI_MODE=auto`，后端有Key时使用DeepSeek，无Key时使用Mock；`AI_MODE=mock` 明确覆盖自动模式。辅导功能区显示当前模式。Mock为固定教学样例，常规回归、截图与录制预检使用Mock。正式演示保留既有官方响应和同一教学任务的连续操作。
 
 正式按需使用：把 `.env.example` 中所需变量设置到后端环境，或保留已被忽略的根目录 `deepseek官方api.txt`，然后：
 

@@ -1,0 +1,32 @@
+{
+  "screenshot_directory": "交付审阅包/界面截图_20261112_174842",
+  "png_count": 480,
+  "source_fingerprint": "d9e0a28c28428eb3c580f9889252276904abe676990c0ac5f731ffec88c9592b",
+  "page_errors": [],
+  "viewports": {
+    "desktop": {
+      "width": 1440,
+      "height": 900
+    },
+    "desktop_wide": {
+      "width": 1920,
+      "height": 1080
+    },
+    "desktop_compact": {
+      "width": 1366,
+      "height": 768
+    },
+    "desktop_short": {
+      "width": 1366,
+      "height": 650
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "module_count": 20,
+  "ai_mode": "mock",
+  "real_ai_requests": 0,
+  "coverage_size_sha256_passed": true
+}

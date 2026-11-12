@@ -1,0 +1,13 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "sqlite_integrity_check": "ok",
+  "backend_port": 8000,
+  "frontend_port": 5173,
+  "real_api_requests_in_check": 0,
+  "backup_created": true
+}

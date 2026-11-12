@@ -3,11 +3,62 @@
   "subtitle": "师生双端AI个性化智慧教育平台",
   "version": "0.6.0",
   "track": "AI创新应用挑战赛",
-  "author": {"school": "西安交通大学", "major": "软件工程", "name": "刘嘉程"},
+  "author": {
+    "school": "西安交通大学",
+    "major": "软件工程",
+    "name": "刘嘉程"
+  },
   "focus": "课程课后巩固与教师循证分层指导",
-  "examples": ["数据结构与算法", "Python程序设计"],
-  "methods": ["K-TRACE", "PATH-G", "DIA-GUIDE", "CLASS-LOOP", "DIA-TEACH"],
+  "examples": [
+    "数据结构与算法",
+    "Python程序设计"
+  ],
+  "methods": [
+    "K-TRACE",
+    "PATH-G",
+    "DIA-GUIDE",
+    "CLASS-LOOP",
+    "DIA-TEACH"
+  ],
   "framework": "docs/figures/xuemai-framework",
-  "real_ai": {"round8_new_requests": 0, "reused_round7_requests": 2, "source": "docs/rounds/第七轮真实API用量.json"},
-  "baseline_commit": "72bd36bfe06436687fd8af413f05797170dc11fc"
+  "real_ai": {
+    "round8_new_requests": 0,
+    "reused_round7_requests": 2,
+    "source": "docs/rounds/第七轮真实API用量.json"
+  },
+  "baseline_commit": "72bd36bfe06436687fd8af413f05797170dc11fc",
+  "evidence": {
+    "method_source": "docs/rounds/第七轮方法实验.json",
+    "fixed_seed": 7011,
+    "path_cases": 48,
+    "path_vs_feasible_greedy": {
+      "win": 36,
+      "tie": 9,
+      "loss": 3,
+      "mean_utility_gain_percent": 3.49
+    },
+    "round8_ordering_queries": 6,
+    "new_content_flow": "docs/rounds/第八轮新增内容教学验证.json"
+  },
+  "delivery": {
+    "pdf_pages": 29,
+    "video_seconds": 473.47,
+    "resolution": "1920x1080",
+    "fps": 30,
+    "development_seconds": 135,
+    "system_ui_seconds": 259.5,
+    "voice_paragraphs": 20,
+    "subtitles": 93,
+    "screenshots": 480,
+    "backend_tests": 157,
+    "browser_tests": 33,
+    "screenshot_directory": "交付审阅包/界面截图_20261112_174842"
+  },
+  "artifacts": {
+    "docs/deliverables/xuemai-technical-report.pdf": "428b2d3d324e8a4e57925ff32a9a2e0ae094cece4802db7bb18dbb09c6e09c4a",
+    "docs/deliverables/xuemai-demo-1080p.mp4": "695b4020e3be1e0eee54e2d9bbc8895796ac83c944a8b174e6b718621b70ad03",
+    "docs/figures/xuemai-framework.png": "08eb2add0ecf94f41813109e66991a08d0c484b2ae511f9a79bad67ede5204d1",
+    "docs/figures/xuemai-framework.pdf": "56877c50a5692613acf8d58c02e4547c99123a93559dada78dfdd7770a4a0e7f",
+    "docs/figures/xuemai-framework.svg": "b3a70276a7813ef49fc0daa1d1352e7e8db77f2830a0a9cf96816b9d5a370938"
+  }
 }
