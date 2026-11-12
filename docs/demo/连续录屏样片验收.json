@@ -1,0 +1,15 @@
+{
+  "capture": "Chromium getDisplayMedia / MediaRecorder VP8",
+  "requested_and_track_fps": 30,
+  "input_size": "1920x1000",
+  "output_size": "1920x1080",
+  "page_zoom": 1,
+  "motion_window_seconds": [
+    0.5,
+    4.5
+  ],
+  "motion_native_frames": 107,
+  "unique_frames": 107,
+  "motion_fps_observed": 26.78,
+  "source": "专用标签页连续媒体流，保留组件动画"
+}
