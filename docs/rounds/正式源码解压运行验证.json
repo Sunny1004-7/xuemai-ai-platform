@@ -1,0 +1,25 @@
+{
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "mock"
+  },
+  "roles": {
+    "student1": {
+      "login_status": 200,
+      "course_count": 2
+    },
+    "teacher": {
+      "login_status": 200,
+      "course_count": 2
+    }
+  },
+  "teaching_clips_available": 6,
+  "integrity_check": "ok",
+  "knowledge_points": 58,
+  "questions": 73,
+  "source_commit": "2be1917a0692be37cb45d1421c4bd3ee1e36f477",
+  "validation_environment": "解压源码、现有已安装依赖、全新SQLite数据库和Mock",
+  "new_real_api_requests": 0
+}

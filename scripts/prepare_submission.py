@@ -99,7 +99,9 @@ def main():
         f'代码仓库：{REPOSITORY}\n完整Git历史：{REPOSITORY}/commits/main/\n'
         f'源码提交：{result["source_commit"]}\n提交数量：{result["git_commits"]}\n'
         '源码ZIP为当前提交快照；完整历史保留在Public仓库，可通过git clone获取。\n', encoding='utf8')
-    (ROOT / 'docs/rounds/正式提交材料归集结果.json').write_text(
+    local = ROOT / '.local'
+    local.mkdir(exist_ok=True)
+    (local / '正式提交材料归集结果.json').write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     print(json.dumps(result, ensure_ascii=False))
 
