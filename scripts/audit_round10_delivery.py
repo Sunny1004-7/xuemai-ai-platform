@@ -15,6 +15,11 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
+    if facts.get('materials_round',10)>=12:
+        import subprocess
+        import sys
+        subprocess.run([sys.executable,str(ROOT/'scripts/validate_submission.py')],check=True)
+        return
     current=json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
     project=ROOT/current['project']
     manifest=json.loads((ROOT/'docs/experiments/round10/manifest.json').read_text('utf8'))

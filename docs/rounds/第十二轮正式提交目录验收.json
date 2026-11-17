@@ -1,0 +1,18 @@
+{
+  "pdf_pages": 30,
+  "video_seconds": 477.0,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "audio_present": true,
+  "submission_files": [
+    "学脉XueMai-技术文档.pdf",
+    "学脉XueMai-演示视频-含旁白.mp4"
+  ],
+  "working_sources": "docs/demo/第十二轮演示源",
+  "new_deepseek_requests": 0,
+  "new_review_zip": false,
+  "full_system_capture": false
+}

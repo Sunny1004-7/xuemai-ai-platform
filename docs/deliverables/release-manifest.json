@@ -1,26 +1,26 @@
 {
+  "round": 12,
   "version": "0.6.0",
-  "round": 11,
-  "source_commit": "f21e6a20949ae7a6bc6014cd7d93f585a2bcc218",
-  "source_commit_scope": "本轮材料基线，最终源码提交见完整审阅包的审阅清单",
-  "repository": "https://github.com/Sunny1004-7/xuemai-ai-platform",
+  "source_commit": "3a2d6530f219e997f47876dd8828f0cf977c8e74",
+  "source_scope": "本轮开始时的基线，后续阶段记录见Git历史",
   "verification": {
     "pdf_pages": 30,
-    "video_seconds": 475.5,
+    "video_seconds": 477.0,
     "resolution": "1920x1080",
     "fps": 30,
-    "development_seconds": 130.5,
-    "system_ui_seconds": 278.0,
-    "voice_paragraphs": 26,
-    "subtitles": 77,
+    "development_seconds": 126.0,
+    "system_ui_seconds": 294.0,
+    "voice_paragraphs": 43,
+    "subtitles": 76,
     "screenshots": 480,
     "backend_tests": 180,
     "browser_tests": 34,
     "screenshot_directory": "交付审阅包/界面截图_20261117_221559",
     "figures_tikz": 11,
     "references": 20,
-    "visual_review_frames": 69,
-    "whisper_character_similarity": 0.9753
+    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图",
+    "visual_review_frames": 70,
+    "whisper_character_similarity": 0.9673
   },
   "real_ai": {
     "requests": 202,
@@ -30,27 +30,14 @@
     "budget": 1000000,
     "source": "docs/experiments/round10/token-ledger.json"
   },
-  "preferred_video": "学脉XueMai-演示视频-含旁白.mp4",
   "files": [
     {
       "name": "学脉XueMai-技术文档.pdf",
-      "bytes": 1516387,
-      "sha256": "96451d245b80e46a647d9c8d6c9fa305d37b4dc0900852660c480a2727d4ea17"
+      "bytes": 1516344
     },
     {
       "name": "学脉XueMai-演示视频-含旁白.mp4",
-      "bytes": 15071838,
-      "sha256": "c798f9e57e7d00d95c8542f0b71ba3dd9899041d32764afa61a2b5f6c735fee9"
-    },
-    {
-      "name": "学脉XueMai-演示视频.mp4",
-      "bytes": 9888224,
-      "sha256": "7388dedd4dd93769ad213e3406c7d402217a004a8d2ebd4b9cac367bcbe7d05a"
-    },
-    {
-      "name": "学脉XueMai-演示字幕.srt",
-      "bytes": 7923,
-      "sha256": "65c112806c0786a79324bd74236f41822c96f5e820776a60051e3fc54bda7bca"
+      "bytes": 13750890
     }
   ]
 }

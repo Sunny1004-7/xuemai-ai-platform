@@ -35,7 +35,8 @@
       "budget": 1000000,
       "source": "docs/experiments/round10/token-ledger.json"
     },
-    "round11_new_requests": 0
+    "round11_new_requests": 0,
+    "round12_new_requests": 0
   },
   "baseline_commit": "04b2ec164558cff12892821b4a72147ceaf8dbce",
   "evidence": {
@@ -66,32 +67,22 @@
   },
   "delivery": {
     "pdf_pages": 30,
-    "video_seconds": 475.5,
+    "video_seconds": 477.0,
     "resolution": "1920x1080",
     "fps": 30,
-    "development_seconds": 130.5,
-    "system_ui_seconds": 278.0,
-    "voice_paragraphs": 26,
-    "subtitles": 77,
+    "development_seconds": 126.0,
+    "system_ui_seconds": 294.0,
+    "voice_paragraphs": 43,
+    "subtitles": 76,
     "screenshots": 480,
     "backend_tests": 180,
     "browser_tests": 34,
     "screenshot_directory": "交付审阅包/界面截图_20261117_221559",
     "figures_tikz": 11,
     "references": 20,
-    "visual_review_frames": 69,
-    "whisper_character_similarity": 0.9753
-  },
-  "artifacts": {
-    "docs/deliverables/xuemai-technical-report.pdf": "96451d245b80e46a647d9c8d6c9fa305d37b4dc0900852660c480a2727d4ea17",
-    "docs/deliverables/xuemai-demo-1080p.mp4": "c798f9e57e7d00d95c8542f0b71ba3dd9899041d32764afa61a2b5f6c735fee9",
-    "docs/figures/xuemai-framework.png": "2c9e1d16c1fc77c8c6a693b9bcc1aa036e4ea18da3eaaea8659beed95bc11092",
-    "docs/figures/xuemai-framework.pdf": "8543e430f659f7d8767cf7cecf556e9c575ab49db3b0c7fe9825f1a0c3323e48",
-    "docs/figures/xuemai-framework.svg": "eff638407f8e824199c11c80e0ee2657c3e6f61240c6dceca2c6d1196e31212c",
-    "docs/figures/xuemai-framework-regions.json": "21fe4dbba6349652108ca261539af4b8e15a2ca23d42463ffca8008e52a03eab",
-    "docs/experiments/round10/token-ledger.json": "9173b2e63ea83be5e1b0d19793348a193d8038426e5f88cb67e4e06a23a0327c",
-    "docs/demo/第十一轮演示源/subtitles.srt": "65c112806c0786a79324bd74236f41822c96f5e820776a60051e3fc54bda7bca",
-    "docs/demo/第十一轮演示源/subtitles.ass": "e2c6f3169dfe18a98d7d9e33872347e89e5244785e8416a1af0b58c0268692a3"
+    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图",
+    "visual_review_frames": 70,
+    "whisper_character_similarity": 0.9673
   },
   "method_definitions": [
     {
@@ -129,6 +120,14 @@
     "backend": "docs/rounds/第十一轮后端完整回归.txt",
     "browser": "docs/rounds/第十一轮浏览器完整回归.txt"
   },
-  "materials_round": 11,
-  "material_baseline_commit": "f21e6a20949ae7a6bc6014cd7d93f585a2bcc218"
+  "materials_round": 12,
+  "material_baseline_commit": "3a2d6530f219e997f47876dd8828f0cf977c8e74",
+  "artifact_files": {
+    "docs/deliverables/xuemai-technical-report.pdf": {
+      "bytes": 1516344
+    },
+    "docs/deliverables/xuemai-demo-1080p.mp4": {
+      "bytes": 13750890
+    }
+  }
 }
