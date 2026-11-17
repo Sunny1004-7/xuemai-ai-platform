@@ -1,0 +1,118 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://6:8",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "screenPixelRatio": 1,
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 943,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "intro",
+      "at": 1.207
+    },
+    {
+      "name": "pain",
+      "at": 15.236
+    },
+    {
+      "name": "framework",
+      "at": 31.295
+    },
+    {
+      "name": "results",
+      "at": 55.316
+    },
+    {
+      "name": "0",
+      "at": 67.344
+    },
+    {
+      "name": "1",
+      "at": 74.862
+    },
+    {
+      "name": "2",
+      "at": 82.378
+    },
+    {
+      "name": "3",
+      "at": 89.898
+    },
+    {
+      "name": "4",
+      "at": 97.414
+    },
+    {
+      "name": "5",
+      "at": 104.926
+    },
+    {
+      "name": "6",
+      "at": 112.446
+    },
+    {
+      "name": "7",
+      "at": 119.958
+    },
+    {
+      "name": "8",
+      "at": 127.475
+    },
+    {
+      "name": "9",
+      "at": 134.988
+    },
+    {
+      "name": "10",
+      "at": 142.501
+    },
+    {
+      "name": "11",
+      "at": 150.015
+    },
+    {
+      "name": "12",
+      "at": 157.524
+    },
+    {
+      "name": "13",
+      "at": 165.032
+    },
+    {
+      "name": "14",
+      "at": 172.538
+    },
+    {
+      "name": "15",
+      "at": 180.049
+    },
+    {
+      "name": "16",
+      "at": 187.57
+    },
+    {
+      "name": "17",
+      "at": 195.083
+    },
+    {
+      "name": "outro",
+      "at": 202.594
+    }
+  ],
+  "elapsed_seconds": 214.61274799999998
+}

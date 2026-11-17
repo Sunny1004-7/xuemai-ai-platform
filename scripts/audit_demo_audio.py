@@ -20,7 +20,7 @@ def main():
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
     current = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
     round_number = int(os.environ.get('XUEMAI_VIDEO_ROUND', current['round']))
-    title = {7:'第七轮',8:'第八轮',9:'第九轮'}[round_number]
+    title = {7:'第七轮',8:'第八轮',9:'第九轮',10:'第十轮'}[round_number]
     project = ROOT/('docs/demo/'+title+'演示源')
     target = ROOT / ('docs/demo/'+title+'语音转写回验.json')
     model = WhisperModel(str(ROOT / '.local/models/faster-whisper-small'), device='cpu', compute_type='int8', cpu_threads=6)

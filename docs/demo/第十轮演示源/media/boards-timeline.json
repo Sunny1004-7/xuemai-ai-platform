@@ -1,0 +1,140 @@
+[
+  {
+    "name": "intro",
+    "at": 1.207,
+    "duration": 14,
+    "capture_at": 1.394252000000023
+  },
+  {
+    "name": "pain",
+    "at": 15.236,
+    "duration": 16,
+    "capture_at": 15.42325200000002
+  },
+  {
+    "name": "framework",
+    "at": 31.295,
+    "duration": 24,
+    "capture_at": 31.482252000000045
+  },
+  {
+    "name": "results",
+    "at": 55.316,
+    "duration": 12,
+    "capture_at": 55.503252
+  },
+  {
+    "name": "0",
+    "at": 67.344,
+    "duration": 7.5,
+    "capture_at": 67.53125200000002
+  },
+  {
+    "name": "1",
+    "at": 74.862,
+    "duration": 7.5,
+    "capture_at": 75.04925200000005
+  },
+  {
+    "name": "2",
+    "at": 82.378,
+    "duration": 7.5,
+    "capture_at": 82.56525200000002
+  },
+  {
+    "name": "3",
+    "at": 89.898,
+    "duration": 7.5,
+    "capture_at": 90.085252
+  },
+  {
+    "name": "4",
+    "at": 97.414,
+    "duration": 7.5,
+    "capture_at": 97.60125200000002
+  },
+  {
+    "name": "5",
+    "at": 104.926,
+    "duration": 7.5,
+    "capture_at": 105.11325200000002
+  },
+  {
+    "name": "6",
+    "at": 112.446,
+    "duration": 7.5,
+    "capture_at": 112.633252
+  },
+  {
+    "name": "7",
+    "at": 119.958,
+    "duration": 7.5,
+    "capture_at": 120.14525200000006
+  },
+  {
+    "name": "8",
+    "at": 127.475,
+    "duration": 7.5,
+    "capture_at": 127.662252
+  },
+  {
+    "name": "9",
+    "at": 134.988,
+    "duration": 7.5,
+    "capture_at": 135.17525200000003
+  },
+  {
+    "name": "10",
+    "at": 142.501,
+    "duration": 7.5,
+    "capture_at": 142.68825200000006
+  },
+  {
+    "name": "11",
+    "at": 150.015,
+    "duration": 7.5,
+    "capture_at": 150.20225200000002
+  },
+  {
+    "name": "12",
+    "at": 157.524,
+    "duration": 7.5,
+    "capture_at": 157.71125200000003
+  },
+  {
+    "name": "13",
+    "at": 165.032,
+    "duration": 7.5,
+    "capture_at": 165.219252
+  },
+  {
+    "name": "14",
+    "at": 172.538,
+    "duration": 7.5,
+    "capture_at": 172.72525200000004
+  },
+  {
+    "name": "15",
+    "at": 180.049,
+    "duration": 7.5,
+    "capture_at": 180.23625200000006
+  },
+  {
+    "name": "16",
+    "at": 187.57,
+    "duration": 7.5,
+    "capture_at": 187.75725200000002
+  },
+  {
+    "name": "17",
+    "at": 195.083,
+    "duration": 7.5,
+    "capture_at": 195.27025200000006
+  },
+  {
+    "name": "outro",
+    "at": 202.594,
+    "duration": 12,
+    "capture_at": 202.78125200000002
+  }
+]

@@ -12,7 +12,7 @@ FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
 CURRENT = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
 ROUND = int(os.environ.get('XUEMAI_VIDEO_ROUND', CURRENT['round']))
 LATEST = ROUND >= 8
-PROJECT = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮'}[ROUND] + '演示源')
+PROJECT = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮',10:'第十轮'}[ROUND] + '演示源')
 EDIT=json.loads((PROJECT/'edit-timeline.json').read_text('utf8'))
 DURATION=EDIT['duration_seconds']
 

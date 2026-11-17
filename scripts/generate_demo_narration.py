@@ -25,7 +25,7 @@ async def synthesize(round_number=None):
     current = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
     round_number = round_number or current['round']
     latest = round_number >= 8
-    project = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮'}[round_number] + '演示源')
+    project = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮',10:'第十轮'}[round_number] + '演示源')
     scene_file = project/'scenes.json'
     scenes=json.loads(scene_file.read_text(encoding='utf-8-sig'))
     output=project/'audio' if latest else ROOT/'.local/narration'
@@ -33,7 +33,7 @@ async def synthesize(round_number=None):
     voice = 'zh-CN-YunxiNeural' if latest else 'zh-CN-XiaoxiaoNeural'
     rate = '-3%' if latest else '+4%'
     segments=[];subtitles=[]
-    font = ImageFont.truetype('msyh.ttc', current['subtitle_font_size']) if round_number == 9 else None
+    font = ImageFont.truetype('msyh.ttc', current['subtitle_font_size']) if round_number >= 9 else None
     pacing_issues=[]
     for scene in scenes:
         sentences=[scene['text']] if latest else [s for s in re.split(r'(?<=[。！？；])',scene['text']) if s.strip()]
@@ -69,7 +69,7 @@ async def synthesize(round_number=None):
                 subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(wav),'-filter:a',f'atempo={tempo:.5f}',str(adjusted)],check=True)
                 wav=adjusted;seconds=duration(wav)
             segments.append({'scene':scene['name'],'text':text,'start':round(at,3),'duration':round(seconds,3),'file':wav.relative_to(ROOT).as_posix(),'word_boundary_count':len(boundaries),'tempo':round(tempo,5)})
-            if round_number == 9:
+            if round_number >= 9:
                 clauses = semantic_lines(text, font.getlength)
             else:
                 clauses=[];phrase=''
@@ -111,11 +111,14 @@ async def synthesize(round_number=None):
             'font_size':current['subtitle_font_size'],'measured_max_width':1440,
             'safe_width':current['subtitle_safe_width'],'single_line':True,'cues':subtitles},ensure_ascii=False,indent=2),encoding='utf8')
     description = description.replace('第八轮演示源', project.name)
+    if round_number>=10:
+        evidence=json.loads((ROOT/'docs/experiments/round10/summary.json').read_text('utf8'))
+        description=f'原生标签页连续录屏沿教学过程剪辑，先问候与教学背景，再进入作品框架和师生操作。画面复用两次已保存的官方模型会话，新增实验用量在统一账本中记录，共{evidence["tokens"]["requests"]}次请求。三条真实开发档案分阶段回放135秒，来源日期为2026年11月3日和12日。云希中文神经合成人声按完整语段生成，透明字幕使用同次WordBoundary，时间轴和可编辑源位于{project.name}。'
     (ROOT/'docs/demo/讲解稿与分镜.md').write_text('# 学脉系统演示分镜\n\n'+description+'\n\n'+'\n\n'.join(f'## {s["name"]}（{s["start"]}—{s["start"]+s["duration"]}秒）\n\n{s["text"]}' for s in scenes),encoding='utf8')
     print('完成',len(segments),'语段配音、' if latest else '句配音、',len(subtitles),'条字幕')
 
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
-    parser.add_argument('--round',type=int,choices=[7,8,9])
+    parser.add_argument('--round',type=int,choices=[7,8,9,10])
     asyncio.run(synthesize(parser.parse_args().round))

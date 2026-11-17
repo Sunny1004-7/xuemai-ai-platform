@@ -1,0 +1,318 @@
+{
+  "revision": 10,
+  "duration_seconds": 460.466341,
+  "fps": 30,
+  "development_evidence_seconds": 135,
+  "system_interface_seconds": 247.5,
+  "edits": [
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 1.394252000000023,
+      "out": 15.394252000000023,
+      "start": 0,
+      "duration": 14.0,
+      "frames": 420,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 15.42325200000002,
+      "out": 31.42325200000002,
+      "start": 14.0,
+      "duration": 16.0,
+      "frames": 480,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/framework-continuous.mp4",
+      "in": 1.8068800999999972,
+      "out": 25.806880099999997,
+      "start": 30.0,
+      "duration": 24.0,
+      "frames": 720,
+      "category": "作品说明"
+    },
+    {
+      "source": "docs/demo/第九轮演示源/media/login-continuous.mp4",
+      "in": 0.5,
+      "out": 8.866666666666667,
+      "start": 54.0,
+      "duration": 8.366666666666667,
+      "frames": 251,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 0.31,
+      "out": 59.010000000000005,
+      "start": 62.36666666666667,
+      "duration": 58.7,
+      "frames": 1761,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/student-review-continuous.mp4",
+      "in": 0.31,
+      "out": 18.509999999999998,
+      "start": 121.06666666666666,
+      "duration": 18.2,
+      "frames": 546,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 13.4931527,
+      "out": 24.4931527,
+      "start": 139.26666666666665,
+      "duration": 11.0,
+      "frames": 330,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 59,
+      "out": 89.46666666666667,
+      "start": 150.26666666666665,
+      "duration": 30.466666666666665,
+      "frames": 914,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/review-continuous.mp4",
+      "in": 21.1,
+      "out": 40.7,
+      "start": 180.73333333333332,
+      "duration": 19.6,
+      "frames": 588,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/system-continuous.mp4",
+      "in": 89.46,
+      "out": 100.29333333333332,
+      "start": 200.33333333333331,
+      "duration": 10.833333333333334,
+      "frames": 325,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第七轮演示源/media/follow-continuous.mp4",
+      "in": 1.5,
+      "out": 32.2,
+      "start": 211.16666666666666,
+      "duration": 30.7,
+      "frames": 921,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 24.4982968,
+      "out": 47.9982968,
+      "start": 241.86666666666665,
+      "duration": 23.5,
+      "frames": 705,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 47.98764,
+      "out": 70.85430666666667,
+      "start": 265.3666666666667,
+      "duration": 22.866666666666667,
+      "frames": 686,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第八轮演示源/media/tour-continuous.mp4",
+      "in": 70.8395294,
+      "out": 84.10619606666667,
+      "start": 288.23333333333335,
+      "duration": 13.266666666666667,
+      "frames": 398,
+      "category": "系统界面"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 55.503252,
+      "duration": 12,
+      "frames": 360,
+      "category": "作品说明",
+      "start": 301.5,
+      "out": 67.503252
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 67.53125200000002,
+      "out": 75.03125200000002,
+      "start": 313.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 75.04925200000005,
+      "out": 82.54925200000005,
+      "start": 321.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 82.56525200000002,
+      "out": 90.06525200000002,
+      "start": 328.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 90.085252,
+      "out": 97.585252,
+      "start": 336.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 97.60125200000002,
+      "out": 105.10125200000002,
+      "start": 343.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 105.11325200000002,
+      "out": 112.61325200000002,
+      "start": 351.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 112.633252,
+      "out": 120.133252,
+      "start": 358.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 120.14525200000006,
+      "out": 127.64525200000006,
+      "start": 366.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 127.662252,
+      "out": 135.162252,
+      "start": 373.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 135.17525200000003,
+      "out": 142.67525200000003,
+      "start": 381.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 142.68825200000006,
+      "out": 150.18825200000006,
+      "start": 388.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 150.20225200000002,
+      "out": 157.70225200000002,
+      "start": 396.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 157.71125200000003,
+      "out": 165.21125200000003,
+      "start": 403.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 165.219252,
+      "out": 172.719252,
+      "start": 411.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 172.72525200000004,
+      "out": 180.22525200000004,
+      "start": 418.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 180.23625200000006,
+      "out": 187.73625200000006,
+      "start": 426.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 187.75725200000002,
+      "out": 195.25725200000002,
+      "start": 433.5,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 195.27025200000006,
+      "out": 202.77025200000006,
+      "start": 441.0,
+      "duration": 7.5,
+      "frames": 225,
+      "category": "开发过程"
+    },
+    {
+      "source": "docs/demo/第十轮演示源/media/boards-continuous.mp4",
+      "in": 202.78125200000002,
+      "out": 214.78125200000002,
+      "start": 448.5,
+      "duration": 12.0,
+      "frames": 360,
+      "category": "作品说明"
+    }
+  ],
+  "real_api_calls_new_during_recording": 0,
+  "real_api_reused": 2,
+  "experiment_run_id": "xuemai-r10-20261117-v1"
+}
