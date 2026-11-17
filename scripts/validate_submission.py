@@ -15,8 +15,11 @@ def main():
     current, number, project = load_project()
     final = ROOT / '最终参赛提交材料'
     expected = {'学脉XueMai-技术文档.pdf', '学脉XueMai-演示视频-含旁白.mp4'}
-    if {path.name for path in final.iterdir() if path.is_file()} != expected:
-        raise ValueError('正式提交目录应只保留技术文档PDF和有声演示视频')
+    actual = {path.name for path in final.iterdir() if path.is_file()}
+    if not expected.issubset(actual):
+        raise ValueError('正式提交目录缺少技术文档PDF或有声演示视频')
+    if {path.name for path in final.glob('*.mp4')} != {'学脉XueMai-演示视频-含旁白.mp4'}:
+        raise ValueError('正式提交目录只保留一个有声演示视频版本')
     document = pymupdf.open(final / '学脉XueMai-技术文档.pdf')
     if len(document) > 30:
         raise ValueError('技术报告超过30页')
@@ -28,6 +31,8 @@ def main():
         if not video.streams.audio or not 300 <= duration <= 480:
             raise ValueError('视频需包含人声且片长为5至8分钟')
     timeline = json.loads((project / 'edit-timeline.json').read_text('utf8'))
+    if timeline['development_evidence_seconds'] < 120:
+        raise ValueError('AI协同过程展示不足两分钟')
     voices = json.loads((project / 'audio/segments.json').read_text('utf8'))
     subtitles = json.loads((project / 'subtitle-layout.json').read_text('utf8'))
     facts = json.loads((ROOT / 'docs/submission-facts.json').read_text('utf8'))
@@ -62,9 +67,9 @@ def main():
     (ROOT / 'docs/deliverables/release-manifest.json').write_text(json.dumps(release, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     result = {'pdf_pages': len(document), 'video_seconds': duration,
               'resolution': [1920, 1080], 'fps': 30, 'audio_present': True,
-              'submission_files': sorted(expected), 'working_sources': current['project'],
+              'submission_files': sorted(path.name for path in final.iterdir()), 'working_sources': current['project'],
               'new_deepseek_requests': 0, 'new_review_zip': False, 'full_system_capture': False}
-    (ROOT / 'docs/rounds/第十二轮正式提交目录验收.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
+    (ROOT / 'docs/rounds/当前正式提交目录验收.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     print(json.dumps(result, ensure_ascii=False))
 
 

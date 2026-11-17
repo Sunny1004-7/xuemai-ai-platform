@@ -34,4 +34,4 @@
 
 配音缓存按文稿、声音和参数区分。重建时使用随工程保存的连续素材，重新采集使用record-round12-modules.mjs与record-round12-materials.mjs，需准备带有既有官方会话11、12的隔离Mock演示库。新录制使用MediaRecorder控制页的单调时钟，在片段前后保留保护时间，剪辑器检查每段结束前仍处于当前画面。
 
-无声中间片、SRT、ASS和验证JSON保存在视频工程目录。正式目录仅保留PDF与有声MP4。用户于2026年11月18日更新交付方式，后续按工程内的[协作约定](../AGENTS.md)维护。
+无声中间片、SRT、ASS和验证JSON保存在视频工程目录。正式目录集中源码ZIP、README复现指南、AI协同开发记录、Git演进记录、PDF与唯一的有声MP4。完成中文提交后执行`scripts/prepare_submission.py`整理官方材料，源码取自当前Git提交；随后执行`scripts/validate_submission.py`检查媒体参数。后续按工程内的[协作约定](../AGENTS.md)维护。
