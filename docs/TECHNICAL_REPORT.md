@@ -1,8 +1,10 @@
 # 技术文档与演示复现
 
-正式提交目录保存[技术文档PDF](../最终参赛提交材料/学脉XueMai-技术文档.pdf)和[有声演示视频](../最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4)。报告30页，视频477秒、1920×1080、30fps。图源、讲稿、连续录屏、声音、字幕与验证记录保存在工程中。
+正式提交目录保存技术文档PDF和有声演示视频，工程内提供对应的[技术文档PDF](deliverables/xuemai-technical-report.pdf)和[有声演示视频](deliverables/xuemai-demo-1080p.mp4)。报告30页，视频477.97秒、1920×1080、30fps。图源、讲稿、连续录屏、声音、字幕与验证记录保存在工程中。
 
 ## 报告
+
+材料构建在Windows环境使用XeLaTeX（TeX Live）、宋体和Times New Roman；媒体检查还使用Poppler中的pdfinfo与pdffonts。可选Python依赖通过`.venv/Scripts/python.exe -m pip install -r scripts/media-requirements.txt`安装。自动语音转写另需scripts/requirements-voice.txt及本地Whisper模型。应用日常运行只需backend/requirements.txt和前端依赖。
 
 入口为[main.tex](technical-report/main.tex)。图8与图18分别由[class-loop.tex](technical-report/figures/class-loop.tex)和[deployment.tex](technical-report/figures/deployment.tex)独立维护。图8从任务框下方引出直角通道，图18使用横平竖直的读写路径，并把“生成”标签放在本机边界外。
 

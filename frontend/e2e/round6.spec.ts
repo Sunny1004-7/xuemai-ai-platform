@@ -1,5 +1,4 @@
 import { test, expect, type Page } from '@playwright/test'
-import { existsSync } from 'node:fs'
 
 async function login(page: Page, teacher = false) {
   await page.goto('/')
@@ -111,10 +110,13 @@ test('教师题库最后一行与分页边界及控件命中正常', async ({ pa
 })
 
 test('真实音频经本地识别进入可编辑输入框', async ({ page }) => {
-  test.skip(!existsSync('../.local/round6-voice-sample.mp3'), '本机固定音频专项')
   await login(page)
+  const token = await page.evaluate(() => JSON.parse(sessionStorage.getItem('xuemai.session.v1') || 'null')?.token)
+  const status = await page.request.get('/api/ai/voice/status', { headers: { Authorization: `Bearer ${token}` } })
+  expect(status.ok()).toBeTruthy()
+  test.skip(!(await status.json()).ready, '可选语音专项：先运行 scripts/setup-voice.ps1 准备Whisper模型')
   await page.goto('/tutor?course=1')
-  await page.getByLabel('选择语音文件').setInputFiles('../.local/round6-voice-sample.mp3')
+  await page.getByLabel('选择语音文件').setInputFiles('e2e/fixtures/voice-stack-queue.mp3')
   await expect(page.locator('#chat-input')).toHaveValue(/栈.*队列/, { timeout: 45000 })
   await expect(page.locator('.chat-message')).toHaveCount(0)
 })

@@ -22,7 +22,7 @@
 
 ## 10分钟极速复现
 
-　　环境要求为Windows 10/11、Python 3.13、Node.js 20.18+、npm和Git。Windows浏览器验收使用Google Chrome，Linux持续集成使用Playwright Chromium。首次运行需要下载依赖。后端依赖见[requirements.txt](backend/requirements.txt)，前端依赖见[package.json](frontend/package.json)，环境变量见[.env.example](.env.example)。
+　　环境要求为Windows 10/11、Python 3.13、Node.js 20.19+（建议22 LTS）、npm和Git。Windows浏览器验收使用Google Chrome，Linux持续集成使用Playwright Chromium。首次运行需要下载依赖。后端依赖见[requirements.txt](backend/requirements.txt)，前端依赖见[package.json](frontend/package.json)，环境变量见[.env.example](.env.example)。
 
 ```powershell
 git clone https://github.com/Sunny1004-7/xuemai-ai-platform.git

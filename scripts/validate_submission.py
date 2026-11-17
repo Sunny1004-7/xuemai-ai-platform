@@ -14,10 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     current, number, project = load_project()
     final = ROOT / '最终参赛提交材料'
-    expected = {'学脉XueMai-技术文档.pdf', '学脉XueMai-演示视频-含旁白.mp4'}
+    expected = {'学脉XueMai-技术文档.pdf', '学脉XueMai-演示视频-含旁白.mp4',
+                '学脉XueMai-完整源码.zip', '学脉XueMai-AI协同开发记录.zip', 'README.md', 'Git演进记录.txt'}
     actual = {path.name for path in final.iterdir() if path.is_file()}
-    if not expected.issubset(actual):
-        raise ValueError('正式提交目录缺少技术文档PDF或有声演示视频')
+    if actual != expected or any(path.is_dir() for path in final.iterdir()):
+        raise ValueError('正式提交目录应包含源码ZIP、AI记录ZIP、README、Git日志、PDF和唯一的有声MP4')
     if {path.name for path in final.glob('*.mp4')} != {'学脉XueMai-演示视频-含旁白.mp4'}:
         raise ValueError('正式提交目录只保留一个有声演示视频版本')
     document = pymupdf.open(final / '学脉XueMai-技术文档.pdf')

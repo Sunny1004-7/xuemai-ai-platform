@@ -16,6 +16,14 @@ def make_repository(root):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text('测试源码\n', encoding='utf8')
     (root / '.gitignore').write_text('deepseek官方api.txt\n', encoding='utf8')
+    demo = root / 'docs/demo'
+    demo.mkdir(parents=True, exist_ok=True)
+    (demo / 'current.json').write_text('{"project":"docs/demo/当前演示源"}', encoding='utf8')
+    for name in ['当前演示源/media/current.mp4', '历史演示源/media/old.mp4',
+                 '历史演示源/audio/old.wav', '历史演示源/scenes.json']:
+        file = demo / name
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_text('测试素材', encoding='utf8')
     subprocess.run(['git', 'add', '.'], cwd=root, check=True, capture_output=True)
     subprocess.run(['git', 'commit', '-qm', '建立可复现的测试工程'], cwd=root, check=True)
 
@@ -32,6 +40,11 @@ def test_source_uses_committed_tree_including_media_and_history(tmp_path):
         names = archive.namelist()
         assert 'xuemai/backend/media/python-loop.mp4' in names
         assert 'xuemai/.env.example' in names
+        assert 'xuemai/docs/demo/当前演示源/media/current.mp4' in names
+        assert 'xuemai/docs/demo/历史演示源/media/old.mp4' not in names
+        assert 'xuemai/docs/demo/历史演示源/audio/old.wav' not in names
+        assert 'xuemai/docs/demo/历史演示源/scenes.json' in names
+        assert result['historical_media_excluded'] == 2
         assert not any('deepseek官方api' in name or '最终参赛提交材料' in name for name in names)
         assert result['source_commit'] in archive.read('xuemai/源码版本.txt').decode()
         assert '建立可复现的测试工程' in archive.read('xuemai/Git提交记录.txt').decode()

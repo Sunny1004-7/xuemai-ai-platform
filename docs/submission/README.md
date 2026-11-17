@@ -7,15 +7,15 @@
 | 官方要求 | 文件或入口 |
 |---|---|
 | 当前系统源码 | [学脉XueMai-完整源码.zip](学脉XueMai-完整源码.zip) |
-| Public仓库及完整提交历史 | [GitHub仓库](https://github.com/Sunny1004-7/xuemai-ai-platform)、[提交历史](https://github.com/Sunny1004-7/xuemai-ai-platform/commits/main/)、[Git提交记录](Git演进记录/Git提交记录.txt) |
-| 三条核心功能的Prompt提问、AI反馈与修复过程 | [AI协同开发记录](AI协同开发记录/README.md)、[逐字转存原文](AI协同开发记录/004-核心功能实际协作逐字转存.md) |
+| Public仓库及完整提交历史 | [GitHub仓库](https://github.com/Sunny1004-7/xuemai-ai-platform)、[提交历史](https://github.com/Sunny1004-7/xuemai-ai-platform/commits/main/)、[Git演进记录](Git演进记录.txt) |
+| 三条核心功能的Prompt提问、AI反馈与修复过程 | [AI协同开发记录ZIP](学脉XueMai-AI协同开发记录.zip)，解压后打开README或“三条核心功能Prompt原文.html” |
 | 复现性声明与10分钟运行指南 | 本README、源码根目录README、依赖清单与环境变量模板 |
 | 不超过30页的技术文档 | [学脉XueMai-技术文档.pdf](学脉XueMai-技术文档.pdf) |
 | 5—8分钟、1080p有声视频，含至少2分钟AI协同过程 | [学脉XueMai-演示视频-含旁白.mp4](学脉XueMai-演示视频-含旁白.mp4) |
 
 ## 10分钟极速复现
 
-　　运行环境为Windows 10/11、Python 3.13、Node.js 20.18或更高版本、npm和Git。解压源码ZIP后进入其中的`xuemai`目录，右键打开PowerShell，执行：
+　　运行环境为Windows 10/11、Python 3.13、Node.js 20.19或更高版本（建议22 LTS）、npm和Git。解压源码ZIP后进入其中的`xuemai`目录，右键打开PowerShell，执行：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1
@@ -56,11 +56,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start.ps1 -RealA
 2. 教师查看班级学情、知识矩阵与作答证据，使用AI教学助手形成可编辑安排。
 3. 教师审核并发布任务，学生完成后，教师查看结果和后续反馈。
 
-　　在源码根目录执行`powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1`运行自动化验证。后端业务测试采用隔离数据库，浏览器测试使用独立端口和Mock。已有算法实验、真实模型请求记录与Token账本位于`docs/experiments/round10/`，方法说明见`docs/ALGORITHMS_V10.md`，实际验证记录见`docs/VALIDATION.md`。
+　　在源码根目录执行`powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1`运行自动化验证。Windows浏览器测试使用Google Chrome，请先安装Chrome；Linux使用Playwright Chromium，准备命令为`cd frontend`后执行`npx playwright install --with-deps chromium`。后端业务测试采用隔离数据库，浏览器测试使用独立端口和Mock。语音测试样例随源码提供；未安装可选Whisper模型时，仅跳过本地语音识别专项。已有算法实验、真实模型请求记录与Token账本位于`docs/experiments/round10/`，方法说明见`docs/ALGORITHMS_V10.md`，实际验证记录见`docs/VALIDATION.md`。
 
 ## 源码与演进记录
 
-　　源码ZIP是当前Git提交的文件快照，内含`源码版本.txt`和`Git提交记录.txt`。完整细粒度历史保存在Public仓库；需要逐提交复现时执行：
+　　源码ZIP包含当前Git提交的系统源码、课程运行资产、实验与当前材料制作源，内含`源码版本.txt`和`Git提交记录.txt`。旧轮配音、录屏与抽帧图片保留在Public仓库历史，正式源码包只收录当前制作媒体。完整细粒度历史保存在Public仓库；需要逐提交复现时执行：
 
 ```powershell
 git clone https://github.com/Sunny1004-7/xuemai-ai-platform.git
