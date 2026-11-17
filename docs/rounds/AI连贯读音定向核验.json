@@ -1,0 +1,131 @@
+{
+  "joined": [
+    {
+      "scene_id": "intro",
+      "gap_removed_ms": 80.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1250.61
+    },
+    {
+      "scene_id": "student-tutor",
+      "gap_removed_ms": 35.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 728.15
+    },
+    {
+      "scene_id": "teacher-resources",
+      "gap_removed_ms": 30.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1219.22
+    },
+    {
+      "scene_id": "teacher-teacher-ai",
+      "gap_removed_ms": 80.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1409.19
+    },
+    {
+      "scene_id": "contract-prompt",
+      "gap_removed_ms": 30.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1075.54
+    },
+    {
+      "scene_id": "contract-feedback",
+      "gap_removed_ms": 40.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 881.26
+    },
+    {
+      "scene_id": "contract-diff",
+      "gap_removed_ms": 65.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1638.38
+    },
+    {
+      "scene_id": "graph-diff",
+      "gap_removed_ms": 80.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 1715.29
+    },
+    {
+      "scene_id": "teacher-diff",
+      "gap_removed_ms": 65.0,
+      "crossfade_ms": 15.0,
+      "join_min_rms": 2105.08
+    }
+  ],
+  "already_continuous": 1,
+  "caption_text_unchanged": true,
+  "timeline_unchanged": true,
+  "transcription": [
+    {
+      "scene_id": "intro",
+      "transcribed": "各位评伪老师好,下面向各位老师介绍我的作品学脉,一套面向学生学习和教师教学的AI个性化智慧教育平台。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "student-tutor",
+      "transcribed": "接下来是《AI学习伙伴》,这里回看以保存的真实辅导,问题,附件引用和理解检查围绕同意知识展开。学生能够打开原资料核对解释,再通过独立回答继续学习,模型和语音入口也集中在这里。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "teacher-resources",
+      "transcribed": "AI 备课与资料,集中保存讲义和教案。教师可以查看课程内容与版本,围绕教学目标,组织学习材料。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "teacher-teacher-ai",
+      "transcribed": "最后是独立的A.I.教学助手，这里回看真实生成的讲平课方案，助手读取班级证据和教师目标，组织教学环节与分组练习。教师能够编辑并保存教案,再确认具体任务,使建议进入教学。",
+      "ai_recognized": false,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "contract-prompt",
+      "transcribed": "下面回看AI 协同开发,先看师生课程 如何接通。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "contract-feedback",
+      "transcribed": "我先说明登陆和课程接口, AI 聚此连接页面,辅导和后端。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "contract-diff",
+      "transcribed": "AI 根据抱错检查写入语句,删去多处的一个站位服。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "graph-diff",
+      "transcribed": "Ai 补充绕形搜索,让寿组的连线从节点之间的空隙通过。",
+      "ai_recognized": false,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "teacher-diff",
+      "transcribed": "AI调整判的顺序,先识别要写交案,再读取班级错题。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    },
+    {
+      "scene_id": "outro",
+      "transcribed": "以上是学脉的主要功能与AI协同开发过程。感谢各位评伪老师的观看与指导。",
+      "ai_recognized": true,
+      "ai_identified_normalized": true
+    }
+  ],
+  "normalized_ai_identified": 10,
+  "tests_passed": 4,
+  "video_seconds": 477.966667,
+  "full_decode_passed": true,
+  "voice_segments": 43,
+  "subtitle_cues": 76,
+  "tts_requests": 0,
+  "deepseek_requests": 0
+}
