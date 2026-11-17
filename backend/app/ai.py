@@ -111,6 +111,8 @@ def safe_usage(usage: dict | None, messages: list[dict], content: str) -> dict:
         "prompt_tokens": int(usage.get("prompt_tokens", sum(len(str(m["content"])) for m in messages) // 2)),
         "completion_tokens": int(usage.get("completion_tokens", len(content) // 2)),
         "estimated": not bool(usage),
+        "prompt_cache_hit_tokens": int(usage.get("prompt_cache_hit_tokens", 0)),
+        "reasoning_tokens": int(usage.get("completion_tokens_details", {}).get("reasoning_tokens", 0)),
     }
 
 
@@ -187,7 +189,7 @@ class AIService:
         content = ""
         status = "error"
         from .ai_budget import reserve, finish
-        reservation = reserve(self.config.model) if self.config.mode == 'real' else None
+        reservation = reserve(self.config.model, messages, min(max_tokens or self.config.max_tokens, self.config.max_tokens)) if self.config.mode == 'real' else None
         try:
             if self.config.mode == "mock":
                 content = mock_content or "这是本地演示回答。先确定输入和边界条件，再逐步验证你的思路。"
@@ -238,7 +240,7 @@ class AIService:
         status = "error"
         finish_reason = None
         from .ai_budget import reserve, finish
-        reservation = reserve(self.config.model) if self.config.mode == 'real' else None
+        reservation = reserve(self.config.model, messages, min(max_tokens or self.config.max_tokens, self.config.max_tokens)) if self.config.mode == 'real' else None
         try:
             if self.config.mode == "mock":
                 answer = mock_content or "先确定问题的输入，再用一个小例子逐步验证。你认为第一步应该做什么？"
