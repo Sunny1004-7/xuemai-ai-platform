@@ -11,6 +11,7 @@ import imageio_ffmpeg
 from PIL import ImageFont
 from subtitle_layout import semantic_lines
 from demo_project import load_project
+from narration_pronunciation import prepare_speech, original_boundary
 
 ROOT=Path(__file__).resolve().parents[1]
 FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
@@ -38,21 +39,23 @@ async def synthesize(round_number=None):
         sentences=[scene['text']] if latest else [s for s in re.split(r'(?<=[。！？；])',scene['text']) if s.strip()]
         waves=[]
         for i,text in enumerate(sentences):
+            spoken, original_positions = prepare_speech(text)
             base=output/f'{scene["id"]}-{i+1:02}'
             mp3=base.with_suffix('.mp3');wav=base.with_suffix('.wav')
             metadata=base.with_suffix('.jsonl');cache=base.with_suffix('.sha256')
-            digest=hashlib.sha256((text+'|'+voice+'|'+rate+'|WordBoundary').encode('utf-8')).hexdigest()
+            digest=hashlib.sha256((spoken+'|'+voice+'|'+rate+'|WordBoundary').encode('utf-8')).hexdigest()
             if not (mp3.exists() and metadata.exists() and cache.exists() and cache.read_text('utf-8')==digest):
-                await edge_tts.Communicate(text,voice,rate=rate,boundary='WordBoundary').save(str(mp3),str(metadata))
+                await edge_tts.Communicate(spoken,voice,rate=rate,boundary='WordBoundary').save(str(mp3),str(metadata))
                 cache.write_text(digest,'utf-8')
             subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(mp3),'-ar','24000','-ac','1',str(wav)],check=True)
             boundaries=[];cursor=0
             for line in metadata.read_text('utf-8').splitlines():
                 item=json.loads(line)
                 if item.get('type')!='WordBoundary':continue
-                word=html.unescape(item['text']);position=text.find(word,cursor)
+                word=html.unescape(item['text']);position=spoken.find(word,cursor)
                 if position<0:raise ValueError('语音边界与原文不匹配：'+word)
-                boundaries.append({'begin':position,'end':position+len(word),'start':item['offset']/1e7,'stop':(item['offset']+item['duration'])/1e7})
+                begin,end=original_boundary(original_positions,position,position+len(word))
+                boundaries.append({'begin':begin,'end':end,'start':item['offset']/1e7,'stop':(item['offset']+item['duration'])/1e7})
                 cursor=position+len(word)
             if not boundaries:raise ValueError('缺少同次合成的词语边界')
             waves.append((text,wav,duration(wav),boundaries))
