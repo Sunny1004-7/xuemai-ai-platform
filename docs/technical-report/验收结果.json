@@ -1,15 +1,13 @@
 {
-  "pages": 29,
+  "pages": 30,
   "black_text": true,
   "fonts": [
     "CMEX10",
-    "CMMI10",
     "CMMI12",
     "CMMI6",
     "CMMI8",
     "CMR12",
     "CMR6",
-    "CMR7",
     "CMR8",
     "CMSY10",
     "CMSY8",
@@ -23,7 +21,7 @@
   "detail_subfigures": 0,
   "screenshot_width": "100%版心，完整应用，彩色，不设高度缩放",
   "frontend_capture_count": 480,
-  "backend_tests": 175,
+  "backend_tests": 180,
   "browser_tests": 34,
   "references": 20,
   "experiment_run_id": "xuemai-r10-20261117-v1"

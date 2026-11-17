@@ -17,7 +17,7 @@ from review_screenshots import validate_screenshots
 def build(screenshots,record,draft=False):
     subprocess.run([sys.executable,str(ROOT/'scripts/build_framework.py')],check=True)
     subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
-    subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_report_data.py')],check=True)
+    subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_report_data.py'),'--materials-only'],check=True)
     source=ROOT/'docs/technical-report'
     directory=ROOT/screenshots
     if not draft:

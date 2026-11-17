@@ -89,6 +89,15 @@ def figures(summary):
 
 
 def main():
+    if '--materials-only' in sys.argv:
+        manifest=read('manifest.json')
+        for relative,expected in manifest['files'].items():
+            if hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()!=expected:
+                raise ValueError('已完成实验文件发生变化：'+relative)
+        subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_sections.py')],cwd=ROOT,check=True)
+        subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_figures.py')],cwd=ROOT,check=True)
+        print('已核对完成的实验，沿用统计图与逐例结果，更新文稿和方法图源')
+        return
     local={name:read(name+'.json') for name in ['ktrace','path','class','retrieval']}
     real=evaluate();tokens=read('token-ledger.json');business=read('end-to-end.json')
     # Post-evidence change stress checks use the already frozen class inputs.
