@@ -8,9 +8,9 @@
   "fps": 30,
   "audio_present": true,
   "submission_files": [
-    "AI协同开发记录",
-    "Git演进记录",
+    "Git演进记录.txt",
     "README.md",
+    "学脉XueMai-AI协同开发记录.zip",
     "学脉XueMai-完整源码.zip",
     "学脉XueMai-技术文档.pdf",
     "学脉XueMai-演示视频-含旁白.mp4"

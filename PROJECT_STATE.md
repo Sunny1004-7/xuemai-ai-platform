@@ -4,7 +4,7 @@
 
 从实际提交源码ZIP建立独立解压目录和全新Python虚拟环境，重新安装后端与前端依赖。后端业务回归164项通过，明确排除独立test_security.py；浏览器33项通过、1项可选语音跳过。TypeScript与Vite生产构建通过，另使用Node 22.23.5构建通过。修正README的最低Node版本为20.19并建议22 LTS，补充Chrome和可选语音测试条件。语音测试固定样例迁入源码，不再依赖本机临时文件。
 
-正式目录采用六个直接提交文件：源码ZIP、AI协同记录ZIP、Git演进日志TXT、README、技术文档PDF和唯一的有声MP4。源码封装保留当前运行资产和制作源，旧轮配音、录屏与抽帧图片通过Public仓库历史提供。旧版可浏览记录目录转存至.local/submission-staging，正式目录不再混放重复目录。
+正式目录采用六个直接提交文件：源码ZIP、AI协同记录ZIP、Git演进日志TXT、README、技术文档PDF和唯一的有声MP4。源码封装保留当前运行资产和制作源，旧轮配音、录屏与抽帧图片通过Public仓库历史提供。正式源码包由约325MB降至约55MB，省略425个旧媒体文件。旧版可浏览记录目录转存至.local/submission-staging，正式目录不再混放重复目录。源码与当前README的一致性按文本比较并兼容Git/Windows换行差异，成品副本按原始字节比较通过；新语音样例在已有模型环境专项1项通过。
 
 新增scripts/audit_official_submission.py核查六份材料、源码版本、README链接、成品副本、Prompt来源、PDF、视频和实验账本。实际记录见docs/rounds/2026-11-18-官方材料全面审查与提交优化.md及官方提交材料全面审查记录.json。打包与格式专项7项通过。此次无新增DeepSeek调用、全量系统截图、审阅包或文件哈希清单。
 

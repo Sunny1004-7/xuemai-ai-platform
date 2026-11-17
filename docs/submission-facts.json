@@ -80,7 +80,9 @@
     "screenshot_directory": "交付审阅包/界面截图_20261117_221559",
     "figures_tikz": 11,
     "references": 20,
-    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图"
+    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图",
+    "visual_review_frames": 70,
+    "whisper_character_similarity": 0.9338
   },
   "method_definitions": [
     {

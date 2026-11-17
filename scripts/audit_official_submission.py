@@ -40,7 +40,9 @@ def audit(root: Path = ROOT) -> dict:
         names = set(archive.namelist())
         assert all('xuemai/' + name in names for name in REQUIRED_SOURCE)
         assert head in archive.read('xuemai/源码版本.txt').decode('utf8')
-        assert archive.read('xuemai/README.md') == (root / 'README.md').read_bytes()
+        archived_readme = archive.read('xuemai/README.md').decode('utf-8-sig').replace('\r\n', '\n')
+        working_readme = (root / 'README.md').read_text('utf-8-sig')
+        assert archived_readme == working_readme, '源码README正文与当前提交不一致'
         source_guide = archive.read('xuemai/README.md').decode('utf8')
         for target in re.findall(r'\]\(([^)]+)\)', source_guide):
             if not target.startswith(('https:', 'http:')):
