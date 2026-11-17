@@ -11,7 +11,7 @@ import imageio_ffmpeg
 from PIL import ImageFont
 from subtitle_layout import semantic_lines
 from demo_project import load_project
-from narration_pronunciation import prepare_speech, original_boundary
+from narration_pronunciation import prepare_speech, original_boundary, join_ai_audio, remap_audio_time
 
 ROOT=Path(__file__).resolve().parents[1]
 FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
@@ -34,7 +34,7 @@ async def synthesize(round_number=None):
     rate = current.get('rate', '-3%') if latest else '+4%'
     segments=[];subtitles=[]
     font = ImageFont.truetype('msyh.ttc', current['subtitle_font_size']) if round_number >= 9 else None
-    pacing_issues=[]
+    pacing_issues=[];pronunciation_joins=[]
     for scene in scenes:
         sentences=[scene['text']] if latest else [s for s in re.split(r'(?<=[。！？；])',scene['text']) if s.strip()]
         waves=[]
@@ -48,14 +48,23 @@ async def synthesize(round_number=None):
                 await edge_tts.Communicate(spoken,voice,rate=rate,boundary='WordBoundary').save(str(mp3),str(metadata))
                 cache.write_text(digest,'utf-8')
             subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(mp3),'-ar','24000','-ac','1',str(wav)],check=True)
+            items=[json.loads(line) for line in metadata.read_text('utf-8').splitlines()]
+            words=[item for item in items if item.get('type')=='WordBoundary']
+            cuts=[]
+            if 'AI' in text:
+                joined=wav.with_name(wav.stem+'-joined.wav')
+                cuts=join_ai_audio(wav,joined,words)
+                wav=joined
+                pronunciation_joins.append({'scene_id':scene['id'],'ai_count':text.count('AI'),'joins':cuts,
+                                            'already_continuous':text.count('AI')-len(cuts)})
             boundaries=[];cursor=0
-            for line in metadata.read_text('utf-8').splitlines():
-                item=json.loads(line)
+            for item in words:
                 if item.get('type')!='WordBoundary':continue
                 word=html.unescape(item['text']);position=spoken.find(word,cursor)
                 if position<0:raise ValueError('语音边界与原文不匹配：'+word)
                 begin,end=original_boundary(original_positions,position,position+len(word))
-                boundaries.append({'begin':begin,'end':end,'start':item['offset']/1e7,'stop':(item['offset']+item['duration'])/1e7})
+                boundaries.append({'begin':begin,'end':end,'start':remap_audio_time(item['offset']/1e7,cuts),
+                                   'stop':remap_audio_time((item['offset']+item['duration'])/1e7,cuts)})
                 cursor=position+len(word)
             if not boundaries:raise ValueError('缺少同次合成的词语边界')
             waves.append((text,wav,duration(wav),boundaries))
@@ -93,6 +102,7 @@ async def synthesize(round_number=None):
         if at>scene['start']+scene['duration']:raise ValueError('配音超出场景：'+scene['name'])
         print(scene['name'],len(waves),'sentences',round(at-scene['start'],2),'seconds',flush=True)
     (output/'pacing-issues.json').write_text(json.dumps(pacing_issues,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
+    (output/'ai-join-report.json').write_text(json.dumps(pronunciation_joins,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     if pacing_issues:
         raise ValueError('有'+str(len(pacing_issues))+'个语段需要调整讲稿或画面时长，详见pacing-issues.json')
     (output/'segments.json').write_text(json.dumps(segments,ensure_ascii=False,indent=2),encoding='utf8')

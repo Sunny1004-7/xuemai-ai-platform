@@ -1,0 +1,134 @@
+[
+  {
+    "scene_id": "intro",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 7.843416666666666,
+        "end": 7.953416666666667,
+        "fade": 0.015,
+        "gap_before_ms": 80.0,
+        "removed_ms": 95.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "student-tutor",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 1.2729166666666667,
+        "end": 1.3379166666666666,
+        "fade": 0.015,
+        "gap_before_ms": 35.0,
+        "removed_ms": 50.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "teacher-resources",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 0.3817083333333333,
+        "end": 0.4417083333333333,
+        "fade": 0.015,
+        "gap_before_ms": 30.0,
+        "removed_ms": 45.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "teacher-teacher-ai",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 1.5382916666666666,
+        "end": 1.6482916666666667,
+        "fade": 0.015,
+        "gap_before_ms": 80.0,
+        "removed_ms": 95.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "contract-prompt",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 1.064375,
+        "end": 1.124375,
+        "fade": 0.015,
+        "gap_before_ms": 30.0,
+        "removed_ms": 45.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "contract-feedback",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 2.6948333333333334,
+        "end": 2.7648333333333333,
+        "fade": 0.015,
+        "gap_before_ms": 40.0,
+        "removed_ms": 55.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "contract-diff",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 0.36670833333333336,
+        "end": 0.46170833333333333,
+        "fade": 0.015,
+        "gap_before_ms": 65.0,
+        "removed_ms": 80.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "graph-diff",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 0.35170833333333335,
+        "end": 0.46170833333333333,
+        "fade": 0.015,
+        "gap_before_ms": 80.0,
+        "removed_ms": 95.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "teacher-diff",
+    "ai_count": 1,
+    "joins": [
+      {
+        "begin": 0.33670833333333333,
+        "end": 0.43170833333333336,
+        "fade": 0.015,
+        "gap_before_ms": 65.0,
+        "removed_ms": 80.0
+      }
+    ],
+    "already_continuous": 0
+  },
+  {
+    "scene_id": "outro",
+    "ai_count": 1,
+    "joins": [],
+    "already_continuous": 1
+  }
+]

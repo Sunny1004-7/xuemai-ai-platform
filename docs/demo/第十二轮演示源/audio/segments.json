@@ -3,8 +3,8 @@
     "scene": "作品介绍",
     "text": "各位评委老师好。下面向各位老师介绍我的作品学脉，一套面向学生学习和教师教学的AI个性化智慧教育平台。",
     "start": 0.6,
-    "duration": 10.272,
-    "file": "docs/demo/第十二轮演示源/audio/intro-01.wav",
+    "duration": 10.177,
+    "file": "docs/demo/第十二轮演示源/audio/intro-01-joined.wav",
     "word_boundary_count": 27,
     "tempo": 1
   },
@@ -111,8 +111,8 @@
     "scene": "AI学习伙伴",
     "text": "接下来是AI学习伙伴。这里回看已保存的真实辅导，问题、附件引用和理解检查围绕同一知识展开。学生能够打开原资料核对解释，再通过独立回答继续学习；模型和语音入口也集中在这里。",
     "start": 174.6,
-    "duration": 17.232,
-    "file": "docs/demo/第十二轮演示源/audio/student-tutor-01.wav",
+    "duration": 17.182,
+    "file": "docs/demo/第十二轮演示源/audio/student-tutor-01-joined.wav",
     "word_boundary_count": 45,
     "tempo": 1
   },
@@ -156,8 +156,8 @@
     "scene": "AI备课与资料",
     "text": "AI备课与资料集中保存讲义和教案。教师可以查看课程内容与版本，围绕教学目标组织学习材料。",
     "start": 233.6,
-    "duration": 9.744,
-    "file": "docs/demo/第十二轮演示源/audio/teacher-resources-01.wav",
+    "duration": 9.699,
+    "file": "docs/demo/第十二轮演示源/audio/teacher-resources-01-joined.wav",
     "word_boundary_count": 23,
     "tempo": 1
   },
@@ -210,8 +210,8 @@
     "scene": "AI教学助手",
     "text": "最后是独立的AI教学助手。这里回看真实生成的讲评课方案，助手读取班级证据和教师目标，组织教学环节与分组练习。教师能够编辑并保存教案，再确认具体任务，使建议进入教学。",
     "start": 321.6,
-    "duration": 16.968,
-    "file": "docs/demo/第十二轮演示源/audio/teacher-teacher-ai-01.wav",
+    "duration": 16.873,
+    "file": "docs/demo/第十二轮演示源/audio/teacher-teacher-ai-01-joined.wav",
     "word_boundary_count": 42,
     "tempo": 1
   },
@@ -219,8 +219,8 @@
     "scene": "AI协同过程复现展示",
     "text": "下面回看AI协同开发，先看师生课程如何接通。",
     "start": 343.6,
-    "duration": 5.232,
-    "file": "docs/demo/第十二轮演示源/audio/contract-prompt-01.wav",
+    "duration": 5.187,
+    "file": "docs/demo/第十二轮演示源/audio/contract-prompt-01-joined.wav",
     "word_boundary_count": 12,
     "tempo": 1
   },
@@ -229,9 +229,9 @@
     "text": "我先说明登录和课程接口，AI据此连接页面、辅导和后端。",
     "start": 350.6,
     "duration": 5.679,
-    "file": "docs/demo/第十二轮演示源/audio/contract-feedback-01-fit.wav",
+    "file": "docs/demo/第十二轮演示源/audio/contract-feedback-01-joined-fit.wav",
     "word_boundary_count": 15,
-    "tempo": 1.01895
+    "tempo": 1.0093
   },
   {
     "scene": "AI协同过程复现展示",
@@ -246,8 +246,8 @@
     "scene": "AI协同过程复现展示",
     "text": "AI根据报错检查写入语句，删去多出的一个占位符。",
     "start": 364.6,
-    "duration": 5.064,
-    "file": "docs/demo/第十二轮演示源/audio/contract-diff-01.wav",
+    "duration": 4.984,
+    "file": "docs/demo/第十二轮演示源/audio/contract-diff-01-joined.wav",
     "word_boundary_count": 15,
     "tempo": 1
   },
@@ -291,8 +291,8 @@
     "scene": "AI协同过程复现展示",
     "text": "AI补充绕行搜索，让受阻的连线从节点之间的空隙通过。",
     "start": 399.6,
-    "duration": 5.448,
-    "file": "docs/demo/第十二轮演示源/audio/graph-diff-01.wav",
+    "duration": 5.353,
+    "file": "docs/demo/第十二轮演示源/audio/graph-diff-01-joined.wav",
     "word_boundary_count": 15,
     "tempo": 1
   },
@@ -345,8 +345,8 @@
     "scene": "AI协同过程复现展示",
     "text": "AI调整判断顺序，先识别要写教案，再读取班级错题。",
     "start": 441.6,
-    "duration": 5.664,
-    "file": "docs/demo/第十二轮演示源/audio/teacher-diff-01.wav",
+    "duration": 5.584,
+    "file": "docs/demo/第十二轮演示源/audio/teacher-diff-01-joined.wav",
     "word_boundary_count": 14,
     "tempo": 1
   },
@@ -382,7 +382,7 @@
     "text": "以上是学脉的主要功能与AI协同开发过程。感谢各位评委老师的观看与指导。",
     "start": 469.6,
     "duration": 7.224,
-    "file": "docs/demo/第十二轮演示源/audio/outro-01.wav",
+    "file": "docs/demo/第十二轮演示源/audio/outro-01-joined.wav",
     "word_boundary_count": 20,
     "tempo": 1
   }
