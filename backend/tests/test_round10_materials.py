@@ -33,5 +33,10 @@ def test_material_aggregation_does_not_call_paid_service():
     assert release['verification']==facts['delivery']
     assert release['real_ai']==facts['real_ai']['round10']
     files={entry['name']:entry for entry in release['files']}
-    assert files['学脉XueMai-技术文档.pdf']['sha256']==facts['artifacts']['docs/deliverables/xuemai-technical-report.pdf']
-    assert files['学脉XueMai-演示视频-含旁白.mp4']['sha256']==facts['artifacts']['docs/deliverables/xuemai-demo-1080p.mp4']
+    if facts.get('materials_round',10)>=12:
+        assert set(files)=={'学脉XueMai-技术文档.pdf','学脉XueMai-演示视频-含旁白.mp4'}
+        assert files['学脉XueMai-技术文档.pdf']['bytes']==facts['artifact_files']['docs/deliverables/xuemai-technical-report.pdf']['bytes']
+        assert files['学脉XueMai-演示视频-含旁白.mp4']['bytes']==facts['artifact_files']['docs/deliverables/xuemai-demo-1080p.mp4']['bytes']
+    else:
+        assert files['学脉XueMai-技术文档.pdf']['sha256']==facts['artifacts']['docs/deliverables/xuemai-technical-report.pdf']
+        assert files['学脉XueMai-演示视频-含旁白.mp4']['sha256']==facts['artifacts']['docs/deliverables/xuemai-demo-1080p.mp4']

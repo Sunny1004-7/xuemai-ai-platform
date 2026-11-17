@@ -97,7 +97,7 @@ npx playwright install chromium
 
 　　[材料制作说明](docs/TECHNICAL_REPORT.md)提供PDF、图源、配音、字幕和剪辑入口；[当前视频工程](docs/demo/current.json)统一指定可编辑源。重建原创课程视频需安装 `scripts/media-requirements.txt`，再执行 `scripts/generate_teaching_clips.py` 与 `scripts/generate_python_clips.py`。
 
-　　每轮完整审阅ZIP位于根目录“交付审阅包”，包含源码、材料、修改记录与全模块截图。解压后打开“界面截图/截图总览.html”查看当前作品，文件摘要与源码提交见“审阅清单.json”。详细维护流程见[工程约定](AGENTS.md)，当前交付状态见[PROJECT_STATE.md](PROJECT_STATE.md)。
+　　正式提交文件位于根目录“最终参赛提交材料”，包括技术文档PDF与有语音讲解的演示MP4。图源、讲稿、配音、字幕、连续录屏和实际验证记录保存在docs中。详细维护流程见[工程约定](AGENTS.md)，当前交付状态见[PROJECT_STATE.md](PROJECT_STATE.md)。
 
 ```text
 backend/app/        课程、评分、学习证据、规划、教学分析与AI
