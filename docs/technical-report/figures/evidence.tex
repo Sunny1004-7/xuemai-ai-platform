@@ -1,5 +1,15 @@
-\begin{tikzpicture}[node distance=10mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2pt,minimum width=37mm,minimum height=14mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](raw){作答事件\\难度、提示、时间};\node[box,right=of raw](weight){证据加权\\独立性与相关性折减};\node[box,right=of weight](post){状态更新\\$\alpha,\beta,N_{eff}$};
-\node[box,below=of weight](time){时间折减\\超出先验部分衰减};\node[box,below=of post](out){学习路径与复习\\同时显示充分度};
-\draw[flow](raw)--(weight);\draw[flow](weight)--(post);\draw[flow](time)--(weight);\draw[flow](post)--(out);
+\begin{tikzpicture}[x=1cm,y=4cm,font=\small]
+\draw[->](0,0)--(13,0)node[right]{事件};
+\draw[->](0,0)--(0,.82)node[above]{知识估计};
+\draw[black!15](0,0.25)--(12.3,0.25);\node[left]at(0,0.25){0.25};
+\draw[black!15](0,0.5)--(12.3,0.5);\node[left]at(0,0.5){0.5};
+\draw[black!15](0,0.75)--(12.3,0.75);\node[left]at(0,0.75){0.75};
+\fill[celadon](0.5,0.25)circle(.045cm);\node[below]at(0.5,0){先验};
+\fill[celadon](2.4,0.4)circle(.045cm);\node[below]at(2.4,0){独立};
+\fill[celadon](4.3,0.421875)circle(.045cm);\node[below]at(4.3,0){提示};
+\fill[celadon](6.199999999999999,0.3461538461538462)circle(.045cm);\node[below]at(6.199999999999999,0){错误};
+\fill[celadon](8.1,0.38480096501809413)circle(.045cm);\node[below]at(8.1,0){订正};
+\fill[celadon](10.0,0.38480096501809413)circle(.045cm);\node[below]at(10.0,0){重复};
+\fill[celadon](11.899999999999999,0.3409275834011391)circle(.045cm);\node[below]at(11.899999999999999,0){30天};
+\draw[celadon,thick] (0.5,0.25)--(2.4,0.4)--(4.3,0.421875)--(6.199999999999999,0.3461538461538462)--(8.1,0.38480096501809413)--(10.0,0.38480096501809413)--(11.899999999999999,0.3409275834011391);
 \end{tikzpicture}

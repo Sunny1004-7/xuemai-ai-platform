@@ -1,9 +1,10 @@
-\begin{tikzpicture}[node distance=8mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2pt,minimum width=43mm,minimum height=15mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick,draw=celadon}]
-\node[box](d){诊断代理（规则）\\状态、错误、先修、反馈};
-\node[box,right=of d,fill=pale!28](p){策略代理\\表征、工具、一次生成};
-\node[box,right=of p,fill=pale!75](v){校验代理（规则）\\课程对象、动作、引用};
-\node[box,below=of v](a){执行教学动作\\实验、视频、理解检查};
-\node[box,left=of a,fill=pale!28](f){确定性评分\\理解结果与证据更新};
-\node[box,left=of f,fill=pale!75](s){持久化反馈\\下轮调整教学表征};
-\draw[flow](d)--(p);\draw[flow](p)--(v);\draw[flow](v)--(a);\draw[flow](a)--(f);\draw[flow](f)--(s);\draw[flow](s)--(d);
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,every node/.style={text=black},>={Stealth[length=1.7mm]}]
+\foreach \x/\t in {0.9/学生,4.4/诊断与策略,8/模型与课程工具,11.8/校验与评分}{
+\node[align=center] at (\x,4.4){\t};\draw[black!30,dashed](\x,4.1)--(\x,0);}
+\draw[->,thick,celadon](.9,3.8)--node[above]{原题、错误与前次反馈}(4.4,3.8);
+\draw[->,thick,celadon](4.4,3.05)--node[above]{证据与表征策略}(8,3.05);
+\draw[->,thick,celadon](8,2.3)--node[above]{一次生成、引用与动作}(11.8,2.3);
+\draw[->,thick,celadon](11.8,1.55)--node[above]{有效理解检查}(.9,1.55);
+\draw[->,thick,tea](.9,.8)--node[above]{独立作答进入确定性评分}(11.8,.8);
+\draw[->,thick,tea](11.8,.08)--node[below]{未通过时，下一轮转为实验或概念对照}(4.4,.08);
 \end{tikzpicture}

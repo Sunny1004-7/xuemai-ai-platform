@@ -1,9 +1,9 @@
-\begin{tikzpicture}[node distance=7mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,rounded corners=2mm,minimum width=40mm,minimum height=15mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](goal){教师问题与教学目标\\讨论／分析／设计};
-\node[box,right=of goal](evidence){受控课程与班级工具\\专题错因／群组／题目};
-\node[box,right=of evidence](generate){一次模型生成\\解释与结构化草稿};
-\node[box,below=of generate](check){约束校验\\时间／题目／统计来源};
-\node[box,left=of check,fill=tea!20](review){教师编辑与确认\\教案／作业／题目};
-\node[box,left=of review](feedback){学生完成与证据回流\\后续分析与教学调整};
-\draw[flow](goal)--(evidence);\draw[flow](evidence)--(generate);\draw[flow](generate)--(check);\draw[flow](check)--(review);\draw[flow](review)--(feedback);
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\node[anchor=west,font=\bfseries] at (0,3.6){教学方案的约束矩阵};
+\foreach \y/\a/\b/\c in {2.8/课时/活动分钟总和/不超过教师预算,2/对象/群组与候选题/来自授权课程工具,1.2/统计/班级人数与错误/匹配本次查询,.4/写入/编辑与确认/保存为教学资源}{
+\fill[rice!50](0,\y-.3)rectangle(2,\y+.3);\node at (1,\y){\a};
+\node[anchor=west] at (2.3,\y){\b};\node[anchor=west] at (6.6,\y){\c};
+\draw[black!20](0,\y-.4)--(12.2,\y-.4);}
+\draw[tea,very thick](12.5,0)--(12.5,3.2);
+\node[anchor=west,align=left] at (12.8,1.6){目标\\环节\\群组\\任务};
 \end{tikzpicture}

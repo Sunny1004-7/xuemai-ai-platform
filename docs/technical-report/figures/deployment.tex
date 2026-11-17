@@ -1,5 +1,10 @@
-\begin{tikzpicture}[node distance=12mm,box/.style={draw=celadon!65,fill=pale!55,minimum width=39mm,minimum height=16mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](browser){浏览器\\学生或教师界面};\node[box,right=of browser](web){前端服务\\React与Vite};\node[box,right=of web](api){后端服务\\FastAPI与SQLite};
-\node[box,below=of api](ai){AI适配层\\本地示例／DeepSeek};
-\draw[flow](browser)--(web);\draw[flow](web)--node[above,font=\small]{API}(api);\draw[flow](api)--(ai);
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=2mm]}]
+\draw[celadon!65,rounded corners=6pt,fill=pale!20](0,0)rectangle(10,3.2);
+\node[anchor=west,font=\bfseries] at (.3,2.8){本机应用边界};
+\node[align=center](browser)at(1.7,1.6){浏览器工作区\\React与共享主题};
+\node[align=center](api)at(5.2,1.6){FastAPI服务\\身份、课程与校验};
+\node[draw,ellipse,fill=white,align=center](db)at(8.3,1.6){SQLite\\事件与版本};
+\draw[->](browser)--(api);\draw[->](api)--(db);
+\node[draw=tea,fill=rice!40,align=center,minimum height=1.2cm](model)at(12.1,1.6){DeepSeek官方API\\生成与用量结算};
+\draw[<->,tea,thick](api.south)--++(0,-.7)-|(model.south);
 \end{tikzpicture}

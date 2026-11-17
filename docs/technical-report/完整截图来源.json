@@ -1,0 +1,15 @@
+{
+  "graph-overview": "student/graph/CS201/desktop_full.png",
+  "student-dashboard": "student/dashboard/CS201/desktop_full.png",
+  "practice": "student/practice/CS201/desktop_correct.png",
+  "video": "student/video/CS101/desktop_full.png",
+  "teacher-dashboard": "teacher/dashboard/CS201/desktop_full.png",
+  "teacher-matrix": "teacher/analytics/CS201/desktop_full.png",
+  "teacher-groups": "teacher/analytics/CS201/desktop_view-3.png",
+  "resources": "teacher/resources/CS101/desktop_full.png",
+  "tutor": "student/tutor/CS101/desktop_conversation.png",
+  "login": "public/login/public/desktop_full.png",
+  "python-plan": "student/plan/CS101/desktop_view-4.png",
+  "stack-experiment": "student/experiments/CS201/desktop_stack-push.png",
+  "teacher-ai": "teacher/teacher-ai/CS201/desktop_teaching-draft.png"
+}

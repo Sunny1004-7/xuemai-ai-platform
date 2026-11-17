@@ -1,9 +1,9 @@
-\begin{tikzpicture}[font=\small,>={Stealth[length=2mm]},box/.style={draw=celadon!55,rounded corners=3pt,fill=pale!45,minimum height=1.05cm,text width=3.5cm,align=center},flow/.style={->,thick,draw=celadon}]
-\node[box] (goal) {个人目标\\共享每日学习时间};
-\node[box,right=1cm of goal] (path) {PATH-G规划\\先修、成本与任务效用};
-\node[box,right=1cm of path] (activity) {具体学习活动\\题目／视频／资料／实验};
-\node[box,below=1cm of activity,fill=rice!50,draw=tea!60] (event) {活动完成事件\\评分／观看／执行步骤};
-\node[box,left=1cm of event,fill=rice!50,draw=tea!60] (plan) {更新计划进度\\保留事件与完成来源};
-\node[box,left=1cm of plan] (state) {独立作答更新证据\\重新计算下一次路径};
-\draw[flow] (goal)--(path);\draw[flow] (path)--(activity);\draw[flow] (activity)--(event);\draw[flow] (event)--(plan);\draw[flow] (plan)--(state);\draw[flow] (state)--(goal);
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\foreach \x/\label in {0/当次学习,4.7/翌日复测,9.4/第六日复测}{
+\fill[pale!45](\x,0)rectangle(\x+4.3,2.6);\draw[celadon!70](\x,2.1)--(\x+4.3,2.1);
+\node at (\x+2.15,2.35){\label};}
+\node[align=left,anchor=west] at (.2,1.1){计划关联具体题目\\活动事件记录完成\\独立评分更新证据};
+\node[align=left,anchor=west] at (4.9,1.1){错误后回到短间隔\\提示成功最多两天\\保留本次质量等级};
+\node[align=left,anchor=west] at (9.6,1.1){独立成功后延长\\按难易因子增长\\新作答触发重规划};
+\draw[->,celadon,thick](.2,-.4)--(13.5,-.4);\node[fill=white] at (6.9,-.4){学习时间与证据持续积累};
 \end{tikzpicture}

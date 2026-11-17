@@ -1,6 +1,11 @@
-\begin{tikzpicture}[node distance=13mm and 8mm,box/.style={draw=celadon!65,fill=pale!55,minimum width=36mm,minimum height=13mm,align=center,font=\small},flow/.style={-{Stealth[length=2mm]},thick}]
-\node[box](course){课程与班级};\node[box,right=of course](knowledge){章节与知识点};\node[box,right=of knowledge](question){资源与习题};
-\node[box,below=of course](task){教学任务\\发布时基线};\node[box,below=of knowledge](attempt){作答与评阅};\node[box,below=of question](evidence){证据更新记录};
-\node[box,below=of attempt](state){知识状态与复习安排};
-\draw[flow](course)--(knowledge);\draw[flow](knowledge)--(question);\draw[flow](course)--(task);\draw[flow](task)--(attempt);\draw[flow](question)--(evidence);\draw[flow](attempt)--(evidence);\draw[flow](attempt)--(state);
+\begin{tikzpicture}[font=\small,entity/.style={draw=celadon!65,fill=pale!25,text width=3.2cm,align=left,inner sep=7pt}]
+\node[entity](course) at (0,2.1){\textbf{课程与知识}\\课程ID、知识ID\\章节、先修边};
+\node[entity](question) at (4.9,2.1){\textbf{资源与题目}\\所属知识、版本\\答案、量规、状态};
+\node[entity](attempt) at (9.8,2.1){\textbf{学生作答}\\题目ID、任务ID\\得分、提示、时间};
+\node[entity](task) at (0,-.6){\textbf{教师任务}\\课程、目标学生\\发布时基线};
+\node[entity](evidence) at (4.9,-.6){\textbf{证据更新}\\作答ID、权重\\前后状态、更新依据};
+\node[entity](state) at (9.8,-.6){\textbf{知识与复习状态}\\学生ID、知识ID\\参数、间隔与时间};
+\draw(course)--node[above]{1:N}(question);\draw(question)--node[above]{1:N}(attempt);
+\draw(course)--node[left]{1:N}(task);\draw(task)--node[above]{关联}(evidence);
+\draw(attempt)--(evidence);\draw(evidence)--node[above]{聚合}(state);\draw(attempt)--node[right]{更新}(state);
 \end{tikzpicture}
