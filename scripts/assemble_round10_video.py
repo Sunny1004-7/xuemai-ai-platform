@@ -51,6 +51,8 @@ def prepare():
     (ROOT/'scripts/demo-scenes.json').write_text(json.dumps(scenes,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     audio=PROJECT/'audio';audio.mkdir(exist_ok=True)
     for source in (PREVIOUS/'audio').glob('*'):
+        if source.stem.endswith('-fit') or source.name in ['segments.json','narration-complete.wav','pacing-issues.json']:
+            continue
         if source.is_file() and not (audio/source.name).exists():shutil.copy2(source,audio/source.name)
     current=json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
     current|={'round':10,'project':'docs/demo/第十轮演示源','scenes':'docs/demo/第十轮演示源/scenes.json','assembler':'scripts/assemble_round10_video.py'}
@@ -58,11 +60,12 @@ def prepare():
 
 
 def build():
-    prepare();LOCAL.mkdir(exist_ok=True);media=PROJECT/'media';media.mkdir(exist_ok=True)
-    pointer=json.loads((ROOT/'.local/round10-boards-current.json').read_text('utf8'))
-    recorded=Path(pointer['directory'])
-    for name in ['continuous.mp4','continuous.webm','timeline.json','recording.json','events.json','highlight-audit.json']:
-        if (recorded/name).exists():shutil.copy2(recorded/name,media/('boards-'+name))
+    prepare();LOCAL.mkdir(exist_ok=True,parents=True);media=PROJECT/'media';media.mkdir(exist_ok=True)
+    pointer=ROOT/'.local/round10-boards-current.json'
+    if pointer.exists():
+        recorded=Path(json.loads(pointer.read_text('utf8'))['directory'])
+        for name in ['continuous.mp4','continuous.webm','timeline.json','recording.json','events.json','highlight-audit.json']:
+            if (recorded/name).exists():shutil.copy2(recorded/name,media/('boards-'+name))
     board_rows={str(r['name']):r for r in json.loads((media/'boards-timeline.json').read_text('utf8'))}
     framework_pointer=ROOT/'.local/round10-framework-current.json'
     framework_row=None
@@ -70,6 +73,7 @@ def build():
         framework=Path(json.loads(framework_pointer.read_text('utf8'))['directory'])
         for name in ['continuous.mp4','continuous.webm','timeline.json','recording.json','events.json','highlight-audit.json']:
             if (framework/name).exists():shutil.copy2(framework/name,media/('framework-'+name))
+    if (media/'framework-timeline.json').exists():
         framework_row=json.loads((media/'framework-timeline.json').read_text('utf8'))[0]
     old=json.loads((PREVIOUS/'edit-timeline.json').read_text('utf8'));edits=[]
     for index,edit in enumerate(old['edits']):
