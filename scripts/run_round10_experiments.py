@@ -32,7 +32,7 @@ NOW=datetime(2026,11,17,tzinfo=timezone.utc)
 
 def save(name, value):
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/name).write_text(json.dumps(value,ensure_ascii=False,indent=2),encoding='utf8')
+    (OUT/name).write_text(json.dumps(value,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
 
 
 def mean(values):

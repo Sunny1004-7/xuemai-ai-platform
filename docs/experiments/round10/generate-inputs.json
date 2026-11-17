@@ -1,0 +1,450 @@
+[
+  {
+    "task_id": "e2e-12-generate",
+    "endpoint": "/api/ai/generate",
+    "request": {
+      "course_id": 1,
+      "knowledge_id": 1,
+      "question_id": 1,
+      "kind": "question",
+      "prompt": "生成简洁可审核的内容。量规分项总分100，当前作答依据需清晰。",
+      "answer": "先确认输入和边界。"
+    },
+    "response": {
+      "http_status": 200,
+      "result": {
+        "mode": "real",
+        "model": "deepseek-flash",
+        "kind": "question",
+        "draft": true,
+        "review_status": "pending_teacher_review",
+        "result": {
+          "type": "single",
+          "title": "学习“数组与链表”时，哪种方法最适合验证算法过程是否正确？",
+          "options": [
+            "只看最终输出",
+            "用小规模输入逐步追踪状态",
+            "仅记忆术语",
+            "跳过边界条件"
+          ],
+          "answer": "用小规模输入逐步追踪状态",
+          "explanation": "逐步追踪状态能够检查每次操作和边界条件，比只看输出更容易定位错误。",
+          "difficulty": 1,
+          "hints": [
+            "考虑能看到中间状态的方法。",
+            "试着用 3 个元素手工执行。"
+          ]
+        },
+        "citations": [
+          {
+            "id": 1,
+            "score": 0.5455,
+            "resource_id": 162,
+            "passage_id": 325,
+            "title": "线性结构教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "线性结构 · 段落5",
+            "version": 1,
+            "url": "/resources?course=1&resource=162&passage=325&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 2,
+            "score": 0.5,
+            "resource_id": 1,
+            "passage_id": 1,
+            "title": "数组与链表学习讲义",
+            "excerpt": "# 数组与链表",
+            "locator": "数组与链表 · 段落2",
+            "version": 2,
+            "url": "/resources?course=1&resource=1&passage=1&version=2",
+            "source_kind": "course"
+          },
+          {
+            "id": 3,
+            "score": 0.5,
+            "resource_id": 1,
+            "passage_id": 2,
+            "title": "数组与链表学习讲义",
+            "excerpt": "数组连续存储并支持常数时间下标访问；链表通过链接组织节点。",
+            "locator": "数组与链表 · 段落3",
+            "version": 2,
+            "url": "/resources?course=1&resource=1&passage=2&version=2",
+            "source_kind": "course"
+          },
+          {
+            "id": 4,
+            "score": 0.5,
+            "resource_id": 162,
+            "passage_id": 322,
+            "title": "线性结构教学活动设计",
+            "excerpt": "# 线性结构",
+            "locator": "线性结构 · 段落2",
+            "version": 1,
+            "url": "/resources?course=1&resource=162&passage=322&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 5,
+            "score": 0.2455,
+            "resource_id": 166,
+            "passage_id": 341,
+            "title": "排序方法教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "排序方法 · 段落5",
+            "version": 1,
+            "url": "/resources?course=1&resource=166&passage=341&version=1",
+            "source_kind": "course"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 866,
+          "completion_tokens": 232,
+          "estimated": false,
+          "prompt_cache_hit_tokens": 0,
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    "source": "执行脚本固定输入及原隔离数据库核对，响应保留服务校验后的结构"
+  },
+  {
+    "task_id": "e2e-13-generate",
+    "endpoint": "/api/ai/generate",
+    "request": {
+      "course_id": 2,
+      "knowledge_id": 9,
+      "question_id": 9,
+      "kind": "lesson",
+      "prompt": "生成简洁可审核的内容。量规分项总分100，当前作答依据需清晰。",
+      "answer": "先确认输入和边界。"
+    },
+    "response": {
+      "http_status": 200,
+      "result": {
+        "mode": "real",
+        "model": "deepseek-flash",
+        "kind": "lesson",
+        "draft": true,
+        "review_status": "pending_teacher_review",
+        "result": {
+          "title": "变量与类型：用 type 认识对象类型",
+          "objectives": [
+            "解释 Python 变量绑定对象、类型由所绑定对象决定",
+            "使用 type 观察整数、字符串、列表的类型差异",
+            "说明整数、字符串和列表在语义上的不同"
+          ],
+          "prerequisites": [
+            "基本变量与顺序执行",
+            "能在交互环境中运行简单表达式"
+          ],
+          "steps": [
+            "5 分钟：回顾变量绑定对象，提问“变量的类型由什么决定”",
+            "10 分钟：在交互环境依次观察 type(3)、type(\"3\")、type([3])，先预测再验证",
+            "10 分钟：分组讨论三个结果为何不同，联系整数、字符串、列表的语义差异",
+            "10 分钟：独立完成随堂题，逐项说明每个选项成立或不成立的理由",
+            "5 分钟：交流错因，强调依据推理而非只对答案"
+          ],
+          "examples": [
+            "先预测 type(3) 的结果，再运行验证，并说明为什么不是字符串或列表。",
+            "对比 type(3) 与 type(\"3\")、type([3])，记录三者的差异。"
+          ],
+          "assessment": "提交一次独立作答，需写出判断依据：说明 3 属于哪类对象、其余选项为何不成立；评分量规总分100：类型判断正确40分，依据清晰30分，排除干扰项20分，表达规范10分。"
+        },
+        "citations": [
+          {
+            "id": 1,
+            "score": 0.5455,
+            "resource_id": 156,
+            "passage_id": 301,
+            "title": "变量与表达式教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "变量与表达式 · 段落5",
+            "version": 1,
+            "url": "/resources?course=2&resource=156&passage=301&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 2,
+            "score": 0.5455,
+            "resource_id": 126,
+            "passage_id": 162,
+            "title": "变量与类型：例题与边界",
+            "excerpt": "## 推导与例题\na=3; a=\"三\" 执行后a的类型是？\n答案为str。请在纸上逐步记录变量、容器内容或控制位置，比较各选项为什么成立或不成立。",
+            "locator": "推导与例题 · 段落5",
+            "version": 1,
+            "url": "/resources?course=2&resource=126&passage=162&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 3,
+            "score": 0.5,
+            "resource_id": 9,
+            "passage_id": 41,
+            "title": "变量与类型学习讲义",
+            "excerpt": "Python变量绑定对象；整数、字符串和列表具有不同语义。\n学习目标：理解定义、手工追踪执行步骤，并使用程序验证。\n合成教学素材，由项目开发时编写。",
+            "locator": "段落1",
+            "version": 1,
+            "url": "/resources?course=2&resource=9&passage=41&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 4,
+            "score": 0.5,
+            "resource_id": 126,
+            "passage_id": 160,
+            "title": "变量与类型：例题与边界",
+            "excerpt": "# 变量与类型",
+            "locator": "变量与类型 · 段落2",
+            "version": 1,
+            "url": "/resources?course=2&resource=126&passage=160&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 5,
+            "score": 0.5,
+            "resource_id": 156,
+            "passage_id": 298,
+            "title": "变量与表达式教学活动设计",
+            "excerpt": "# 变量与表达式",
+            "locator": "变量与表达式 · 段落2",
+            "version": 1,
+            "url": "/resources?course=2&resource=156&passage=298&version=1",
+            "source_kind": "course"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 935,
+          "completion_tokens": 301,
+          "estimated": false,
+          "prompt_cache_hit_tokens": 0,
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    "source": "执行脚本固定输入及原隔离数据库核对，响应保留服务校验后的结构"
+  },
+  {
+    "task_id": "e2e-14-generate",
+    "endpoint": "/api/ai/generate",
+    "request": {
+      "course_id": 1,
+      "knowledge_id": 1,
+      "question_id": 1,
+      "kind": "rubric",
+      "prompt": "生成简洁可审核的内容。量规分项总分100，当前作答依据需清晰。",
+      "answer": "先确认输入和边界。"
+    },
+    "response": {
+      "http_status": 200,
+      "result": {
+        "mode": "real",
+        "model": "deepseek-flash",
+        "kind": "rubric",
+        "draft": true,
+        "review_status": "pending_teacher_review",
+        "result": {
+          "score": 0.0,
+          "criteria": [
+            {
+              "name": "核心概念",
+              "score": 0.0,
+              "max_score": 40.0
+            },
+            {
+              "name": "推理步骤",
+              "score": 0.0,
+              "max_score": 40.0
+            },
+            {
+              "name": "边界条件",
+              "score": 0.0,
+              "max_score": 20.0
+            }
+          ],
+          "feedback": "本地演示评阅草稿：学生答案“先确认输入和边界”仅复述了审题习惯，未给出栈的入栈/出栈顺序推理，也未选择任何选项，缺少可评分的核心概念与推理依据。渐进提示（不公布答案）：1）明确栈的插入与删除都发生在同一端；2）按 1、2、3 依次入栈，画出栈内元素自上而下的顺序；3）出栈只能取当前栈顶元素，据此判断首个出栈者。建议补充逐步推理与边界说明后再提交。该分数仅为量规展示样例，不能视为对真实答案的判定。",
+          "review_status": "pending_teacher_review"
+        },
+        "citations": [
+          {
+            "id": 1,
+            "score": 0.5455,
+            "resource_id": 162,
+            "passage_id": 325,
+            "title": "线性结构教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "线性结构 · 段落5",
+            "version": 1,
+            "url": "/resources?course=1&resource=162&passage=325&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 2,
+            "score": 0.5,
+            "resource_id": 1,
+            "passage_id": 1,
+            "title": "数组与链表学习讲义",
+            "excerpt": "# 数组与链表",
+            "locator": "数组与链表 · 段落2",
+            "version": 2,
+            "url": "/resources?course=1&resource=1&passage=1&version=2",
+            "source_kind": "course"
+          },
+          {
+            "id": 3,
+            "score": 0.5,
+            "resource_id": 1,
+            "passage_id": 2,
+            "title": "数组与链表学习讲义",
+            "excerpt": "数组连续存储并支持常数时间下标访问；链表通过链接组织节点。",
+            "locator": "数组与链表 · 段落3",
+            "version": 2,
+            "url": "/resources?course=1&resource=1&passage=2&version=2",
+            "source_kind": "course"
+          },
+          {
+            "id": 4,
+            "score": 0.5,
+            "resource_id": 162,
+            "passage_id": 322,
+            "title": "线性结构教学活动设计",
+            "excerpt": "# 线性结构",
+            "locator": "线性结构 · 段落2",
+            "version": 1,
+            "url": "/resources?course=1&resource=162&passage=322&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 5,
+            "score": 0.2455,
+            "resource_id": 166,
+            "passage_id": 341,
+            "title": "排序方法教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "排序方法 · 段落5",
+            "version": 1,
+            "url": "/resources?course=1&resource=166&passage=341&version=1",
+            "source_kind": "course"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 925,
+          "completion_tokens": 226,
+          "estimated": false,
+          "prompt_cache_hit_tokens": 0,
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    "source": "执行脚本固定输入及原隔离数据库核对，响应保留服务校验后的结构"
+  },
+  {
+    "task_id": "e2e-15-generate",
+    "endpoint": "/api/ai/generate",
+    "request": {
+      "course_id": 2,
+      "knowledge_id": 9,
+      "question_id": 9,
+      "kind": "question",
+      "prompt": "生成简洁可审核的内容。量规分项总分100，当前作答依据需清晰。",
+      "answer": "先确认输入和边界。"
+    },
+    "response": {
+      "http_status": 200,
+      "result": {
+        "mode": "real",
+        "model": "deepseek-flash",
+        "kind": "question",
+        "draft": true,
+        "review_status": "pending_teacher_review",
+        "result": {
+          "type": "single",
+          "title": "学习“变量与类型”时，判断 type(3) 的结果，哪种做法最有助于得出可靠结论？",
+          "options": [
+            "直接凭印象选一个类型",
+            "在交互环境中执行 type(3) 并观察返回结果",
+            "只记忆“整数”这个中文词",
+            "跳过验证，等老师公布答案"
+          ],
+          "answer": "在交互环境中执行 type(3) 并观察返回结果",
+          "explanation": "Python 变量绑定对象，type() 返回对象所属的类型；通过实际执行可以观察 3 绑定的是哪种对象，比凭印象或只记术语更可靠。",
+          "difficulty": 1,
+          "hints": [
+            "想一想 3 在 Python 中写成什么样，它属于哪一类对象。",
+            "可以在交互环境里输入 type(3)，看看返回的类型名与哪个选项一致。"
+          ]
+        },
+        "citations": [
+          {
+            "id": 1,
+            "score": 0.5455,
+            "resource_id": 156,
+            "passage_id": 301,
+            "title": "变量与表达式教学活动设计",
+            "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+            "locator": "变量与表达式 · 段落5",
+            "version": 1,
+            "url": "/resources?course=2&resource=156&passage=301&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 2,
+            "score": 0.5455,
+            "resource_id": 126,
+            "passage_id": 162,
+            "title": "变量与类型：例题与边界",
+            "excerpt": "## 推导与例题\na=3; a=\"三\" 执行后a的类型是？\n答案为str。请在纸上逐步记录变量、容器内容或控制位置，比较各选项为什么成立或不成立。",
+            "locator": "推导与例题 · 段落5",
+            "version": 1,
+            "url": "/resources?course=2&resource=126&passage=162&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 3,
+            "score": 0.5,
+            "resource_id": 9,
+            "passage_id": 41,
+            "title": "变量与类型学习讲义",
+            "excerpt": "Python变量绑定对象；整数、字符串和列表具有不同语义。\n学习目标：理解定义、手工追踪执行步骤，并使用程序验证。\n合成教学素材，由项目开发时编写。",
+            "locator": "段落1",
+            "version": 1,
+            "url": "/resources?course=2&resource=9&passage=41&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 4,
+            "score": 0.5,
+            "resource_id": 126,
+            "passage_id": 160,
+            "title": "变量与类型：例题与边界",
+            "excerpt": "# 变量与类型",
+            "locator": "变量与类型 · 段落2",
+            "version": 1,
+            "url": "/resources?course=2&resource=126&passage=160&version=1",
+            "source_kind": "course"
+          },
+          {
+            "id": 5,
+            "score": 0.5,
+            "resource_id": 156,
+            "passage_id": 298,
+            "title": "变量与表达式教学活动设计",
+            "excerpt": "# 变量与表达式",
+            "locator": "变量与表达式 · 段落2",
+            "version": 1,
+            "url": "/resources?course=2&resource=156&passage=298&version=1",
+            "source_kind": "course"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 914,
+          "completion_tokens": 310,
+          "estimated": false,
+          "prompt_cache_hit_tokens": 640,
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    "source": "执行脚本固定输入及原隔离数据库核对，响应保留服务校验后的结构"
+  }
+]

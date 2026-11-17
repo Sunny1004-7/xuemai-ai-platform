@@ -22,7 +22,7 @@ from backend.app.ai_budget import task_id, ledger
 def write(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
     temporary=path.with_name(path.name+f'.{os.getpid()}.tmp')
-    temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf8')
+    temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     temporary.replace(path)
 
 
@@ -103,6 +103,11 @@ def run_case(client,headers,task,condition):
     filename=OUT/'real'/(task['id']+'-'+condition+'.json')
     if filename.exists():
         return json.loads(filename.read_text('utf8'))
+    with ledger() as db:
+        previous=db.execute('SELECT status FROM token_calls WHERE scope=? AND task_id=? ORDER BY id DESC LIMIT 1',
+                            (os.getenv('AI_DEV_BUDGET_SCOPE',''),task['id']+'-'+condition)).fetchone()
+    if previous:
+        raise RuntimeError('任务已有计费或在途记录，停止重复请求；请从既存会话恢复结果：'+task['id']+'-'+condition)
     original=AIService.stream
     captured={}
     async def observed(service,messages,**kwargs):
@@ -111,10 +116,12 @@ def run_case(client,headers,task,condition):
         captured['parameters']=service.payload(actual,stream=True,max_tokens=kwargs.get('max_tokens'))
         captured['parameters'].pop('messages',None)
         text=''
-        async for fragment in original(service,actual,**kwargs):
-            text+=fragment
-            yield fragment
-        captured['raw_response']=text
+        try:
+            async for fragment in original(service,actual,**kwargs):
+                text+=fragment
+                yield fragment
+        finally:
+            captured['raw_response']=text
     task_id.set(task['id']+'-'+condition)
     # Per-user application limiter remains enabled. Serial experiment pacing honors 30/minute.
     body=task['body']|{'model':task['model']}

@@ -90,8 +90,8 @@ async def synthesize(round_number=None):
             at+=seconds+.16
         if at>scene['start']+scene['duration']:raise ValueError('配音超出场景：'+scene['name'])
         print(scene['name'],len(waves),'sentences',round(at-scene['start'],2),'seconds',flush=True)
+    (output/'pacing-issues.json').write_text(json.dumps(pacing_issues,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     if pacing_issues:
-        (output/'pacing-issues.json').write_text(json.dumps(pacing_issues,ensure_ascii=False,indent=2),encoding='utf8')
         raise ValueError('有'+str(len(pacing_issues))+'个语段需要调整讲稿或画面时长，详见pacing-issues.json')
     (output/'segments.json').write_text(json.dumps(segments,ensure_ascii=False,indent=2),encoding='utf8')
     for left,right in zip(subtitles,subtitles[1:]):

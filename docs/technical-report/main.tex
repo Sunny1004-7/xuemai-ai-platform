@@ -27,9 +27,9 @@
 \setlist{nosep,leftmargin=2em}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\pagechapter}[1]{\section{#1}}
-\newcommand{\diagram}[2]{\begin{figure}[htbp]\centering\input{figures/#1.tex}\caption{#2}\end{figure}}
-\newcommand{\frameworkdiagram}[1]{\begin{figure}[htbp]\centering\resizebox{\linewidth}{!}{\input{figures/overall-framework.tex}}\caption{#1}\end{figure}}
-\newcommand{\screen}[2]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\caption{#2}\end{figure}}
+\newcommand{\diagram}[2]{\par\begin{figure}[htbp]\centering\input{figures/#1.tex}\caption{#2}\end{figure}\par}
+\newcommand{\frameworkdiagram}[1]{\par\begin{figure}[htbp]\centering\resizebox{\linewidth}{!}{\input{figures/overall-framework.tex}}\caption{#1}\end{figure}\par}
+\newcommand{\screen}[2]{\par\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\caption{#2}\end{figure}\par}
 \newcommand{\pairedscreen}[4]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{images/#1.png}\\[-2pt]{\small (a) #2}\par\vspace{5pt}\includegraphics[width=\linewidth]{images/#3.png}\\[-2pt]{\small (b) #4}\caption{#2与#4的应用对应}\label{fig:#1}\end{figure}}
 \input{submission-author.tex}
 \input{method-names.tex}

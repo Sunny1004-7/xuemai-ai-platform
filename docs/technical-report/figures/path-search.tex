@@ -1,24 +1,22 @@
 \begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=1.5mm]}]
 \node[circle,draw=celadon,fill=pale,minimum size=8mm](n1)at(0.5,2.8){$k_{1}$};
 \node[circle,draw=celadon,fill=pale,minimum size=8mm](n2)at(2.5,2.8){$k_{2}$};
-\node[circle,draw=celadon,fill=pale,minimum size=8mm](n3)at(4.5,2.8){$k_{3}$};
+\node[circle,draw=celadon,fill=white,minimum size=8mm](n3)at(4.5,2.8){$k_{3}$};
 \node[circle,draw=celadon,fill=pale,minimum size=8mm](n4)at(0.5,0.9999999999999998){$k_{4}$};
-\node[circle,draw=celadon,fill=pale,minimum size=8mm](n5)at(2.5,0.9999999999999998){$k_{5}$};
+\node[circle,draw=celadon,fill=white,minimum size=8mm](n5)at(2.5,0.9999999999999998){$k_{5}$};
 \node[circle,draw=celadon,fill=white,minimum size=8mm](n6)at(4.5,0.9999999999999998){$k_{6}$};
-\draw[->](n2)--(n3);
 \draw[->](n1)--(n4);
-\draw[->](n3)--(n4);
+\draw[->](n3)--(n5);
 \draw[->](n4)--(n5);
+\draw[->](n2)--(n6);
+\draw[->](n4)--(n6);
+\draw[->](n5)--(n6);
 \node[anchor=west,font=\bfseries]at(6.6,3.4){30分钟内的实际候选序列};
-\fill[pale!80](6.6,2.5)rectangle(7.55,1.6);
-\node at(7.074999999999999,2.05){$k_{2}$};
-\fill[pale!80](7.55,2.49)rectangle(9.07,1.6);
-\node at(8.31,2.05){$k_{3}$};
-\fill[pale!80](9.07,2.48)rectangle(10.59,1.6);
-\node at(9.83,2.05){$k_{5}$};
-\fill[pale!80](10.59,2.47)rectangle(11.54,1.6);
-\node at(11.065,2.05){$k_{1}$};
-\fill[pale!80](11.54,2.46)rectangle(12.11,1.6);
-\node at(11.825,2.05){$k_{4}$};
-\node[anchor=west]at(6.6,1){用时29分钟，效用26.63};
+\fill[pale!80](6.6,2.5)rectangle(8.879999999999999,1.6);
+\node at(7.74,2.05){$k_{2}$};
+\fill[pale!80](8.879999999999999,2.49)rectangle(11.16,1.6);
+\node at(10.02,2.05){$k_{1}$};
+\fill[pale!80](11.16,2.48)rectangle(12.11,1.6);
+\node at(11.635,2.05){$k_{4}$};
+\node[anchor=west]at(6.6,1){用时29分钟，效用23.23};
 \node[anchor=west]at(6.6,.3){先修在前，剩余时间决定后续候选};\end{tikzpicture}

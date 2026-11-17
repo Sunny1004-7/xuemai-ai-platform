@@ -8,7 +8,7 @@ DATA=ROOT/'docs/experiments/round10'
 SOURCES={
 'actions':r'''\begin{tikzpicture}[x=1cm,y=1cm,font=\small,every node/.style={text=black},>={Stealth[length=1.7mm]}]
 \foreach \x/\t in {0.9/学生,4.4/诊断与策略,8/模型与课程工具,11.8/校验与评分}{
-\node[align=center] at (\x,4.4){\t};\draw[black!30,dashed](\x,4.1)--(\x,0);}
+\node[align=center] at (\x,4.8){\t};\draw[black!30,dashed](\x,4.5)--(\x,0);}
 \draw[->,thick,celadon](.9,3.8)--node[above]{原题、错误与前次反馈}(4.4,3.8);
 \draw[->,thick,celadon](4.4,3.05)--node[above]{证据与表征策略}(8,3.05);
 \draw[->,thick,celadon](8,2.3)--node[above]{一次生成、引用与动作}(11.8,2.3);
@@ -88,7 +88,8 @@ def main():
     (FIG/'evidence.tex').write_text('\n'.join(lines),encoding='utf8',newline='\n')
     path=json.loads((DATA/'path.json').read_text('utf8'))
     case=next(c for c in path['cases'] if c['split']=='eval' and len(c['parents'])==6
-              and sum(len(parents) for parents in c['parents'].values())>=4 and c['budget']==30)
+              and sum(len(parents) for parents in c['parents'].values())>=4 and c['budget']==30
+              and all(state['effective_count']<2 or state['value']<.6 for state in c['states'].values()))
     plan=case['outcomes']['PATH-G'];costs={c['knowledge_id']:c['estimated_minutes'] for c in case['candidates']}
     lines=[r'\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=1.5mm]}]']
     for i,k in enumerate(case['parents']):

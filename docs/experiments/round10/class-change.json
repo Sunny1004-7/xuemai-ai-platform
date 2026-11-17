@@ -1,0 +1,1407 @@
+{
+  "source": "class.json frozen eval family 5",
+  "scenarios": 8,
+  "changed": 8,
+  "cases": [
+    {
+      "class_id": 11,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-18",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26,
+            30,
+            34,
+            38,
+            42,
+            46,
+            50,
+            54,
+            58,
+            62,
+            66,
+            70,
+            74,
+            78
+          ],
+          "features": {
+            "概念辨析": 0.109,
+            "操作步骤": 0.792,
+            "推理论证": 0.152,
+            "迁移应用": 0.16,
+            "提示依赖": 0.097,
+            "学习参与": 0.162
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 18,
+          "dispersion": 0.515
+        },
+        {
+          "id": "group-37",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25,
+            29,
+            33,
+            37,
+            41,
+            45,
+            49,
+            53,
+            57,
+            61,
+            65,
+            69,
+            73,
+            77
+          ],
+          "features": {
+            "概念辨析": 0.838,
+            "操作步骤": 0.165,
+            "推理论证": 0.09,
+            "迁移应用": 0.134,
+            "提示依赖": 0.116,
+            "学习参与": 0.139
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 37,
+          "dispersion": 0.51
+        },
+        {
+          "id": "group-76",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80
+          ],
+          "features": {
+            "概念辨析": 0.09,
+            "操作步骤": 0.131,
+            "推理论证": 0.135,
+            "迁移应用": 0.821,
+            "提示依赖": 0.133,
+            "学习参与": 0.123
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 76,
+          "dispersion": 0.5
+        },
+        {
+          "id": "group-55",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27,
+            31,
+            35,
+            39,
+            43,
+            47,
+            51,
+            55,
+            59,
+            63,
+            67,
+            71,
+            75,
+            79
+          ],
+          "features": {
+            "概念辨析": 0.166,
+            "操作步骤": 0.1,
+            "推理论证": 0.821,
+            "迁移应用": 0.122,
+            "提示依赖": 0.121,
+            "学习参与": 0.149
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 55,
+          "dispersion": 0.56
+        }
+      ]
+    },
+    {
+      "class_id": 17,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-22",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26
+          ],
+          "features": {
+            "概念辨析": 0.084,
+            "操作步骤": 0.823,
+            "推理论证": 0.123,
+            "迁移应用": 0.111,
+            "提示依赖": 0.091,
+            "学习参与": 0.178
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 22,
+          "dispersion": 0.431
+        },
+        {
+          "id": "group-5",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25
+          ],
+          "features": {
+            "概念辨析": 0.817,
+            "操作步骤": 0.065,
+            "推理论证": 0.136,
+            "迁移应用": 0.169,
+            "提示依赖": 0.176,
+            "学习参与": 0.102
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 5,
+          "dispersion": 0.495
+        },
+        {
+          "id": "group-28",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28
+          ],
+          "features": {
+            "概念辨析": 0.14,
+            "操作步骤": 0.177,
+            "推理论证": 0.155,
+            "迁移应用": 0.785,
+            "提示依赖": 0.142,
+            "学习参与": 0.176
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 28,
+          "dispersion": 0.488
+        },
+        {
+          "id": "group-19",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27
+          ],
+          "features": {
+            "概念辨析": 0.119,
+            "操作步骤": 0.141,
+            "推理论证": 0.732,
+            "迁移应用": 0.161,
+            "提示依赖": 0.126,
+            "学习参与": 0.125
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 19,
+          "dispersion": 0.426
+        }
+      ]
+    },
+    {
+      "class_id": 23,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-58",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26,
+            30,
+            34,
+            38,
+            42,
+            46,
+            50,
+            54,
+            58,
+            62,
+            66,
+            70,
+            74,
+            78
+          ],
+          "features": {
+            "概念辨析": 0.119,
+            "操作步骤": 0.729,
+            "推理论证": 0.166,
+            "迁移应用": 0.119,
+            "提示依赖": 0.132,
+            "学习参与": 0.128
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 58,
+          "dispersion": 0.454
+        },
+        {
+          "id": "group-4",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80
+          ],
+          "features": {
+            "概念辨析": 0.105,
+            "操作步骤": 0.124,
+            "推理论证": 0.135,
+            "迁移应用": 0.816,
+            "提示依赖": 0.101,
+            "学习参与": 0.112
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 4,
+          "dispersion": 0.599
+        },
+        {
+          "id": "group-79",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27,
+            31,
+            35,
+            39,
+            43,
+            47,
+            51,
+            55,
+            59,
+            63,
+            67,
+            71,
+            75,
+            79
+          ],
+          "features": {
+            "概念辨析": 0.124,
+            "操作步骤": 0.146,
+            "推理论证": 0.825,
+            "迁移应用": 0.149,
+            "提示依赖": 0.138,
+            "学习参与": 0.143
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 79,
+          "dispersion": 0.47
+        },
+        {
+          "id": "group-9",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25,
+            29,
+            33,
+            37,
+            41,
+            45,
+            49,
+            53,
+            57,
+            61,
+            65,
+            69,
+            73,
+            77
+          ],
+          "features": {
+            "概念辨析": 0.841,
+            "操作步骤": 0.108,
+            "推理论证": 0.159,
+            "迁移应用": 0.131,
+            "提示依赖": 0.151,
+            "学习参与": 0.118
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 9,
+          "dispersion": 0.511
+        }
+      ]
+    },
+    {
+      "class_id": 29,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-26",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26
+          ],
+          "features": {
+            "概念辨析": 0.192,
+            "操作步骤": 0.776,
+            "推理论证": 0.15,
+            "迁移应用": 0.103,
+            "提示依赖": 0.169,
+            "学习参与": 0.15
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 26,
+          "dispersion": 0.536
+        },
+        {
+          "id": "group-16",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28
+          ],
+          "features": {
+            "概念辨析": 0.048,
+            "操作步骤": 0.134,
+            "推理论证": 0.211,
+            "迁移应用": 0.857,
+            "提示依赖": 0.172,
+            "学习参与": 0.115
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 16,
+          "dispersion": 0.451
+        },
+        {
+          "id": "group-17",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25
+          ],
+          "features": {
+            "概念辨析": 0.768,
+            "操作步骤": 0.139,
+            "推理论证": 0.169,
+            "迁移应用": 0.128,
+            "提示依赖": 0.129,
+            "学习参与": 0.238
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 17,
+          "dispersion": 0.488
+        },
+        {
+          "id": "group-11",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27
+          ],
+          "features": {
+            "概念辨析": 0.166,
+            "操作步骤": 0.19,
+            "推理论证": 0.813,
+            "迁移应用": 0.193,
+            "提示依赖": 0.125,
+            "学习参与": 0.154
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 11,
+          "dispersion": 0.481
+        }
+      ]
+    },
+    {
+      "class_id": 35,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-22",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26,
+            30,
+            34,
+            38,
+            42,
+            46,
+            50,
+            54,
+            58,
+            62,
+            66,
+            70,
+            74,
+            78
+          ],
+          "features": {
+            "概念辨析": 0.126,
+            "操作步骤": 0.839,
+            "推理论证": 0.157,
+            "迁移应用": 0.141,
+            "提示依赖": 0.163,
+            "学习参与": 0.129
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 22,
+          "dispersion": 0.489
+        },
+        {
+          "id": "group-31",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27,
+            31,
+            35,
+            39,
+            43,
+            47,
+            51,
+            55,
+            59,
+            63,
+            67,
+            71,
+            75,
+            79
+          ],
+          "features": {
+            "概念辨析": 0.14,
+            "操作步骤": 0.174,
+            "推理论证": 0.841,
+            "迁移应用": 0.153,
+            "提示依赖": 0.094,
+            "学习参与": 0.131
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 31,
+          "dispersion": 0.487
+        },
+        {
+          "id": "group-17",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25,
+            29,
+            33,
+            37,
+            41,
+            45,
+            49,
+            53,
+            57,
+            61,
+            65,
+            69,
+            73,
+            77
+          ],
+          "features": {
+            "概念辨析": 0.85,
+            "操作步骤": 0.087,
+            "推理论证": 0.091,
+            "迁移应用": 0.133,
+            "提示依赖": 0.105,
+            "学习参与": 0.104
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 17,
+          "dispersion": 0.496
+        },
+        {
+          "id": "group-72",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80
+          ],
+          "features": {
+            "概念辨析": 0.129,
+            "操作步骤": 0.122,
+            "推理论证": 0.118,
+            "迁移应用": 0.768,
+            "提示依赖": 0.122,
+            "学习参与": 0.085
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 72,
+          "dispersion": 0.437
+        }
+      ]
+    },
+    {
+      "class_id": 41,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-1",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26
+          ],
+          "features": {
+            "概念辨析": 0.149,
+            "操作步骤": 0.818,
+            "推理论证": 0.173,
+            "迁移应用": 0.128,
+            "提示依赖": 0.134,
+            "学习参与": 0.139
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 1,
+          "dispersion": 0.571
+        },
+        {
+          "id": "group-17",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25
+          ],
+          "features": {
+            "概念辨析": 0.837,
+            "操作步骤": 0.187,
+            "推理论证": 0.045,
+            "迁移应用": 0.22,
+            "提示依赖": 0.089,
+            "学习参与": 0.151
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 17,
+          "dispersion": 0.492
+        },
+        {
+          "id": "group-24",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28
+          ],
+          "features": {
+            "概念辨析": 0.148,
+            "操作步骤": 0.134,
+            "推理论证": 0.151,
+            "迁移应用": 0.767,
+            "提示依赖": 0.106,
+            "学习参与": 0.064
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 24,
+          "dispersion": 0.433
+        },
+        {
+          "id": "group-19",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27
+          ],
+          "features": {
+            "概念辨析": 0.064,
+            "操作步骤": 0.165,
+            "推理论证": 0.796,
+            "迁移应用": 0.184,
+            "提示依赖": 0.127,
+            "学习参与": 0.096
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 19,
+          "dispersion": 0.472
+        }
+      ]
+    },
+    {
+      "class_id": 47,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-18",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26,
+            30,
+            34,
+            38,
+            42,
+            46,
+            50,
+            54,
+            58,
+            62,
+            66,
+            70,
+            74,
+            78
+          ],
+          "features": {
+            "概念辨析": 0.135,
+            "操作步骤": 0.851,
+            "推理论证": 0.157,
+            "迁移应用": 0.112,
+            "提示依赖": 0.172,
+            "学习参与": 0.121
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 18,
+          "dispersion": 0.468
+        },
+        {
+          "id": "group-9",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25,
+            29,
+            33,
+            37,
+            41,
+            45,
+            49,
+            53,
+            57,
+            61,
+            65,
+            69,
+            73,
+            77
+          ],
+          "features": {
+            "概念辨析": 0.83,
+            "操作步骤": 0.114,
+            "推理论证": 0.122,
+            "迁移应用": 0.135,
+            "提示依赖": 0.148,
+            "学习参与": 0.118
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 9,
+          "dispersion": 0.537
+        },
+        {
+          "id": "group-4",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28,
+            32,
+            36,
+            40,
+            44,
+            48,
+            52,
+            56,
+            60,
+            64,
+            68,
+            72,
+            76,
+            80
+          ],
+          "features": {
+            "概念辨析": 0.14,
+            "操作步骤": 0.162,
+            "推理论证": 0.133,
+            "迁移应用": 0.817,
+            "提示依赖": 0.096,
+            "学习参与": 0.17
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 4,
+          "dispersion": 0.484
+        },
+        {
+          "id": "group-67",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27,
+            31,
+            35,
+            39,
+            43,
+            47,
+            51,
+            55,
+            59,
+            63,
+            67,
+            71,
+            75,
+            79
+          ],
+          "features": {
+            "概念辨析": 0.128,
+            "操作步骤": 0.141,
+            "推理论证": 0.785,
+            "迁移应用": 0.153,
+            "提示依赖": 0.128,
+            "学习参与": 0.104
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 67,
+          "dispersion": 0.54
+        }
+      ]
+    },
+    {
+      "class_id": 53,
+      "student_id": 1,
+      "before_focus": "概念辨析",
+      "after_focus": "操作步骤",
+      "focus_changed": true,
+      "after_groups": [
+        {
+          "id": "group-1",
+          "name": "操作步骤关注组",
+          "student_ids": [
+            1,
+            2,
+            6,
+            10,
+            14,
+            18,
+            22,
+            26
+          ],
+          "features": {
+            "概念辨析": 0.094,
+            "操作步骤": 0.793,
+            "推理论证": 0.075,
+            "迁移应用": 0.097,
+            "提示依赖": 0.198,
+            "学习参与": 0.086
+          },
+          "focus": "操作步骤",
+          "strategy": "逐步追踪状态并检查操作顺序",
+          "question_ids": [
+            6,
+            5,
+            7
+          ],
+          "weak_knowledge_ids": [
+            2
+          ],
+          "knowledge_id": 2,
+          "method": "CLASS-LOOP",
+          "medoid": 1,
+          "dispersion": 0.462
+        },
+        {
+          "id": "group-3",
+          "name": "推理论证关注组",
+          "student_ids": [
+            3,
+            7,
+            11,
+            15,
+            19,
+            23,
+            27
+          ],
+          "features": {
+            "概念辨析": 0.169,
+            "操作步骤": 0.14,
+            "推理论证": 0.908,
+            "迁移应用": 0.121,
+            "提示依赖": 0.071,
+            "学习参与": 0.196
+          },
+          "focus": "推理论证",
+          "strategy": "补齐推理依据与边界条件",
+          "question_ids": [
+            11,
+            9,
+            10
+          ],
+          "weak_knowledge_ids": [
+            3
+          ],
+          "knowledge_id": 3,
+          "method": "CLASS-LOOP",
+          "medoid": 3,
+          "dispersion": 0.419
+        },
+        {
+          "id": "group-28",
+          "name": "迁移应用关注组",
+          "student_ids": [
+            4,
+            8,
+            12,
+            16,
+            20,
+            24,
+            28
+          ],
+          "features": {
+            "概念辨析": 0.131,
+            "操作步骤": 0.097,
+            "推理论证": 0.156,
+            "迁移应用": 0.792,
+            "提示依赖": 0.061,
+            "学习参与": 0.153
+          },
+          "focus": "迁移应用",
+          "strategy": "更换输入检验知识迁移",
+          "question_ids": [
+            16,
+            13,
+            14
+          ],
+          "weak_knowledge_ids": [
+            4
+          ],
+          "knowledge_id": 4,
+          "method": "CLASS-LOOP",
+          "medoid": 28,
+          "dispersion": 0.47
+        },
+        {
+          "id": "group-21",
+          "name": "概念辨析关注组",
+          "student_ids": [
+            5,
+            9,
+            13,
+            17,
+            21,
+            25
+          ],
+          "features": {
+            "概念辨析": 0.705,
+            "操作步骤": 0.12,
+            "推理论证": 0.194,
+            "迁移应用": 0.102,
+            "提示依赖": 0.074,
+            "学习参与": 0.127
+          },
+          "focus": "概念辨析",
+          "strategy": "用反例区分概念边界",
+          "question_ids": [
+            1,
+            2,
+            3
+          ],
+          "weak_knowledge_ids": [
+            1
+          ],
+          "knowledge_id": 1,
+          "method": "CLASS-LOOP",
+          "medoid": 21,
+          "dispersion": 0.46
+        }
+      ]
+    }
+  ]
+}

@@ -65,6 +65,11 @@ def main():
             if kind=='generate':
                 role='teacher';generation=['question','lesson','rubric','question'][index%4]
                 task_id.set(f'e2e-{index}-generate')
+                from backend.app.ai_budget import ledger
+                with ledger() as db:
+                    previous=db.execute('SELECT 1 FROM token_calls WHERE scope=? AND task_id=?',
+                                        ('round10-20261117',f'e2e-{index}-generate')).fetchone()
+                if previous:raise RuntimeError('生成任务已有计费记录，停止重复请求，请从数据库草稿恢复结果')
                 response=client.post('/api/ai/generate',headers=headers[role],json={'course_id':cid,'knowledge_id':point['id'],
                     'question_id':question['id'],'kind':generation,'prompt':'生成简洁可审核的内容。量规分项总分100，当前作答依据需清晰。','answer':'先确认输入和边界。'})
                 checks['generated']=response.status_code==200

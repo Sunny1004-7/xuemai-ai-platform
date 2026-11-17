@@ -90,7 +90,7 @@ def main():
         output={'dataset':'r10-retrieval-v1','group_split':'按知识主题分组，所有改写位于同一分区',
                 'total_cases':len(cases),'evaluation_cases':len(evaluated),'courses':3,'summary':summary,
                 'permission':permission,'insufficient_evidence_empty':not empty,'cases':cases}
-        OUT.mkdir(exist_ok=True,parents=True);(OUT/'retrieval.json').write_text(json.dumps(output,ensure_ascii=False,indent=2),encoding='utf8')
+        OUT.mkdir(exist_ok=True,parents=True);(OUT/'retrieval.json').write_text(json.dumps(output,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
         print(json.dumps({k:v for k,v in output.items() if k!='cases'},ensure_ascii=False))
 
 
