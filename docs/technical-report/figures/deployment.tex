@@ -6,9 +6,10 @@ box/.style={draw=celadon!70,fill=white,rounded corners=2pt,text width=3.2cm,mini
 \node[box](api)at(7.1,3.5){FastAPI业务服务\\身份、课程与业务校验};
 \node[box](storage)at(2.3,1.2){SQLite与教学文件\\学习记录、内容及版本};
 \node[box](adapter)at(7.1,1.2){AI适配与工具\\检索、解析与语音};
-\node[box,draw=tea!80,fill=rice!25](model)at(12.2,1.2){DeepSeek官方API\\模型生成与官方用量};
+\node[box,draw=tea!80,fill=rice!25](model)at(13,1.2){DeepSeek官方API\\模型生成与官方用量};
 \draw[flow](browser)--node[above]{请求}(api);
 \draw[flow](api)--node[right]{调用}(adapter);
-\draw[flow](api.south west)--(4.6,2.3)-|node[pos=.8,left]{读写}(storage.north);
-\draw[<->,thick,tea](adapter)--node[above]{生成}(model);
+\draw[flow]([xshift=-.8cm]api.south)--(6.3,2.35)--node[above,inner sep=3pt]{读写}(2.3,2.35)--(storage.north);
+\draw[<->,thick,tea](adapter.east)--(model.west);
+\node[anchor=south,inner sep=3pt]at(10.35,1.2){生成};
 \end{tikzpicture}

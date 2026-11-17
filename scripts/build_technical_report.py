@@ -14,16 +14,22 @@ sys.path.insert(0,str(ROOT/'scripts'))
 from review_screenshots import validate_screenshots
 
 
-def build(screenshots,record,draft=False):
-    subprocess.run([sys.executable,str(ROOT/'scripts/build_framework.py')],check=True)
-    subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
-    subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_report_data.py'),'--materials-only'],check=True)
+def build(screenshots=None,record=None,draft=False,reuse_assets=False):
+    if not reuse_assets:
+        subprocess.run([sys.executable,str(ROOT/'scripts/build_framework.py')],check=True)
+        subprocess.run([sys.executable,str(ROOT/'scripts/report_evidence_example.py')],check=True)
+        subprocess.run([sys.executable,str(ROOT/'scripts/build_round10_report_data.py'),'--materials-only'],check=True)
     source=ROOT/'docs/technical-report'
-    directory=ROOT/screenshots
-    if not draft:
-        manifest,_=validate_screenshots(ROOT,Path(screenshots),record)
+    if reuse_assets:
+        previous=json.loads((source/'验收结果.json').read_text('utf8'))
+        manifest={'files':[None]*previous['frontend_capture_count']}
     else:
-        manifest=json.loads((directory/'截图清单.json').read_text(encoding='utf-8'))
+        if not screenshots or not record:raise ValueError('导入截图时需要截图目录和记录路径')
+        directory=ROOT/screenshots
+        if not draft:
+            manifest,_=validate_screenshots(ROOT,Path(screenshots),record)
+        else:
+            manifest=json.loads((directory/'截图清单.json').read_text(encoding='utf-8'))
     images=source/'images';images.mkdir(exist_ok=True)
     mapping={'graph-overview':'student/graph/CS201/desktop_full.png',
              'student-dashboard':'student/dashboard/CS201/desktop_full.png',
@@ -37,11 +43,13 @@ def build(screenshots,record,draft=False):
              'python-plan':'student/plan/CS101/desktop_view-4.png',
              'stack-experiment':'student/experiments/CS201/desktop_stack-push.png',
              'teacher-ai':'teacher/teacher-ai/CS201/desktop_teaching-draft.png'}
-    for name,relative in mapping.items():
-        img=Image.open(directory/relative).convert('RGB')
-        # 保留彩色像素；排版使用版心100%宽度，不设置高度压缩。
-        img.save(images/(name+'.png'))
-    (source/'完整截图来源.json').write_text(json.dumps(mapping,ensure_ascii=False,indent=2),encoding='utf8')
+    if not reuse_assets:
+        for name,relative in mapping.items():
+            img=Image.open(directory/relative).convert('RGB')
+            img.save(images/(name+'.png'))
+        (source/'完整截图来源.json').write_text(json.dumps(mapping,ensure_ascii=False,indent=2),encoding='utf8')
+    elif not all((images/(name+'.png')).exists() for name in mapping):
+        raise ValueError('既有完整界面图缺失')
     facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
     back=(ROOT/facts['validation_sources']['backend']).read_text(encoding='utf-8',errors='replace')
     browser=(ROOT/facts['validation_sources']['browser']).read_text(encoding='utf-8',errors='replace')
@@ -86,5 +94,5 @@ def build(screenshots,record,draft=False):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--screenshots',required=True);p.add_argument('--record',required=True);p.add_argument('--draft',action='store_true');args=p.parse_args()
-    build(args.screenshots,args.record,args.draft)
+    p=argparse.ArgumentParser();p.add_argument('--screenshots');p.add_argument('--record');p.add_argument('--reuse-assets',action='store_true');p.add_argument('--draft',action='store_true');args=p.parse_args()
+    build(args.screenshots,args.record,args.draft,args.reuse_assets)
