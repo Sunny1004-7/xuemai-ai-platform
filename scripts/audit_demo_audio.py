@@ -18,7 +18,6 @@ def normalize(text):
 
 def main():
     source = ROOT / '最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
-    digest = hashlib.sha256(source.read_bytes()).hexdigest()
     current, round_number, project = load_project(os.environ.get('XUEMAI_VIDEO_ROUND'))
     title = project.name.removesuffix('演示源')
     target = ROOT / ('docs/demo/'+title+'语音转写回验.json')
@@ -44,7 +43,7 @@ def main():
     expected = ''.join(scene['text'] for scene in scenes)
     actual = ''.join(segment['text'] for segment in decoded)
     result = {'method': '本地Whisper small中文自动回转写，保留原文与逐场景对应；关键操作字幕另作可视核对',
-              'source_video_sha256': digest, 'language_probability': info.language_probability,
+              'source_video_bytes': source.stat().st_size, 'language_probability': info.language_probability,
               'global_character_similarity': round(SequenceMatcher(None, normalize(expected), normalize(actual), autojunk=False).ratio(), 4),
               'max_narration_tempo': max(voice['tempo'] for voice in voices), 'max_gap_seconds': round(max(gaps), 3),
               'voice_segments': len(voices), 'no_voice_overlap': min(gaps) >= -.005,

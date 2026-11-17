@@ -1,11 +1,11 @@
 {
-  "round": 11,
-  "project": "docs/demo/第十一轮演示源",
-  "scenes": "docs/demo/第十一轮演示源/scenes.json",
-  "assembler": "scripts/assemble_round11_video.py",
+  "round": 12,
+  "project": "docs/demo/第十二轮演示源",
+  "scenes": "docs/demo/第十二轮演示源/scenes.json",
+  "assembler": "scripts/assemble_round12_video.py",
   "subtitle_font": "Microsoft YaHei",
   "subtitle_font_size": 32,
   "subtitle_safe_width": 1720,
   "voice": "zh-CN-YunxiNeural",
-  "rate": "-3%"
+  "rate": "+7%"
 }

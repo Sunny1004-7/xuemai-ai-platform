@@ -1,0 +1,32 @@
+[
+  {
+    "name": null,
+    "at": 0,
+    "spoken_phrase": "先展示全貌"
+  },
+  {
+    "name": "shared-evidence",
+    "at": 4.537,
+    "spoken_phrase": "课程资料"
+  },
+  {
+    "name": "student-methods",
+    "at": 7.773,
+    "spoken_phrase": "学生侧"
+  },
+  {
+    "name": "teacher-methods",
+    "at": 11.71,
+    "spoken_phrase": "教师侧"
+  },
+  {
+    "name": "services",
+    "at": 14.432,
+    "spoken_phrase": "共享工具"
+  },
+  {
+    "name": "feedback",
+    "at": 17.259,
+    "spoken_phrase": "新的作答"
+  }
+]

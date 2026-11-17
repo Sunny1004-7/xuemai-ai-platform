@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>学脉作品演示</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:'Microsoft YaHei',sans-serif;background:#f5f3ec;color:#203f3d}
+main{height:100%;padding:36px 64px 38px}.brand{font-family:SimSun,serif;font-size:28px;letter-spacing:2px}
+#stage{height:calc(100% - 40px);padding-top:26px}h1,h2,p{margin:0}
+.cover{height:100%;display:grid;grid-template-columns:.92fr 1.08fr;gap:65px;align-items:center}
+.cover-copy{display:flex;flex-direction:column;gap:34px}.rule{width:104px;height:5px;background:#2e6a67}
+.cover h1{font:92px SimSun,serif;white-space:nowrap}.purpose{font-size:34px;line-height:1.65}
+.author{font-size:28px;color:#725c49;line-height:1.7}.login-preview{width:100%;border:1px solid #d4dbd4;border-radius:14px;box-shadow:0 20px 50px #183f3214}
+main[data-view="framework"]{padding:20px 28px 18px}main[data-view="framework"] #stage{padding-top:8px;height:calc(100% - 36px)}
+.framework,.diagram-frame{height:100%;width:100%;position:relative}.diagram-frame img{width:100%;height:100%;object-fit:contain}
+.focus{position:absolute;border:4px solid #2e6a67;border-radius:10px;pointer-events:none;opacity:0}
+.dev{height:100%;display:flex;flex-direction:column;gap:20px}.dev-head{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.dev-head h1{font-size:42px;font-weight:600}.date{font-size:25px;color:#725c49}.case-title{font-size:35px;font-weight:500}
+.steps{display:flex;gap:12px;align-items:center}.step{flex:1;padding:12px 8px;border-bottom:3px solid #d4dcd5;font-size:23px;text-align:center;color:#6b7b73}.step.active{border-color:#2e6a67;color:#203f3d;font-weight:600}
+.dev-body{display:grid;grid-template-columns:.82fr 1.18fr;gap:36px;flex:1;min-height:0;padding-top:8px}
+.explanation{display:flex;flex-direction:column;justify-content:center;gap:25px;padding:15px 22px 35px 0}
+.explanation h2{font-size:39px;line-height:1.5}.explanation p{font-size:30px;line-height:1.85}
+.record{background:#fffefb;border:1px solid #cbd7cf;border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;gap:18px;min-height:0}
+.evidence-label{font-size:23px;color:#64776d}.record pre{font-family:'Microsoft YaHei',sans-serif;font-size:27px;line-height:1.7;white-space:pre-wrap;word-break:break-word;margin:0;overflow:hidden;flex:1}
+.record.code pre{font-family:Consolas,'Microsoft YaHei',monospace;font-size:24px;line-height:1.55}
+.outro{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:40px}
+.outro h1{font:76px SimSun,serif}.outro .thanks{font-size:38px}
+</style>
+<main><header class="brand">学脉 XueMai</header><div id="stage"></div></main>
+<script type="module">
+import { calculateFocus } from '../framework-focus.js';
+let boards,facts,regions;
+window.ready=Promise.all(['boards.json','product.json','../../figures/xuemai-framework-regions.json'].map(p=>fetch(p).then(r=>r.json()))).then(values=>{[boards,facts,regions]=values});
+const main=document.querySelector('main'),stage=document.querySelector('#stage');
+const caseSteps=[['说明任务','AI实现','发现问题','修改代码','重新验证','保存结果'],['提出要求','发现遮挡','修改连线','准备输入','比较结果','页面复查'],['说明要求','发现遗漏','调整判断','专项复测','完整回归','保存修复']];
+window.show=async name=>{
+ await window.ready;stage.innerHTML='';main.dataset.view=name;
+ const view=document.createElement('div');stage.append(view);
+ const author=`${facts.author.school} · ${facts.author.major} · ${facts.author.name}`;
+ if(name==='intro'||name==='context'){
+  view.className='cover';view.innerHTML=`<section class="cover-copy"><div class="rule"></div><h1>学脉 XueMai</h1><p class="purpose">课程学习、个性化辅导与教学协作</p><p class="author">${author}</p></section><img class="login-preview" src="../../technical-report/images/login.png" alt="学脉学生登录界面">`;return {name};
+ }
+ if(name==='framework'){
+  view.className='framework';view.innerHTML='<div class="diagram-frame"><img src="../../figures/xuemai-framework.png" alt="总体方法框架"><div class="focus"></div></div>';return {name};
+ }
+ if(name==='outro'){
+  view.className='outro';view.innerHTML=`<h1>让学习与教学相互连接</h1><p class="author">${author}</p><p class="thanks">感谢各位评委老师的观看与指导</p>`;return {name};
+ }
+ const board=boards.find(item=>item.board_id===name);if(!board)throw new Error('未知协作记录 '+name);
+ view.className='dev';view.innerHTML='<div class="dev-head"><h1>AI协同过程复现展示</h1><p class="date"></p></div><h2 class="case-title"></h2><nav class="steps"></nav><div class="dev-body"><section class="explanation"><h2></h2><p></p></section><section class="record"><p class="evidence-label"></p><pre></pre></section></div>';
+ view.querySelector('.date').textContent=board.date+' · 历史记录复现';
+ view.querySelector('.case-title').textContent=`案例${['一','二','三'][board.case_index-1]} · ${board.case_name}`;
+ view.querySelector('.steps').innerHTML=caseSteps[board.case_index-1].map((label,i)=>`<span class="step ${i===board.step_index?'active':''}">${label}</span>`).join('');
+ view.querySelector('.explanation h2').textContent=board.heading;
+ view.querySelector('.explanation p').textContent=board.explanation;
+ view.querySelector('.evidence-label').textContent=board.evidence_kind;
+ view.querySelector('pre').textContent=board.excerpt;
+ view.querySelector('.record').classList.toggle('code',!!board.code);
+ return {name,case:board.case_index,step:board.step_index};
+};
+window.highlight=name=>{
+ const frame=document.querySelector('.diagram-frame'),focus=frame.querySelector('.focus'),image=frame.querySelector('img');
+ if(!name){focus.style.opacity=0;return {name:null,image:image.getBoundingClientRect().toJSON()};}
+ const viewport={width:frame.clientWidth,height:frame.clientHeight},result=calculateFocus(regions,name,viewport);
+ for(const [key,value] of Object.entries(result.box))focus.style[key]=value+'px';
+ focus.style.borderColor=name==='teacher-methods'?'#7e6554':'#2e6a67';focus.style.opacity=1;
+ return {name,...result,viewport,image:image.getBoundingClientRect().toJSON()};
+};
+window.scrollRecord=()=>{const pre=document.querySelector('pre');if(pre&&pre.scrollHeight>pre.clientHeight){pre.scrollTo({top:pre.scrollHeight,behavior:'smooth'})}};
+</script>
+</html>

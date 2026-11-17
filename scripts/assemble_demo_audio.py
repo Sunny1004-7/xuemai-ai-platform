@@ -45,10 +45,10 @@ def inspect_output(target, segments):
             'narration_timeline_no_overlap':True,'subtitle_timing':'同次TTS WordBoundary经音频速度换算','audio_mean_db':mean,'audio_peak_db':peak,
             'audio_auditory_review':'完整解码与语段边界检查已完成，自动语音转写另存核验记录',
             'human_listening_review':False,
-            'subtitles_burned_in':True,'subtitle_entries':len((ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8').strip().split('\n\n')),
-            'real_api_calls_during_recording':0 if LATEST else 2,'reused_real_api_calls':2 if LATEST else 0,'subtitle_background':'透明，无底色块' if LATEST else '深色底色','sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
+            'subtitles_burned_in':True,'subtitle_entries':len(((PROJECT/'subtitles.srt') if ROUND>=12 else (ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt')).read_text(encoding='utf8').strip().split('\n\n')),
+            'real_api_calls_during_recording':0 if LATEST else 2,'reused_real_api_calls':2 if LATEST else 0,'subtitle_background':'透明，无底色块' if LATEST else '深色底色','video_bytes':target.stat().st_size}
     encoded=json.dumps(record,ensure_ascii=False,indent=2)
-    (ROOT/'最终参赛提交材料/视频验收记录.json').write_text(encoded,encoding='utf8')
+    (PROJECT/'视频验收记录.json').write_text(encoded,encoding='utf8')
     (ROOT/'docs/demo').mkdir(exist_ok=True)
     (ROOT/'docs/demo/验收结果.json').write_text(encoded,encoding='utf8')
     return record
@@ -57,7 +57,7 @@ def build():
     local=ROOT/(f'.local/narration-round{ROUND}' if LATEST else '.local/narration')
     local.mkdir(exist_ok=True)
     segments=json.loads(((PROJECT/'audio' if LATEST else local)/'segments.json').read_text(encoding='utf8'))
-    source=ROOT/'最终参赛提交材料/学脉XueMai-演示视频.mp4'
+    source=(PROJECT/'video-unvoiced.mp4') if ROUND>=12 else ROOT/'最终参赛提交材料/学脉XueMai-演示视频.mp4'
     target=ROOT/'最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
     groups=[]
     for start in range(0,len(segments),12):
@@ -75,7 +75,7 @@ def build():
     command+=['-filter_complex',f'amix=inputs={len(groups)}:normalize=0,apad=whole_dur={DURATION},atrim=duration={DURATION}[out]',
               '-map','[out]','-ar','24000','-t',str(DURATION),str(local/'complete.wav')]
     subprocess.run(command,check=True)
-    srt=(ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt').read_text(encoding='utf8')
+    srt=((PROJECT/'subtitles.srt') if ROUND>=12 else (ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt')).read_text(encoding='utf8')
     ass=['[Script Info]','ScriptType: v4.00+','PlayResX: 1920','PlayResY: 1080','WrapStyle: 2','[V4+ Styles]',
          'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
          ('Style: Default,Microsoft YaHei,32,&H003D3F20,&H003D3F20,&H00F8F8F5,&HFF000000,0,0,0,0,100,100,0,0,1,1.1,0.4,2,100,100,24,1' if LATEST else 'Style: Default,Microsoft YaHei,32,&H00FFFFFF,&H00FFFFFF,&H00372F26,&H20372F26,0,0,0,0,100,100,0,0,3,8,0,2,100,100,24,1'),

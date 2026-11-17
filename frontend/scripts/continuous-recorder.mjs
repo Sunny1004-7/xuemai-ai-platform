@@ -66,6 +66,7 @@ export async function createRecorder({ base, directory }) {
           recorder.onstop = async () => { await pending; stream.getTracks().forEach(track => track.stop()); resolve() }
           recorder.stop()
         })
+        window.nativeRecordingStarted = performance.now()
         recorder.start(1000)
         window.recordingReady = true
       } catch (error) { window.recordingError = error.message }
@@ -90,7 +91,7 @@ export async function createRecorder({ base, directory }) {
     }).toBe('1a45dfa3')
   }
   async function mark(name, operation) {
-    const at = (performance.now() - started) / 1000
+    const at = await controller.evaluate(() => (performance.now() - window.nativeRecordingStarted) / 1000)
     events.push({ name, at: Number(at.toFixed(3)) })
     console.log(JSON.stringify(events.at(-1)))
     if (operation) await operation()

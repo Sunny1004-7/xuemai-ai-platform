@@ -11,7 +11,7 @@ def load_project(round_number=None):
     if number == current['round']:
         project = ROOT / current['project']
     else:
-        history = {7: '第七轮', 8: '第八轮', 9: '第九轮', 10: '第十轮'}
+        history = {7: '第七轮', 8: '第八轮', 9: '第九轮', 10: '第十轮', 11: '第十一轮'}
         if number not in history:
             raise ValueError('该视频工程未配置，请检查docs/demo/current.json')
         project = ROOT / ('docs/demo/' + history[number] + '演示源')

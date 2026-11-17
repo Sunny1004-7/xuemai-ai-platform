@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     current, number, project = load_project()
-    if number != 11:
-        raise ValueError('请先将当前视频工程指定为第十一轮')
+    if number not in (11, 12):
+        raise ValueError('请先指定受支持的模块化视频工程')
     scenes = json.loads((project / 'scenes-source.json').read_text('utf8'))
     ids = [scene['scene_id'] for scene in scenes]
     if len(set(ids)) != len(ids):

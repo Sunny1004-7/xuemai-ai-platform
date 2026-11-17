@@ -3,7 +3,7 @@
     "scene_id": "intro",
     "id": "intro",
     "name": "作品介绍",
-    "duration": 14,
+    "duration": 12,
     "text": "各位评委老师好。下面向各位老师介绍我的作品学脉，一套面向学生学习和教师教学的AI个性化智慧教育平台。",
     "role": "presentation",
     "module": null,
@@ -14,23 +14,35 @@
     "scene_id": "context",
     "id": "context",
     "name": "教学情境",
-    "duration": 17,
+    "duration": 14,
     "text": "学生要把课前准备、课堂理解和课后练习连起来；教师也要根据不同表现调整安排。学脉把课程资源、学习反馈和教学行动组织在同一平台。",
     "role": "presentation",
     "module": null,
     "route": null,
-    "start": 14
+    "start": 12
   },
   {
     "scene_id": "framework",
     "id": "framework",
     "name": "总体方法框架",
-    "duration": 24,
+    "duration": 22,
     "text": "这幅框架连接个人学习和班级教学。课程资料与学习记录提供共同依据。学生侧追踪知识状态，安排路径并检验理解；教师侧据此分组和编排教学。共享工具完成检索、生成与校验，新的作答继续更新下一步安排。",
     "role": "presentation",
     "module": null,
     "route": null,
-    "start": 31
+    "start": 26
+  },
+  {
+    "scene_id": "student-login",
+    "id": "student-login",
+    "name": "学生登录",
+    "duration": 8,
+    "text": "先从登录页进入学生端，依次查看学习安排、课程学习和练习答疑。",
+    "role": "authentication",
+    "module": "login",
+    "route": "/",
+    "identity": "student",
+    "start": 48
   },
   {
     "scene_id": "student-dashboard",
@@ -44,7 +56,7 @@
     "operation": "展开并收起课程选择器",
     "expected_result": "课程选项与当前学习任务可见",
     "goal": "说明学习概览的用途与实际操作",
-    "start": 55
+    "start": 56
   },
   {
     "scene_id": "student-plan",
@@ -58,7 +70,7 @@
     "operation": "从学习目标切换至预算内路径",
     "expected_result": "目标与预算内活动对应",
     "goal": "说明目标与计划的用途与实际操作",
-    "start": 66
+    "start": 67
   },
   {
     "scene_id": "student-video",
@@ -72,7 +84,7 @@
     "operation": "播放课程视频并打开我的笔记",
     "expected_result": "视频正常解码，笔记与随堂理解检查可见",
     "goal": "说明视频学习的用途与实际操作",
-    "start": 84
+    "start": 85
   },
   {
     "scene_id": "student-resources",
@@ -86,7 +98,7 @@
     "operation": "打开课程讲义",
     "expected_result": "显示完整讲义与示例",
     "goal": "说明课程资料的用途与实际操作",
-    "start": 97
+    "start": 98
   },
   {
     "scene_id": "student-graph",
@@ -100,7 +112,7 @@
     "operation": "选择栈与队列并查看先修链",
     "expected_result": "当前知识与先修关系清楚呈现",
     "goal": "说明知识图谱的用途与实际操作",
-    "start": 106
+    "start": 107
   },
   {
     "scene_id": "student-practice",
@@ -114,7 +126,7 @@
     "operation": "独立完成提前发布的检查",
     "expected_result": "实际评分与证据反馈保存",
     "goal": "说明智能练习的用途与实际操作",
-    "start": 126
+    "start": 127
   },
   {
     "scene_id": "student-review",
@@ -128,7 +140,7 @@
     "operation": "切换复习工作视图",
     "expected_result": "错题或复习安排可查",
     "goal": "说明错题与复习的用途与实际操作",
-    "start": 145
+    "start": 146
   },
   {
     "scene_id": "student-experiments",
@@ -142,7 +154,7 @@
     "operation": "压栈、查看栈顶、出栈",
     "expected_result": "结构、返回值与操作轨迹对应",
     "goal": "说明交互实验室的用途与实际操作",
-    "start": 157
+    "start": 158
   },
   {
     "scene_id": "student-tutor",
@@ -156,7 +168,7 @@
     "operation": "回看已保存的官方辅导会话",
     "expected_result": "解释、来源与理解检查可读",
     "goal": "说明AI学习伙伴的用途与实际操作",
-    "start": 173
+    "start": 174
   },
   {
     "scene_id": "student-classroom",
@@ -170,21 +182,33 @@
     "operation": "查看当前课堂活动",
     "expected_result": "问题与本人回答对应",
     "goal": "说明课堂互动的用途与实际操作",
-    "start": 196
+    "start": 197
+  },
+  {
+    "scene_id": "teacher-login",
+    "id": "teacher-login",
+    "name": "教师登录",
+    "duration": 8,
+    "text": "学生端介绍完毕。现在从登录页进入教师端。",
+    "role": "authentication",
+    "module": "login",
+    "route": "/",
+    "identity": "teacher",
+    "start": 205
   },
   {
     "scene_id": "teacher-dashboard",
     "id": "teacher-dashboard",
     "name": "教学工作台",
     "duration": 9,
-    "text": "学生端介绍完毕，下面进入教师端。教学工作台集中呈现课程和待办。",
+    "text": "教师进入教学工作台后，可以集中查看当前课程、教学任务和待办事项。",
     "role": "teacher",
     "module": "dashboard",
     "route": "/",
     "operation": "展开并收起课程选择器",
     "expected_result": "当前课程与待处理事项可见",
     "goal": "说明教学工作台的用途与实际操作",
-    "start": 204
+    "start": 213
   },
   {
     "scene_id": "teacher-manage",
@@ -198,7 +222,7 @@
     "operation": "查看章节内容和授课班级",
     "expected_result": "课程组织与学生名单可查",
     "goal": "说明课程与班级的用途与实际操作",
-    "start": 213
+    "start": 222
   },
   {
     "scene_id": "teacher-resources",
@@ -212,7 +236,7 @@
     "operation": "打开课程讲义",
     "expected_result": "讲义与课程内容一致",
     "goal": "说明AI备课与资料的用途与实际操作",
-    "start": 226
+    "start": 235
   },
   {
     "scene_id": "teacher-graph",
@@ -226,7 +250,7 @@
     "operation": "选择知识并打开先修关系编辑",
     "expected_result": "当前课程先修对象可维护",
     "goal": "说明教师知识图谱的用途与实际操作",
-    "start": 238
+    "start": 247
   },
   {
     "scene_id": "teacher-video",
@@ -240,7 +264,7 @@
     "operation": "打开字幕与检查点编辑",
     "expected_result": "视频与字幕、知识片段、题目关联",
     "goal": "说明视频教学的用途与实际操作",
-    "start": 247
+    "start": 256
   },
   {
     "scene_id": "teacher-practice",
@@ -254,7 +278,7 @@
     "operation": "查看前面学生的检查结果，再发布新巩固任务",
     "expected_result": "旧任务完成结果与新任务分别保存",
     "goal": "说明题库与作业的用途与实际操作",
-    "start": 256
+    "start": 265
   },
   {
     "scene_id": "teacher-classroom",
@@ -268,7 +292,7 @@
     "operation": "查看课堂回答",
     "expected_result": "教师能够检查学生解释",
     "goal": "说明教师课堂互动的用途与实际操作",
-    "start": 280
+    "start": 289
   },
   {
     "scene_id": "teacher-analytics",
@@ -282,7 +306,7 @@
     "operation": "从矩阵下钻作答，再查看教学群组",
     "expected_result": "原始作答与动态关注知识对应",
     "goal": "说明学情与分层的用途与实际操作",
-    "start": 289
+    "start": 298
   },
   {
     "scene_id": "teacher-teacher-ai",
@@ -296,50 +320,233 @@
     "operation": "回看官方教学方案并确认保存教案",
     "expected_result": "真实已有草稿经业务校验保存",
     "goal": "说明AI教学助手的用途与实际操作",
-    "start": 310
+    "start": 319
   },
   {
-    "scene_id": "development-1",
-    "id": "development-1",
+    "scene_id": "contract-prompt",
+    "id": "contract-prompt",
     "name": "AI协同过程复现展示",
-    "duration": 43.5,
-    "text": "下面是AI协同过程复现展示。先回看课程对象与权限的协作指令。Codex先固定接口契约，前后端与人工智能模块共用课程标识。联测发现初始化错误，三个路由测试被同一个数据问题阻断。反馈后，代码将知识点种子的八个占位符修正为七个。修复后的登录、图谱和作答返回实际结果，记录进入同一数据库。中文提交保留数据初始化和课程授权，后续功能沿用这些对象。师生页面由此能够继续使用同一份课程记录。",
+    "duration": 7,
+    "text": "下面回看AI协同开发，先看师生课程如何接通。",
     "role": "development",
     "module": "1",
     "route": null,
-    "start": 333
+    "board_id": "contract-prompt",
+    "start": 342
   },
   {
-    "scene_id": "development-2",
-    "id": "development-2",
+    "scene_id": "contract-feedback",
+    "id": "contract-feedback",
     "name": "AI协同过程复现展示",
-    "duration": 43.5,
-    "text": "第二条来自知识网络。原始要求是改善拥挤的布局与阅读体验。实际几何检查发现九处连线遮挡，问题被保留在验证记录里。Codex增加空白通道搜索，使受阻连线继续寻找可用路径。两门真实课程和不同规模网络使用固定输入，分别检查几何结果。改进后，全部案例的节点碰撞与连线遮挡均为零。代码、固定输入和结果一起提交，再检查页面中的相机与全屏。相同输入可以再次执行，逐项核对。",
+    "duration": 7,
+    "text": "我先说明登录和课程接口，AI据此连接页面、辅导和后端。",
+    "role": "development",
+    "module": "1",
+    "route": null,
+    "board_id": "contract-feedback",
+    "start": 349
+  },
+  {
+    "scene_id": "contract-failure",
+    "id": "contract-failure",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "运行测试时，三项接口检查失败，发现演示数据写入出错。",
+    "role": "development",
+    "module": "1",
+    "route": null,
+    "board_id": "contract-failure",
+    "start": 356
+  },
+  {
+    "scene_id": "contract-diff",
+    "id": "contract-diff",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "AI根据报错检查写入语句，删去多出的一个占位符。",
+    "role": "development",
+    "module": "1",
+    "route": null,
+    "board_id": "contract-diff",
+    "start": 363
+  },
+  {
+    "scene_id": "contract-verification",
+    "id": "contract-verification",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "再次运行登录、图谱和作答，接口都返回了正常结果。",
+    "role": "development",
+    "module": "1",
+    "route": null,
+    "board_id": "contract-verification",
+    "start": 370
+  },
+  {
+    "scene_id": "contract-commit",
+    "id": "contract-commit",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "最后按功能提交代码，师生两端开始共用同一份课程记录。",
+    "role": "development",
+    "module": "1",
+    "route": null,
+    "board_id": "contract-commit",
+    "start": 377
+  },
+  {
+    "scene_id": "graph-prompt",
+    "id": "graph-prompt",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "第二个例子是知识图谱。我希望节点清楚，连线也能看清。",
     "role": "development",
     "module": "2",
     "route": null,
-    "start": 376.5
+    "board_id": "graph-prompt",
+    "start": 384
   },
   {
-    "scene_id": "development-3",
-    "id": "development-3",
+    "scene_id": "graph-failure",
+    "id": "graph-failure",
     "name": "AI协同过程复现展示",
-    "duration": 43.5,
-    "text": "第三条核查教师要求，一句指令同时包含班级错误与教学设计。专项测试真实失败，系统只返回学情分析，遗漏讲评课产物。Codex调整优先级，先识别教学产物，再使用班级错误作为证据。同一专项重新执行，两项通过，教学设计与轻量讨论分别核查。随后验证既有业务和双端页面，回归结果保留当时的执行记录。中文提交保存修复，真实教学方案继续进入任务发布和学生反馈。",
+    "duration": 7,
+    "text": "先运行几何检查，发现数据结构课程有九处连线遮挡。",
+    "role": "development",
+    "module": "2",
+    "route": null,
+    "board_id": "graph-failure",
+    "start": 391
+  },
+  {
+    "scene_id": "graph-diff",
+    "id": "graph-diff",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "AI补充绕行搜索，让受阻的连线从节点之间的空隙通过。",
+    "role": "development",
+    "module": "2",
+    "route": null,
+    "board_id": "graph-diff",
+    "start": 398
+  },
+  {
+    "scene_id": "graph-inputs",
+    "id": "graph-inputs",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "接着用两门课程和三组不同规模的网络重新检查。",
+    "role": "development",
+    "module": "2",
+    "route": null,
+    "board_id": "graph-inputs",
+    "start": 405
+  },
+  {
+    "scene_id": "graph-verification",
+    "id": "graph-verification",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "五组结果中，节点碰撞和连线遮挡都降到了零。",
+    "role": "development",
+    "module": "2",
+    "route": null,
+    "board_id": "graph-verification",
+    "start": 412
+  },
+  {
+    "scene_id": "graph-commit",
+    "id": "graph-commit",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "再检查页面里的拖动、搜索和全屏，随后保存这次修改。",
+    "role": "development",
+    "module": "2",
+    "route": null,
+    "board_id": "graph-commit",
+    "start": 419
+  },
+  {
+    "scene_id": "teacher-prompt",
+    "id": "teacher-prompt",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "第三个例子，教师希望根据班级错题设计一节讲评课。",
     "role": "development",
     "module": "3",
     "route": null,
-    "start": 420.0
+    "board_id": "teacher-prompt",
+    "start": 426
+  },
+  {
+    "scene_id": "teacher-failure",
+    "id": "teacher-failure",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "专项测试发现，系统只分析错误，却没有给出要求的教案。",
+    "role": "development",
+    "module": "3",
+    "route": null,
+    "board_id": "teacher-failure",
+    "start": 433
+  },
+  {
+    "scene_id": "teacher-diff",
+    "id": "teacher-diff",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "AI调整判断顺序，先识别要写教案，再读取班级错题。",
+    "role": "development",
+    "module": "3",
+    "route": null,
+    "board_id": "teacher-diff",
+    "start": 440
+  },
+  {
+    "scene_id": "teacher-verification",
+    "id": "teacher-verification",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "用原来的教师要求再次测试，两项专项检查全部通过。",
+    "role": "development",
+    "module": "3",
+    "route": null,
+    "board_id": "teacher-verification",
+    "start": 447
+  },
+  {
+    "scene_id": "teacher-regression",
+    "id": "teacher-regression",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "随后运行原有业务和浏览器测试，继续核对师生操作。",
+    "role": "development",
+    "module": "3",
+    "route": null,
+    "board_id": "teacher-regression",
+    "start": 454
+  },
+  {
+    "scene_id": "teacher-commit",
+    "id": "teacher-commit",
+    "name": "AI协同过程复现展示",
+    "duration": 7,
+    "text": "保存代码后，再核对教案编辑、任务发布和学生反馈。",
+    "role": "development",
+    "module": "3",
+    "route": null,
+    "board_id": "teacher-commit",
+    "start": 461
   },
   {
     "scene_id": "outro",
     "id": "outro",
     "name": "总结与感谢",
-    "duration": 12,
-    "text": "以上是学脉的主要功能与AI协同过程。感谢各位评委老师的观看与指导。",
+    "duration": 9,
+    "text": "以上是学脉的主要功能与AI协同开发过程。感谢各位评委老师的观看与指导。",
     "role": "presentation",
     "module": null,
     "route": null,
-    "start": 463.5
+    "start": 468
   }
 ]
