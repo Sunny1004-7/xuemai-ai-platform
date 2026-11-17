@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 import av
 import imageio_ffmpeg
@@ -94,28 +95,50 @@ def main():
         if not candidates:
             candidates = [row for row in boards if row['scene_id'] == scene['scene_id']]
             prefix = 'boards'
-        if abs(sum(row['duration'] for row in candidates) - scene['duration']) > .001:
+        adjusted = scene['scene_id'] in {'student-graph','teacher-graph','student-tutor','teacher-teacher-ai'}
+        if not adjusted and abs(sum(row['duration'] for row in candidates) - scene['duration']) > .001:
             raise ValueError('场景素材长度与讲稿不一致：' + scene['scene_id'])
         within_scene = 0
         for row in candidates:
-            frames = round((within_scene + row['duration']) * 30) - round(within_scene * 30)
-            validate_clip_range(row,frames/30)
+            frames = round(scene['duration'] * 30)
+            source_duration = 10 if scene['scene_id']=='student-graph' else 9 if scene['scene_id']=='teacher-graph' else scene['duration']
+            validate_clip_range(row,source_duration)
             edit = {'scene_id': scene['scene_id'], 'segment_id': row.get('segment_id', scene['scene_id']),
                     'role': scene['role'], 'module': scene['module'],
                     'category': '系统界面' if prefix == 'modules' else 'AI协同过程复现展示' if scene['role'] == 'development' else '作品介绍',
                     'source': (media / (prefix + '-continuous.mp4')).relative_to(ROOT).as_posix(),
-                    'in': row['capture_at'], 'valid_until':row['valid_until'], 'guard_seconds':round(row['valid_until']-row['capture_at']-frames/30,3), 'frames': frames, 'duration': frames / 30, 'start': output_frames / 30}
+                    'source_duration':source_duration,'playback_factor':scene['duration']/source_duration,
+                    'in': row['capture_at'], 'valid_until':row['valid_until'], 'guard_seconds':round(row['valid_until']-row['capture_at']-source_duration,3), 'frames': frames, 'duration': frames / 30, 'start': output_frames / 30}
             edits.append(edit)
             within_scene += row['duration']
             output_frames += frames
     local = ROOT / '.local/round12-edit'
     local.mkdir(exist_ok=True)
+    rendered=[]
+    changed={'intro','context','student-graph','teacher-graph','student-tutor','teacher-teacher-ai'}
     for index, edit in enumerate(edits):
-        subprocess.run([FFMPEG, '-y', '-v', 'error', '-ss', str(edit['in']), '-i', str(ROOT / edit['source']),
-                        '-an', '-frames:v', str(edit['frames']), '-r', '30', '-c:v', 'libx264', '-threads', '4',
-                        '-preset', 'veryfast', '-crf', '19', '-pix_fmt', 'yuv420p', str(local / f'clip-{index:02}.mp4')], check=True)
-    concat = local / 'concat.txt'
-    concat.write_text('\n'.join("file '" + (local / f'clip-{index:02}.mp4').as_posix() + "'" for index in range(len(edits))), encoding='utf8')
+        if edit['scene_id']=='context':
+            continue
+        clip=local/f'clip-{index:02}.mp4'
+        rendered.append(clip)
+        if '--reuse-unchanged' in sys.argv and edit['scene_id'] not in changed and clip.exists():
+            continue
+        input_seconds=edit['source_duration']
+        frames=edit['frames']
+        filters=[]
+        if edit['scene_id']=='intro':
+            # 同一开场画面只编码一个连续镜头，12秒处保持画面连续。
+            context=next(scene for scene in scenes if scene['scene_id']=='context')
+            frames+=round(context['duration']*30)
+            filters.append('tpad=stop_mode=clone:stop_duration='+str(context['duration']))
+        elif edit['playback_factor']!=1:
+            filters.append('setpts='+str(edit['playback_factor'])+'*(PTS-STARTPTS)')
+        command=[FFMPEG,'-y','-v','error','-ss',str(edit['in']),'-t',str(input_seconds),'-i',str(ROOT/edit['source']),'-an']
+        if filters:command+=['-vf',','.join(filters)]
+        command+=['-frames:v',str(frames),'-r','30','-c:v','libx264','-threads','4','-preset','veryfast','-crf','19','-pix_fmt','yuv420p',str(clip)]
+        subprocess.run(command,check=True)
+    concat=local/'concat.txt'
+    concat.write_text('\n'.join("file '"+clip.as_posix()+"'" for clip in rendered),encoding='utf8')
     target = project / 'video-unvoiced.mp4'
     subprocess.run([FFMPEG, '-y', '-v', 'error', '-f', 'concat', '-safe', '0', '-i', str(concat),
                     '-c', 'copy', '-movflags', '+faststart', str(target)], check=True)

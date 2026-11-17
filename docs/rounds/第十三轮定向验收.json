@@ -1,0 +1,19 @@
+{
+  "scope": "主语、README开头与材料入口、封面末行、开场12秒、两端图谱",
+  "pdf_pages": 30,
+  "first_person_subject_matches": 0,
+  "cover_repository_link": true,
+  "intro_frame_mean_differences": [
+    0.0,
+    1.1574074074074073e-05
+  ],
+  "student_graph_playback_factor": 2,
+  "teacher_graph_seconds": 13,
+  "video_seconds": 477.97,
+  "ai_development_seconds": 126,
+  "repository_public": true,
+  "prompt_chains": 3,
+  "prompt_source": "docs/development-process/004-核心功能实际协作逐字转存.md",
+  "readme_environment_template": ".env.example",
+  "new_deepseek_requests": 0
+}

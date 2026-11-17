@@ -67,11 +67,11 @@
   },
   "delivery": {
     "pdf_pages": 30,
-    "video_seconds": 477.0,
+    "video_seconds": 477.967,
     "resolution": "1920x1080",
     "fps": 30,
     "development_seconds": 126.0,
-    "system_ui_seconds": 294.0,
+    "system_ui_seconds": 295.0,
     "voice_paragraphs": 43,
     "subtitles": 76,
     "screenshots": 480,
@@ -80,9 +80,7 @@
     "screenshot_directory": "交付审阅包/界面截图_20261117_221559",
     "figures_tikz": 11,
     "references": 20,
-    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图",
-    "visual_review_frames": 70,
-    "whisper_character_similarity": 0.9673
+    "screenshots_scope": "沿用既有界面图，本轮按用户要求取消全量截图"
   },
   "method_definitions": [
     {
@@ -124,10 +122,10 @@
   "material_baseline_commit": "3a2d6530f219e997f47876dd8828f0cf977c8e74",
   "artifact_files": {
     "docs/deliverables/xuemai-technical-report.pdf": {
-      "bytes": 1516344
+      "bytes": 1515760
     },
     "docs/deliverables/xuemai-demo-1080p.mp4": {
-      "bytes": 13750890
+      "bytes": 13837634
     }
   }
 }

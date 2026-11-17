@@ -40,9 +40,10 @@ def main():
     facts['delivery'].pop('whisper_character_similarity', None)
     media_check = ROOT / 'docs/rounds/第十二轮视频边界与字幕验收.json'
     voice_check = ROOT / 'docs/demo/第十二轮语音转写回验.json'
-    if media_check.exists():
+    video_bytes = (final / '学脉XueMai-演示视频-含旁白.mp4').stat().st_size
+    if media_check.exists() and json.loads(media_check.read_text('utf8')).get('source_bytes') == video_bytes:
         facts['delivery']['visual_review_frames'] = json.loads(media_check.read_text('utf8'))['frames']
-    if voice_check.exists():
+    if voice_check.exists() and json.loads(voice_check.read_text('utf8')).get('source_video_bytes') == video_bytes:
         facts['delivery']['whisper_character_similarity'] = json.loads(voice_check.read_text('utf8'))['global_character_similarity']
     facts.pop('artifacts', None)
     pairs = [('学脉XueMai-技术文档.pdf', 'xuemai-technical-report.pdf'),

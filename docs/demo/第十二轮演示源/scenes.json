@@ -160,7 +160,7 @@
     "scene_id": "student-tutor",
     "id": "student-tutor",
     "name": "AI学习伙伴",
-    "duration": 23,
+    "duration": 21,
     "text": "接下来是AI学习伙伴。这里回看已保存的真实辅导，问题、附件引用和理解检查围绕同一知识展开。学生能够打开原资料核对解释，再通过独立回答继续学习；模型和语音入口也集中在这里。",
     "role": "student",
     "module": "tutor",
@@ -182,7 +182,7 @@
     "operation": "查看当前课堂活动",
     "expected_result": "问题与本人回答对应",
     "goal": "说明课堂互动的用途与实际操作",
-    "start": 197
+    "start": 195
   },
   {
     "scene_id": "teacher-login",
@@ -194,7 +194,7 @@
     "module": "login",
     "route": "/",
     "identity": "teacher",
-    "start": 205
+    "start": 203
   },
   {
     "scene_id": "teacher-dashboard",
@@ -208,7 +208,7 @@
     "operation": "展开并收起课程选择器",
     "expected_result": "当前课程与待处理事项可见",
     "goal": "说明教学工作台的用途与实际操作",
-    "start": 213
+    "start": 211
   },
   {
     "scene_id": "teacher-manage",
@@ -222,7 +222,7 @@
     "operation": "查看章节内容和授课班级",
     "expected_result": "课程组织与学生名单可查",
     "goal": "说明课程与班级的用途与实际操作",
-    "start": 222
+    "start": 220
   },
   {
     "scene_id": "teacher-resources",
@@ -236,13 +236,13 @@
     "operation": "打开课程讲义",
     "expected_result": "讲义与课程内容一致",
     "goal": "说明AI备课与资料的用途与实际操作",
-    "start": 235
+    "start": 233
   },
   {
     "scene_id": "teacher-graph",
     "id": "teacher-graph",
     "name": "教师知识图谱",
-    "duration": 9,
+    "duration": 13,
     "text": "教师知识图谱沿用同一课程网络，并提供知识和先修关系的编辑入口。",
     "role": "teacher",
     "module": "graph",
@@ -250,7 +250,7 @@
     "operation": "选择知识并打开先修关系编辑",
     "expected_result": "当前课程先修对象可维护",
     "goal": "说明教师知识图谱的用途与实际操作",
-    "start": 247
+    "start": 245
   },
   {
     "scene_id": "teacher-video",
@@ -264,7 +264,7 @@
     "operation": "打开字幕与检查点编辑",
     "expected_result": "视频与字幕、知识片段、题目关联",
     "goal": "说明视频教学的用途与实际操作",
-    "start": 256
+    "start": 258
   },
   {
     "scene_id": "teacher-practice",
@@ -278,7 +278,7 @@
     "operation": "查看前面学生的检查结果，再发布新巩固任务",
     "expected_result": "旧任务完成结果与新任务分别保存",
     "goal": "说明题库与作业的用途与实际操作",
-    "start": 265
+    "start": 267
   },
   {
     "scene_id": "teacher-classroom",
@@ -292,7 +292,7 @@
     "operation": "查看课堂回答",
     "expected_result": "教师能够检查学生解释",
     "goal": "说明教师课堂互动的用途与实际操作",
-    "start": 289
+    "start": 291
   },
   {
     "scene_id": "teacher-analytics",
@@ -306,13 +306,13 @@
     "operation": "从矩阵下钻作答，再查看教学群组",
     "expected_result": "原始作答与动态关注知识对应",
     "goal": "说明学情与分层的用途与实际操作",
-    "start": 298
+    "start": 300
   },
   {
     "scene_id": "teacher-teacher-ai",
     "id": "teacher-teacher-ai",
     "name": "AI教学助手",
-    "duration": 23,
+    "duration": 22,
     "text": "最后是独立的AI教学助手。这里回看真实生成的讲评课方案，助手读取班级证据和教师目标，组织教学环节与分组练习。教师能够编辑并保存教案，再确认具体任务，使建议进入教学。",
     "role": "teacher",
     "module": "teacher-ai",
@@ -320,7 +320,7 @@
     "operation": "回看官方教学方案并确认保存教案",
     "expected_result": "真实已有草稿经业务校验保存",
     "goal": "说明AI教学助手的用途与实际操作",
-    "start": 319
+    "start": 321
   },
   {
     "scene_id": "contract-prompt",
@@ -332,7 +332,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-prompt",
-    "start": 342
+    "start": 343
   },
   {
     "scene_id": "contract-feedback",
@@ -344,7 +344,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-feedback",
-    "start": 349
+    "start": 350
   },
   {
     "scene_id": "contract-failure",
@@ -356,7 +356,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-failure",
-    "start": 356
+    "start": 357
   },
   {
     "scene_id": "contract-diff",
@@ -368,7 +368,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-diff",
-    "start": 363
+    "start": 364
   },
   {
     "scene_id": "contract-verification",
@@ -380,7 +380,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-verification",
-    "start": 370
+    "start": 371
   },
   {
     "scene_id": "contract-commit",
@@ -392,7 +392,7 @@
     "module": "1",
     "route": null,
     "board_id": "contract-commit",
-    "start": 377
+    "start": 378
   },
   {
     "scene_id": "graph-prompt",
@@ -404,7 +404,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-prompt",
-    "start": 384
+    "start": 385
   },
   {
     "scene_id": "graph-failure",
@@ -416,7 +416,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-failure",
-    "start": 391
+    "start": 392
   },
   {
     "scene_id": "graph-diff",
@@ -428,7 +428,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-diff",
-    "start": 398
+    "start": 399
   },
   {
     "scene_id": "graph-inputs",
@@ -440,7 +440,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-inputs",
-    "start": 405
+    "start": 406
   },
   {
     "scene_id": "graph-verification",
@@ -452,7 +452,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-verification",
-    "start": 412
+    "start": 413
   },
   {
     "scene_id": "graph-commit",
@@ -464,7 +464,7 @@
     "module": "2",
     "route": null,
     "board_id": "graph-commit",
-    "start": 419
+    "start": 420
   },
   {
     "scene_id": "teacher-prompt",
@@ -476,7 +476,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-prompt",
-    "start": 426
+    "start": 427
   },
   {
     "scene_id": "teacher-failure",
@@ -488,7 +488,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-failure",
-    "start": 433
+    "start": 434
   },
   {
     "scene_id": "teacher-diff",
@@ -500,7 +500,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-diff",
-    "start": 440
+    "start": 441
   },
   {
     "scene_id": "teacher-verification",
@@ -512,7 +512,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-verification",
-    "start": 447
+    "start": 448
   },
   {
     "scene_id": "teacher-regression",
@@ -524,7 +524,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-regression",
-    "start": 454
+    "start": 455
   },
   {
     "scene_id": "teacher-commit",
@@ -536,7 +536,7 @@
     "module": "3",
     "route": null,
     "board_id": "teacher-commit",
-    "start": 461
+    "start": 462
   },
   {
     "scene_id": "outro",
@@ -547,6 +547,6 @@
     "role": "presentation",
     "module": null,
     "route": null,
-    "start": 468
+    "start": 469
   }
 ]

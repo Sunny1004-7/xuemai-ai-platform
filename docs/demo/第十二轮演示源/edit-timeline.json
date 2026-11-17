@@ -1,9 +1,9 @@
 {
   "revision": 11,
-  "duration_seconds": 477.0,
+  "duration_seconds": 477.966667,
   "fps": 30,
   "development_evidence_seconds": 126.0,
-  "system_interface_seconds": 294.0,
+  "system_interface_seconds": 295.0,
   "edits": [
     {
       "scene_id": "intro",
@@ -12,6 +12,8 @@
       "module": null,
       "category": "作品介绍",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 12,
+      "playback_factor": 1.0,
       "in": 2.298,
       "valid_until": 15.33,
       "guard_seconds": 1.032,
@@ -26,6 +28,8 @@
       "module": null,
       "category": "作品介绍",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 14,
+      "playback_factor": 1.0,
       "in": 16.261,
       "valid_until": 31.27,
       "guard_seconds": 1.009,
@@ -40,6 +44,8 @@
       "module": null,
       "category": "作品介绍",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 22,
+      "playback_factor": 1.0,
       "in": 32.212,
       "valid_until": 55.22,
       "guard_seconds": 1.008,
@@ -54,6 +60,8 @@
       "module": "login",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 8,
+      "playback_factor": 1.0,
       "in": 4.888,
       "valid_until": 13.9,
       "guard_seconds": 1.012,
@@ -68,6 +76,8 @@
       "module": "dashboard",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 11,
+      "playback_factor": 1.0,
       "in": 15.161,
       "valid_until": 27.173,
       "guard_seconds": 1.012,
@@ -82,6 +92,8 @@
       "module": "plan",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 18,
+      "playback_factor": 1.0,
       "in": 29.1,
       "valid_until": 48.113,
       "guard_seconds": 1.013,
@@ -96,6 +108,8 @@
       "module": "video",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 13,
+      "playback_factor": 1.0,
       "in": 49.696,
       "valid_until": 63.704,
       "guard_seconds": 1.008,
@@ -110,6 +124,8 @@
       "module": "resources",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.0,
       "in": 65.581,
       "valid_until": 75.601,
       "guard_seconds": 1.02,
@@ -124,9 +140,11 @@
       "module": "graph",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 10,
+      "playback_factor": 2.0,
       "in": 77.514,
       "valid_until": 98.524,
-      "guard_seconds": 1.01,
+      "guard_seconds": 11.01,
       "frames": 600,
       "duration": 20.0,
       "start": 107.0
@@ -138,6 +156,8 @@
       "module": "practice",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 19,
+      "playback_factor": 1.0,
       "in": 100.082,
       "valid_until": 120.108,
       "guard_seconds": 1.026,
@@ -152,6 +172,8 @@
       "module": "review",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 12,
+      "playback_factor": 1.0,
       "in": 121.586,
       "valid_until": 134.6,
       "guard_seconds": 1.014,
@@ -166,6 +188,8 @@
       "module": "experiments",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 16,
+      "playback_factor": 1.0,
       "in": 136.164,
       "valid_until": 153.186,
       "guard_seconds": 1.022,
@@ -180,11 +204,13 @@
       "module": "tutor",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 21,
+      "playback_factor": 1.0,
       "in": 154.675,
       "valid_until": 178.684,
-      "guard_seconds": 1.009,
-      "frames": 690,
-      "duration": 23.0,
+      "guard_seconds": 3.009,
+      "frames": 630,
+      "duration": 21.0,
       "start": 174.0
     },
     {
@@ -194,12 +220,14 @@
       "module": "classroom",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 8,
+      "playback_factor": 1.0,
       "in": 179.908,
       "valid_until": 188.927,
       "guard_seconds": 1.019,
       "frames": 240,
       "duration": 8.0,
-      "start": 197.0
+      "start": 195.0
     },
     {
       "scene_id": "teacher-login",
@@ -208,12 +236,14 @@
       "module": "login",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 8,
+      "playback_factor": 1.0,
       "in": 190.806,
       "valid_until": 199.819,
       "guard_seconds": 1.013,
       "frames": 240,
       "duration": 8.0,
-      "start": 205.0
+      "start": 203.0
     },
     {
       "scene_id": "teacher-dashboard",
@@ -222,12 +252,14 @@
       "module": "dashboard",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.0,
       "in": 201.04,
       "valid_until": 211.07,
       "guard_seconds": 1.03,
       "frames": 270,
       "duration": 9.0,
-      "start": 213.0
+      "start": 211.0
     },
     {
       "scene_id": "teacher-manage",
@@ -236,12 +268,14 @@
       "module": "manage",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 13,
+      "playback_factor": 1.0,
       "in": 212.271,
       "valid_until": 226.285,
       "guard_seconds": 1.014,
       "frames": 390,
       "duration": 13.0,
-      "start": 222.0
+      "start": 220.0
     },
     {
       "scene_id": "teacher-resources",
@@ -250,12 +284,14 @@
       "module": "resources",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 12,
+      "playback_factor": 1.0,
       "in": 227.696,
       "valid_until": 240.709,
       "guard_seconds": 1.013,
       "frames": 360,
       "duration": 12.0,
-      "start": 235.0
+      "start": 233.0
     },
     {
       "scene_id": "teacher-graph",
@@ -264,12 +300,14 @@
       "module": "graph",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.4444444444444444,
       "in": 242.344,
       "valid_until": 252.367,
       "guard_seconds": 1.023,
-      "frames": 270,
-      "duration": 9.0,
-      "start": 247.0
+      "frames": 390,
+      "duration": 13.0,
+      "start": 245.0
     },
     {
       "scene_id": "teacher-video",
@@ -278,12 +316,14 @@
       "module": "video",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.0,
       "in": 253.992,
       "valid_until": 264.013,
       "guard_seconds": 1.021,
       "frames": 270,
       "duration": 9.0,
-      "start": 256.0
+      "start": 258.0
     },
     {
       "scene_id": "teacher-practice",
@@ -292,12 +332,14 @@
       "module": "practice",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 24,
+      "playback_factor": 1.0,
       "in": 265.64,
       "valid_until": 290.648,
       "guard_seconds": 1.008,
       "frames": 720,
       "duration": 24.0,
-      "start": 265.0
+      "start": 267.0
     },
     {
       "scene_id": "teacher-classroom",
@@ -306,12 +348,14 @@
       "module": "classroom",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.0,
       "in": 291.756,
       "valid_until": 301.786,
       "guard_seconds": 1.03,
       "frames": 270,
       "duration": 9.0,
-      "start": 289.0
+      "start": 291.0
     },
     {
       "scene_id": "teacher-analytics",
@@ -320,12 +364,14 @@
       "module": "analytics",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 21,
+      "playback_factor": 1.0,
       "in": 303.327,
       "valid_until": 325.348,
       "guard_seconds": 1.021,
       "frames": 630,
       "duration": 21.0,
-      "start": 298.0
+      "start": 300.0
     },
     {
       "scene_id": "teacher-teacher-ai",
@@ -334,12 +380,14 @@
       "module": "teacher-ai",
       "category": "系统界面",
       "source": "docs/demo/第十二轮演示源/media/modules-continuous.mp4",
+      "source_duration": 22,
+      "playback_factor": 1.0,
       "in": 326.747,
       "valid_until": 350.772,
-      "guard_seconds": 1.025,
-      "frames": 690,
-      "duration": 23.0,
-      "start": 319.0
+      "guard_seconds": 2.025,
+      "frames": 660,
+      "duration": 22.0,
+      "start": 321.0
     },
     {
       "scene_id": "contract-prompt",
@@ -348,12 +396,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 56.172,
       "valid_until": 64.186,
       "guard_seconds": 1.014,
       "frames": 210,
       "duration": 7.0,
-      "start": 342.0
+      "start": 343.0
     },
     {
       "scene_id": "contract-feedback",
@@ -362,12 +412,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 65.106,
       "valid_until": 73.125,
       "guard_seconds": 1.019,
       "frames": 210,
       "duration": 7.0,
-      "start": 349.0
+      "start": 350.0
     },
     {
       "scene_id": "contract-failure",
@@ -376,12 +428,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 74.045,
       "valid_until": 82.072,
       "guard_seconds": 1.027,
       "frames": 210,
       "duration": 7.0,
-      "start": 356.0
+      "start": 357.0
     },
     {
       "scene_id": "contract-diff",
@@ -390,12 +444,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 82.99,
       "valid_until": 91.002,
       "guard_seconds": 1.012,
       "frames": 210,
       "duration": 7.0,
-      "start": 363.0
+      "start": 364.0
     },
     {
       "scene_id": "contract-verification",
@@ -404,12 +460,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 91.923,
       "valid_until": 99.952,
       "guard_seconds": 1.029,
       "frames": 210,
       "duration": 7.0,
-      "start": 370.0
+      "start": 371.0
     },
     {
       "scene_id": "contract-commit",
@@ -418,12 +476,14 @@
       "module": "1",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 100.874,
       "valid_until": 108.902,
       "guard_seconds": 1.028,
       "frames": 210,
       "duration": 7.0,
-      "start": 377.0
+      "start": 378.0
     },
     {
       "scene_id": "graph-prompt",
@@ -432,12 +492,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 109.834,
       "valid_until": 117.846,
       "guard_seconds": 1.012,
       "frames": 210,
       "duration": 7.0,
-      "start": 384.0
+      "start": 385.0
     },
     {
       "scene_id": "graph-failure",
@@ -446,12 +508,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 118.773,
       "valid_until": 126.788,
       "guard_seconds": 1.015,
       "frames": 210,
       "duration": 7.0,
-      "start": 391.0
+      "start": 392.0
     },
     {
       "scene_id": "graph-diff",
@@ -460,12 +524,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 127.709,
       "valid_until": 135.719,
       "guard_seconds": 1.01,
       "frames": 210,
       "duration": 7.0,
-      "start": 398.0
+      "start": 399.0
     },
     {
       "scene_id": "graph-inputs",
@@ -474,12 +540,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 136.642,
       "valid_until": 144.66,
       "guard_seconds": 1.018,
       "frames": 210,
       "duration": 7.0,
-      "start": 405.0
+      "start": 406.0
     },
     {
       "scene_id": "graph-verification",
@@ -488,12 +556,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 145.58,
       "valid_until": 153.596,
       "guard_seconds": 1.016,
       "frames": 210,
       "duration": 7.0,
-      "start": 412.0
+      "start": 413.0
     },
     {
       "scene_id": "graph-commit",
@@ -502,12 +572,14 @@
       "module": "2",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 154.517,
       "valid_until": 162.546,
       "guard_seconds": 1.029,
       "frames": 210,
       "duration": 7.0,
-      "start": 419.0
+      "start": 420.0
     },
     {
       "scene_id": "teacher-prompt",
@@ -516,12 +588,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 163.47,
       "valid_until": 171.483,
       "guard_seconds": 1.013,
       "frames": 210,
       "duration": 7.0,
-      "start": 426.0
+      "start": 427.0
     },
     {
       "scene_id": "teacher-failure",
@@ -530,12 +604,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 172.407,
       "valid_until": 180.437,
       "guard_seconds": 1.03,
       "frames": 210,
       "duration": 7.0,
-      "start": 433.0
+      "start": 434.0
     },
     {
       "scene_id": "teacher-diff",
@@ -544,12 +620,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 181.36,
       "valid_until": 189.375,
       "guard_seconds": 1.015,
       "frames": 210,
       "duration": 7.0,
-      "start": 440.0
+      "start": 441.0
     },
     {
       "scene_id": "teacher-verification",
@@ -558,12 +636,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 190.298,
       "valid_until": 198.314,
       "guard_seconds": 1.016,
       "frames": 210,
       "duration": 7.0,
-      "start": 447.0
+      "start": 448.0
     },
     {
       "scene_id": "teacher-regression",
@@ -572,12 +652,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 199.236,
       "valid_until": 207.258,
       "guard_seconds": 1.022,
       "frames": 210,
       "duration": 7.0,
-      "start": 454.0
+      "start": 455.0
     },
     {
       "scene_id": "teacher-commit",
@@ -586,12 +668,14 @@
       "module": "3",
       "category": "AI协同过程复现展示",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 7,
+      "playback_factor": 1.0,
       "in": 208.171,
       "valid_until": 216.189,
       "guard_seconds": 1.018,
       "frames": 210,
       "duration": 7.0,
-      "start": 461.0
+      "start": 462.0
     },
     {
       "scene_id": "outro",
@@ -600,12 +684,14 @@
       "module": null,
       "category": "作品介绍",
       "source": "docs/demo/第十二轮演示源/media/boards-continuous.mp4",
+      "source_duration": 9,
+      "playback_factor": 1.0,
       "in": 217.11,
       "valid_until": 227.123,
       "guard_seconds": 1.013,
       "frames": 270,
       "duration": 9.0,
-      "start": 468.0
+      "start": 469.0
     }
   ],
   "real_api_calls_new_during_recording": 0,
