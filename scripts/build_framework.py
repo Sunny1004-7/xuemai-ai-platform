@@ -79,6 +79,7 @@ def build():
         r'\newcommand{\authorSchool}{' + author['school'] + '}',
         r'\newcommand{\authorMajor}{' + author['major'] + '}',
         r'\newcommand{\authorName}{' + author['name'] + '}',
+        r'\newcommand{\supervisorName}{' + author['supervisor'] + '}',
         r'\newcommand{\applicationFocus}{' + facts['focus'] + '}',
     ]) + '\n', encoding='utf8')
     definitions = facts['method_definitions']

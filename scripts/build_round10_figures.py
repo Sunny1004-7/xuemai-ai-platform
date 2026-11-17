@@ -4,7 +4,6 @@ import json
 
 ROOT=Path(__file__).resolve().parents[1]
 FIG=ROOT/'docs/technical-report/figures'
-DATA=ROOT/'docs/experiments/round10'
 SOURCES={
 'actions':r'''\begin{tikzpicture}[x=1cm,y=1cm,font=\small,every node/.style={text=black},>={Stealth[length=1.7mm]}]
 \foreach \x/\t in {0.9/学生,4.4/诊断与策略,8/模型与课程工具,11.8/校验与评分}{
@@ -54,16 +53,6 @@ SOURCES={
 \draw(course)--node[left]{1:N}(task);\draw(task)--node[above]{关联}(evidence);
 \draw(attempt)--(evidence);\draw(evidence)--node[above]{聚合}(state);\draw(attempt)--node[right]{更新}(state);
 \end{tikzpicture}''',
-'deployment':r'''\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=2mm]}]
-\draw[celadon!65,rounded corners=6pt,fill=pale!20](0,0)rectangle(10,3.2);
-\node[anchor=west,font=\bfseries] at (.3,2.8){本机应用边界};
-\node[align=center](browser)at(1.7,1.6){浏览器工作区\\React与共享主题};
-\node[align=center](api)at(5.2,1.6){FastAPI服务\\身份、课程与校验};
-\node[draw,ellipse,fill=white,align=center](db)at(8.3,1.6){SQLite\\事件与版本};
-\draw[->](browser)--(api);\draw[->](api)--(db);
-\node[draw=tea,fill=rice!40,align=center,minimum height=1.2cm](model)at(12.1,1.6){DeepSeek官方API\\生成与用量结算};
-\draw[<->,tea,thick](api.south)--++(0,-.7)-|(model.south);
-\end{tikzpicture}''',
 'intent-control':r'''\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
 \draw[celadon,thick](.3,0)--(.3,4);
 \foreach \y/\date/\title/\details in {3.5/11月3日/统一课程对象与权限/固定接口后联测并修复种子字段,2/11月12日/知识网络阅读优化/保留九处遮挡后进行几何复核,.5/11月12日/教师混合意图修复/产物任务优先使专项失败转为通过}{
@@ -86,39 +75,7 @@ def main():
         lines.append(f'\\fill[celadon]({x},{y})circle(.045cm);\\node[below]at({x},0){{{label}}};')
     lines += ['\\draw[celadon,thick] '+'--'.join(points)+';',r'\end{tikzpicture}']
     (FIG/'evidence.tex').write_text('\n'.join(lines),encoding='utf8',newline='\n')
-    path=json.loads((DATA/'path.json').read_text('utf8'))
-    case=next(c for c in path['cases'] if c['split']=='eval' and len(c['parents'])==6
-              and sum(len(parents) for parents in c['parents'].values())>=4 and c['budget']==30
-              and all(state['effective_count']<2 or state['value']<.6 for state in c['states'].values()))
-    plan=case['outcomes']['PATH-G'];costs={c['knowledge_id']:c['estimated_minutes'] for c in case['candidates']}
-    lines=[r'\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=1.5mm]}]']
-    for i,k in enumerate(case['parents']):
-        selected=int(k) in plan['sequence'];fill='pale' if selected else 'white'
-        lines.append(f'\\node[circle,draw=celadon,fill={fill},minimum size=8mm](n{k})at({i%3*2+.5},{2.8-i//3*1.8}){{$k_{{{k}}}$}};')
-    for k,parents in case['parents'].items():
-        for p in parents:lines.append(f'\\draw[->](n{p})--(n{k});')
-    lines.append(r'\node[anchor=west,font=\bfseries]at(6.6,3.4){30分钟内的实际候选序列};')
-    spent=0
-    for i,k in enumerate(plan['sequence']):
-        width=costs[k]*.19
-        lines.append(f'\\fill[pale!80]({6.6+spent*.19},{2.5-i*.01})rectangle({6.6+spent*.19+width},1.6);')
-        lines.append(f'\\node at({6.6+spent*.19+width/2},2.05){{$k_{{{k}}}$}};')
-        spent+=costs[k]
-    lines.append(f'\\node[anchor=west]at(6.6,1){{用时{spent}分钟，效用{plan["utility"]:.2f}}};')
-    lines.append(r'\node[anchor=west]at(6.6,.3){先修在前，剩余时间决定后续候选};\end{tikzpicture}')
-    (FIG/'path-search.tex').write_text('\n'.join(lines),encoding='utf8',newline='\n')
-    data=json.loads((DATA/'class.json').read_text('utf8'));case=data['cases'][6]
-    lines=[r'\begin{tikzpicture}[x=.7cm,y=.28cm,font=\small]']
-    for j,title in enumerate(['概念','步骤','推理','迁移','提示','参与']):lines.append(f'\\node[rotate=0]at({j*1.35+1},1.3){{{title}}};')
-    for i,student in enumerate(case['students'][:12]):
-        lines.append(f'\\node[anchor=east]at(0,{-i-0.5}){{$s_{{{student["id"]}}}$}};')
-        for j,value in enumerate(student['features']):
-            lines.append(f'\\fill[celadon!{max(3,int(value*85))}]({j*1.35+.4},{-i})rectangle({j*1.35+1.6},{-i-1});')
-    for i,group in enumerate(case['groups'][:4]):
-        lines.append(f'\\node[anchor=west,align=left]at(9,{-i*3-1}){{{group["focus"]}\\\\对应知识{group["knowledge_id"]}，候选题{group["question_ids"][0]}}};')
-    lines.append(r'\end{tikzpicture}')
-    (FIG/'class-loop.tex').write_text('\n'.join(lines),encoding='utf8',newline='\n')
-    print('已生成10种方法图形，时间线、序列图、矩阵、网络、热图、日历与实体关联')
+    print('已生成其余方法图；path-search、class-loop、deployment由各自TikZ源维护')
 
 
 if __name__=='__main__':main()

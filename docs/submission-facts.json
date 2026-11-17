@@ -6,7 +6,8 @@
   "author": {
     "school": "西安交通大学",
     "major": "软件工程",
-    "name": "刘嘉程"
+    "name": "刘嘉程",
+    "supervisor": "刘帅"
   },
   "focus": "课程学习、个性化辅导与教学协作",
   "examples": [
@@ -126,5 +127,6 @@
   "validation_sources": {
     "backend": "docs/rounds/第十轮后端完整回归.txt",
     "browser": "docs/rounds/第十轮浏览器完整回归.txt"
-  }
+  },
+  "materials_round": 11
 }

@@ -1,22 +1,20 @@
-\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>={Stealth[length=1.5mm]}]
-\node[circle,draw=celadon,fill=pale,minimum size=8mm](n1)at(0.5,2.8){$k_{1}$};
-\node[circle,draw=celadon,fill=pale,minimum size=8mm](n2)at(2.5,2.8){$k_{2}$};
-\node[circle,draw=celadon,fill=white,minimum size=8mm](n3)at(4.5,2.8){$k_{3}$};
-\node[circle,draw=celadon,fill=pale,minimum size=8mm](n4)at(0.5,0.9999999999999998){$k_{4}$};
-\node[circle,draw=celadon,fill=white,minimum size=8mm](n5)at(2.5,0.9999999999999998){$k_{5}$};
-\node[circle,draw=celadon,fill=white,minimum size=8mm](n6)at(4.5,0.9999999999999998){$k_{6}$};
-\draw[->](n1)--(n4);
-\draw[->](n3)--(n5);
-\draw[->](n4)--(n5);
-\draw[->](n2)--(n6);
-\draw[->](n4)--(n6);
-\draw[->](n5)--(n6);
-\node[anchor=west,font=\bfseries]at(6.6,3.4){30分钟内的实际候选序列};
-\fill[pale!80](6.6,2.5)rectangle(8.879999999999999,1.6);
-\node at(7.74,2.05){$k_{2}$};
-\fill[pale!80](8.879999999999999,2.49)rectangle(11.16,1.6);
-\node at(10.02,2.05){$k_{1}$};
-\fill[pale!80](11.16,2.48)rectangle(12.11,1.6);
-\node at(11.635,2.05){$k_{4}$};
-\node[anchor=west]at(6.6,1){用时29分钟，效用23.23};
-\node[anchor=west]at(6.6,.3){先修在前，剩余时间决定后续候选};\end{tikzpicture}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,every node/.style={text=black},>={Stealth[length=1.8mm]},
+box/.style={draw=celadon!70,fill=pale!22,rounded corners=2pt,text width=2.75cm,minimum height=.83cm,align=center,inner sep=5pt},
+flow/.style={->,thick,celadon}]
+\node[box](prereq)at(1.7,4.5){知识先修关系};
+\node[box](state)at(5.3,4.5){知识状态};
+\node[box](goals)at(8.9,4.5){个人目标\\教师任务};
+\node[box](budget)at(12.5,4.5){资源与时间预算};
+\draw[celadon!70](prereq.south)--(1.7,3.7)--(12.5,3.7)--(budget.south);
+\draw[celadon!70](state.south)--(5.3,3.7);\draw[celadon!70](goals.south)--(8.9,3.7);
+\node[box](candidates)at(1.7,2.65){构建可执行\\候选活动};
+\node[box](check)at(5.3,2.65){检查先修条件\\与剩余预算};
+\node[box](extend)at(8.9,2.65){扩展合法\\候选路径};
+\node[box](beam)at(12.5,2.65){有限束搜索\\比较序列效用};
+\draw[flow](1.7,3.7)--(candidates.north);
+\draw[flow](candidates)--(check);\draw[flow](check)--(extend);\draw[flow](extend)--(beam);
+\node[box,draw=tea!75,fill=rice!25](output)at(12.5,.65){预算内活动序列\\及后续候选};
+\node[box,text width=5.9cm,draw=tea!75,fill=rice!25](feedback)at(5.3,.65){实际完成与新学习证据\\进入下一次规划};
+\draw[flow](beam)--(output);\draw[->,thick,tea](output.west)--(feedback.east);
+\draw[->,thick,tea](feedback.west)-|(candidates.south);
+\end{tikzpicture}
