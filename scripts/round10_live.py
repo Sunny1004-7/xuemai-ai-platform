@@ -136,7 +136,12 @@ def run_case(client,headers,task,condition):
     if done:
         teaching=done.get('teaching',{});artifact=done.get('artifact',{})
         citations=done.get('citations',first.get('citations',[]))
-        result['checks']={'course_and_role':done.get('model',task['model'])==task['model'],
+        from backend.app.db import get_db
+        with get_db() as db:
+            scope=db.execute('''SELECT c.course_id,u.role FROM ai_conversations c JOIN users u ON u.id=c.user_id
+                WHERE c.id=?''',(done.get('conversation_id',first.get('conversation_id')),)).fetchone()
+        result['checks']={'model_matches':done.get('model',task['model'])==task['model'],
+                          'course_and_role':bool(scope and scope['course_id']==task['body']['course_id'] and scope['role']==task['role']),
                           'citation_locators':all(c.get('locator') and c.get('version') for c in citations),
                           'has_citation':bool(citations),'has_check':bool(teaching.get('check')),
                           'valid_artifact':bool(artifact.get('id')),
