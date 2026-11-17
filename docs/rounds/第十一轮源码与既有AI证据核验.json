@@ -1,0 +1,20 @@
+{
+  "base_commit": "f21e6a20949ae7a6bc6014cd7d93f585a2bcc218",
+  "application_source_changes": [],
+  "new_deepseek_requests": 0,
+  "historical_response_checks": [
+    {
+      "database_kind": "原始历史",
+      "official_messages": 2,
+      "content_and_usage_sha256": "a5f46cb5f862e340f69b62592b718f04e368d0bfe66012558a25ddffcca08c3f"
+    },
+    {
+      "database_kind": "本轮隔离录制",
+      "official_messages": 2,
+      "content_and_usage_sha256": "a5f46cb5f862e340f69b62592b718f04e368d0bfe66012558a25ddffcca08c3f"
+    }
+  ],
+  "recording_backend_mode": "mock",
+  "new_generation_routes": "录制页拦截chat及generate，回看原有正式回答",
+  "experiment_ledger_sha256": "9173b2e63ea83be5e1b0d19793348a193d8038426e5f88cb67e4e06a23a0327c"
+}

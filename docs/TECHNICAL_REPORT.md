@@ -1,36 +1,39 @@
 # 技术文档与演示复现
 
-正式报告为[技术文档PDF](deliverables/xuemai-technical-report.pdf)，可编辑入口为[main.tex](technical-report/main.tex)。封面保留学校、专业和作者，摘要三段独立成页，正文仅使用两级标题。小四宋体、英文Times New Roman、黑色正文和标题，段首两字，底部居中页码。八张应用图均保留完整导航、课程栏与工作区，按100%版心宽度放置。
+正式报告为[技术文档PDF](deliverables/xuemai-technical-report.pdf)，可编辑入口为[main.tex](technical-report/main.tex)。报告30页，封面包括学校、专业、参赛学生和指导教师刘帅。摘要三段独立成页，正文使用两级标题、小四宋体、英文Times New Roman与黑色文字，段首两字，底部居中页码。八张应用图保留完整导航、课程栏与工作区，按100%版心宽度放置。
 
-总框架沿用[统一母版](technical-report/figures/overall-framework.tex)。其余图形按机制改为事件曲线、先修网络与活动序列、辅导时序、约束矩阵、错因热图、复习日历和对象关联，统计图从逐例结果生成。当前实验入口、任务、原始结果和Token账本见[实验目录](experiments/round10/README.md)。
+总框架沿用[统一母版](technical-report/figures/overall-framework.tex)。图4、图8和图18分别由[path-search.tex](technical-report/figures/path-search.tex)、[class-loop.tex](technical-report/figures/class-loop.tex)和[deployment.tex](technical-report/figures/deployment.tex)独立维护，采用方框与箭头表达学习规划、教学分层和部署关系。生成器保留这三份图源，其余图源继续按既有机制组织。实验入口、逐例结果和Token账本见[实验目录](experiments/round10/README.md)。
 
 ## 重建报告
 
-准备XeLaTeX、宋体、Times New Roman和工具依赖，再安装 `scripts/requirements-experiments.txt`。审阅包将480张截图置于“界面截图”，重建时复制至下列截图目录并保留全部索引。
+准备XeLaTeX、宋体、Times New Roman和工具依赖，再安装 `scripts/requirements-experiments.txt`。审阅包将480张截图置于“界面截图”，重建时复制到下列截图目录并保留全部索引。
 
 ```powershell
-.venv/Scripts/python.exe scripts/build_technical_report.py --screenshots 交付审阅包/界面截图_20261117_173816 --record docs/rounds/2026-11-17-第十轮实验与参赛材料重编.md
+.venv/Scripts/python.exe scripts/build_technical_report.py --screenshots 交付审阅包/界面截图_20261117_221559 --record docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md
 ```
 
-构建器读取当前实验清单和回归结果，生成摘要数字、方法图、统计图与验证汇总，验证截图覆盖和源码指纹，执行三遍编译并渲染全部页面。实验数据在构建时直接读取，真实模型实验需另行显式执行。
+构建器校验232份冻结实验文件的摘要，再读取事实表与回归结果，更新文字、核对截图覆盖和源码指纹，执行三遍编译并渲染全部页面。`--materials-only` 模式沿用已完成的统计图与实验结果。真实模型实验由独立命令显式执行。五项方法的定义、公式与逐例结果在本轮保持一致，新增文字解释各项设计如何进入学习活动、教师决策与反馈流程。
 
-## 连续教学演示
+## 连续模块演示
 
-[正式成片](deliverables/xuemai-demo-1080p.mp4)约460.47秒，1920×1080、30fps、H.264/AAC。问候后交代教学背景，再引出学脉。师生连续界面约247.5秒，三条开发档案回放135秒。作者在封面和结尾署名。字幕采用透明背景与轻描边，21个完整语段由同次WordBoundary对齐到70条单行字幕。
+[正式成片](deliverables/xuemai-demo-1080p.mp4)为475.5秒，1920×1080、30fps、H.264/AAC。问候与作品介绍之后进入教学情境，依次介绍学生10个模块、教师9个模块，系统界面共278秒。后半段统一使用“AI协同过程复现展示”标题，展示2026年11月3日和12日的真实Prompt、代码差异、问题修复与验证，合计130.5秒。作者在封面和结尾署名。
 
-当前入口为[demo/current.json](demo/current.json)，源目录为[第十轮演示源](demo/第十轮演示源/)。工程包含画板HTML、原始连续WebM与MP4、教学素材引用、实际Git差异、剪辑时间轴、音轨、语音边界、字幕和验收帧。界面继续使用此前已取得的真实师生会话，实验用量单列于本轮账本。
+当前入口为[demo/current.json](demo/current.json)，源目录为[第十一轮演示源](demo/第十一轮演示源/)。工程保留完整连续WebM与MP4、模块操作及业务结果、历史开发原文、剪辑时间轴、26段配音、语音边界、77条字幕与69个验收关键帧。`scenes-source.json` 使用固定的场景标识关联讲稿、镜头和素材，当前讲稿、通用SRT与ASS由同一工程生成。
 
 ```powershell
-.venv/Scripts/python.exe scripts/assemble_round10_video.py
-.venv/Scripts/python.exe scripts/generate_demo_narration.py --round 10
+.venv/Scripts/python.exe scripts/prepare_round11_video.py
+.venv/Scripts/python.exe scripts/assemble_round11_video.py
+.venv/Scripts/python.exe scripts/generate_demo_narration.py --round 11
 .venv/Scripts/python.exe scripts/assemble_demo_audio.py
 .venv/Scripts/python.exe scripts/audit_demo_audio.py
-.venv/Scripts/python.exe scripts/audit_round10_media.py
+.venv/Scripts/python.exe scripts/audit_round11_media.py
 .venv/Scripts/python.exe scripts/audit_round10_delivery.py
 ```
 
-剪辑器优先使用已交付连续素材。重新采集画板时启动docs静态服务至8010，再运行 `node frontend/scripts/record-round10-materials.mjs`。可选 `--framework-only` 补录框架。实际节点边界决定高亮与放大位置，语音边界决定切换时间。整段配音缓存已提供，重新合成需要语音服务网络。
+剪辑器优先读取本机最近一次录制，解压后的工程可直接使用随包交付的 `media` 连续素材。重新采集需先启动隔离Mock服务，随后运行 `node frontend/scripts/record-round11-modules.mjs`。画板重新采集使用 `node frontend/scripts/record-round11-materials.mjs`，完整操作见[模块与镜头](demo/第十一轮演示源/模块与镜头.md)。录制包含正常保存、发布和作答，已有两份官方响应从历史会话回看，本轮新增DeepSeek请求为0。
 
-音轨完整解码和本地Whisper回验已完成，具体媒体参数见[验收结果](demo/验收结果.json)，转写见[语音回验](demo/第十轮语音转写回验.json)。人工听审尚未进行。
+框架图先展示全貌4.943秒，随后移动五组高亮框，图像位置与比例固定。剪辑器比较原生视频和同状态完整视口截图，测得内容下边界为943像素，因此底部字幕中心为1011.5像素。ASS使用透明背景，最终成片逐条测量77条字幕的实际字形，最大居中误差为1像素。
 
-交付一致性工具同时核对实验、PDF、视频、字幕及Token，按当前事实表生成[发布清单](deliverables/release-manifest.json)，与正式目录保留相同副本。
+整段配音缓存与WordBoundary已提供，重新合成需要语音服务网络。完整解码、音量、语段边界与本地Whisper回验均已完成，字符相似度0.9753，最大语速拟合倍率1.04416。具体记录见[视频验收](demo/验收结果.json)、[语音回验](demo/第十一轮语音转写回验.json)及[画面与字幕核验](rounds/第十一轮视频边界与字幕验收.json)。人工听审尚未进行。
+
+交付一致性工具核对实验、PDF、视频、字幕及Token，按当前事实表生成[发布清单](deliverables/release-manifest.json)，与正式提交目录保留相同副本。

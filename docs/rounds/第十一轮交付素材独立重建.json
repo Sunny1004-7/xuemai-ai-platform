@@ -1,0 +1,9 @@
+{
+  "local_recording_pointers_available_during_build": false,
+  "delivered_media_only": true,
+  "duration_seconds": 475.5,
+  "before_sha256": "7388dedd4dd93769ad213e3406c7d402217a004a8d2ebd4b9cac367bcbe7d05a",
+  "after_sha256": "7388dedd4dd93769ad213e3406c7d402217a004a8d2ebd4b9cac367bcbe7d05a",
+  "identical": true,
+  "elapsed_seconds": 55.4
+}

@@ -1,0 +1,389 @@
+{
+  "source": "本次Playwright HTML报告中的原始report.json",
+  "start_time_epoch_ms": 1794926326476,
+  "duration_ms": 130823.554,
+  "stats": {
+    "total": 34,
+    "expected": 34,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "ok": true
+  },
+  "tests": [
+    {
+      "file": "authoring.spec.ts",
+      "title": "教师用视频表单保存字幕片段与检查点，学生可检索并定位新字幕",
+      "outcome": "expected",
+      "duration_ms": 4631,
+      "location": {
+        "file": "authoring.spec.ts",
+        "line": 31,
+        "column": 1
+      }
+    },
+    {
+      "file": "authoring.spec.ts",
+      "title": "Mock 备课草稿编辑发布形成可检索版本，AI 题目审核后学生可独立作答",
+      "outcome": "expected",
+      "duration_ms": 5178,
+      "location": {
+        "file": "authoring.spec.ts",
+        "line": 138,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "教师创建课程章节知识班级，学生邀请码加入后读取同一图谱",
+      "outcome": "expected",
+      "duration_ms": 5730,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 12,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "从图谱进入视频，完成互动检查并真实写回事件",
+      "outcome": "expected",
+      "duration_ms": 3183,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 80,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "原题进入 Mock 辅导，资料引用与历史可接续，服务故障反馈明确",
+      "outcome": "expected",
+      "duration_ms": 8199,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 113,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "教师根据学情发布定向任务，学生完成后再次分析作答增量",
+      "outcome": "expected",
+      "duration_ms": 15236,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 145,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "个人目标计划编辑持久化，课堂互动回答同步给教师",
+      "outcome": "expected",
+      "duration_ms": 11104,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 205,
+        "column": 1
+      }
+    },
+    {
+      "file": "features.spec.ts",
+      "title": "真实算法状态支持预测与执行，实验操作保存到学习事件",
+      "outcome": "expected",
+      "duration_ms": 2509,
+      "location": {
+        "file": "features.spec.ts",
+        "line": 269,
+        "column": 1
+      }
+    },
+    {
+      "file": "platform.spec.ts",
+      "title": "教师发布作业，学生真实提交，教师查看结果与学情",
+      "outcome": "expected",
+      "duration_ms": 2199,
+      "location": {
+        "file": "platform.spec.ts",
+        "line": 11,
+        "column": 1
+      }
+    },
+    {
+      "file": "platform.spec.ts",
+      "title": "知识图谱定位视频、真实播放、时间戳笔记持久化",
+      "outcome": "expected",
+      "duration_ms": 1038,
+      "location": {
+        "file": "platform.spec.ts",
+        "line": 59,
+        "column": 1
+      }
+    },
+    {
+      "file": "platform.spec.ts",
+      "title": "双端主要页面无崩溃，窄屏无横向溢出",
+      "outcome": "expected",
+      "duration_ms": 1500,
+      "location": {
+        "file": "platform.spec.ts",
+        "line": 88,
+        "column": 1
+      }
+    },
+    {
+      "file": "round4.spec.ts",
+      "title": "课程切换更新学习首项且作答反馈显示状态变化与后续路径",
+      "outcome": "expected",
+      "duration_ms": 966,
+      "location": {
+        "file": "round4.spec.ts",
+        "line": 3,
+        "column": 1
+      }
+    },
+    {
+      "file": "round4.spec.ts",
+      "title": "教师四个学情工作区保持筛选并可分别完成任务",
+      "outcome": "expected",
+      "duration_ms": 1072,
+      "location": {
+        "file": "round4.spec.ts",
+        "line": 20,
+        "column": 1
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮首屏 student 课程1",
+      "outcome": "expected",
+      "duration_ms": 6983,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 12,
+        "column": 5
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮首屏 student 课程2",
+      "outcome": "expected",
+      "duration_ms": 5915,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 12,
+        "column": 5
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮首屏 teacher 课程1",
+      "outcome": "expected",
+      "duration_ms": 6351,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 12,
+        "column": 5
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮首屏 teacher 课程2",
+      "outcome": "expected",
+      "duration_ms": 5635,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 12,
+        "column": 5
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮课程选择器键盘操作和课程上下文清理",
+      "outcome": "expected",
+      "duration_ms": 1074,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 88,
+        "column": 1
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮Python导航、辅导历史、实验和归档回答",
+      "outcome": "expected",
+      "duration_ms": 2436,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 106,
+        "column": 1
+      }
+    },
+    {
+      "file": "round5.spec.ts",
+      "title": "第五轮窄屏计划正文保留足够阅读宽度",
+      "outcome": "expected",
+      "duration_ms": 724,
+      "location": {
+        "file": "round5.spec.ts",
+        "line": 130,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "分组导航与教师帮助保留课程上下文，短窗口导航可达",
+      "outcome": "expected",
+      "duration_ms": 721,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 12,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "模型与文档附件进入问答，引用位置和历史消息可重开",
+      "outcome": "expected",
+      "duration_ms": 2093,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 26,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "教师从班级证据生成草稿，编辑保存并带群组进入作业发布",
+      "outcome": "expected",
+      "duration_ms": 2992,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 46,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "栈操作回放与边界处理保存前后状态，预测与参与分开",
+      "outcome": "expected",
+      "duration_ms": 2362,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 65,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "教师题库最后一行与分页边界及控件命中正常",
+      "outcome": "expected",
+      "duration_ms": 1950,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 92,
+        "column": 1
+      }
+    },
+    {
+      "file": "round6.spec.ts",
+      "title": "真实音频经本地识别进入可编辑输入框",
+      "outcome": "expected",
+      "duration_ms": 5718,
+      "location": {
+        "file": "round6.spec.ts",
+        "line": 113,
+        "column": 1
+      }
+    },
+    {
+      "file": "round7.spec.ts",
+      "title": "侧栏精简保留学生导航与面包屑",
+      "outcome": "expected",
+      "duration_ms": 833,
+      "location": {
+        "file": "round7.spec.ts",
+        "line": 4,
+        "column": 3
+      }
+    },
+    {
+      "file": "round7.spec.ts",
+      "title": "侧栏精简保留教师导航与面包屑",
+      "outcome": "expected",
+      "duration_ms": 805,
+      "location": {
+        "file": "round7.spec.ts",
+        "line": 4,
+        "column": 3
+      }
+    },
+    {
+      "file": "round8.spec.ts",
+      "title": "双身份登录诗句保持表单位置与完整可读",
+      "outcome": "expected",
+      "duration_ms": 680,
+      "location": {
+        "file": "round8.spec.ts",
+        "line": 3,
+        "column": 1
+      }
+    },
+    {
+      "file": "round8.spec.ts",
+      "title": "短窗口完整显示师生全部导航项",
+      "outcome": "expected",
+      "duration_ms": 787,
+      "location": {
+        "file": "round8.spec.ts",
+        "line": 24,
+        "column": 1
+      }
+    },
+    {
+      "file": "round9.spec.ts",
+      "title": "外围背景共用静态构图且不改变卡片与键盘操作",
+      "outcome": "expected",
+      "duration_ms": 1072,
+      "location": {
+        "file": "round9.spec.ts",
+        "line": 3,
+        "column": 1
+      }
+    },
+    {
+      "file": "upgrade.spec.ts",
+      "title": "双端主题保持指定色值，登录布局在桌面完整可见",
+      "outcome": "expected",
+      "duration_ms": 875,
+      "location": {
+        "file": "upgrade.spec.ts",
+        "line": 3,
+        "column": 1
+      }
+    },
+    {
+      "file": "upgrade.spec.ts",
+      "title": "渐进图谱支持章节展开搜索全屏小地图与平移",
+      "outcome": "expected",
+      "duration_ms": 1852,
+      "location": {
+        "file": "upgrade.spec.ts",
+        "line": 39,
+        "column": 1
+      }
+    },
+    {
+      "file": "upgrade.spec.ts",
+      "title": "辅导结构化动作执行理解检查并在历史保留评分",
+      "outcome": "expected",
+      "duration_ms": 1701,
+      "location": {
+        "file": "upgrade.spec.ts",
+        "line": 108,
+        "column": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "frontend_url": "http://127.0.0.1:5180",
+  "backend_port": 8006,
+  "frontend_status": 200,
+  "backend_status": "ok",
+  "ai_mode": "real",
+  "sqlite_integrity": "ok",
+  "model_requests_during_check": 0
+}
