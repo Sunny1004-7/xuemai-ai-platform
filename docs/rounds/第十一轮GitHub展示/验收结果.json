@@ -1,0 +1,35 @@
+{
+  "url": "https://github.com/Sunny1004-7/xuemai-ai-platform/blob/bd49952398e1322e48a88033a8cfaed986024b6c/README.md",
+  "revision": "bd49952398e1322e48a88033a8cfaed986024b6c",
+  "actual_github_page": true,
+  "results": [
+    {
+      "width": 1440,
+      "screenshot": "github-readme-1440.png",
+      "image_loaded": true,
+      "image_center_error": 0,
+      "image_within_container": true,
+      "centered_container": "center",
+      "paragraph_count": 21,
+      "indented_paragraph_count": 21,
+      "code_blocks": 6,
+      "tables": 1,
+      "removed_copy_absent": true
+    },
+    {
+      "width": 390,
+      "screenshot": "github-readme-390.png",
+      "image_loaded": true,
+      "image_center_error": 0,
+      "image_within_container": true,
+      "centered_container": "center",
+      "paragraph_count": 21,
+      "indented_paragraph_count": 21,
+      "code_blocks": 6,
+      "tables": 1,
+      "removed_copy_absent": true
+    }
+  ],
+  "readme_git_blob": "3861358b7bbf02611bcb8da2627c46d4da8bee70",
+  "visual_review": "桌面与手机完整实页截图复核，包含总图、正文、代码与表格"
+}

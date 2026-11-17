@@ -1,0 +1,316 @@
+{
+  "checked": 62,
+  "missing": [],
+  "links": [
+    {
+      "document": "README.md",
+      "target": "docs/deliverables/xuemai-technical-report.pdf",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/deliverables/xuemai-demo-1080p.mp4",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/ALGORITHMS_V10.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/VALIDATION.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/technical-report/figures/overall-framework.tex",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/METHOD_TERMS.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/round10/README.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": ".env.example",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/round10/token-ledger.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/TECHNICAL_REPORT.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "docs/demo/current.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "AGENTS.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "PROJECT_STATE.md",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "deliverables/xuemai-technical-report.pdf",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "technical-report/main.tex",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "technical-report/figures/overall-framework.tex",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "technical-report/figures/path-search.tex",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "technical-report/figures/class-loop.tex",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "technical-report/figures/deployment.tex",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "experiments/round10/README.md",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "deliverables/xuemai-demo-1080p.mp4",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "demo/current.json",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "demo/第十一轮演示源/",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "demo/第十一轮演示源/模块与镜头.md",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "rounds/第十一轮交付素材独立重建.json",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "demo/验收结果.json",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "demo/第十一轮语音转写回验.json",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "rounds/第十一轮视频边界与字幕验收.json",
+      "exists": true
+    },
+    {
+      "document": "docs/TECHNICAL_REPORT.md",
+      "target": "deliverables/release-manifest.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第十一轮远端推送与持续集成.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第十一轮交付一致性核验.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第十一轮视频边界与字幕验收.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第十一轮源码与既有AI证据核验.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "experiments/round10/README.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "technical-report/验收结果.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "demo/验收结果.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-17-第十轮实验与参赛材料重编.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-12-第六轮知识网络与双角色智能教学升级.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第六轮远端推送.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第五轮课程与预算验证.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第五轮核心方法对照.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-11-第五轮全课程与单屏工作区升级.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第五轮远端推送.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第五轮交付核验.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第四轮测试记录.txt",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第四轮核心方法对照.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第四轮图谱几何与相机验证.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "demo/验收结果.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "demo/画面复核.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第四轮远端验收.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-11-第四轮产品视觉与教学体验升级.md",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第三轮图谱几何测试.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第三轮核心方法对照.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/第三轮DeepSeek联调.json",
+      "exists": true
+    },
+    {
+      "document": "docs/VALIDATION.md",
+      "target": "rounds/2026-11-10-第三轮系统深度升级.md",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "../demo/第十一轮演示源/模块与镜头.md",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "第十一轮浏览器完整回归.json",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "第十一轮交付素材独立重建.json",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "第十一轮远端推送与持续集成.json",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "第十一轮GitHub展示/验收结果.json",
+      "exists": true
+    },
+    {
+      "document": "docs/rounds/2026-11-17-第十一轮文档表达与模块化演示.md",
+      "target": "第十一轮文档链接核验.json",
+      "exists": true
+    }
+  ]
+}

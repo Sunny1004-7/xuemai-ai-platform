@@ -1,0 +1,114 @@
+{
+  "verified_materials_commit": "bd49952398e1322e48a88033a8cfaed986024b6c",
+  "source_scope": "报告、视频、生成器及完整回归的交付基线；后续提交补充GitHub展示与验收记录",
+  "ordinary_https_attempt": "Recv failure: Connection was reset",
+  "synchronization": {
+    "remote": "https://github.com/Sunny1004-7/xuemai-ai-platform",
+    "old_head": "f21e6a20949ae7a6bc6014cd7d93f585a2bcc218",
+    "new_head": "bd49952398e1322e48a88033a8cfaed986024b6c",
+    "commits_transferred": [
+      "ab8297774881d70979afadd9170910873cad9390",
+      "ee303203099671f49116b672267fd85369bb6769",
+      "a241eaef4eabb9bae91d8499a07fc553bf4a4fe7",
+      "1c071eb8d9f8840c4b488fa74cdbe28a5de3aa50",
+      "cb8530b27cac922329ee8a76799bfb9eea80e1e3",
+      "bd49952398e1322e48a88033a8cfaed986024b6c"
+    ],
+    "blob_count": 970,
+    "transport": "官方Git数据API；逐对象核对SHA；非强制快进",
+    "verified": true
+  },
+  "remote_check": {
+    "head": "bd49952398e1322e48a88033a8cfaed986024b6c",
+    "remote": "bd49952398e1322e48a88033a8cfaed986024b6c",
+    "identical": true,
+    "runs": [
+      {
+        "id": 44114855463,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Sunny1004-7/xuemai-ai-platform/actions/runs/44114855463"
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "id": 134150035591,
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "安装后端依赖",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "验证业务与权限",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "扫描已跟踪敏感信息",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "安装前端依赖",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "构建与浏览器回归",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "保存失败验收证据",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
