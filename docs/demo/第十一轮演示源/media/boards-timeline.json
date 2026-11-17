@@ -1,0 +1,156 @@
+[
+  {
+    "scene_id": "intro",
+    "segment_id": "intro",
+    "at": 1.191,
+    "duration": 14,
+    "capture_at": 1.4195905000000266
+  },
+  {
+    "scene_id": "context",
+    "segment_id": "pain",
+    "at": 15.209,
+    "duration": 17,
+    "capture_at": 15.437590500000027
+  },
+  {
+    "scene_id": "framework",
+    "segment_id": "framework",
+    "at": 32.254,
+    "duration": 24,
+    "capture_at": 32.482590500000015
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-prompt",
+    "at": 56.283,
+    "duration": 7.25,
+    "capture_at": 56.51159050000004
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-feedback",
+    "at": 63.549,
+    "duration": 7.25,
+    "capture_at": 63.7775905
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-failure",
+    "at": 70.822,
+    "duration": 7.25,
+    "capture_at": 71.05059050000003
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-diff",
+    "at": 78.094,
+    "duration": 7.25,
+    "capture_at": 78.32259050000002
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-verification",
+    "at": 85.359,
+    "duration": 7.25,
+    "capture_at": 85.5875905
+  },
+  {
+    "scene_id": "development-1",
+    "segment_id": "contract-commit",
+    "at": 92.618,
+    "duration": 7.25,
+    "capture_at": 92.84659050000002
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-prompt",
+    "at": 99.884,
+    "duration": 7.25,
+    "capture_at": 100.11259050000004
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-failure",
+    "at": 107.141,
+    "duration": 7.25,
+    "capture_at": 107.36959050000004
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-diff",
+    "at": 114.404,
+    "duration": 7.25,
+    "capture_at": 114.63259050000002
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-inputs",
+    "at": 121.667,
+    "duration": 7.25,
+    "capture_at": 121.8955905
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-verification",
+    "at": 128.929,
+    "duration": 7.25,
+    "capture_at": 129.15759050000005
+  },
+  {
+    "scene_id": "development-2",
+    "segment_id": "graph-commit",
+    "at": 136.187,
+    "duration": 7.25,
+    "capture_at": 136.41559050000004
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-prompt",
+    "at": 143.457,
+    "duration": 7.25,
+    "capture_at": 143.68559050000002
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-failure",
+    "at": 150.725,
+    "duration": 7.25,
+    "capture_at": 150.9535905
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-diff",
+    "at": 157.991,
+    "duration": 7.25,
+    "capture_at": 158.21959050000007
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-verification",
+    "at": 165.259,
+    "duration": 7.25,
+    "capture_at": 165.48759049999998
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-regression",
+    "at": 172.529,
+    "duration": 7.25,
+    "capture_at": 172.75759050000002
+  },
+  {
+    "scene_id": "development-3",
+    "segment_id": "teacher-commit",
+    "at": 179.783,
+    "duration": 7.25,
+    "capture_at": 180.01159049999998
+  },
+  {
+    "scene_id": "outro",
+    "segment_id": "outro",
+    "at": 187.052,
+    "duration": 12,
+    "capture_at": 187.2805905
+  }
+]

@@ -1,0 +1,211 @@
+[
+  {
+    "scene_id": "student-dashboard",
+    "role": "student",
+    "module": "dashboard",
+    "route": "/?course=1",
+    "at": 1.181,
+    "duration": 11,
+    "operation_seconds": 2.5047757,
+    "screenshot": "student-dashboard.png",
+    "capture_at": 1.4648551000000225
+  },
+  {
+    "scene_id": "student-plan",
+    "role": "student",
+    "module": "plan",
+    "route": "/plan?course=1",
+    "at": 12.192,
+    "duration": 18,
+    "operation_seconds": 5.3615766,
+    "screenshot": "student-plan.png",
+    "capture_at": 12.475855100000047
+  },
+  {
+    "scene_id": "student-video",
+    "role": "student",
+    "module": "video",
+    "route": "/video?course=1",
+    "at": 30.208,
+    "duration": 13,
+    "operation_seconds": 5.621532700000003,
+    "screenshot": "student-video.png",
+    "capture_at": 30.491855100000066
+  },
+  {
+    "scene_id": "student-resources",
+    "role": "student",
+    "module": "resources",
+    "route": "/resources?course=1",
+    "at": 43.51,
+    "duration": 9,
+    "operation_seconds": 2.584742299999998,
+    "screenshot": "student-resources.png",
+    "capture_at": 43.79385510000003
+  },
+  {
+    "scene_id": "student-graph",
+    "role": "student",
+    "module": "graph",
+    "route": "/graph?course=1&knowledge=2",
+    "at": 52.822,
+    "duration": 20,
+    "operation_seconds": 8.020100399999995,
+    "screenshot": "student-graph.png",
+    "capture_at": 53.10585510000004
+  },
+  {
+    "scene_id": "student-practice",
+    "role": "student",
+    "module": "practice",
+    "route": "/practice?course=1&assignment=12",
+    "at": 72.827,
+    "duration": 19,
+    "operation_seconds": 5.3975868000000045,
+    "screenshot": "student-practice.png",
+    "capture_at": 73.11085510000004
+  },
+  {
+    "scene_id": "student-review",
+    "role": "student",
+    "module": "review",
+    "route": "/review?course=1",
+    "at": 91.841,
+    "duration": 12,
+    "operation_seconds": 2.866311200000011,
+    "screenshot": "student-review.png",
+    "capture_at": 92.12485510000005
+  },
+  {
+    "scene_id": "student-experiments",
+    "role": "student",
+    "module": "experiments",
+    "route": "/experiments?course=1&mode=stack",
+    "at": 103.842,
+    "duration": 16,
+    "operation_seconds": 7.606761899999998,
+    "screenshot": "student-experiments.png",
+    "capture_at": 104.12585510000002
+  },
+  {
+    "scene_id": "student-tutor",
+    "role": "student",
+    "module": "tutor",
+    "route": "/tutor?course=1&knowledge=2&question=1",
+    "at": 119.85,
+    "duration": 23,
+    "operation_seconds": 8.675882499999993,
+    "screenshot": "student-tutor.png",
+    "capture_at": 120.1338551
+  },
+  {
+    "scene_id": "student-classroom",
+    "role": "student",
+    "module": "classroom",
+    "route": "/classroom?course=1",
+    "at": 142.857,
+    "duration": 8,
+    "operation_seconds": 1.088901199999993,
+    "screenshot": "student-classroom.png",
+    "capture_at": 143.14085510000007
+  },
+  {
+    "scene_id": "teacher-dashboard",
+    "role": "teacher",
+    "module": "dashboard",
+    "route": "/?course=1",
+    "at": 152.159,
+    "duration": 9,
+    "operation_seconds": 2.4642385000000067,
+    "screenshot": "teacher-dashboard.png",
+    "capture_at": 152.44285510000003
+  },
+  {
+    "scene_id": "teacher-manage",
+    "role": "teacher",
+    "module": "manage",
+    "route": "/manage?course=1",
+    "at": 161.167,
+    "duration": 13,
+    "operation_seconds": 5.691939799999993,
+    "screenshot": "teacher-manage.png",
+    "capture_at": 161.4508551
+  },
+  {
+    "scene_id": "teacher-resources",
+    "role": "teacher",
+    "module": "resources",
+    "route": "/resources?course=1",
+    "at": 174.185,
+    "duration": 12,
+    "operation_seconds": 2.802698300000018,
+    "screenshot": "teacher-resources.png",
+    "capture_at": 174.46885510000004
+  },
+  {
+    "scene_id": "teacher-graph",
+    "role": "teacher",
+    "module": "graph",
+    "route": "/graph?course=1&knowledge=2",
+    "at": 186.573,
+    "duration": 9,
+    "operation_seconds": 5.838310599999997,
+    "screenshot": "teacher-graph.png",
+    "capture_at": 186.85685510000008
+  },
+  {
+    "scene_id": "teacher-video",
+    "role": "teacher",
+    "module": "video",
+    "route": "/video?course=1",
+    "at": 195.964,
+    "duration": 9,
+    "operation_seconds": 2.6733641000000063,
+    "screenshot": "teacher-video.png",
+    "capture_at": 196.24785510000004
+  },
+  {
+    "scene_id": "teacher-practice",
+    "role": "teacher",
+    "module": "practice",
+    "route": "/practice?course=1",
+    "at": 205.337,
+    "duration": 24,
+    "operation_seconds": 9.050629000000015,
+    "screenshot": "teacher-practice.png",
+    "capture_at": 205.62085510000003
+  },
+  {
+    "scene_id": "teacher-classroom",
+    "role": "teacher",
+    "module": "classroom",
+    "route": "/classroom?course=1",
+    "at": 229.348,
+    "duration": 9,
+    "operation_seconds": 2.4443018999999913,
+    "screenshot": "teacher-classroom.png",
+    "capture_at": 229.63185510000005
+  },
+  {
+    "scene_id": "teacher-analytics",
+    "role": "teacher",
+    "module": "analytics",
+    "route": "/analytics?course=1",
+    "at": 238.356,
+    "duration": 21,
+    "operation_seconds": 7.4409737000000025,
+    "screenshot": "teacher-analytics.png",
+    "capture_at": 238.63985509999998
+  },
+  {
+    "scene_id": "teacher-teacher-ai",
+    "role": "teacher",
+    "module": "teacher-ai",
+    "route": "/teacher-ai?course=1&knowledge=2",
+    "at": 259.374,
+    "duration": 23,
+    "operation_seconds": 11.568282000000007,
+    "screenshot": "teacher-teacher-ai.png",
+    "capture_at": 259.6578551
+  }
+]

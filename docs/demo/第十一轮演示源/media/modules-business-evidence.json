@@ -1,0 +1,1159 @@
+{
+  "new_model_calls": 0,
+  "course_id": 1,
+  "student_id": 2,
+  "reused_conversation_ids": [
+    11,
+    12
+  ],
+  "assignment": {
+    "id": 12,
+    "course_id": 1,
+    "class_id": null,
+    "teacher_id": 1,
+    "knowledge_id": 2,
+    "title": "栈与队列独立检查",
+    "description": "",
+    "question_ids": [
+      11
+    ],
+    "student_ids": [
+      2
+    ],
+    "due_at": null,
+    "status": "published",
+    "created_at": "2026-11-17 14:42:09",
+    "completed": false,
+    "completed_count": 0,
+    "submission_count": 0
+  },
+  "attempt": {
+    "id": 2441,
+    "correct": true,
+    "score": 100,
+    "answer": "1",
+    "explanation": "栈后进先出；队列先进先出。两者的限制操作决定应用场景。 输入1、2、3，全部入栈后依次弹出3、2、1；全部入队后依次取出1、2、3。",
+    "error_type": "",
+    "mastery": 44,
+    "review_status": "automatic",
+    "rubric": {},
+    "evidence": {
+      "value": 0.4375280686800928,
+      "alpha": 5.063306645252664,
+      "beta": 6.509223228150269,
+      "effective_count": 7.572529873402935,
+      "lower": 0.16330870388855018,
+      "upper": 0.7117474334716354,
+      "sufficiency": "证据较充分",
+      "retention": 1,
+      "days_since_evidence": 0,
+      "observed": true,
+      "model": "K-TRACE-v3"
+    },
+    "knowledge_change": {
+      "before": 38.4,
+      "after": 43.8,
+      "weight": 1,
+      "hints": 0,
+      "novelty": 1,
+      "correlation": 1
+    },
+    "review_schedule": {
+      "interval_days": 16.8,
+      "ease": 2.8000000000000003,
+      "repetitions": 3,
+      "last_quality": 5,
+      "next_due": "2026-12-04T09:55:29.146276+00:00",
+      "updated_at": "2026-11-17T14:43:29.146276+00:00"
+    },
+    "recommendations": [
+      {
+        "id": "review-1",
+        "course_id": 1,
+        "knowledge_id": 1,
+        "title": "数组与链表",
+        "reason": "1 道错题待订正；对应目标：比较线性结构的定位与修改成本",
+        "kind": "review",
+        "href": "/review?course=1&knowledge=1&question=8",
+        "priority": 31,
+        "mastery": 33,
+        "evidence": {
+          "value": 0.32569076517612683,
+          "alpha": 1.9517519941457688,
+          "beta": 4.040901783096891,
+          "effective_count": 1.9926537772426598,
+          "lower": 0,
+          "upper": 0.6730407901491975,
+          "sufficiency": "待补充证据",
+          "retention": 0.7375516418756198,
+          "days_since_evidence": 13.18,
+          "observed": true,
+          "model": "K-TRACE-v3"
+        },
+        "steps": [
+          {
+            "kind": "document",
+            "title": "阅读知识卡",
+            "href": "/resources?course=1&knowledge=1&resource=1"
+          },
+          {
+            "kind": "practice",
+            "title": "针对性练习",
+            "href": "/practice?course=1&knowledge=1&question=8"
+          },
+          {
+            "kind": "check",
+            "title": "辅导与理解检查",
+            "href": "/tutor?course=1&knowledge=1&question=8"
+          },
+          {
+            "kind": "review",
+            "title": "间隔复测",
+            "href": "/review?course=1&knowledge=1"
+          }
+        ],
+        "goal": true,
+        "teacher_task": true,
+        "due": true,
+        "wrong": 1,
+        "prerequisite_ids": [],
+        "next_review_at": "2026-11-04T22:43:29.271967+00:00",
+        "expected_change": "完成后补充独立作答证据；以实际结果更新状态",
+        "estimated_minutes": 5,
+        "target": {
+          "question_id": 8,
+          "completion_kind": "attempt"
+        },
+        "in_current_plan": true,
+        "path_position": 1,
+        "path_plan": {
+          "method": "PATH-G",
+          "knowledge_ids": [
+            1,
+            2,
+            18,
+            4,
+            3,
+            16,
+            8
+          ],
+          "minutes": 37,
+          "utility": 50.6421,
+          "components": {
+            "1": {
+              "need": 2.6972369392954927,
+              "uncertainty": 1.0095611852237962,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "2": {
+              "need": 2.2498877255146033,
+              "uncertainty": 0.822658094586888,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "3": {
+              "need": 2.3732885422115437,
+              "uncertainty": 1.1736674712629114,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "4": {
+              "need": 3.270617862513977,
+              "uncertainty": 0.7193337987821302,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 2
+            },
+            "5": {
+              "need": 2.8656483024491557,
+              "uncertainty": 0.89373265589915,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "6": {
+              "need": 1.9567815315016888,
+              "uncertainty": 1.1005871504101816,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "7": {
+              "need": 2.213559341605845,
+              "uncertainty": 1.153589720938494,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "8": {
+              "need": 2.1871252138637605,
+              "uncertainty": 1.0681901347181961,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "11": {
+              "need": 3.2203791004844167,
+              "uncertainty": 0.7627148094228923,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "12": {
+              "need": 3.2223349835239263,
+              "uncertainty": 0.7610398496712736,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "13": {
+              "need": 2.327090307081706,
+              "uncertainty": 1.1689281611537947,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "14": {
+              "need": 2.3211485024474072,
+              "uncertainty": 1.1682545429191065,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "15": {
+              "need": 2.1734153168867785,
+              "uncertainty": 1.1469453031846242,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "16": {
+              "need": 3.1760717983535542,
+              "uncertainty": 0.8003575669310234,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "17": {
+              "need": 3.2322996325200086,
+              "uncertainty": 0.7524889340071987,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "18": {
+              "need": 2.461834453349318,
+              "uncertainty": 1.166926233739212,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "19": {
+              "need": 2.290884994478111,
+              "uncertainty": 1.1645997800976904,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "20": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "21": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "22": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "23": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "24": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "25": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "26": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "27": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "28": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "29": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "30": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "31": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "32": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "33": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            }
+          },
+          "budget": 40,
+          "expanded": 1067,
+          "beam_width": 24,
+          "budget_policy": "活跃目标最大日投入；无目标为30分钟"
+        },
+        "utility_components": {
+          "need": 2.6972369392954927,
+          "uncertainty": 1.0095611852237962,
+          "goal": 3,
+          "teacher": 3,
+          "due": 2,
+          "mistakes": 1
+        }
+      },
+      {
+        "id": "review-2",
+        "course_id": 1,
+        "knowledge_id": 2,
+        "title": "栈与队列",
+        "reason": "1 道错题待订正；先巩固数组与链表；对应目标：独立追踪栈与队列的交错操作",
+        "kind": "review",
+        "href": "/review?course=1&knowledge=2&question=1",
+        "priority": 30,
+        "mastery": 44,
+        "evidence": {
+          "value": 0.43752806862134924,
+          "alpha": 5.063306641570173,
+          "beta": 6.509223224969933,
+          "effective_count": 7.572529866540108,
+          "lower": 0.16330870375905326,
+          "upper": 0.7117474334836452,
+          "sufficiency": "证据较充分",
+          "retention": 0.9999999990937207,
+          "days_since_evidence": 0,
+          "observed": true,
+          "model": "K-TRACE-v3"
+        },
+        "steps": [
+          {
+            "kind": "prerequisite",
+            "title": "先修：数组与链表",
+            "href": "/graph?course=1&knowledge=1"
+          },
+          {
+            "kind": "video",
+            "title": "观看关键片段",
+            "href": "/video?course=1&knowledge=2&resource=101&t=0.0"
+          },
+          {
+            "kind": "practice",
+            "title": "针对性练习",
+            "href": "/practice?course=1&knowledge=2&question=1"
+          },
+          {
+            "kind": "check",
+            "title": "辅导与理解检查",
+            "href": "/tutor?course=1&knowledge=2&question=1"
+          },
+          {
+            "kind": "review",
+            "title": "间隔复测",
+            "href": "/review?course=1&knowledge=2"
+          }
+        ],
+        "goal": true,
+        "teacher_task": true,
+        "due": true,
+        "wrong": 1,
+        "prerequisite_ids": [
+          1
+        ],
+        "next_review_at": "2026-11-13T07:17:12.042755+00:00",
+        "expected_change": "完成后补充独立作答证据；以实际结果更新状态",
+        "estimated_minutes": 5,
+        "target": {
+          "question_id": 1,
+          "completion_kind": "attempt"
+        },
+        "in_current_plan": true,
+        "path_position": 2,
+        "path_plan": {
+          "method": "PATH-G",
+          "knowledge_ids": [
+            1,
+            2,
+            18,
+            4,
+            3,
+            16,
+            8
+          ],
+          "minutes": 37,
+          "utility": 50.6421,
+          "components": {
+            "1": {
+              "need": 2.6972369392954927,
+              "uncertainty": 1.0095611852237962,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "2": {
+              "need": 2.2498877255146033,
+              "uncertainty": 0.822658094586888,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "3": {
+              "need": 2.3732885422115437,
+              "uncertainty": 1.1736674712629114,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "4": {
+              "need": 3.270617862513977,
+              "uncertainty": 0.7193337987821302,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 2
+            },
+            "5": {
+              "need": 2.8656483024491557,
+              "uncertainty": 0.89373265589915,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "6": {
+              "need": 1.9567815315016888,
+              "uncertainty": 1.1005871504101816,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "7": {
+              "need": 2.213559341605845,
+              "uncertainty": 1.153589720938494,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "8": {
+              "need": 2.1871252138637605,
+              "uncertainty": 1.0681901347181961,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "11": {
+              "need": 3.2203791004844167,
+              "uncertainty": 0.7627148094228923,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "12": {
+              "need": 3.2223349835239263,
+              "uncertainty": 0.7610398496712736,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "13": {
+              "need": 2.327090307081706,
+              "uncertainty": 1.1689281611537947,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "14": {
+              "need": 2.3211485024474072,
+              "uncertainty": 1.1682545429191065,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "15": {
+              "need": 2.1734153168867785,
+              "uncertainty": 1.1469453031846242,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "16": {
+              "need": 3.1760717983535542,
+              "uncertainty": 0.8003575669310234,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "17": {
+              "need": 3.2322996325200086,
+              "uncertainty": 0.7524889340071987,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "18": {
+              "need": 2.461834453349318,
+              "uncertainty": 1.166926233739212,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "19": {
+              "need": 2.290884994478111,
+              "uncertainty": 1.1645997800976904,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "20": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "21": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "22": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "23": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "24": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "25": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "26": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "27": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "28": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "29": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "30": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "31": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "32": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "33": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            }
+          },
+          "budget": 40,
+          "expanded": 1067,
+          "beam_width": 24,
+          "budget_policy": "活跃目标最大日投入；无目标为30分钟"
+        },
+        "utility_components": {
+          "need": 2.2498877255146033,
+          "uncertainty": 0.822658094586888,
+          "goal": 3,
+          "teacher": 3,
+          "due": 2,
+          "mistakes": 1
+        }
+      },
+      {
+        "id": "review-18",
+        "course_id": 1,
+        "knowledge_id": 18,
+        "title": "递归终止条件",
+        "reason": "复习已到期",
+        "kind": "review",
+        "href": "/review?course=1&knowledge=18&question=25",
+        "priority": 29,
+        "mastery": 38,
+        "evidence": {
+          "value": 0.38454138666267046,
+          "alpha": 1.8744138679487714,
+          "beta": 3,
+          "effective_count": 0.8744138679487714,
+          "lower": 0,
+          "upper": 0.7779508224928079,
+          "sufficiency": "待补充证据",
+          "retention": 0.8744138679487714,
+          "days_since_evidence": 5.81,
+          "observed": true,
+          "model": "K-TRACE-v3"
+        },
+        "steps": [
+          {
+            "kind": "document",
+            "title": "阅读知识卡",
+            "href": "/resources?course=1&knowledge=18&resource=110"
+          },
+          {
+            "kind": "practice",
+            "title": "针对性练习",
+            "href": "/practice?course=1&knowledge=18&question=25"
+          },
+          {
+            "kind": "check",
+            "title": "辅导与理解检查",
+            "href": "/tutor?course=1&knowledge=18&question=25"
+          },
+          {
+            "kind": "review",
+            "title": "间隔复测",
+            "href": "/review?course=1&knowledge=18"
+          }
+        ],
+        "goal": false,
+        "teacher_task": false,
+        "due": true,
+        "wrong": 0,
+        "prerequisite_ids": [],
+        "next_review_at": "2026-11-12T19:19:27.330546+00:00",
+        "expected_change": "完成后补充独立作答证据；以实际结果更新状态",
+        "estimated_minutes": 5,
+        "target": {
+          "question_id": 25,
+          "completion_kind": "attempt"
+        },
+        "in_current_plan": true,
+        "path_position": 3,
+        "path_plan": {
+          "method": "PATH-G",
+          "knowledge_ids": [
+            1,
+            2,
+            18,
+            4,
+            3,
+            16,
+            8
+          ],
+          "minutes": 37,
+          "utility": 50.6421,
+          "components": {
+            "1": {
+              "need": 2.6972369392954927,
+              "uncertainty": 1.0095611852237962,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "2": {
+              "need": 2.2498877255146033,
+              "uncertainty": 0.822658094586888,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "3": {
+              "need": 2.3732885422115437,
+              "uncertainty": 1.1736674712629114,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "4": {
+              "need": 3.270617862513977,
+              "uncertainty": 0.7193337987821302,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 2
+            },
+            "5": {
+              "need": 2.8656483024491557,
+              "uncertainty": 0.89373265589915,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 1
+            },
+            "6": {
+              "need": 1.9567815315016888,
+              "uncertainty": 1.1005871504101816,
+              "goal": 3,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "7": {
+              "need": 2.213559341605845,
+              "uncertainty": 1.153589720938494,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "8": {
+              "need": 2.1871252138637605,
+              "uncertainty": 1.0681901347181961,
+              "goal": 0,
+              "teacher": 3,
+              "due": 2,
+              "mistakes": 0
+            },
+            "11": {
+              "need": 3.2203791004844167,
+              "uncertainty": 0.7627148094228923,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "12": {
+              "need": 3.2223349835239263,
+              "uncertainty": 0.7610398496712736,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "13": {
+              "need": 2.327090307081706,
+              "uncertainty": 1.1689281611537947,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "14": {
+              "need": 2.3211485024474072,
+              "uncertainty": 1.1682545429191065,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "15": {
+              "need": 2.1734153168867785,
+              "uncertainty": 1.1469453031846242,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "16": {
+              "need": 3.1760717983535542,
+              "uncertainty": 0.8003575669310234,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "17": {
+              "need": 3.2322996325200086,
+              "uncertainty": 0.7524889340071987,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 1
+            },
+            "18": {
+              "need": 2.461834453349318,
+              "uncertainty": 1.166926233739212,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "19": {
+              "need": 2.290884994478111,
+              "uncertainty": 1.1645997800976904,
+              "goal": 0,
+              "teacher": 0,
+              "due": 2,
+              "mistakes": 0
+            },
+            "20": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "21": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "22": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "23": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "24": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "25": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "26": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "27": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "28": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "29": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "30": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "31": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "32": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            },
+            "33": {
+              "need": 3,
+              "uncertainty": 0.9443285518924902,
+              "goal": 0,
+              "teacher": 0,
+              "due": 0,
+              "mistakes": 0
+            }
+          },
+          "budget": 40,
+          "expanded": 1067,
+          "beam_width": 24,
+          "budget_policy": "活跃目标最大日投入；无目标为30分钟"
+        },
+        "utility_components": {
+          "need": 2.461834453349318,
+          "uncertainty": 1.166926233739212,
+          "goal": 0,
+          "teacher": 0,
+          "due": 2,
+          "mistakes": 0
+        }
+      }
+    ]
+  },
+  "teacher_results": [
+    {
+      "id": 2,
+      "name": "陈星河",
+      "comparison": [
+        {
+          "knowledge_id": 2,
+          "title": "栈与队列",
+          "baseline": 38.4,
+          "current": 43.8,
+          "delta": 5.3,
+          "new_evidence": 1,
+          "evidence": {
+            "value": 0.43752584231217384,
+            "alpha": 5.063167082729923,
+            "beta": 6.5091026967483,
+            "effective_count": 7.572269779478227,
+            "lower": 0.16330379600673373,
+            "upper": 0.711747888617614,
+            "sufficiency": "证据较充分",
+            "retention": 0.9999656529681551,
+            "days_since_evidence": 0,
+            "observed": true,
+            "model": "K-TRACE-v3"
+          }
+        }
+      ],
+      "interpretation": "任务完成与状态变化分别展示；状态对照不等同教学效果证实",
+      "completed": true,
+      "completed_count": 1,
+      "score": 100,
+      "attempts": [
+        {
+          "id": 2441,
+          "student_id": 2,
+          "question_id": 11,
+          "assignment_id": 12,
+          "answer": "1",
+          "correct": 1,
+          "score": 100,
+          "hints_used": 0,
+          "error_type": "",
+          "review_status": "automatic",
+          "feedback": "",
+          "created_at": "2026-11-17T14:43:29.146276+00:00"
+        }
+      ]
+    }
+  ],
+  "next_assignment": {
+    "id": 13,
+    "course_id": 1,
+    "class_id": 1,
+    "teacher_id": 1,
+    "knowledge_id": null,
+    "title": "栈与队列后续巩固",
+    "description": "",
+    "question_ids": [
+      1
+    ],
+    "student_ids": [],
+    "due_at": null,
+    "status": "published",
+    "created_at": "2026-11-17 14:45:45",
+    "completed": false,
+    "completed_count": 0,
+    "submission_count": 0
+  },
+  "saved_lesson": {
+    "resource_id": 168,
+    "already_saved": true
+  }
+}

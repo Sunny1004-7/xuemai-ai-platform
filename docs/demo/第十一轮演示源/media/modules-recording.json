@@ -1,0 +1,101 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://5:14",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 943,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "student-dashboard",
+      "at": 1.181
+    },
+    {
+      "name": "student-plan",
+      "at": 12.192
+    },
+    {
+      "name": "student-video",
+      "at": 30.208
+    },
+    {
+      "name": "student-resources",
+      "at": 43.51
+    },
+    {
+      "name": "student-graph",
+      "at": 52.822
+    },
+    {
+      "name": "student-practice",
+      "at": 72.827
+    },
+    {
+      "name": "student-review",
+      "at": 91.841
+    },
+    {
+      "name": "student-experiments",
+      "at": 103.842
+    },
+    {
+      "name": "student-tutor",
+      "at": 119.85
+    },
+    {
+      "name": "student-classroom",
+      "at": 142.857
+    },
+    {
+      "name": "teacher-dashboard",
+      "at": 152.159
+    },
+    {
+      "name": "teacher-manage",
+      "at": 161.167
+    },
+    {
+      "name": "teacher-resources",
+      "at": 174.185
+    },
+    {
+      "name": "teacher-graph",
+      "at": 186.573
+    },
+    {
+      "name": "teacher-video",
+      "at": 195.964
+    },
+    {
+      "name": "teacher-practice",
+      "at": 205.337
+    },
+    {
+      "name": "teacher-classroom",
+      "at": 229.348
+    },
+    {
+      "name": "teacher-analytics",
+      "at": 238.356
+    },
+    {
+      "name": "teacher-teacher-ai",
+      "at": 259.374
+    }
+  ],
+  "elapsed_seconds": 282.3828119
+}

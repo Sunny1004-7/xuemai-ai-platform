@@ -1,0 +1,114 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://6:8",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "screenPixelRatio": 1,
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 943,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "intro",
+      "at": 1.191
+    },
+    {
+      "name": "pain",
+      "at": 15.209
+    },
+    {
+      "name": "framework",
+      "at": 32.254
+    },
+    {
+      "name": "contract-prompt",
+      "at": 56.283
+    },
+    {
+      "name": "contract-feedback",
+      "at": 63.549
+    },
+    {
+      "name": "contract-failure",
+      "at": 70.822
+    },
+    {
+      "name": "contract-diff",
+      "at": 78.094
+    },
+    {
+      "name": "contract-verification",
+      "at": 85.359
+    },
+    {
+      "name": "contract-commit",
+      "at": 92.618
+    },
+    {
+      "name": "graph-prompt",
+      "at": 99.884
+    },
+    {
+      "name": "graph-failure",
+      "at": 107.141
+    },
+    {
+      "name": "graph-diff",
+      "at": 114.404
+    },
+    {
+      "name": "graph-inputs",
+      "at": 121.667
+    },
+    {
+      "name": "graph-verification",
+      "at": 128.929
+    },
+    {
+      "name": "graph-commit",
+      "at": 136.187
+    },
+    {
+      "name": "teacher-prompt",
+      "at": 143.457
+    },
+    {
+      "name": "teacher-failure",
+      "at": 150.725
+    },
+    {
+      "name": "teacher-diff",
+      "at": 157.991
+    },
+    {
+      "name": "teacher-verification",
+      "at": 165.259
+    },
+    {
+      "name": "teacher-regression",
+      "at": 172.529
+    },
+    {
+      "name": "teacher-commit",
+      "at": 179.783
+    },
+    {
+      "name": "outro",
+      "at": 187.052
+    }
+  ],
+  "elapsed_seconds": 199.0714095
+}

@@ -1,0 +1,47 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "content_bottom": 943,
+  "subtitle_region": [
+    943,
+    1080
+  ],
+  "subtitle_center": [
+    960,
+    1011.5
+  ],
+  "glyph_center_correction": 0,
+  "observations": [
+    {
+      "recording": "modules",
+      "viewport": {
+        "width": 1920,
+        "height": 943,
+        "dpr": 1,
+        "zoom": "1"
+      },
+      "native_track_height": 1000,
+      "matched_top": 0,
+      "content_bottom": 943,
+      "mean_rgb_error": 1.9674,
+      "sample_time": 7.4648551000000225,
+      "reference": "modules-student-dashboard.png"
+    },
+    {
+      "recording": "boards",
+      "viewport": {
+        "width": 1920,
+        "height": 943,
+        "dpr": 1,
+        "zoom": "1"
+      },
+      "native_track_height": 1000,
+      "matched_top": 0,
+      "content_bottom": 943,
+      "mean_rgb_error": 1.311,
+      "sample_time": 34.482590500000015,
+      "reference": "boards-framework-full.png"
+    }
+  ],
+  "method": "实际原生视频与同状态完整视口截图比较，保持画面原尺寸；字幕在共同底部留白中心"
+}

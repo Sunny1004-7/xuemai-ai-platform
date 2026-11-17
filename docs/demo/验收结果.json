@@ -1,28 +1,28 @@
 {
   "output": "学脉XueMai-演示视频-含旁白.mp4",
-  "duration_seconds": 460.47,
+  "duration_seconds": 475.5,
   "resolution": "1920x1080",
   "fps": 30.0,
   "video_codec": "H.264",
   "audio_codec": "AAC",
   "full_decode_passed": true,
-  "development_record_replay_seconds": 135,
+  "development_record_replay_seconds": 130.5,
   "development_records_dates": [
     "2026-11-03",
     "2026-11-12"
   ],
   "narration": "云希中文神经合成人声，完整语段",
-  "narration_segments": 21,
+  "narration_segments": 26,
   "narration_timeline_no_overlap": true,
   "subtitle_timing": "同次TTS WordBoundary经音频速度换算",
-  "audio_mean_db": -24.9,
-  "audio_peak_db": -1.9,
+  "audio_mean_db": -25.0,
+  "audio_peak_db": -2.5,
   "audio_auditory_review": "完整解码与语段边界检查已完成，自动语音转写另存核验记录",
   "human_listening_review": false,
   "subtitles_burned_in": true,
-  "subtitle_entries": 70,
+  "subtitle_entries": 77,
   "real_api_calls_during_recording": 0,
   "reused_real_api_calls": 2,
   "subtitle_background": "透明，无底色块",
-  "sha256": "d33eda0946066c7995f113704f3f87bc57bb936ae89dce2f09a804d5f11ba603"
+  "sha256": "c798f9e57e7d00d95c8542f0b71ba3dd9899041d32764afa61a2b5f6c735fee9"
 }
