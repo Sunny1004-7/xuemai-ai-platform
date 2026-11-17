@@ -1,0 +1,138 @@
+{
+  "changed_scenes": [
+    {
+      "scene_id": "intro",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "student-tutor",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "teacher-resources",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "teacher-teacher-ai",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "contract-prompt",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "contract-feedback",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "contract-diff",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "graph-diff",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "teacher-diff",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    },
+    {
+      "scene_id": "outro",
+      "ai_occurrences": 1,
+      "letters_separate": true
+    }
+  ],
+  "unchanged_scenes": 33,
+  "caption_text_unchanged": true,
+  "scene_timeline_unchanged": true,
+  "max_tempo": 1.02236,
+  "targeted_asr_recognized_ai": 10,
+  "targeted_asr_segments": [
+    {
+      "scene_id": "intro",
+      "script": "各位评委老师好。下面向各位老师介绍我的作品学脉，一套面向学生学习和教师教学的AI个性化智慧教育平台。",
+      "transcribed": "各位评伪老师好,下面向各位老师介绍我的作品学脉,一套面向学生学习和教师教学的AI个性化智慧教育平台。"
+    },
+    {
+      "scene_id": "student-tutor",
+      "script": "接下来是AI学习伙伴。这里回看已保存的真实辅导，问题、附件引用和理解检查围绕同一知识展开。学生能够打开原资料核对解释，再通过独立回答继续学习；模型和语音入口也集中在这里。",
+      "transcribed": "接下来是《AI学习伙伴》,这里回看以保存的真实辅导,问题,附件引用和理解检查围绕同意知识展开。学生能够打开原资料核对解释,再通过独立回答继续学习,模型和语音入口也集中在这里。"
+    },
+    {
+      "scene_id": "teacher-resources",
+      "script": "AI备课与资料集中保存讲义和教案。教师可以查看课程内容与版本，围绕教学目标组织学习材料。",
+      "transcribed": "AI 备课与资料,集中保存讲义和教案。教师可以查看课程内容与版本,围绕教学目标,组织学习材料。"
+    },
+    {
+      "scene_id": "teacher-teacher-ai",
+      "script": "最后是独立的AI教学助手。这里回看真实生成的讲评课方案，助手读取班级证据和教师目标，组织教学环节与分组练习。教师能够编辑并保存教案，再确认具体任务，使建议进入教学。",
+      "transcribed": "最后是独立的AI教学助手。这里回看真实生成的讲评课方案,助手读取班级证据和教师目标,组织教学环节与分组练习。教师能够编辑并保存教案,再确认具体任务,使建议进入教学。"
+    },
+    {
+      "scene_id": "contract-prompt",
+      "script": "下面回看AI协同开发，先看师生课程如何接通。",
+      "transcribed": "下面回看AI协同开发,先看师生课程如何接通。"
+    },
+    {
+      "scene_id": "contract-feedback",
+      "script": "我先说明登录和课程接口，AI据此连接页面、辅导和后端。",
+      "transcribed": "我先说明登陆和课程接口, AI 聚此连接页面,辅导和后端。"
+    },
+    {
+      "scene_id": "contract-diff",
+      "script": "AI根据报错检查写入语句，删去多出的一个占位符。",
+      "transcribed": "AI 根据抱错检查写入语句,删去多处的一个站位服。"
+    },
+    {
+      "scene_id": "graph-diff",
+      "script": "AI补充绕行搜索，让受阻的连线从节点之间的空隙通过。",
+      "transcribed": "AI 补充绕形搜索,让寿组的连线从节点之间的空隙通过。"
+    },
+    {
+      "scene_id": "teacher-diff",
+      "script": "AI调整判断顺序，先识别要写教案，再读取班级错题。",
+      "transcribed": "AI调整判的顺序,先识别要写交案,再读取班级错题。"
+    },
+    {
+      "scene_id": "outro",
+      "script": "以上是学脉的主要功能与AI协同开发过程。感谢各位评委老师的观看与指导。",
+      "transcribed": "以上是学脉的主要功能与AI 协同开发过程。感谢各位评伪老师的观看与指导。"
+    }
+  ],
+  "picture_checks": [
+    {
+      "seconds": 6,
+      "picture_mean_difference": 0.0
+    },
+    {
+      "seconds": 12,
+      "picture_mean_difference": 0.0
+    },
+    {
+      "seconds": 117,
+      "picture_mean_difference": 0.0
+    },
+    {
+      "seconds": 251,
+      "picture_mean_difference": 0.0
+    },
+    {
+      "seconds": 381,
+      "picture_mean_difference": 0.0
+    }
+  ],
+  "pronunciation_tests_passed": 2,
+  "video_seconds": 477.966667,
+  "video_full_decode": true,
+  "video_bytes": 13831526,
+  "new_deepseek_requests": 0
+}
