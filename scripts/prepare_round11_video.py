@@ -25,7 +25,9 @@ def main():
     (project / 'scenes.json').write_text(json.dumps(scenes, ensure_ascii=False, indent=2) + '\n', encoding='utf8', newline='\n')
     (ROOT / 'scripts/demo-scenes.json').write_text(json.dumps(scenes, ensure_ascii=False, indent=2) + '\n', encoding='utf8', newline='\n')
     facts = json.loads((ROOT / 'docs/submission-facts.json').read_text('utf8'))
-    (project / 'product.json').write_text(json.dumps(facts, ensure_ascii=False, indent=2) + '\n', encoding='utf8', newline='\n')
+    product_fields = ['product', 'subtitle', 'version', 'track', 'author', 'focus', 'methods', 'method_definitions']
+    product = {key: facts[key] for key in product_fields}
+    (project / 'product.json').write_text(json.dumps(product, ensure_ascii=False, indent=2) + '\n', encoding='utf8', newline='\n')
     rows = ['# 模块、镜头与旁白对应', '', '| 场景 | 身份与模块 | 路由 | 时间（秒） | 实际操作 | 结果 | 讲解 |', '|---|---|---|---|---|---|---|']
     for scene in scenes:
         rows.append(f'| {scene["scene_id"]} | {scene["role"]}／{scene["name"]} | {scene["route"] or "画板与历史记录"} | {scene["start"]}—{scene["start"]+scene["duration"]} | {scene.get("operation", "连续展示")} | {scene.get("expected_result", "对应讲述内容")} | {scene["text"]} |')

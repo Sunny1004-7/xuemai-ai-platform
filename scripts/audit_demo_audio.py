@@ -1,5 +1,4 @@
 """以本地语音识别回验正式旁白，并保留原始转写与时间轴检查。"""
-import hashlib
 import json
 from pathlib import Path
 import re

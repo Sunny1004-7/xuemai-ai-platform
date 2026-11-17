@@ -1,7 +1,6 @@
 """按整段旁白时间轴合入声音与透明单行字幕。"""
 import json
 from pathlib import Path
-import hashlib
 import re
 import subprocess
 import os
@@ -59,6 +58,7 @@ def build():
     segments=json.loads(((PROJECT/'audio' if LATEST else local)/'segments.json').read_text(encoding='utf8'))
     source=(PROJECT/'video-unvoiced.mp4') if ROUND>=12 else ROOT/'最终参赛提交材料/学脉XueMai-演示视频.mp4'
     target=ROOT/'最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
+    encoded_target=local/target.name
     groups=[]
     for start in range(0,len(segments),12):
         command=[FFMPEG,'-y','-loglevel','error']
@@ -96,8 +96,10 @@ def build():
         (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
     if ROUND == CURRENT['round']:
         (ROOT/'docs/demo/学脉XueMai-演示字幕.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
-    subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(source),'-i',str(local/'complete.wav'),'-vf','ass=subtitles.ass','-map','0:v','-map','1:a','-c:v','libx264','-preset','fast','-crf','22','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(target)],cwd=local,check=True)
-    print(json.dumps(inspect_output(target,segments),ensure_ascii=False))
+    subprocess.run([FFMPEG,'-y','-loglevel','error','-i',str(source),'-i',str(local/'complete.wav'),'-vf','ass=subtitles.ass','-map','0:v','-map','1:a','-c:v','libx264','-preset','fast','-crf','22','-c:a','aac','-b:a','160k','-t',str(DURATION),'-movflags','+faststart',str(encoded_target)],cwd=local,check=True)
+    result=inspect_output(encoded_target,segments)
+    os.replace(encoded_target,target)
+    print(json.dumps(result,ensure_ascii=False))
     if LATEST:
         import shutil
         shutil.copy2(local/'complete.wav', PROJECT/'audio/narration-complete.wav')

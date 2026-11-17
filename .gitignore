@@ -31,3 +31,8 @@ Thumbs.db
 # 用户提供的设计参考资料
 /供参考学习的优秀智慧平台UI截图.zip
 /供参考学习的优秀智慧平台前端代码.zip
+
+# 当前视频可从压缩配音和连续素材重建的工作文件
+/docs/demo/第十二轮演示源/audio/*.wav
+/docs/demo/第十二轮演示源/video-unvoiced.mp4
+/docs/demo/第十二轮演示源/验收关键帧/

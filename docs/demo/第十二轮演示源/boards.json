@@ -332,7 +332,7 @@
     "case_name": "让教师拿到要求的教案",
     "step_index": 1,
     "case_index": 3,
-    "excerpt": "assert result['teaching']['task'] == 'design'\nAssertionError: 'analysis' != 'design'\n\n1 failed, 1 passed in 21.52s",
+    "excerpt": ">       assert result['teaching']['task'] == 'design'\nE       AssertionError: assert 'analysis' == 'design'\n\n1 failed, 1 passed in 21.52s",
     "evidence_kind": "当时的专项测试失败"
   },
   {
@@ -404,7 +404,7 @@
     "case_name": "让教师拿到要求的教案",
     "step_index": 4,
     "case_index": 3,
-    "excerpt": "124 passed in 230.05s\n\n31 passed (1.8m)\n",
+    "excerpt": "124 passed in 230.05s (0:03:50)\n  31 passed (1.8m)",
     "evidence_kind": "当时的完整回归记录"
   },
   {

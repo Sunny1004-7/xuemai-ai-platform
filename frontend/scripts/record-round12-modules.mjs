@@ -192,6 +192,7 @@ try {
     if (await page.getByRole('dialog').count()) await closeDialog()
     if (authentication) {
       if (await page.locator('.profile').isVisible()) await click(page.locator('.profile'))
+      await page.goto(base + '/')
       await click(page.getByRole('button', { name: scene.identity === 'teacher' ? '教师端' : '学生端', exact: true }))
       await expect(page.locator('.login-form')).toBeVisible()
     } else {

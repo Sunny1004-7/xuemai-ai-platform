@@ -1,0 +1,193 @@
+{
+  "capture": "Chromium getDisplayMedia标签页媒体流 / MediaRecorder VP8",
+  "requested_fps": 30,
+  "track_settings": {
+    "aspectRatio": 1.92,
+    "cursor": "motion",
+    "deviceId": "web-contents-media-stream://5:11",
+    "displaySurface": "browser",
+    "frameRate": 30,
+    "height": 1000,
+    "logicalSurface": true,
+    "resizeMode": "crop-and-scale",
+    "width": 1920
+  },
+  "native_file": "continuous.webm",
+  "metrics": {
+    "width": 1920,
+    "height": 943,
+    "dpr": 1,
+    "zoom": "1"
+  },
+  "events": [
+    {
+      "name": "student-login",
+      "at": 4.888
+    },
+    {
+      "name": "student-login:结束保护",
+      "at": 13.9
+    },
+    {
+      "name": "student-dashboard",
+      "at": 15.161
+    },
+    {
+      "name": "student-dashboard:结束保护",
+      "at": 27.173
+    },
+    {
+      "name": "student-plan",
+      "at": 29.1
+    },
+    {
+      "name": "student-plan:结束保护",
+      "at": 48.113
+    },
+    {
+      "name": "student-video",
+      "at": 49.696
+    },
+    {
+      "name": "student-video:结束保护",
+      "at": 63.704
+    },
+    {
+      "name": "student-resources",
+      "at": 65.581
+    },
+    {
+      "name": "student-resources:结束保护",
+      "at": 75.601
+    },
+    {
+      "name": "student-graph",
+      "at": 77.514
+    },
+    {
+      "name": "student-graph:结束保护",
+      "at": 98.524
+    },
+    {
+      "name": "student-practice",
+      "at": 100.082
+    },
+    {
+      "name": "student-practice:结束保护",
+      "at": 120.108
+    },
+    {
+      "name": "student-review",
+      "at": 121.586
+    },
+    {
+      "name": "student-review:结束保护",
+      "at": 134.6
+    },
+    {
+      "name": "student-experiments",
+      "at": 136.164
+    },
+    {
+      "name": "student-experiments:结束保护",
+      "at": 153.186
+    },
+    {
+      "name": "student-tutor",
+      "at": 154.675
+    },
+    {
+      "name": "student-tutor:结束保护",
+      "at": 178.684
+    },
+    {
+      "name": "student-classroom",
+      "at": 179.908
+    },
+    {
+      "name": "student-classroom:结束保护",
+      "at": 188.927
+    },
+    {
+      "name": "teacher-login",
+      "at": 190.806
+    },
+    {
+      "name": "teacher-login:结束保护",
+      "at": 199.819
+    },
+    {
+      "name": "teacher-dashboard",
+      "at": 201.04
+    },
+    {
+      "name": "teacher-dashboard:结束保护",
+      "at": 211.07
+    },
+    {
+      "name": "teacher-manage",
+      "at": 212.271
+    },
+    {
+      "name": "teacher-manage:结束保护",
+      "at": 226.285
+    },
+    {
+      "name": "teacher-resources",
+      "at": 227.696
+    },
+    {
+      "name": "teacher-resources:结束保护",
+      "at": 240.709
+    },
+    {
+      "name": "teacher-graph",
+      "at": 242.344
+    },
+    {
+      "name": "teacher-graph:结束保护",
+      "at": 252.367
+    },
+    {
+      "name": "teacher-video",
+      "at": 253.992
+    },
+    {
+      "name": "teacher-video:结束保护",
+      "at": 264.013
+    },
+    {
+      "name": "teacher-practice",
+      "at": 265.64
+    },
+    {
+      "name": "teacher-practice:结束保护",
+      "at": 290.648
+    },
+    {
+      "name": "teacher-classroom",
+      "at": 291.756
+    },
+    {
+      "name": "teacher-classroom:结束保护",
+      "at": 301.786
+    },
+    {
+      "name": "teacher-analytics",
+      "at": 303.327
+    },
+    {
+      "name": "teacher-analytics:结束保护",
+      "at": 325.348
+    },
+    {
+      "name": "teacher-teacher-ai",
+      "at": 326.747
+    },
+    {
+      "name": "teacher-teacher-ai:结束保护",
+      "at": 350.772
+    }
+  ],
+  "elapsed_seconds": 350.56119739999997
+}

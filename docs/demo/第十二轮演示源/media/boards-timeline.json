@@ -1,0 +1,178 @@
+[
+  {
+    "scene_id": "intro",
+    "segment_id": "intro",
+    "capture_at": 2.298,
+    "valid_until": 15.33,
+    "duration": 12,
+    "screenshot": "intro.png"
+  },
+  {
+    "scene_id": "context",
+    "segment_id": "context",
+    "capture_at": 16.261,
+    "valid_until": 31.27,
+    "duration": 14,
+    "screenshot": "context.png"
+  },
+  {
+    "scene_id": "framework",
+    "segment_id": "framework",
+    "capture_at": 32.212,
+    "valid_until": 55.22,
+    "duration": 22,
+    "screenshot": "framework.png"
+  },
+  {
+    "scene_id": "contract-prompt",
+    "segment_id": "contract-prompt",
+    "capture_at": 56.172,
+    "valid_until": 64.186,
+    "duration": 7,
+    "screenshot": "contract-prompt.png"
+  },
+  {
+    "scene_id": "contract-feedback",
+    "segment_id": "contract-feedback",
+    "capture_at": 65.106,
+    "valid_until": 73.125,
+    "duration": 7,
+    "screenshot": "contract-feedback.png"
+  },
+  {
+    "scene_id": "contract-failure",
+    "segment_id": "contract-failure",
+    "capture_at": 74.045,
+    "valid_until": 82.072,
+    "duration": 7,
+    "screenshot": "contract-failure.png"
+  },
+  {
+    "scene_id": "contract-diff",
+    "segment_id": "contract-diff",
+    "capture_at": 82.99,
+    "valid_until": 91.002,
+    "duration": 7,
+    "screenshot": "contract-diff.png"
+  },
+  {
+    "scene_id": "contract-verification",
+    "segment_id": "contract-verification",
+    "capture_at": 91.923,
+    "valid_until": 99.952,
+    "duration": 7,
+    "screenshot": "contract-verification.png"
+  },
+  {
+    "scene_id": "contract-commit",
+    "segment_id": "contract-commit",
+    "capture_at": 100.874,
+    "valid_until": 108.902,
+    "duration": 7,
+    "screenshot": "contract-commit.png"
+  },
+  {
+    "scene_id": "graph-prompt",
+    "segment_id": "graph-prompt",
+    "capture_at": 109.834,
+    "valid_until": 117.846,
+    "duration": 7,
+    "screenshot": "graph-prompt.png"
+  },
+  {
+    "scene_id": "graph-failure",
+    "segment_id": "graph-failure",
+    "capture_at": 118.773,
+    "valid_until": 126.788,
+    "duration": 7,
+    "screenshot": "graph-failure.png"
+  },
+  {
+    "scene_id": "graph-diff",
+    "segment_id": "graph-diff",
+    "capture_at": 127.709,
+    "valid_until": 135.719,
+    "duration": 7,
+    "screenshot": "graph-diff.png"
+  },
+  {
+    "scene_id": "graph-inputs",
+    "segment_id": "graph-inputs",
+    "capture_at": 136.642,
+    "valid_until": 144.66,
+    "duration": 7,
+    "screenshot": "graph-inputs.png"
+  },
+  {
+    "scene_id": "graph-verification",
+    "segment_id": "graph-verification",
+    "capture_at": 145.58,
+    "valid_until": 153.596,
+    "duration": 7,
+    "screenshot": "graph-verification.png"
+  },
+  {
+    "scene_id": "graph-commit",
+    "segment_id": "graph-commit",
+    "capture_at": 154.517,
+    "valid_until": 162.546,
+    "duration": 7,
+    "screenshot": "graph-commit.png"
+  },
+  {
+    "scene_id": "teacher-prompt",
+    "segment_id": "teacher-prompt",
+    "capture_at": 163.47,
+    "valid_until": 171.483,
+    "duration": 7,
+    "screenshot": "teacher-prompt.png"
+  },
+  {
+    "scene_id": "teacher-failure",
+    "segment_id": "teacher-failure",
+    "capture_at": 172.407,
+    "valid_until": 180.437,
+    "duration": 7,
+    "screenshot": "teacher-failure.png"
+  },
+  {
+    "scene_id": "teacher-diff",
+    "segment_id": "teacher-diff",
+    "capture_at": 181.36,
+    "valid_until": 189.375,
+    "duration": 7,
+    "screenshot": "teacher-diff.png"
+  },
+  {
+    "scene_id": "teacher-verification",
+    "segment_id": "teacher-verification",
+    "capture_at": 190.298,
+    "valid_until": 198.314,
+    "duration": 7,
+    "screenshot": "teacher-verification.png"
+  },
+  {
+    "scene_id": "teacher-regression",
+    "segment_id": "teacher-regression",
+    "capture_at": 199.236,
+    "valid_until": 207.258,
+    "duration": 7,
+    "screenshot": "teacher-regression.png"
+  },
+  {
+    "scene_id": "teacher-commit",
+    "segment_id": "teacher-commit",
+    "capture_at": 208.171,
+    "valid_until": 216.189,
+    "duration": 7,
+    "screenshot": "teacher-commit.png"
+  },
+  {
+    "scene_id": "outro",
+    "segment_id": "outro",
+    "capture_at": 217.11,
+    "valid_until": 227.123,
+    "duration": 9,
+    "screenshot": "outro.png"
+  }
+]
