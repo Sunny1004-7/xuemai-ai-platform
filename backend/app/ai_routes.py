@@ -276,7 +276,7 @@ async def chat(request: ChatInput, user: User):
                 {"role": "user", "content": request.message}]
     if image_blocks(attachments):
         messages[-1]['content']=[{'type':'text','text':request.message},*image_blocks(attachments)]
-    marker=TEACH_MARKER if teacher else MARKER
+    marker='<!--XM_TEACH' if teacher else MARKER
     if teacher:
         messages[0]['content']+='\n教学目标与班级证据：'+json.dumps(plan,ensure_ascii=False)
         if plan['task'] in {'design','intervention','question','rubric'}:
@@ -303,12 +303,16 @@ async def chat(request: ChatInput, user: User):
             async for fragment in service.stream(messages, user_key=str(user["id"]), mock_content=mock_answer,max_tokens=1200 if teacher else 700):
                 content += fragment
                 boundary=content.find(marker)
+                if teacher and plan['task'] in {'design','intervention','question','rubric'}:
+                    fence=content.find('```json')
+                    if fence>=0:boundary=min(boundary,fence) if boundary>=0 else fence
                 safe_end=boundary if boundary>=0 else max(0,len(content)-len(marker))
                 if safe_end>emitted:
                     yield sse('delta',{'content':content[emitted:safe_end]})
                     emitted=safe_end
             artifact={}
-            visible,teaching=(content.partition(marker)[0].strip(),plan) if teacher else validate_selection(content,plan)
+            from .teacher_assistant import extract_teacher_payload
+            visible,teaching=(extract_teacher_payload(content)[0],plan) if teacher else validate_selection(content,plan)
             if len(visible)>emitted:
                 yield sse('delta',{'content':visible[emitted:]})
             with get_db() as db:

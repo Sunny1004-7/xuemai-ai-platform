@@ -16,6 +16,21 @@ router = APIRouter(prefix='/api/ai/teacher-drafts', tags=['教师教学草稿'])
 TEACH_MARKER = '<!--XM_TEACH:'
 
 
+def extract_teacher_payload(content):
+    """Accept a single explicit teaching envelope, then apply the normal business schema."""
+    marker=re.search(r'<!--\s*XM_TEACH\s*:?\s*',content)
+    if marker:
+        end=content.find('-->',marker.end())
+        if end<0:
+            return content[:marker.start()].strip(),None
+        return (content[:marker.start()]+content[end+3:]).strip(),content[marker.end():end].strip()
+    blocks=list(re.finditer(r'```json\s*\n([\s\S]*?)\n```',content))
+    if len(blocks)==1:
+        block=blocks[0]
+        return (content[:block.start()]+content[block.end():]).strip(),block[1].strip()
+    return content.strip(),None
+
+
 class LessonStep(BaseModel):
     title: str = Field(min_length=1, max_length=100)
     minutes: int = Field(ge=1, le=120)
@@ -108,11 +123,11 @@ def validate_draft(db, request, plan, payload):
 
 
 def finalize_teacher(db,user,request,plan,content,citations):
-    visible, _, raw=content.partition(TEACH_MARKER)
+    visible,raw=extract_teacher_payload(content) if plan['task'] in {'design','intervention','question','rubric'} else (content,'')
     artifact={}
     if plan['task'] in {'design','intervention','question','rubric'}:
         try:
-            payload=json.loads(raw.split('-->',1)[0])
+            payload=json.loads(raw or '')
             if plan['task'] in {'question','rubric'}:
                 from .ai_routes import QuestionDraft,RubricDraft
                 schema=QuestionDraft if plan['task']=='question' else RubricDraft
