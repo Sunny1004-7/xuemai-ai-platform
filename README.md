@@ -1,72 +1,33 @@
 # 学脉 XueMai
 
-**课程学习、个性化辅导与教学协作。**
+　　**课程学习、个性化辅导与教学协作。**
 
-西安交通大学 · 软件工程 · 刘嘉程  
-第九届传智杯 AI创新应用挑战赛 · 系统版本0.6.0
+　　西安交通大学 · 软件工程 · 刘嘉程  
+第九届传智杯 AI创新应用挑战赛
 
-课前，教师组织资料、知识结构与教学安排，学生查看目标和学习内容。课中，师生围绕课堂问题、回答与交互实验开展活动。课后，学生继续练习、辅导与复习，教师从具体作答识别困难，发布针对性任务并查看后续结果。学脉将这些活动连接到同一课程与学习证据，让每次反馈接上下一步行动。
+　　学脉是一套面向学生与教师的AI个性化智慧教育平台。学生可以把课程资料、视频、练习与答疑连接起来，逐步弄清自己的困难和下一步学习安排。教师可以从具体作答理解班级差异，组织教学内容、发布针对性任务，并持续查看完成结果。
 
-![学脉总体方法与教学协同框架](docs/figures/xuemai-framework.svg)
+<p align="center">
+  <img src="docs/figures/xuemai-framework.svg" alt="学脉总体方法与教学协同框架" width="900">
+</p>
 
-学生从原题进入课程辅导，结合资料引用、操作实验和理解检查继续学习。教师从知识矩阵追溯实际作答，由独立教学助手组织教学环节，编辑教案、审核任务，再查看同一批学生的完成结果。知识状态、路径规划、个人辅导、班级分层与教学编排分别承担明确职责。客观评分、课程权限与内容发布由业务服务执行。
+　　我们把个性化支持落实到能够直接进入的课程活动。知识状态综合得分、提示、重复作答与时间变化；学习规划同时考虑先修关系和可用时间；学生辅导通过资料引用与理解检查推进学习；教师助手则依据教学目标和班级证据形成可编辑方案。每次练习、审核和反馈都与原有课程对象保持关联，建议因而能够继续成为实际行动。
 
-当前以数据结构与算法、Python程序设计展示课程学习，分别提供31个与27个知识点、完整资料与题目、班级历史及六段原创教学视频。教师还可通过正常课程建设流程接入新单元，本次“信息素养微单元”已完成资料入库、学生辅导、练习、任务和教师反馈验证。演示账号与班级记录为合成教学数据，真实DeepSeek会话保留请求用量及教学结果。
+　　平台采用宋瓷青绿与茶烟米褐双主题，提供学生10个模块与教师9个模块。当前以数据结构与算法、Python程序设计展示课前、课中和课后的教学活动，分别配有31个和27个知识点、完整资料与题目、差异化班级记录，以及六段原创教学视频。教师还可通过正常课程建设流程接入新的主题。
 
-技术文档、连续演示与可运行验证共同展示作品。学生端采用宋瓷青绿，教师端采用茶烟米褐，支持Flash/Pro、私有附件和本地语音输入。阅读[技术文档](docs/deliverables/xuemai-technical-report.pdf)，观看[1080p演示视频](docs/deliverables/xuemai-demo-1080p.mp4)，查看[方法与对照实验](docs/ALGORITHMS_V10.md)、[实际验证记录](docs/VALIDATION.md)和[框架图可编辑母版](docs/technical-report/figures/overall-framework.tex)。
+　　阅读[技术文档](docs/deliverables/xuemai-technical-report.pdf)，观看[1080p演示视频](docs/deliverables/xuemai-demo-1080p.mp4)，查看[核心方法与实验](docs/ALGORITHMS_V10.md)、[实际验证记录](docs/VALIDATION.md)和[框架图可编辑母版](docs/technical-report/figures/overall-framework.tex)。
 
-## 方法与系统验证
+## 方法与验证
 
-本地实验采用开发与评测分离的固定数据。1200条学习轨迹比较知识追踪修正，180个独立图形成720种路径场景，48个班级检查分层，三课程180个问题检查检索。PATH-G在评测场景中先修与预算违规均为0，相对同约束可行贪心的平均效用提高2.80%，按独立图重采样的95%区间为2.15%—3.48%。逐例为456胜、209平、55负，原始输入与结果随源码提供。
+　　K-TRACE追踪知识证据，PATH-G规划先修和时间约束下的活动，DIA-GUIDE组织学生诊断、干预与理解检查，CLASS-LOOP形成错因关注群组，DIA-TEACH连接教师目标、班级证据和教学产物。五项方法的[中英文定义](docs/METHOD_TERMS.md)、实现与对照结果随源码提供。
 
-真实DeepSeek验证包括80个独立任务的160次配对响应、12次试运行、20个业务场景及后续独立复核和语音链路，共202次请求、371,304 Token。原编排和单步提示的初次业务完成分别为77/80与80/80，共享业务工具使两个条件均具备课程证据与受控执行基础。教学草稿包裹格式的问题修复后，8个新主题任务全部形成有效方案并保存。教师发布、学生作答与结果回流在隔离数据库实际执行。[实验协议、逐例记录与Token账本](docs/experiments/round10/README.md)
+　　本地实验采用开发与评测分离的固定数据。1200条学习轨迹比较知识追踪修正，180个独立图形成720种路径场景，48个班级检查分层，三课程180个问题检查检索。PATH-G先修与预算违规均为0，相对同约束可行贪心的平均效用提高2.80%，按独立图重采样的95%区间为2.15%—3.48%，逐例456胜、209平、55负。更充分地使用有限学习时间，是这一搜索机制带来的直接价值。
 
-## 核心方法
+　　真实DeepSeek验证累计202次请求、371,304 Token，其中80个独立任务形成160次配对响应。原编排和单步提示的初次业务完成分别为77/80与80/80。教学草稿包裹格式修复后，8个新主题任务全部形成有效方案并保存。教师发布、学生作答与结果回流均在隔离数据库执行。[实验协议、逐例结果与Token账本](docs/experiments/round10/README.md)保留初次失败及后续复核。
 
-- K-TRACE（Knowledge Tracing with Relevance-Adjusted Cumulative Evidence，相关性修正的多维知识证据追踪）。
+## 快速运行
 
-- PATH-G（Prerequisite-Aware Multi-Objective Learning Path Planning，先修约束的多目标学习路径规划）。
-
-- DIA-GUIDE（Diagnosis–Intervention–Assessment Orchestration for Guided Learning，诊断—干预—校验协作教学编排）。
-
-- CLASS-LOOP（Learning-Error-Based Dynamic Classroom Stratification，基于错因距离的动态教学分层）。
-
-- DIA-TEACH（Diagnosis–Intervention–Assessment Orchestration with Teaching Goals and Class Evidence，教学目标与班级证据双约束编排）。
-
-## 人工审阅一键启动
-
-在Windows中双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。首次启动会准备缺少的依赖，重复点击会复用本项目服务，单端退出时会补启该端。默认自动选择AI模式：后端配置有效Key时使用DeepSeek官方接口，无Key时使用Mock。离线检查可运行 `.\scripts\start.ps1 -MockAI`。
-
-审阅地址为 http://127.0.0.1:5173 。账号student1和teacher的演示密码均为Xuemai123!。停止可在项目PowerShell运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
-
-## 文件、模型与语音
-
-师生问答支持Flash与Pro逐请求切换。Flash可读取图片，Pro使用文本与文档片段。TXT、Markdown、PDF、DOCX、CSV附件保存在当前用户的私有目录，回答中的引用可以打开原片段、版本和位置。附件绑定课程与会话。
-
-当前开发机已准备本地Whisper small模型。其他电脑解压源码后，在已安装主依赖的环境运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup-voice.ps1`，下载约483MB本地模型并安装可选语音依赖。模型缓存和临时音频由交付过滤规则排除。语音支持麦克风录音和音频上传，每段60秒以内，转写结果可编辑后发送。临时音频处理后删除。
-
-## 每轮完整审阅包
-
-每轮修改完成后，在根目录“交付审阅包”生成 `学脉XueMai_完整审阅包_年月日_时分秒.zip`，时间采用北京时间。每包收录当前源码、文档、现有视频、官方手册、本轮修改记录及补丁，以及本轮重新拍摄的全部前端模块截图，并生成“审阅包说明.md”和带SHA256的“审阅清单.json”。文档与视频各自的文件修改时间保留在清单中。
-
-```powershell
-node frontend/scripts/capture-review.mjs docs/rounds/本轮记录.md
-.venv/Scripts/python.exe scripts/package_review.py --record docs/rounds/本轮记录.md --base-ref 本轮起始提交 --screenshots 交付审阅包/界面截图_年月日_时分秒
-```
-
-将命令参数替换为本轮修改记录、起始Git提交及截图脚本输出的实际目录。截图脚本使用1440×900、1366×768、1366×650、1920×1080桌面和390×844手机窄屏，覆盖登录页、学生端10个模块和教师端9个模块，并分别切换两门课程。桌面保存首屏，移动端长页面、长弹窗另存分段图，并拍摄分页、关键表单、题型、操作结果和AI引用。新增模块时维护 frontend/scripts/review-capture-plan.json 和对应操作。
-
-截图使用本轮生产构建和独立合成演示数据，AI为本地Mock，真实API调用0次。隔离服务占用8002和5176端口，任务结束自动关闭，截图前会检查端口空闲。首次需完成环境安装，Windows使用已安装的Chrome，Linux需安装Playwright Chromium。
-
-解压后先打开“界面截图/截图总览.html”查看缩略图并点击原图，也可用“截图索引.md”逐模块阅读。JSON清单记录模块、路由、状态、尺寸、SHA256和源码指纹。打包工具拒绝缺少模块、图片损坏、跨轮记录或与当前源码不一致的截图。
-
-打包规则过滤凭据、依赖、运行数据、缓存、历史压缩包及既往审阅包，当前截图通过参数单独收录。完成ZIP和逐文件摘要校验后才生成可交付的ZIP。后续工程执行约定见AGENTS.md。
-
-## 本机 10 分钟复现路径
-
-Windows浏览器自动验收使用已安装的Google Chrome；Linux持续集成使用Playwright Chromium。
-
-环境：Windows 10/11，Python 3.13，Node.js 20.18+，npm，Git。开发机实际使用 Python 3.13、Node 20.18、npm 10.8；使用 Vite 6 保持兼容。首次依赖下载受网络影响，不保证所有网络环境在 10 分钟内完成。
+　　环境要求为Windows 10/11、Python 3.13、Node.js 20.18+、npm和Git。Windows浏览器验收使用Google Chrome，Linux持续集成使用Playwright Chromium。首次运行需要下载依赖。
 
 ```powershell
 git clone https://github.com/Sunny1004-7/xuemai-ai-platform.git
@@ -75,71 +36,74 @@ cd xuemai-ai-platform
 .\scripts\start.ps1
 ```
 
-打开 [学脉本机应用](http://127.0.0.1:5173)；[接口说明](http://127.0.0.1:8000/docs)。停止：`.\scripts\stop.ps1`。没有远程权限时，也可以直接在当前工程运行 setup/start。
+　　Windows也可双击根目录的 **启动学脉.cmd**，前后端就绪后自动打开浏览器。重复启动复用本项目服务。默认应用地址为 [http://127.0.0.1:5173](http://127.0.0.1:5173)，[接口说明](http://127.0.0.1:8000/docs)位于8000端口。启动器检查端口归属，遇到其他工程占用会给出提示。停止本项目可执行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/stop.ps1`。
 
 | 身份 | 账号 | 演示密码 |
 |---|---|---|
 | 教师 林知远 | teacher | Xuemai123! |
 | 学生 陈星河 | student1 | Xuemai123! |
 
-所有预置账号、掌握度、学习记录和班级均为**合成演示数据**。初始班级邀请码 XM2026；第二课程 Python 程序设计邀请码 PY2026。学生通过课程班级取得访问权限。
+　　初始班级邀请码为XM2026，Python课程邀请码为PY2026。预置账号、掌握度、学习记录和班级为合成教学数据；学生通过课程班级取得访问权限。
 
-## 复现教学闭环
-
-1. 教师登录，课程与班级创建课程、章节和班级，在图谱添加知识点和先修关系。
-2. 题库与作业选择课程题目，发布到班级。学生登录后在练习页接收作业并提交。
-3. 故意答错一次后查看错题；使用提示、独立复测，比较图谱掌握度和推荐理由变化。
-4. 从题目打开学习伙伴，查看题目上下文、资料引用和流式回复，重新打开历史会话。
-5. 在图谱选择冒泡排序并进入课程视频；字幕定位、时间戳笔记、随堂题写回学习记录。
-6. 教师学情与分层页查看薄弱群组、发布巩固任务，学生完成后刷新统计。
-
-交互实验室由算法执行排序、栈/队列、二叉树与 BFS；Python课程使用循环、分支、列表共享和函数调用四类受控实验，逐步展示变量与输出。课程资料支持文本/PDF解析；教师AI备课和出题先生成可编辑草稿，审核保存后才成为课程内容。
-
-## AI 模式与额度
-
-默认 `AI_MODE=auto`，后端有Key时使用DeepSeek，无Key时使用Mock；`AI_MODE=mock` 明确覆盖自动模式。辅导功能区显示当前模式。Mock为固定教学样例，常规回归、截图与录制预检使用Mock。正式演示保留既有官方响应和同一教学任务的连续操作。
-
-正式按需使用：把 `.env.example` 中所需变量设置到后端环境，或保留已被忽略的根目录 `deepseek官方api.txt`，然后：
+　　默认端口被其他工程使用时，可选择空闲端口分别启动。以下两组命令在项目根目录的两个PowerShell终端执行，打开 [http://127.0.0.1:5180](http://127.0.0.1:5180) 即可。端口需保持前后对应。
 
 ```powershell
-$env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
+# 终端一，启动后端
+.venv/Scripts/python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8006
+```
+
+```powershell
+# 终端二，启动前端
+$env:VITE_API_PROXY_TARGET='http://127.0.0.1:8006'
+Set-Location frontend
+npm run dev -- --host 127.0.0.1 --port 5180 --strictPort
+```
+
+## AI、文件与语音
+
+　　默认 `AI_MODE=auto`，后端读取有效Key后使用DeepSeek官方API，无Key时使用本地Mock。离线检查可执行 `.\scripts\start.ps1 -MockAI`。环境变量模板见[.env.example](.env.example)，启动器直接读取进程环境。
+
+```powershell
+$env:DEEPSEEK_API_KEY = '<仅在本机设置>'
 .\scripts\start.ps1 -RealAI
 ```
 
-`.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
+　　密钥只在后端读取。师生AI支持Flash与Pro逐请求切换，Flash可读取图片，Pro使用文本与文档片段。TXT、Markdown、PDF、DOCX和CSV附件按用户、课程及会话保存，回答中的引用可以打开原片段、版本和位置。
 
-常规测试、CI、浏览器回归均使用Mock。本次真实实验采用统一的1,000,000 Token上限，调用前预留输入与输出，跨进程累计在途请求，返回后按官方usage结算，未取得官方用量的故障保留全部预留。累计输入297,521、输出73,783，实际合计371,304 Token。Flash 183次、Pro 19次，全部请求和费用估算保存在[统一账本](docs/experiments/round10/token-ledger.json)。试运行与正式评测分开，脚本读取已完成结果恢复。历史专项的次数账本及用量继续保留。[早期联调记录](docs/rounds/第三轮DeepSeek联调.json)
+　　语音使用可选的本地Whisper small模型，支持麦克风和60秒以内音频上传，转写文字可编辑后发送。其他电脑运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup-voice.ps1` 准备可选依赖与约483MB模型。
 
-## 结构与验证
+　　模型调用采用统一Token账本，调用前预留输入与输出，返回后按官方usage结算。已完成实验的输入297,521、输出73,783 Token，Flash183次、Pro19次，明细见[统一账本](docs/experiments/round10/token-ledger.json)。常规测试、CI和截图使用Mock，材料构建直接读取已完成结果。
 
-```text
-backend/app/        认证、课程、评分、证据、推荐、教师分析、AI
-backend/migrations/ 版本化 SQLite SQL
-backend/tests/      离线契约、权限与业务闭环测试
-backend/media/      自有教学演示 MP4
-frontend/src/       学生与教师 React 页面、算法组件
-frontend/e2e/       真实浏览器教学闭环
-scripts/           Windows 安装启动测试、安全扫描、显式烟测
-docs/              架构、API、设计与真实开发过程
-```
+## 复现教学流程
+
+1. 教师在课程与班级组织章节和班级，在知识图谱维护知识及先修关系。
+2. 教师从题库与作业发布任务，学生独立作答并查看解析与证据变化。
+3. 学生从错题进入复习、实验或AI学习伙伴，结合课程引用完成理解检查。
+4. 学生在视频中定位字幕、记录笔记，再进入关联知识与练习。
+5. 教师从知识矩阵追溯具体作答，通过分层与教学助手形成安排、审核发布并查看后续结果。
+
+　　数据结构实验提供排序、栈、队列、树与图的逐步操作，Python实验展示循环、分支、列表共享和函数调用。课程资料支持文档解析，AI出题与备课形成可编辑草稿，经教师审核后保存为课程内容。
+
+## 测试与材料复现
 
 ```powershell
 .\scripts\test.ps1
-# 首次浏览器测试若缺少 Chromium：
-cd frontend
+# 首次Linux浏览器验收需要安装Chromium
+Set-Location frontend
 npx playwright install chromium
 ```
 
-后端测试使用隔离临时数据库；端到端使用独立端口和演示数据库，不访问真实 AI。测试报告和截图生成在忽略的本机目录，核实结果后把不含敏感信息的必要证据存入 docs。
+　　后端使用隔离临时数据库，端到端验收采用独立端口和Mock。数据库默认为 `data/xuemai.db`，启动时自动迁移并补齐版本化内容，保留教师编辑、作答与完成状态。重建演示数据可将 `DATABASE_PATH` 指向新的文件。
 
-数据库默认 `data/xuemai.db`，启动自动迁移并执行版本化教学内容补全。5001导入双课样例，5002精修未被人工修改的原始对话和目标；重复启动保留编辑、作答及完成状态。不要在已有真实数据上删除数据库以“修复”；演示重建请另选 `DATABASE_PATH` 创建新库。六个原创教学片段已随源码提供，重建素材安装 `scripts/media-requirements.txt` 后执行 `scripts/generate_teaching_clips.py` 及 `scripts/generate_python_clips.py`。正式文档与系统演示的生成方式见[材料说明](docs/TECHNICAL_REPORT.md)和[演示分镜](docs/demo/讲解稿与分镜.md)。
+　　[材料制作说明](docs/TECHNICAL_REPORT.md)提供PDF、图源、配音、字幕和剪辑入口；[当前视频工程](docs/demo/current.json)统一指定可编辑源。重建原创课程视频需安装 `scripts/media-requirements.txt`，再执行 `scripts/generate_teaching_clips.py` 与 `scripts/generate_python_clips.py`。
 
-## 使用边界与赛事证据
+　　每轮完整审阅ZIP位于根目录“交付审阅包”，包含源码、材料、修改记录与全模块截图。解压后打开“界面截图/截图总览.html”查看当前作品，文件摘要与源码提交见“审阅清单.json”。详细维护流程见[工程约定](AGENTS.md)，当前交付状态见[PROJECT_STATE.md](PROJECT_STATE.md)。
 
-客观题按规则评分，简答按量规待教师复核；AI 草稿和辅导需核对。观看时长仅作为活动记录，不能直接代表掌握。上传资源按课程授权访问，任何真实学生数据应在适当授权后导入。
-
-本项目面向本机演示，服务默认仅绑定 127.0.0.1。公开部署前需要 HTTPS、账号管理、正式运维与数据保护配置；演示账号不适合直接用于公网服务。
-
-运行setup前先停止本项目服务，避免Windows占用esbuild可执行文件；安装器会检查端口并说明。重新生成PDF和演示素材时，安装scripts/requirements-tools.txt中的可选工具；这些依赖不影响应用启动。原始聊天自动快照对部分协作正文不完整，另提供可见协作卡片逐字转存与实际回放，建议保留原界面截图交叉核验。
-
-真实阶段进度见 [PROJECT_STATE.md](PROJECT_STATE.md)，架构与接口见 docs。开发过程摘要区分真实用户指令和 Codex 自主分工，不伪造用户反馈；原始聊天导出/录屏需与摘要共同保留。参赛要求包括 5–8 分钟 1080p MP4（至少 2 分钟真实 AI 协同）和不超过 30 页技术 PDF；最终交付状态以 PROJECT_STATE 为准。
+```text
+backend/app/        课程、评分、学习证据、规划、教学分析与AI
+backend/tests/      业务、算法、权限与材料回归
+frontend/src/       师生React页面、知识网络与交互实验
+frontend/e2e/       浏览器教学流程与交互回归
+scripts/           安装启动、测试、实验与材料生成
+docs/              技术文档、实验、视频与可编辑源
+```
