@@ -1,0 +1,3048 @@
+{
+  "run_id": "xuemai-r10-20261117-v1",
+  "source_commit": "04b2ec164558cff12892821b4a72147ceaf8dbce",
+  "local": {
+    "ktrace": {
+      "evaluation_trajectories": 1200,
+      "events": 25920,
+      "summary": {
+        "K-TRACE": 0.18647,
+        "no_decay": 0.196263,
+        "no_hints": 0.186154,
+        "no_correlation": 0.189723,
+        "fixed_step": 0.243713
+      },
+      "by_family": {
+        "0": {
+          "K-TRACE": 0.161887,
+          "no_decay": 0.171522,
+          "no_hints": 0.161887,
+          "no_correlation": 0.161887,
+          "fixed_step": 0.218669
+        },
+        "1": {
+          "K-TRACE": 0.168048,
+          "no_decay": 0.166096,
+          "no_hints": 0.174171,
+          "no_correlation": 0.168048,
+          "fixed_step": 0.215738
+        },
+        "2": {
+          "K-TRACE": 0.195905,
+          "no_decay": 0.264868,
+          "no_hints": 0.195905,
+          "no_correlation": 0.213867,
+          "fixed_step": 0.219699
+        },
+        "3": {
+          "K-TRACE": 0.175441,
+          "no_decay": 0.177497,
+          "no_hints": 0.167423,
+          "no_correlation": 0.176999,
+          "fixed_step": 0.219185
+        },
+        "4": {
+          "K-TRACE": 0.218862,
+          "no_decay": 0.22863,
+          "no_hints": 0.218862,
+          "no_correlation": 0.218862,
+          "fixed_step": 0.315493
+        },
+        "5": {
+          "K-TRACE": 0.198677,
+          "no_decay": 0.168964,
+          "no_hints": 0.198677,
+          "no_correlation": 0.198677,
+          "fixed_step": 0.273496
+        }
+      },
+      "repeat_violations": 0
+    },
+    "path": {
+      "independent_graphs": 180,
+      "evaluation_cases": 720,
+      "summary": {
+        "PATH-G": {
+          "utility": 27.272605,
+          "goal_coverage": 0.460185,
+          "budget_utilization": 0.874074,
+          "prerequisite_violations": 0,
+          "budget_violation": 0
+        },
+        "feasible_greedy": {
+          "utility": 26.529309,
+          "goal_coverage": 0.431019,
+          "budget_utilization": 0.836968,
+          "prerequisite_violations": 0,
+          "budget_violation": 0
+        },
+        "static_goal": {
+          "utility": 24.863182,
+          "goal_coverage": 0.815972,
+          "budget_utilization": 0.909074,
+          "prerequisite_violations": 1477,
+          "budget_violation": 0
+        }
+      },
+      "wins_ties_losses": [
+        456,
+        209,
+        55
+      ],
+      "exact_reference_cases": 288,
+      "mean_optimality_ratio": 0.999512,
+      "runtime_ms_mean": 1.121413
+    },
+    "class": {
+      "evaluation_classes": 48,
+      "students": 2064,
+      "prototype_classes": 32,
+      "summary": {
+        "CLASS-LOOP": 1.0,
+        "no_support": 0.986021,
+        "score_quartile": 0.652522
+      },
+      "sparse_checks": 48,
+      "permutation_checks": 48,
+      "task_matches": 184,
+      "task_count": 184,
+      "runtime_ms_mean": 5.612077
+    },
+    "retrieval": {
+      "dataset": "r10-retrieval-v1",
+      "group_split": "按知识主题分组，所有改写位于同一分区",
+      "total_cases": 200,
+      "evaluation_cases": 180,
+      "courses": 3,
+      "summary": {
+        "lexical": {
+          "recall_at_1": 0.9777777777777777,
+          "recall_at_3": 0.9944444444444445,
+          "recall_at_5": 0.9944444444444445,
+          "reciprocal_rank": 0.9861111111111112,
+          "locator_valid": 1.0,
+          "runtime_ms": 2.6883499999459874
+        },
+        "knowledge": {
+          "recall_at_1": 0.9888888888888889,
+          "recall_at_3": 0.9944444444444445,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.9930555555555556,
+          "locator_valid": 1.0,
+          "runtime_ms": 2.2889094444508373
+        },
+        "full": {
+          "recall_at_1": 0.9888888888888889,
+          "recall_at_3": 0.9944444444444445,
+          "recall_at_5": 1.0,
+          "reciprocal_rank": 0.9930555555555556,
+          "locator_valid": 1.0,
+          "runtime_ms": 2.06161944443516
+        }
+      },
+      "permission": [
+        {
+          "course": 1,
+          "role": "student",
+          "private_visible": false,
+          "passed": true
+        },
+        {
+          "course": 1,
+          "role": "teacher",
+          "private_visible": true,
+          "passed": true
+        },
+        {
+          "course": 2,
+          "role": "student",
+          "private_visible": false,
+          "passed": true
+        },
+        {
+          "course": 2,
+          "role": "teacher",
+          "private_visible": true,
+          "passed": true
+        },
+        {
+          "course": 3,
+          "role": "student",
+          "private_visible": false,
+          "passed": true
+        },
+        {
+          "course": 3,
+          "role": "teacher",
+          "private_visible": true,
+          "passed": true
+        }
+      ],
+      "insufficient_evidence_empty": true
+    }
+  },
+  "real": {
+    "independent_tasks": 80,
+    "responses": 160,
+    "conditions": {
+      "full": {
+        "tasks": 80,
+        "api_complete": 79,
+        "structure_valid": 77,
+        "source_located": 80,
+        "reference_number_valid": 58,
+        "business_complete": 77,
+        "mean_seconds": 4.140444638750057
+      },
+      "baseline": {
+        "tasks": 80,
+        "api_complete": 80,
+        "structure_valid": 80,
+        "source_located": 80,
+        "reference_number_valid": 55,
+        "business_complete": 80,
+        "mean_seconds": 3.331840636249967
+      }
+    },
+    "by_kind": {
+      "student/attachment": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/concept": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/followup": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/hint_dependence": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/prerequisite": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/transfer": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/video": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "student/wrong_step": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/analysis": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 4
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/discussion": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/feedback": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/groups": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 4
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/lesson": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 4
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/mixed": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/question": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      },
+      "teacher/rubric": {
+        "full": {
+          "tasks": 5,
+          "business_complete": 5
+        },
+        "baseline": {
+          "tasks": 5,
+          "business_complete": 5
+        }
+      }
+    },
+    "rows": [
+      {
+        "task_id": "eval-student-0-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.122077399999398,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.693211799999517,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.2668180000000575,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.8371040000001813,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.37908090000019,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.5853493000004164,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.8026638999999705,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.055301899999904,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 6.745171999999911,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-0-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "concept",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.606291799999781,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.700374300000476,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.042671199999859,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.2105383999996775,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.7806024000001344,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.837689500000124,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.981484300000375,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.3157647000007273,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.8661174999997456,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.7479365999997754,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-1-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "wrong_step",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.5077768999999535,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.3018401999997877,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.456441399999676,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.952803799999856,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.488658199999918,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.5073397999994995,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.3030021000004126,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.1143583000002764,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.2737121000000116,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 6.407658600000104,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-2-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "prerequisite",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.672673300000497,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.841913399999612,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 1.988080799999807,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.2563119000005827,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.455590999999913,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.237324300000182,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 1.9473975000000792,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.6452747000003,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.3811105999993742,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.952079099999537,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-3-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "hint_dependence",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 1.5949522000000798,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.3745801000004576,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.92097879999983,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.4849621000003026,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.8854630999994697,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.601934600000277,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.322703900000306,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.9664791000004698,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.7802498000000924,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.407593100000668,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-4-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "transfer",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.7386257999996815,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.7728268999999273,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.5641400999993493,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.296234999999797,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.929855800000041,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.844279699999788,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.793741200000113,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.68187350000062,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.5190521999993507,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.556060500000058,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-5-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "attachment",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.6036973999998736,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.597491700000319,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.2548047999998744,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.248546000000715,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.227572300000247,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.3635967999998684,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.169159399999444,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.6829163000002154,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.7627913999995144,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.572327800000494,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-6-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "video",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.483008700000028,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-0",
+        "condition": "full",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.5366860000003726,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-0",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.750520900000083,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-1",
+        "condition": "full",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.7214489000007234,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-1",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.1863094999998793,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-2",
+        "condition": "full",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.3567493999998987,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-2",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.0735928000003696,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-3",
+        "condition": "full",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.019160699999702,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-3",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.967463300000418,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-4",
+        "condition": "full",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.382539700000052,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-student-7-4",
+        "condition": "baseline",
+        "role": "student",
+        "kind": "followup",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.6235290999993595,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.334732299999814,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 1.9699491999999736,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.575366899999608,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.102254399999765,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.067081399999552,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.0616331000001082,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.1014976000005845,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.046905300000617,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 11.185935900000004,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-0-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "discussion",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 6.575420799999847,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 8.079331200000524,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 6.480411099999401,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": false,
+        "structure_valid": false,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": false,
+        "seconds": 9.576245199999903,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.861640800000714,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 7.0234104999999545,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.609716599999956,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 8.30229159999999,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 7.127889299999879,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 9.263220899999396,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-1-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "analysis",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 5.061836599999879,
+        "artifact_status": null
+      },
+      {
+        "task_id": "eval-teacher-2-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.561279000000468,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.0444903999996313,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.1173533999999563,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.2583472000005713,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.7088851999997132,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.018806400000358,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.053431000000273,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.7830009999997856,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 13.029793900000186,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-2-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "mixed",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 9.320440799999233,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.7995099999998274,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.892004799999995,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.042058199999701,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.1322299000003113,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.984924399999727,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.9718257000004087,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.427418000000216,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.5283761999999115,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-3-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": false,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": false,
+        "seconds": 4.316214699999364,
+        "artifact_status": "invalid"
+      },
+      {
+        "task_id": "eval-teacher-3-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "lesson",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.212491100000079,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.392628399999921,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.286529099999825,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.795987100000275,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.7598441999998613,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.980051000000458,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.954274300000179,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.657682699999896,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.3134110999999393,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-4-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": false,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": false,
+        "seconds": 11.986912200000006,
+        "artifact_status": "invalid"
+      },
+      {
+        "task_id": "eval-teacher-4-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "groups",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 8.277743500000724,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.08204939999996,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.377354799999921,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.3301283999999214,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.2434258000002956,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.519112199999654,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.141556099999434,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.722333200000321,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 1.9107074000003195,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.077940499999386,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-5-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "question",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.4547134000004007,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.488777200000186,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.1759665999998106,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.4843399000001227,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.590644899999461,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.4868382000004203,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 2.5754875000002357,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 2.9581121000001076,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 1.8684744000001956,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 5.397575799999686,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-6-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "rubric",
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 4.986672800000633,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-0",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.110275099999853,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-0",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.251527599999463,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-1",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.393932400000267,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-1",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.7893430999993143,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-2",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 3.634080000000722,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-2",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.215985699999692,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-3",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.693990699999631,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-3",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.4738670000006096,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-4",
+        "condition": "full",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": true,
+        "business_complete": true,
+        "seconds": 4.679535600000236,
+        "artifact_status": "draft"
+      },
+      {
+        "task_id": "eval-teacher-7-4",
+        "condition": "baseline",
+        "role": "teacher",
+        "kind": "feedback",
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "structure_valid": true,
+        "source_located": true,
+        "reference_number_valid": false,
+        "business_complete": true,
+        "seconds": 3.7652602999996816,
+        "artifact_status": "draft"
+      }
+    ]
+  },
+  "business": {
+    "scenarios": 20,
+    "passed": 18
+  },
+  "tokens": {
+    "scope": "round10-20261117",
+    "limit": 1000000,
+    "requests": 202,
+    "by_model": {
+      "deepseek-flash": {
+        "requests": 183,
+        "prompt_tokens": 269629,
+        "completion_tokens": 68349,
+        "cached_input_tokens": 4608,
+        "peak_price_estimate_usd": 0.161553
+      },
+      "deepseek-v4-pro": {
+        "requests": 19,
+        "prompt_tokens": 27892,
+        "completion_tokens": 5434,
+        "cached_input_tokens": 0,
+        "peak_price_estimate_usd": 0.058336
+      }
+    },
+    "charged_or_reserved": 371304,
+    "official_prompt_tokens": 297521,
+    "official_completion_tokens": 73783
+  },
+  "path_mean_gain_percent": 2.80179178432427,
+  "path_cluster_bootstrap_95_percent": [
+    2.149526868684415,
+    3.4799631041364743
+  ],
+  "repair": {
+    "original_failures": [
+      {
+        "original_case": 8,
+        "recovered": true,
+        "saved": true,
+        "no_new_model_request": true,
+        "artifact": {
+          "id": 3,
+          "kind": "intervention",
+          "draft": {
+            "title": "数组与链表的依据追踪与边界讲评课",
+            "objective": "对照具体作答，用可复算的状态追踪解释数组与链表的操作依据，识别边界条件，并在减少提示后完成独立复测。",
+            "steps": [
+              {
+                "title": "发现问题：依据缺口",
+                "minutes": 6,
+                "activity": "展示匿名错例，学生先独立预测操作结果并写出判断依据，再对照答案标出依据缺失处。"
+              },
+              {
+                "title": "对照实验：逐步追踪",
+                "minutes": 12,
+                "activity": "用同一组输入分别追踪顺序表插入删除与单链表链接操作，逐步记录指针与下标变化，说明每步修改了什么、为什么这样改。"
+              },
+              {
+                "title": "反例辨析：边界条件",
+                "minutes": 6,
+                "activity": "对照易错输入与反例，讨论头尾插入、空表、越界等隐含前提，明确数组连续存储与链表链接组织的适用差异。"
+              },
+              {
+                "title": "分层独立复测",
+                "minutes": 6,
+                "activity": "各组按关注点完成对应练习，减少提示，记录错误步骤作为后续复测依据。"
+              }
+            ],
+            "groups": [
+              {
+                "group_id": "group-8",
+                "objective": "逐步追踪状态并检查操作顺序，修正程序步骤偏差",
+                "question_ids": [
+                  1,
+                  3,
+                  5
+                ],
+                "student_ids": [
+                  5,
+                  8,
+                  11,
+                  14,
+                  17,
+                  20,
+                  23,
+                  26,
+                  29
+                ],
+                "name": "操作步骤关注组",
+                "knowledge_id": 2
+              },
+              {
+                "group_id": "group-10",
+                "objective": "减少提示后独立完成链接操作复测",
+                "question_ids": [
+                  1,
+                  3,
+                  5
+                ],
+                "student_ids": [
+                  3,
+                  7,
+                  9,
+                  10,
+                  13,
+                  15,
+                  19,
+                  21,
+                  25,
+                  27,
+                  28
+                ],
+                "name": "提示依赖关注组",
+                "knowledge_id": 2
+              },
+              {
+                "group_id": "group-6",
+                "objective": "更换输入检验数组与链表规则的迁移应用",
+                "question_ids": [
+                  1,
+                  3,
+                  5
+                ],
+                "student_ids": [
+                  2,
+                  6,
+                  12,
+                  18,
+                  24
+                ],
+                "name": "迁移应用关注组",
+                "knowledge_id": 2
+              },
+              {
+                "group_id": "group-16",
+                "objective": "用反例区分数组与链表的概念边界",
+                "question_ids": [
+                  1,
+                  3,
+                  5
+                ],
+                "student_ids": [
+                  4,
+                  16,
+                  22
+                ],
+                "name": "概念辨析关注组",
+                "knowledge_id": 2
+              }
+            ]
+          },
+          "status": "draft"
+        }
+      },
+      {
+        "original_case": 11,
+        "recovered": true,
+        "saved": true,
+        "no_new_model_request": true,
+        "artifact": {
+          "id": 4,
+          "kind": "intervention",
+          "draft": {
+            "title": "变量与类型：状态追踪与边界讲评课",
+            "objective": "对照匿名错例，区分变量绑定、类型语义与赋值顺序，完成分层复测。",
+            "steps": [
+              {
+                "title": "暴露错误与预测",
+                "minutes": 6,
+                "activity": "展示变量与类型相关匿名错例，让学生先独立预测每一步变量指向和类型，再简短说出判断依据。"
+              },
+              {
+                "title": "逐步追踪与对照",
+                "minutes": 14,
+                "activity": "用整数、字符串和列表的同一组赋值操作逐步追踪，强调变量保存对象引用、赋值改变绑定，并对照易错输入讨论隐含前提。"
+              },
+              {
+                "title": "分层练习与复测",
+                "minutes": 10,
+                "activity": "按群组完成对应练习，记录错误步骤，教师根据错误安排复测。"
+              }
+            ],
+            "groups": [
+              {
+                "group_id": "group-11",
+                "objective": "逐步追踪状态并检查操作顺序",
+                "question_ids": [
+                  9,
+                  41,
+                  42
+                ],
+                "student_ids": [
+                  2,
+                  6,
+                  7,
+                  11,
+                  12
+                ],
+                "name": "操作步骤关注组",
+                "knowledge_id": 9
+              },
+              {
+                "group_id": "group-9",
+                "objective": "更换输入检验知识迁移",
+                "question_ids": [
+                  9,
+                  41,
+                  42
+                ],
+                "student_ids": [
+                  4,
+                  9,
+                  14
+                ],
+                "name": "迁移应用关注组",
+                "knowledge_id": 9
+              },
+              {
+                "group_id": "group-10",
+                "objective": "补齐推理依据与边界条件",
+                "question_ids": [
+                  9,
+                  41,
+                  42
+                ],
+                "student_ids": [
+                  5,
+                  10,
+                  15
+                ],
+                "name": "推理论证关注组",
+                "knowledge_id": 9
+              },
+              {
+                "group_id": "group-8",
+                "objective": "用反例区分概念边界",
+                "question_ids": [
+                  9,
+                  41,
+                  42
+                ],
+                "student_ids": [
+                  3,
+                  8,
+                  13
+                ],
+                "name": "概念辨析关注组",
+                "knowledge_id": 9
+              }
+            ]
+          },
+          "status": "draft"
+        }
+      }
+    ],
+    "independent_cases": [
+      {
+        "id": "repair-independent-0",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-1",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-2",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-3",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-4",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-5",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-6",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      },
+      {
+        "id": "repair-independent-7",
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": false,
+          "valid_artifact": true,
+          "business_status": "draft_ready",
+          "saved": true,
+          "persisted": true
+        },
+        "api_complete": true
+      }
+    ],
+    "independent_passed": 8
+  },
+  "input_business": {
+    "audio_text": "我不明白栈和队列的取出顺序有什么区别，请给我一个简单的反例。",
+    "transcription": {
+      "text": "我不明白栈和队列的取出顺序有什么区别,请给我一个简单的反例。",
+      "raw_text": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。",
+      "term_corrections": [
+        {
+          "from": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。",
+          "to": "我不明白栈和队列的取出顺序有什么区别,请给我一个简单的反例。",
+          "rule": "栈与队列课程术语"
+        }
+      ],
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.5,
+          "text": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。"
+        }
+      ],
+      "engine": "faster-whisper-small",
+      "local": true,
+      "language": "zh"
+    },
+    "local_transcription": true,
+    "scenarios": 2,
+    "results": [
+      {
+        "model": "deepseek-flash",
+        "api_complete": true,
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": true,
+          "valid_artifact": false,
+          "business_status": null,
+          "persisted": true
+        }
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "api_complete": true,
+        "checks": {
+          "course_and_role": true,
+          "citation_locators": true,
+          "has_citation": true,
+          "has_check": true,
+          "valid_artifact": false,
+          "business_status": null,
+          "persisted": true
+        }
+      }
+    ]
+  },
+  "sources": {
+    "class.json": "31311ec6252337da34288845a13485b778449ac96511fb18bfc8b61871476b54",
+    "end-to-end.json": "e858de2f5cf43ddf10bb988e0b5e00812d351d5ba530215535ec165ac4f49480",
+    "ktrace.json": "292a19df618ddecd7934a462d35c8d66a7bbd255b8c5404f069696c7402d0554",
+    "path.json": "c2e39f6c928175f6f9a908a996ba3073beac6c5ac4f5d3d3f45d80d4f556c3fe",
+    "protocol.json": "73ecade4bd94dc28f8f30d3d02cfde3dae82af0fae9759388010a7dc3625f789",
+    "repair-validation.json": "df8713b394e78da32f29e7d704addebfaf4556572f7af0ff45b6d537f17d7442",
+    "retrieval.json": "045dc98c3ee18ecc53fe109872b41932acf8bf3d2598c55bdfe42b9891bdbafa",
+    "token-ledger.json": "c0d53da2a2a8411ea0a1b27422e7e18afb896eb707e92d79ef6ff6d6f1a6b133",
+    "voice-and-models.json": "e5a60d1dfa39cf701b97fa5c07a328ce8196393e73036907356c2f87abe64fdd"
+  }
+}

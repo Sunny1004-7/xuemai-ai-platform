@@ -1,0 +1,106 @@
+{
+  "id": 15,
+  "kind": "generate",
+  "course_id": 2,
+  "checks": {
+    "generated": true
+  },
+  "passed": true,
+  "elapsed_seconds": 2.688975500000197,
+  "evidence": {
+    "http_status": 200,
+    "result": {
+      "mode": "real",
+      "model": "deepseek-flash",
+      "kind": "question",
+      "draft": true,
+      "review_status": "pending_teacher_review",
+      "result": {
+        "type": "single",
+        "title": "学习“变量与类型”时，判断 type(3) 的结果，哪种做法最有助于得出可靠结论？",
+        "options": [
+          "直接凭印象选一个类型",
+          "在交互环境中执行 type(3) 并观察返回结果",
+          "只记忆“整数”这个中文词",
+          "跳过验证，等老师公布答案"
+        ],
+        "answer": "在交互环境中执行 type(3) 并观察返回结果",
+        "explanation": "Python 变量绑定对象，type() 返回对象所属的类型；通过实际执行可以观察 3 绑定的是哪种对象，比凭印象或只记术语更可靠。",
+        "difficulty": 1,
+        "hints": [
+          "想一想 3 在 Python 中写成什么样，它属于哪一类对象。",
+          "可以在交互环境里输入 type(3)，看看返回的类型名与哪个选项一致。"
+        ]
+      },
+      "citations": [
+        {
+          "id": 1,
+          "score": 0.5455,
+          "resource_id": 156,
+          "passage_id": 301,
+          "title": "变量与表达式教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "变量与表达式 · 段落5",
+          "version": 1,
+          "url": "/resources?course=2&resource=156&passage=301&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5455,
+          "resource_id": 126,
+          "passage_id": 162,
+          "title": "变量与类型：例题与边界",
+          "excerpt": "## 推导与例题\na=3; a=\"三\" 执行后a的类型是？\n答案为str。请在纸上逐步记录变量、容器内容或控制位置，比较各选项为什么成立或不成立。",
+          "locator": "推导与例题 · 段落5",
+          "version": 1,
+          "url": "/resources?course=2&resource=126&passage=162&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 9,
+          "passage_id": 41,
+          "title": "变量与类型学习讲义",
+          "excerpt": "Python变量绑定对象；整数、字符串和列表具有不同语义。\n学习目标：理解定义、手工追踪执行步骤，并使用程序验证。\n合成教学素材，由项目开发时编写。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=2&resource=9&passage=41&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 4,
+          "score": 0.5,
+          "resource_id": 126,
+          "passage_id": 160,
+          "title": "变量与类型：例题与边界",
+          "excerpt": "# 变量与类型",
+          "locator": "变量与类型 · 段落2",
+          "version": 1,
+          "url": "/resources?course=2&resource=126&passage=160&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 5,
+          "score": 0.5,
+          "resource_id": 156,
+          "passage_id": 298,
+          "title": "变量与表达式教学活动设计",
+          "excerpt": "# 变量与表达式",
+          "locator": "变量与表达式 · 段落2",
+          "version": 1,
+          "url": "/resources?course=2&resource=156&passage=298&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 914,
+        "completion_tokens": 310,
+        "estimated": false,
+        "prompt_cache_hit_tokens": 640,
+        "reasoning_tokens": 0
+      }
+    }
+  }
+}

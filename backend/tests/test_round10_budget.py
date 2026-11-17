@@ -41,3 +41,17 @@ def test_failed_large_input_rejected_without_insert():
         reserve('deepseek-flash',[{'role':'user','content':'汉'*500}],100)
     with ledger() as db:
         assert db.execute('SELECT COUNT(*) FROM token_calls').fetchone()[0]==0
+
+
+def test_concurrent_reservations_share_one_ceiling():
+    from concurrent.futures import ThreadPoolExecutor
+    def attempt(_):
+        try:
+            return reserve('deepseek-flash',[],200)
+        except AIError:
+            return None
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        accepted=[value for value in executor.map(attempt,range(16)) if value]
+    assert len(accepted)==3
+    with ledger() as db:
+        assert db.execute('SELECT SUM(reserved) FROM token_calls').fetchone()[0]==990

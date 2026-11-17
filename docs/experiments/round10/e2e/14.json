@@ -1,0 +1,111 @@
+{
+  "id": 14,
+  "kind": "generate",
+  "course_id": 1,
+  "checks": {
+    "generated": true
+  },
+  "passed": true,
+  "elapsed_seconds": 1.8333112999998775,
+  "evidence": {
+    "http_status": 200,
+    "result": {
+      "mode": "real",
+      "model": "deepseek-flash",
+      "kind": "rubric",
+      "draft": true,
+      "review_status": "pending_teacher_review",
+      "result": {
+        "score": 0.0,
+        "criteria": [
+          {
+            "name": "核心概念",
+            "score": 0.0,
+            "max_score": 40.0
+          },
+          {
+            "name": "推理步骤",
+            "score": 0.0,
+            "max_score": 40.0
+          },
+          {
+            "name": "边界条件",
+            "score": 0.0,
+            "max_score": 20.0
+          }
+        ],
+        "feedback": "本地演示评阅草稿：学生答案“先确认输入和边界”仅复述了审题习惯，未给出栈的入栈/出栈顺序推理，也未选择任何选项，缺少可评分的核心概念与推理依据。渐进提示（不公布答案）：1）明确栈的插入与删除都发生在同一端；2）按 1、2、3 依次入栈，画出栈内元素自上而下的顺序；3）出栈只能取当前栈顶元素，据此判断首个出栈者。建议补充逐步推理与边界说明后再提交。该分数仅为量规展示样例，不能视为对真实答案的判定。",
+        "review_status": "pending_teacher_review"
+      },
+      "citations": [
+        {
+          "id": 1,
+          "score": 0.5455,
+          "resource_id": 162,
+          "passage_id": 325,
+          "title": "线性结构教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "线性结构 · 段落5",
+          "version": 1,
+          "url": "/resources?course=1&resource=162&passage=325&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5,
+          "resource_id": 1,
+          "passage_id": 1,
+          "title": "数组与链表学习讲义",
+          "excerpt": "# 数组与链表",
+          "locator": "数组与链表 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=1&passage=1&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 1,
+          "passage_id": 2,
+          "title": "数组与链表学习讲义",
+          "excerpt": "数组连续存储并支持常数时间下标访问；链表通过链接组织节点。",
+          "locator": "数组与链表 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=1&passage=2&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 4,
+          "score": 0.5,
+          "resource_id": 162,
+          "passage_id": 322,
+          "title": "线性结构教学活动设计",
+          "excerpt": "# 线性结构",
+          "locator": "线性结构 · 段落2",
+          "version": 1,
+          "url": "/resources?course=1&resource=162&passage=322&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 5,
+          "score": 0.2455,
+          "resource_id": 166,
+          "passage_id": 341,
+          "title": "排序方法教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "排序方法 · 段落5",
+          "version": 1,
+          "url": "/resources?course=1&resource=166&passage=341&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 925,
+        "completion_tokens": 226,
+        "estimated": false,
+        "prompt_cache_hit_tokens": 0,
+        "reasoning_tokens": 0
+      }
+    }
+  }
+}

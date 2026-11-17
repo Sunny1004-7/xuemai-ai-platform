@@ -1,0 +1,54 @@
+{
+  "audio_text": "我不明白栈和队列的取出顺序有什么区别，请给我一个简单的反例。",
+  "transcription": {
+    "text": "我不明白栈和队列的取出顺序有什么区别,请给我一个简单的反例。",
+    "raw_text": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。",
+    "term_corrections": [
+      {
+        "from": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。",
+        "to": "我不明白栈和队列的取出顺序有什么区别,请给我一个简单的反例。",
+        "rule": "栈与队列课程术语"
+      }
+    ],
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 5.5,
+        "text": "我不明白战和队列的取出顺序有什么区别,请给我一个简单的反例。"
+      }
+    ],
+    "engine": "faster-whisper-small",
+    "local": true,
+    "language": "zh"
+  },
+  "local_transcription": true,
+  "scenarios": 2,
+  "results": [
+    {
+      "model": "deepseek-flash",
+      "api_complete": true,
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": true,
+        "valid_artifact": false,
+        "business_status": null,
+        "persisted": true
+      }
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "api_complete": true,
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": true,
+        "valid_artifact": false,
+        "business_status": null,
+        "persisted": true
+      }
+    }
+  ]
+}

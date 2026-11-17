@@ -1,0 +1,1058 @@
+{
+  "run_id": "xuemai-r10-20261117-v1",
+  "source_commit": "04b2ec164558cff12892821b4a72147ceaf8dbce",
+  "created_at": "2026-11-17T09:24:01.187256+00:00",
+  "seed": 101711,
+  "budget": 1000000,
+  "model_parameters": {
+    "temperature": 0.3,
+    "thinking": "disabled",
+    "student_max_tokens": 700,
+    "teacher_max_tokens": 1200
+  },
+  "official_pricing_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "models": {
+    "deepseek-flash": "DeepSeek-V4.1-Flash-1017",
+    "deepseek-v4-pro": "DeepSeek-V4-Pro-0813"
+  },
+  "conditions": {
+    "full": "原服务的诊断、策略与编排提示",
+    "baseline": "相同上下文、统计、候选、JSON契约与输出预算的单步生成；双方保留同一权限及业务校验"
+  },
+  "evaluation": "独立程序检查来源定位、课程对象、理解检查、产物结构、课时、保存和回流；语言量规仅为关键词覆盖代理指标",
+  "failure_policy": "所有失败保留，零自动重试；无官方usage按最坏预留扣账；重启跳过已完成结果",
+  "tasks": [
+    {
+      "id": "pilot-0",
+      "split": "pilot",
+      "role": "student",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 58,
+        "message": "请用一个反例帮助我理解综合成绩分析，最后让我独立判断。请保持简洁。"
+      }
+    },
+    {
+      "id": "pilot-1",
+      "split": "pilot",
+      "role": "student",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 57,
+        "message": "我做测试与边界案例时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。请保持简洁。"
+      }
+    },
+    {
+      "id": "pilot-2",
+      "split": "pilot",
+      "role": "student",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 56,
+        "message": "我对方法与状态约束的基础还不牢，请判断应先补哪一步，再让我验证。请保持简洁。"
+      }
+    },
+    {
+      "id": "pilot-3",
+      "split": "pilot",
+      "role": "teacher",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 55,
+        "message": "讨论初始化与属性的课堂提问，给出一个能暴露误解的追问。请保持简洁。"
+      }
+    },
+    {
+      "id": "pilot-4",
+      "split": "pilot",
+      "role": "teacher",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 54,
+        "message": "分析这个班关于类与实例的学情与典型错误，依据实际统计提出可执行建议。请保持简洁。"
+      }
+    },
+    {
+      "id": "pilot-5",
+      "split": "pilot",
+      "role": "teacher",
+      "kind": "pilot",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 53,
+        "message": "根据这个班异常与资源边界的错误，设计一节30分钟讲评课。请保持简洁。"
+      }
+    },
+    {
+      "id": "eval-student-0-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "concept",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 1,
+        "message": "请用一个反例帮助我理解数组与链表，最后让我独立判断。"
+      }
+    },
+    {
+      "id": "eval-student-0-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "concept",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 10,
+        "message": "请用一个反例帮助我理解循环与条件，最后让我独立判断。"
+      }
+    },
+    {
+      "id": "eval-student-0-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "concept",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 3,
+        "message": "请用一个反例帮助我理解递归与分治，最后让我独立判断。"
+      }
+    },
+    {
+      "id": "eval-student-0-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "concept",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 35,
+        "message": "请用一个反例帮助我理解布尔表达式，最后让我独立判断。"
+      }
+    },
+    {
+      "id": "eval-student-0-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "concept",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 5,
+        "message": "请用一个反例帮助我理解图的遍历，最后让我独立判断。"
+      }
+    },
+    {
+      "id": "eval-student-1-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "wrong_step",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 4,
+        "message": "我做二叉树时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。"
+      }
+    },
+    {
+      "id": "eval-student-1-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "wrong_step",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 36,
+        "message": "我做输入与类型转换时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。"
+      }
+    },
+    {
+      "id": "eval-student-1-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "wrong_step",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 6,
+        "message": "我做冒泡排序时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。"
+      }
+    },
+    {
+      "id": "eval-student-1-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "wrong_step",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 38,
+        "message": "我做累加与循环不变量时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。"
+      }
+    },
+    {
+      "id": "eval-student-1-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "wrong_step",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 8,
+        "message": "我做二分查找时跳过了中间状态，结果错了。请先提示怎样找到错误步骤。"
+      }
+    },
+    {
+      "id": "eval-student-2-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "prerequisite",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 7,
+        "message": "我对快速排序的基础还不牢，请判断应先补哪一步，再让我验证。"
+      }
+    },
+    {
+      "id": "eval-student-2-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "prerequisite",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 39,
+        "message": "我对break与continue的基础还不牢，请判断应先补哪一步，再让我验证。"
+      }
+    },
+    {
+      "id": "eval-student-2-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "prerequisite",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 11,
+        "message": "我对顺序表插入与删除的基础还不牢，请判断应先补哪一步，再让我验证。"
+      }
+    },
+    {
+      "id": "eval-student-2-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "prerequisite",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 41,
+        "message": "我对列表遍历的基础还不牢，请判断应先补哪一步，再让我验证。"
+      }
+    },
+    {
+      "id": "eval-student-2-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "prerequisite",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 13,
+        "message": "我对双向链表的基础还不牢，请判断应先补哪一步，再让我验证。"
+      }
+    },
+    {
+      "id": "eval-student-3-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "hint_dependence",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 12,
+        "message": "我总是看提示才能完成单链表链接操作的题，请带我做一次减少提示的检查。"
+      }
+    },
+    {
+      "id": "eval-student-3-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "hint_dependence",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 42,
+        "message": "我总是看提示才能完成列表切片与别名的题，请带我做一次减少提示的检查。"
+      }
+    },
+    {
+      "id": "eval-student-3-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "hint_dependence",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 14,
+        "message": "我总是看提示才能完成循环队列的题，请带我做一次减少提示的检查。"
+      }
+    },
+    {
+      "id": "eval-student-3-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "hint_dependence",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 44,
+        "message": "我总是看提示才能完成字典计数的题，请带我做一次减少提示的检查。"
+      }
+    },
+    {
+      "id": "eval-student-3-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "hint_dependence",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 16,
+        "message": "我总是看提示才能完成时间复杂度的题，请带我做一次减少提示的检查。"
+      }
+    },
+    {
+      "id": "eval-student-4-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "transfer",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 15,
+        "message": "把括号匹配换一个输入或应用场景，应如何检查方法是否仍成立？"
+      }
+    },
+    {
+      "id": "eval-student-4-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "transfer",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 45,
+        "message": "把函数定义与返回换一个输入或应用场景，应如何检查方法是否仍成立？"
+      }
+    },
+    {
+      "id": "eval-student-4-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "transfer",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 17,
+        "message": "把空间复杂度换一个输入或应用场景，应如何检查方法是否仍成立？"
+      }
+    },
+    {
+      "id": "eval-student-4-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "transfer",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 47,
+        "message": "把局部作用域换一个输入或应用场景，应如何检查方法是否仍成立？"
+      }
+    },
+    {
+      "id": "eval-student-4-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "transfer",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 19,
+        "message": "把二叉树遍历换一个输入或应用场景，应如何检查方法是否仍成立？"
+      }
+    },
+    {
+      "id": "eval-student-5-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "attachment",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 18,
+        "message": "读过课程讲义后，我仍不能区分递归终止条件的边界，请结合可引用材料解释。"
+      }
+    },
+    {
+      "id": "eval-student-5-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "attachment",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 48,
+        "message": "读过课程讲义后，我仍不能区分默认参数陷阱的边界，请结合可引用材料解释。"
+      }
+    },
+    {
+      "id": "eval-student-5-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "attachment",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 20,
+        "message": "读过课程讲义后，我仍不能区分二叉搜索树的边界，请结合可引用材料解释。"
+      }
+    },
+    {
+      "id": "eval-student-5-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "attachment",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 50,
+        "message": "读过课程讲义后，我仍不能区分异常处理的边界，请结合可引用材料解释。"
+      }
+    },
+    {
+      "id": "eval-student-5-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "attachment",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 22,
+        "message": "读过课程讲义后，我仍不能区分优先队列的边界，请结合可引用材料解释。"
+      }
+    },
+    {
+      "id": "eval-student-6-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "video",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 21,
+        "message": "我刚学习堆与堆调整的视频片段，请用一个简短检查连接视频与实际作答。"
+      }
+    },
+    {
+      "id": "eval-student-6-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "video",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 51,
+        "message": "我刚学习文件上下文的视频片段，请用一个简短检查连接视频与实际作答。"
+      }
+    },
+    {
+      "id": "eval-student-6-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "video",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 23,
+        "message": "我刚学习邻接表与邻接矩阵的视频片段，请用一个简短检查连接视频与实际作答。"
+      }
+    },
+    {
+      "id": "eval-student-6-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "video",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 53,
+        "message": "我刚学习异常与资源边界的视频片段，请用一个简短检查连接视频与实际作答。"
+      }
+    },
+    {
+      "id": "eval-student-6-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "video",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 25,
+        "message": "我刚学习广度优先搜索的视频片段，请用一个简短检查连接视频与实际作答。"
+      }
+    },
+    {
+      "id": "eval-student-7-0",
+      "split": "eval",
+      "role": "student",
+      "kind": "followup",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 24,
+        "message": "上次检查没有通过，我把深度优先搜索的条件理解反了，请换一种表征继续辅导。"
+      }
+    },
+    {
+      "id": "eval-student-7-1",
+      "split": "eval",
+      "role": "student",
+      "kind": "followup",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 54,
+        "message": "上次检查没有通过，我把类与实例的条件理解反了，请换一种表征继续辅导。"
+      }
+    },
+    {
+      "id": "eval-student-7-2",
+      "split": "eval",
+      "role": "student",
+      "kind": "followup",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 26,
+        "message": "上次检查没有通过，我把拓扑排序的条件理解反了，请换一种表征继续辅导。"
+      }
+    },
+    {
+      "id": "eval-student-7-3",
+      "split": "eval",
+      "role": "student",
+      "kind": "followup",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 56,
+        "message": "上次检查没有通过，我把方法与状态约束的条件理解反了，请换一种表征继续辅导。"
+      }
+    },
+    {
+      "id": "eval-student-7-4",
+      "split": "eval",
+      "role": "student",
+      "kind": "followup",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 28,
+        "message": "上次检查没有通过，我把归并排序的条件理解反了，请换一种表征继续辅导。"
+      }
+    },
+    {
+      "id": "eval-teacher-0-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "discussion",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 1,
+        "message": "讨论数组与链表的课堂提问，给出一个能暴露误解的追问。"
+      }
+    },
+    {
+      "id": "eval-teacher-0-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "discussion",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 10,
+        "message": "讨论循环与条件的课堂提问，给出一个能暴露误解的追问。"
+      }
+    },
+    {
+      "id": "eval-teacher-0-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "discussion",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 3,
+        "message": "讨论递归与分治的课堂提问，给出一个能暴露误解的追问。"
+      }
+    },
+    {
+      "id": "eval-teacher-0-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "discussion",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 35,
+        "message": "讨论布尔表达式的课堂提问，给出一个能暴露误解的追问。"
+      }
+    },
+    {
+      "id": "eval-teacher-0-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "discussion",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 5,
+        "message": "讨论图的遍历的课堂提问，给出一个能暴露误解的追问。"
+      }
+    },
+    {
+      "id": "eval-teacher-1-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "analysis",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 4,
+        "message": "分析这个班关于二叉树的学情与典型错误，依据实际统计提出可执行建议。"
+      }
+    },
+    {
+      "id": "eval-teacher-1-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "analysis",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 36,
+        "message": "分析这个班关于输入与类型转换的学情与典型错误，依据实际统计提出可执行建议。"
+      }
+    },
+    {
+      "id": "eval-teacher-1-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "analysis",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 6,
+        "message": "分析这个班关于冒泡排序的学情与典型错误，依据实际统计提出可执行建议。"
+      }
+    },
+    {
+      "id": "eval-teacher-1-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "analysis",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 38,
+        "message": "分析这个班关于累加与循环不变量的学情与典型错误，依据实际统计提出可执行建议。"
+      }
+    },
+    {
+      "id": "eval-teacher-1-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "analysis",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 8,
+        "message": "分析这个班关于二分查找的学情与典型错误，依据实际统计提出可执行建议。"
+      }
+    },
+    {
+      "id": "eval-teacher-2-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "mixed",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 7,
+        "message": "根据这个班快速排序的错误，设计一节30分钟讲评课。"
+      }
+    },
+    {
+      "id": "eval-teacher-2-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "mixed",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 39,
+        "message": "根据这个班break与continue的错误，设计一节30分钟讲评课。"
+      }
+    },
+    {
+      "id": "eval-teacher-2-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "mixed",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 11,
+        "message": "根据这个班顺序表插入与删除的错误，设计一节30分钟讲评课。"
+      }
+    },
+    {
+      "id": "eval-teacher-2-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "mixed",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 41,
+        "message": "根据这个班列表遍历的错误，设计一节30分钟讲评课。"
+      }
+    },
+    {
+      "id": "eval-teacher-2-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "mixed",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 13,
+        "message": "根据这个班双向链表的错误，设计一节30分钟讲评课。"
+      }
+    },
+    {
+      "id": "eval-teacher-3-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "lesson",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 12,
+        "message": "围绕单链表链接操作准备一节20分钟教案，保留独立检查和结果反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-3-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "lesson",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 42,
+        "message": "围绕列表切片与别名准备一节20分钟教案，保留独立检查和结果反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-3-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "lesson",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 14,
+        "message": "围绕循环队列准备一节20分钟教案，保留独立检查和结果反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-3-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "lesson",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 44,
+        "message": "围绕字典计数准备一节20分钟教案，保留独立检查和结果反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-3-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "lesson",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 16,
+        "message": "围绕时间复杂度准备一节20分钟教案，保留独立检查和结果反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-4-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "groups",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 15,
+        "message": "根据括号匹配的薄弱证据安排两组后续练习和25分钟分层教学。"
+      }
+    },
+    {
+      "id": "eval-teacher-4-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "groups",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 45,
+        "message": "根据函数定义与返回的薄弱证据安排两组后续练习和25分钟分层教学。"
+      }
+    },
+    {
+      "id": "eval-teacher-4-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "groups",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 17,
+        "message": "根据空间复杂度的薄弱证据安排两组后续练习和25分钟分层教学。"
+      }
+    },
+    {
+      "id": "eval-teacher-4-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "groups",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 47,
+        "message": "根据局部作用域的薄弱证据安排两组后续练习和25分钟分层教学。"
+      }
+    },
+    {
+      "id": "eval-teacher-4-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "groups",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 19,
+        "message": "根据二叉树遍历的薄弱证据安排两组后续练习和25分钟分层教学。"
+      }
+    },
+    {
+      "id": "eval-teacher-5-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "question",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 18,
+        "message": "围绕递归终止条件设计题目，生成一道单选题并提供答案和解析。"
+      }
+    },
+    {
+      "id": "eval-teacher-5-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "question",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 48,
+        "message": "围绕默认参数陷阱设计题目，生成一道单选题并提供答案和解析。"
+      }
+    },
+    {
+      "id": "eval-teacher-5-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "question",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 20,
+        "message": "围绕二叉搜索树设计题目，生成一道单选题并提供答案和解析。"
+      }
+    },
+    {
+      "id": "eval-teacher-5-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "question",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 50,
+        "message": "围绕异常处理设计题目，生成一道单选题并提供答案和解析。"
+      }
+    },
+    {
+      "id": "eval-teacher-5-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "question",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 22,
+        "message": "围绕优先队列设计题目，生成一道单选题并提供答案和解析。"
+      }
+    },
+    {
+      "id": "eval-teacher-6-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "rubric",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 21,
+        "message": "为堆与堆调整的解释型作答设计评分量规，分项总分100，当前未作答，给出0分待教师确认。"
+      }
+    },
+    {
+      "id": "eval-teacher-6-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "rubric",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 51,
+        "message": "为文件上下文的解释型作答设计评分量规，分项总分100，当前未作答，给出0分待教师确认。"
+      }
+    },
+    {
+      "id": "eval-teacher-6-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "rubric",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 23,
+        "message": "为邻接表与邻接矩阵的解释型作答设计评分量规，分项总分100，当前未作答，给出0分待教师确认。"
+      }
+    },
+    {
+      "id": "eval-teacher-6-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "rubric",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 53,
+        "message": "为异常与资源边界的解释型作答设计评分量规，分项总分100，当前未作答，给出0分待教师确认。"
+      }
+    },
+    {
+      "id": "eval-teacher-6-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "rubric",
+      "model": "deepseek-v4-pro",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 25,
+        "message": "为广度优先搜索的解释型作答设计评分量规，分项总分100，当前未作答，给出0分待教师确认。"
+      }
+    },
+    {
+      "id": "eval-teacher-7-0",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "feedback",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 24,
+        "message": "依据深度优先搜索的班级错误安排30分钟讲评和后续练习，并说明如何查看完成反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-7-1",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "feedback",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 54,
+        "message": "依据类与实例的班级错误安排30分钟讲评和后续练习，并说明如何查看完成反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-7-2",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "feedback",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 26,
+        "message": "依据拓扑排序的班级错误安排30分钟讲评和后续练习，并说明如何查看完成反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-7-3",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "feedback",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 2,
+        "knowledge_id": 56,
+        "message": "依据方法与状态约束的班级错误安排30分钟讲评和后续练习，并说明如何查看完成反馈。"
+      }
+    },
+    {
+      "id": "eval-teacher-7-4",
+      "split": "eval",
+      "role": "teacher",
+      "kind": "feedback",
+      "model": "deepseek-flash",
+      "body": {
+        "course_id": 1,
+        "knowledge_id": 28,
+        "message": "依据归并排序的班级错误安排30分钟讲评和后续练习，并说明如何查看完成反馈。"
+      }
+    }
+  ]
+}

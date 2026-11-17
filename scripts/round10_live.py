@@ -21,7 +21,9 @@ from backend.app.ai_budget import task_id, ledger
 
 def write(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf8')
+    temporary=path.with_name(path.name+f'.{os.getpid()}.tmp')
+    temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf8')
+    temporary.replace(path)
 
 
 STUDENT=[
@@ -149,7 +151,17 @@ def export_ledger():
         db.row_factory=__import__('sqlite3').Row
         rows=[dict(r) for r in db.execute('SELECT * FROM token_calls WHERE scope=? ORDER BY id',('round10-20261117',))]
     for row in rows:row['usage']=json.loads(row['usage'])
-    write(OUT/'token-ledger.json',{'scope':'round10-20261117','limit':1000000,'requests':len(rows),
+    models={}
+    for model in sorted({r['model'] for r in rows}):
+        chosen=[r for r in rows if r['model']==model]
+        official=[r for r in chosen if not r['usage'].get('estimated',True)]
+        prompt=sum(r['usage'].get('prompt_tokens',0) for r in official)
+        completion=sum(r['usage'].get('completion_tokens',0) for r in official)
+        hit=sum(r['usage'].get('prompt_cache_hit_tokens',0) for r in official)
+        input_price,hit_price,output_price=(.3,.006,1.2) if model=='deepseek-flash' else (1.32,.044,3.96)
+        models[model]={'requests':len(chosen),'prompt_tokens':prompt,'completion_tokens':completion,
+                       'cached_input_tokens':hit,'peak_price_estimate_usd':round(((prompt-hit)*input_price+hit*hit_price+completion*output_price)/1e6,6)}
+    write(OUT/'token-ledger.json',{'scope':'round10-20261117','limit':1000000,'requests':len(rows),'by_model':models,
           'charged_or_reserved':sum(r['reserved'] if r['status']=='reserved' else r['charged'] for r in rows),
           'official_prompt_tokens':sum(r['usage'].get('prompt_tokens',0) for r in rows if not r['usage'].get('estimated',True)),
           'official_completion_tokens':sum(r['usage'].get('completion_tokens',0) for r in rows if not r['usage'].get('estimated',True)),

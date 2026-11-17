@@ -1,0 +1,113 @@
+{
+  "id": 13,
+  "kind": "generate",
+  "course_id": 2,
+  "checks": {
+    "generated": true
+  },
+  "passed": true,
+  "elapsed_seconds": 2.3710627999998906,
+  "evidence": {
+    "http_status": 200,
+    "result": {
+      "mode": "real",
+      "model": "deepseek-flash",
+      "kind": "lesson",
+      "draft": true,
+      "review_status": "pending_teacher_review",
+      "result": {
+        "title": "变量与类型：用 type 认识对象类型",
+        "objectives": [
+          "解释 Python 变量绑定对象、类型由所绑定对象决定",
+          "使用 type 观察整数、字符串、列表的类型差异",
+          "说明整数、字符串和列表在语义上的不同"
+        ],
+        "prerequisites": [
+          "基本变量与顺序执行",
+          "能在交互环境中运行简单表达式"
+        ],
+        "steps": [
+          "5 分钟：回顾变量绑定对象，提问“变量的类型由什么决定”",
+          "10 分钟：在交互环境依次观察 type(3)、type(\"3\")、type([3])，先预测再验证",
+          "10 分钟：分组讨论三个结果为何不同，联系整数、字符串、列表的语义差异",
+          "10 分钟：独立完成随堂题，逐项说明每个选项成立或不成立的理由",
+          "5 分钟：交流错因，强调依据推理而非只对答案"
+        ],
+        "examples": [
+          "先预测 type(3) 的结果，再运行验证，并说明为什么不是字符串或列表。",
+          "对比 type(3) 与 type(\"3\")、type([3])，记录三者的差异。"
+        ],
+        "assessment": "提交一次独立作答，需写出判断依据：说明 3 属于哪类对象、其余选项为何不成立；评分量规总分100：类型判断正确40分，依据清晰30分，排除干扰项20分，表达规范10分。"
+      },
+      "citations": [
+        {
+          "id": 1,
+          "score": 0.5455,
+          "resource_id": 156,
+          "passage_id": 301,
+          "title": "变量与表达式教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "变量与表达式 · 段落5",
+          "version": 1,
+          "url": "/resources?course=2&resource=156&passage=301&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5455,
+          "resource_id": 126,
+          "passage_id": 162,
+          "title": "变量与类型：例题与边界",
+          "excerpt": "## 推导与例题\na=3; a=\"三\" 执行后a的类型是？\n答案为str。请在纸上逐步记录变量、容器内容或控制位置，比较各选项为什么成立或不成立。",
+          "locator": "推导与例题 · 段落5",
+          "version": 1,
+          "url": "/resources?course=2&resource=126&passage=162&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 9,
+          "passage_id": 41,
+          "title": "变量与类型学习讲义",
+          "excerpt": "Python变量绑定对象；整数、字符串和列表具有不同语义。\n学习目标：理解定义、手工追踪执行步骤，并使用程序验证。\n合成教学素材，由项目开发时编写。",
+          "locator": "段落1",
+          "version": 1,
+          "url": "/resources?course=2&resource=9&passage=41&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 4,
+          "score": 0.5,
+          "resource_id": 126,
+          "passage_id": 160,
+          "title": "变量与类型：例题与边界",
+          "excerpt": "# 变量与类型",
+          "locator": "变量与类型 · 段落2",
+          "version": 1,
+          "url": "/resources?course=2&resource=126&passage=160&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 5,
+          "score": 0.5,
+          "resource_id": 156,
+          "passage_id": 298,
+          "title": "变量与表达式教学活动设计",
+          "excerpt": "# 变量与表达式",
+          "locator": "变量与表达式 · 段落2",
+          "version": 1,
+          "url": "/resources?course=2&resource=156&passage=298&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 935,
+        "completion_tokens": 301,
+        "estimated": false,
+        "prompt_cache_hit_tokens": 0,
+        "reasoning_tokens": 0
+      }
+    }
+  }
+}

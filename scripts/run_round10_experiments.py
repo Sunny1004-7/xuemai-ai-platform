@@ -151,6 +151,7 @@ def ktrace_experiment():
                    'at':now.isoformat(),'latent':latent,'repeat':repeated}
             events.append(event)
             for method,state in states.items():
+                stored=deepcopy(state)
                 if method=='fixed_step':
                     state['value']=max(0,min(1,state['value']+(.08 if correct else -.08)))
                 else:
@@ -163,7 +164,7 @@ def ktrace_experiment():
                         repeat_violations+=abs(state['value']-before)>1e-10
                     if change['weight']>0:
                         state['updated_at']=now.isoformat()
-                states[method]=state
+                states[method]=stored if method!='fixed_step' and change['weight']==0 else state
                 errors[method].append((state['value']-latent)**2)
             previous={'correct':correct,'created_at':now.isoformat()}
         cases.append({'id':index,'split':'dev' if index<120 else 'eval','family':family,'events':events,

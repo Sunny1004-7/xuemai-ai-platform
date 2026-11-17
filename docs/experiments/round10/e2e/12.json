@@ -1,0 +1,106 @@
+{
+  "id": 12,
+  "kind": "generate",
+  "course_id": 1,
+  "checks": {
+    "generated": true
+  },
+  "passed": true,
+  "elapsed_seconds": 2.304229100000157,
+  "evidence": {
+    "http_status": 200,
+    "result": {
+      "mode": "real",
+      "model": "deepseek-flash",
+      "kind": "question",
+      "draft": true,
+      "review_status": "pending_teacher_review",
+      "result": {
+        "type": "single",
+        "title": "学习“数组与链表”时，哪种方法最适合验证算法过程是否正确？",
+        "options": [
+          "只看最终输出",
+          "用小规模输入逐步追踪状态",
+          "仅记忆术语",
+          "跳过边界条件"
+        ],
+        "answer": "用小规模输入逐步追踪状态",
+        "explanation": "逐步追踪状态能够检查每次操作和边界条件，比只看输出更容易定位错误。",
+        "difficulty": 1,
+        "hints": [
+          "考虑能看到中间状态的方法。",
+          "试着用 3 个元素手工执行。"
+        ]
+      },
+      "citations": [
+        {
+          "id": 1,
+          "score": 0.5455,
+          "resource_id": 162,
+          "passage_id": 325,
+          "title": "线性结构教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "线性结构 · 段落5",
+          "version": 1,
+          "url": "/resources?course=1&resource=162&passage=325&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 2,
+          "score": 0.5,
+          "resource_id": 1,
+          "passage_id": 1,
+          "title": "数组与链表学习讲义",
+          "excerpt": "# 数组与链表",
+          "locator": "数组与链表 · 段落2",
+          "version": 2,
+          "url": "/resources?course=1&resource=1&passage=1&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 3,
+          "score": 0.5,
+          "resource_id": 1,
+          "passage_id": 2,
+          "title": "数组与链表学习讲义",
+          "excerpt": "数组连续存储并支持常数时间下标访问；链表通过链接组织节点。",
+          "locator": "数组与链表 · 段落3",
+          "version": 2,
+          "url": "/resources?course=1&resource=1&passage=2&version=2",
+          "source_kind": "course"
+        },
+        {
+          "id": 4,
+          "score": 0.5,
+          "resource_id": 162,
+          "passage_id": 322,
+          "title": "线性结构教学活动设计",
+          "excerpt": "# 线性结构",
+          "locator": "线性结构 · 段落2",
+          "version": 1,
+          "url": "/resources?course=1&resource=162&passage=322&version=1",
+          "source_kind": "course"
+        },
+        {
+          "id": 5,
+          "score": 0.2455,
+          "resource_id": 166,
+          "passage_id": 341,
+          "title": "排序方法教学活动设计",
+          "excerpt": "评价：关注推理依据、独立完成情况和边界处理，避免只检查最后答案。",
+          "locator": "排序方法 · 段落5",
+          "version": 1,
+          "url": "/resources?course=1&resource=166&passage=341&version=1",
+          "source_kind": "course"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 866,
+        "completion_tokens": 232,
+        "estimated": false,
+        "prompt_cache_hit_tokens": 0,
+        "reasoning_tokens": 0
+      }
+    }
+  }
+}

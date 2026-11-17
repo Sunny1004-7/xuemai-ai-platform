@@ -1,0 +1,338 @@
+{
+  "original_failures": [
+    {
+      "original_case": 8,
+      "recovered": true,
+      "saved": true,
+      "no_new_model_request": true,
+      "artifact": {
+        "id": 3,
+        "kind": "intervention",
+        "draft": {
+          "title": "数组与链表的依据追踪与边界讲评课",
+          "objective": "对照具体作答，用可复算的状态追踪解释数组与链表的操作依据，识别边界条件，并在减少提示后完成独立复测。",
+          "steps": [
+            {
+              "title": "发现问题：依据缺口",
+              "minutes": 6,
+              "activity": "展示匿名错例，学生先独立预测操作结果并写出判断依据，再对照答案标出依据缺失处。"
+            },
+            {
+              "title": "对照实验：逐步追踪",
+              "minutes": 12,
+              "activity": "用同一组输入分别追踪顺序表插入删除与单链表链接操作，逐步记录指针与下标变化，说明每步修改了什么、为什么这样改。"
+            },
+            {
+              "title": "反例辨析：边界条件",
+              "minutes": 6,
+              "activity": "对照易错输入与反例，讨论头尾插入、空表、越界等隐含前提，明确数组连续存储与链表链接组织的适用差异。"
+            },
+            {
+              "title": "分层独立复测",
+              "minutes": 6,
+              "activity": "各组按关注点完成对应练习，减少提示，记录错误步骤作为后续复测依据。"
+            }
+          ],
+          "groups": [
+            {
+              "group_id": "group-8",
+              "objective": "逐步追踪状态并检查操作顺序，修正程序步骤偏差",
+              "question_ids": [
+                1,
+                3,
+                5
+              ],
+              "student_ids": [
+                5,
+                8,
+                11,
+                14,
+                17,
+                20,
+                23,
+                26,
+                29
+              ],
+              "name": "操作步骤关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-10",
+              "objective": "减少提示后独立完成链接操作复测",
+              "question_ids": [
+                1,
+                3,
+                5
+              ],
+              "student_ids": [
+                3,
+                7,
+                9,
+                10,
+                13,
+                15,
+                19,
+                21,
+                25,
+                27,
+                28
+              ],
+              "name": "提示依赖关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-6",
+              "objective": "更换输入检验数组与链表规则的迁移应用",
+              "question_ids": [
+                1,
+                3,
+                5
+              ],
+              "student_ids": [
+                2,
+                6,
+                12,
+                18,
+                24
+              ],
+              "name": "迁移应用关注组",
+              "knowledge_id": 2
+            },
+            {
+              "group_id": "group-16",
+              "objective": "用反例区分数组与链表的概念边界",
+              "question_ids": [
+                1,
+                3,
+                5
+              ],
+              "student_ids": [
+                4,
+                16,
+                22
+              ],
+              "name": "概念辨析关注组",
+              "knowledge_id": 2
+            }
+          ]
+        },
+        "status": "draft"
+      }
+    },
+    {
+      "original_case": 11,
+      "recovered": true,
+      "saved": true,
+      "no_new_model_request": true,
+      "artifact": {
+        "id": 4,
+        "kind": "intervention",
+        "draft": {
+          "title": "变量与类型：状态追踪与边界讲评课",
+          "objective": "对照匿名错例，区分变量绑定、类型语义与赋值顺序，完成分层复测。",
+          "steps": [
+            {
+              "title": "暴露错误与预测",
+              "minutes": 6,
+              "activity": "展示变量与类型相关匿名错例，让学生先独立预测每一步变量指向和类型，再简短说出判断依据。"
+            },
+            {
+              "title": "逐步追踪与对照",
+              "minutes": 14,
+              "activity": "用整数、字符串和列表的同一组赋值操作逐步追踪，强调变量保存对象引用、赋值改变绑定，并对照易错输入讨论隐含前提。"
+            },
+            {
+              "title": "分层练习与复测",
+              "minutes": 10,
+              "activity": "按群组完成对应练习，记录错误步骤，教师根据错误安排复测。"
+            }
+          ],
+          "groups": [
+            {
+              "group_id": "group-11",
+              "objective": "逐步追踪状态并检查操作顺序",
+              "question_ids": [
+                9,
+                41,
+                42
+              ],
+              "student_ids": [
+                2,
+                6,
+                7,
+                11,
+                12
+              ],
+              "name": "操作步骤关注组",
+              "knowledge_id": 9
+            },
+            {
+              "group_id": "group-9",
+              "objective": "更换输入检验知识迁移",
+              "question_ids": [
+                9,
+                41,
+                42
+              ],
+              "student_ids": [
+                4,
+                9,
+                14
+              ],
+              "name": "迁移应用关注组",
+              "knowledge_id": 9
+            },
+            {
+              "group_id": "group-10",
+              "objective": "补齐推理依据与边界条件",
+              "question_ids": [
+                9,
+                41,
+                42
+              ],
+              "student_ids": [
+                5,
+                10,
+                15
+              ],
+              "name": "推理论证关注组",
+              "knowledge_id": 9
+            },
+            {
+              "group_id": "group-8",
+              "objective": "用反例区分概念边界",
+              "question_ids": [
+                9,
+                41,
+                42
+              ],
+              "student_ids": [
+                3,
+                8,
+                13
+              ],
+              "name": "概念辨析关注组",
+              "knowledge_id": 9
+            }
+          ]
+        },
+        "status": "draft"
+      }
+    }
+  ],
+  "independent_cases": [
+    {
+      "id": "repair-independent-0",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-1",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-2",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-3",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-4",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-5",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-6",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    },
+    {
+      "id": "repair-independent-7",
+      "checks": {
+        "course_and_role": true,
+        "citation_locators": true,
+        "has_citation": true,
+        "has_check": false,
+        "valid_artifact": true,
+        "business_status": "draft_ready",
+        "saved": true,
+        "persisted": true
+      },
+      "api_complete": true
+    }
+  ],
+  "independent_passed": 8
+}
