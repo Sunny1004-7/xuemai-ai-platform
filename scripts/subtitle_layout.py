@@ -2,6 +2,15 @@
 import re
 
 
+def caption_center(layout):
+    """以已核对的内容下边界计算底部留白区中心。"""
+    width, height = layout['width'], layout['height']
+    bottom = layout['content_bottom']
+    if not 0 < bottom < height or width <= 0:
+        raise ValueError('字幕布局需要有效的画面尺寸和内容下边界')
+    return width / 2, (bottom + height) / 2
+
+
 def semantic_lines(text, measure, max_width=1440):
     """保留术语内部字符，仅在讲稿已有的自然停顿处分条。"""
     clauses = re.findall(r'[^，。！？；：]+[，。！？；：]?|[，。！？；：]', text)

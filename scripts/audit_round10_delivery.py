@@ -15,6 +15,8 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
+    current=json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
+    project=ROOT/current['project']
     manifest=json.loads((ROOT/'docs/experiments/round10/manifest.json').read_text('utf8'))
     for relative,expected in manifest['files'].items():
         assert digest(ROOT/relative)==expected,relative
@@ -23,10 +25,13 @@ def main():
     pairs=[('docs/deliverables/xuemai-technical-report.pdf','最终参赛提交材料/学脉XueMai-技术文档.pdf'),
            ('docs/deliverables/xuemai-demo-1080p.mp4','最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4')]
     for a,b in pairs:assert digest(ROOT/a)==digest(ROOT/b)
-    pdf=pymupdf.open(ROOT/pairs[0][0]);assert len(pdf)<=30
+    pdf=pymupdf.open(ROOT/pairs[0][0]);assert len(pdf)==facts['delivery']['pdf_pages']<=30
     assert '摘要' in pdf[2].get_text() and '1.1' not in pdf[2].get_text()
     assert '应用场景与总体方案' in pdf[3].get_text()
     assert '系统版本' not in pdf[0].get_text()
+    if facts.get('materials_round',10)>=11:
+        assert '参赛学生' in pdf[0].get_text() and '指导教师' in pdf[0].get_text()
+        assert facts['author']['supervisor'] in pdf[0].get_text()
     main=(ROOT/'docs/technical-report/main.tex').read_text('utf8')
     abstract=(ROOT/'docs/technical-report/abstract-current.tex').read_text('utf8')
     assert len([p for p in abstract.split('\n\n') if p.strip()])==3
@@ -47,14 +52,15 @@ def main():
     assert len(ledger['rows'])==202 and all(r['status']!='reserved' for r in ledger['rows'])
     assert sum(r['charged'] for r in ledger['rows'])==ledger['charged_or_reserved']<=ledger['limit']
     subtitle=ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt'
-    assert digest(subtitle)==digest(ROOT/'docs/demo/第十轮演示源/subtitles.srt')
+    assert digest(subtitle)==digest(project/'subtitles.srt')
     release_files=[]
     for name in ['学脉XueMai-技术文档.pdf','学脉XueMai-演示视频-含旁白.mp4',
                  '学脉XueMai-演示视频.mp4','学脉XueMai-演示字幕.srt']:
         path=ROOT/'最终参赛提交材料'/name
         release_files.append({'name':name,'bytes':path.stat().st_size,'sha256':digest(path)})
-    release={'version':facts['version'],'round':10,'source_commit':facts['baseline_commit'],
-             'source_commit_scope':'本轮实验协议基线，最终源码提交见完整审阅包的审阅清单',
+    release={'version':facts['version'],'round':facts.get('materials_round',10),
+             'source_commit':facts.get('material_baseline_commit',facts['baseline_commit']),
+             'source_commit_scope':'本轮材料基线，最终源码提交见完整审阅包的审阅清单',
              'repository':'https://github.com/Sunny1004-7/xuemai-ai-platform',
              'verification':facts['delivery'],'real_ai':facts['real_ai']['round10'],
              'preferred_video':'学脉XueMai-演示视频-含旁白.mp4','files':release_files}
@@ -67,7 +73,8 @@ def main():
             'ui_image_sources':images,'token_rows':len(ledger['rows']),'tokens':ledger['charged_or_reserved'],
             'all_tokens_settled':True,'human_listening_review':False,
             'current_release_manifest_files':len(release_files),'release_manifest_copies_identical':True}
-    (ROOT/'docs/rounds/第十轮交付一致性核验.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
+    title=project.name.removesuffix('演示源')
+    (ROOT/f'docs/rounds/{title}交付一致性核验.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     print(json.dumps({k:v for k,v in result.items() if k!='ui_image_sources'},ensure_ascii=False))
 
 

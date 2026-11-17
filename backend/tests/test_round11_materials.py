@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from scripts import build_round10_figures
+from scripts.subtitle_layout import caption_center
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -43,3 +44,24 @@ def test_readme_has_centered_figure_and_indented_plain_paragraphs():
             if not line.startswith(('#', '|', '<', '-', '1.', '2.', '3.', '4.', '5.')):
                 assert line.startswith('\u3000\u3000'), line
         previous_blank = not line.strip()
+
+
+def test_video_follows_modules_and_keeps_framework_stationary():
+    current = json.loads((ROOT / 'docs/demo/current.json').read_text('utf8'))
+    project = ROOT / current['project']
+    scenes = json.loads((project / 'scenes-source.json').read_text('utf8'))
+    modules = [scene for scene in scenes if scene['role'] in ['student', 'teacher']]
+    assert len({scene['scene_id'] for scene in scenes}) == len(scenes)
+    assert [scene['role'] for scene in modules] == ['student'] * 10 + ['teacher'] * 9
+    assert [scene['module'] for scene in modules[:10]] == [
+        'dashboard', 'plan', 'video', 'resources', 'graph', 'practice', 'review', 'experiments', 'tutor', 'classroom',
+    ]
+    assert sum(scene['duration'] for scene in scenes if scene['role'] == 'development') >= 120
+    board = (project / 'boards.html').read_text('utf8')
+    assert 'AI协同过程复现展示' in board
+    assert 'frame.style.transform=' not in board and 'scale(${zoom})' not in board
+
+
+def test_subtitle_uses_actual_content_boundary():
+    assert caption_center({'width': 1920, 'height': 1080, 'content_bottom': 1000}) == (960, 1040)
+    assert caption_center({'width': 1920, 'height': 1080, 'content_bottom': 932}) == (960, 1006)

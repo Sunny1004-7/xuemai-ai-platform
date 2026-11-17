@@ -7,6 +7,7 @@ import os
 from difflib import SequenceMatcher
 
 from faster_whisper import WhisperModel
+from demo_project import load_project
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,10 +19,8 @@ def normalize(text):
 def main():
     source = ROOT / '最终参赛提交材料/学脉XueMai-演示视频-含旁白.mp4'
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
-    current = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
-    round_number = int(os.environ.get('XUEMAI_VIDEO_ROUND', current['round']))
-    title = {7:'第七轮',8:'第八轮',9:'第九轮',10:'第十轮'}[round_number]
-    project = ROOT/('docs/demo/'+title+'演示源')
+    current, round_number, project = load_project(os.environ.get('XUEMAI_VIDEO_ROUND'))
+    title = project.name.removesuffix('演示源')
     target = ROOT / ('docs/demo/'+title+'语音转写回验.json')
     model = WhisperModel(str(ROOT / '.local/models/faster-whisper-small'), device='cpu', compute_type='int8', cpu_threads=6)
     segments, info = model.transcribe(str(source), language='zh', beam_size=3, vad_filter=True,

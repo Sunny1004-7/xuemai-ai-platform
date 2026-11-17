@@ -29,7 +29,7 @@ def test_material_aggregation_does_not_call_paid_service():
     assert 'source_commit' in source
     facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
     release=json.loads((ROOT/'docs/deliverables/release-manifest.json').read_text('utf8'))
-    assert release['round']==10
+    assert release['round']==facts.get('materials_round',10)
     assert release['verification']==facts['delivery']
     assert release['real_ai']==facts['real_ai']['round10']
     files={entry['name']:entry for entry in release['files']}

@@ -6,13 +6,13 @@ import re
 import subprocess
 import os
 import imageio_ffmpeg
+from demo_project import load_project
+from subtitle_layout import caption_center
 
 ROOT=Path(__file__).resolve().parents[1]
 FFMPEG=imageio_ffmpeg.get_ffmpeg_exe()
-CURRENT = json.loads((ROOT/'docs/demo/current.json').read_text('utf8'))
-ROUND = int(os.environ.get('XUEMAI_VIDEO_ROUND', CURRENT['round']))
+CURRENT, ROUND, PROJECT = load_project(os.environ.get('XUEMAI_VIDEO_ROUND'))
 LATEST = ROUND >= 8
-PROJECT = ROOT/('docs/demo/' + {7:'第七轮',8:'第八轮',9:'第九轮',10:'第十轮'}[ROUND] + '演示源')
 EDIT=json.loads((PROJECT/'edit-timeline.json').read_text('utf8'))
 DURATION=EDIT['duration_seconds']
 
@@ -80,11 +80,17 @@ def build():
          'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
          ('Style: Default,Microsoft YaHei,32,&H003D3F20,&H003D3F20,&H00F8F8F5,&HFF000000,0,0,0,0,100,100,0,0,1,1.1,0.4,2,100,100,24,1' if LATEST else 'Style: Default,Microsoft YaHei,32,&H00FFFFFF,&H00FFFFFF,&H00372F26,&H20372F26,0,0,0,0,100,100,0,0,3,8,0,2,100,100,24,1'),
          '[Events]','Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text']
+    position = ''
+    if ROUND >= 11:
+        layout = json.loads((PROJECT/'video-layout.json').read_text('utf8'))
+        x, y = caption_center(layout)
+        y += layout.get('glyph_center_correction', 0)
+        position = f'{{\\an5\\pos({x:g},{y:g})}}'
     def seconds(s):
         h,m,v=s.replace(',','.').split(':');return int(h)*3600+int(m)*60+float(v)
     for block in srt.strip().split('\n\n'):
         lines=block.splitlines();a,b=lines[1].split(' --> ')
-        ass.append(f'Dialogue: 0,{ass_time(seconds(a))},{ass_time(seconds(b))},Default,,0,0,0,,'+''.join(lines[2:]))
+        ass.append(f'Dialogue: 0,{ass_time(seconds(a))},{ass_time(seconds(b))},Default,,0,0,0,,'+position+''.join(lines[2:]))
     (local/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')
     if LATEST:
         (PROJECT/'subtitles.ass').write_text('\n'.join(ass),encoding='utf8',newline='\n')

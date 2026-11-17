@@ -32,8 +32,13 @@ const stamp = new Intl.DateTimeFormat('sv-SE', {
   .replace(' ', '_')
 const output = path.join(root, '交付审阅包', `界面截图_${stamp}`)
 const buildDirectory = path.join(root, '.local', 'review-builds', stamp)
-const apiUrl = 'http://127.0.0.1:8002'
-const baseUrl = 'http://127.0.0.1:5176'
+const apiPort = Number(process.env.XUEMAI_REVIEW_API_PORT || 8002)
+const webPort = Number(process.env.XUEMAI_REVIEW_WEB_PORT || 5176)
+if (![apiPort, webPort].every(port => Number.isInteger(port) && port >= 1024 && port <= 65535) || apiPort === webPort) {
+  throw new Error('截图端口须为1024至65535间的两个不同整数')
+}
+const apiUrl = `http://127.0.0.1:${apiPort}`
+const baseUrl = `http://127.0.0.1:${webPort}`
 const python = path.join(
   root,
   process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python',
@@ -554,8 +559,8 @@ function escapeHtml(text) {
   return String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;')
 }
 try {
-  await freePort(8002)
-  await freePort(5176)
+  await freePort(apiPort)
+  await freePort(webPort)
   await mkdir(output, { recursive: true })
   outputCreated = true
   await run(process.execPath, ['node_modules/typescript/bin/tsc', '-b'], { cwd: frontend })
@@ -563,7 +568,7 @@ try {
   const sourceFingerprint = await fingerprint()
   const backend = start(
     python,
-    ['-m', 'uvicorn', 'backend.app.main:app', '--host', '127.0.0.1', '--port', '8002'],
+    ['-m', 'uvicorn', 'backend.app.main:app', '--host', '127.0.0.1', '--port', String(apiPort)],
     {
       env: {
         ...process.env,
@@ -584,7 +589,7 @@ try {
       '--host',
       '127.0.0.1',
       '--port',
-      '5176',
+      String(webPort),
       '--strictPort',
     ],
     { cwd: frontend, env: { ...process.env, VITE_API_PROXY_TARGET: apiUrl } },
