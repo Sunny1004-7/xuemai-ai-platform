@@ -46,11 +46,27 @@ def main():
     ledger=json.loads((ROOT/'docs/experiments/round10/token-ledger.json').read_text('utf8'))
     assert len(ledger['rows'])==202 and all(r['status']!='reserved' for r in ledger['rows'])
     assert sum(r['charged'] for r in ledger['rows'])==ledger['charged_or_reserved']<=ledger['limit']
+    subtitle=ROOT/'最终参赛提交材料/学脉XueMai-演示字幕.srt'
+    assert digest(subtitle)==digest(ROOT/'docs/demo/第十轮演示源/subtitles.srt')
+    release_files=[]
+    for name in ['学脉XueMai-技术文档.pdf','学脉XueMai-演示视频-含旁白.mp4',
+                 '学脉XueMai-演示视频.mp4','学脉XueMai-演示字幕.srt']:
+        path=ROOT/'最终参赛提交材料'/name
+        release_files.append({'name':name,'bytes':path.stat().st_size,'sha256':digest(path)})
+    release={'version':facts['version'],'round':10,'source_commit':facts['baseline_commit'],
+             'source_commit_scope':'本轮实验协议基线，最终源码提交见完整审阅包的审阅清单',
+             'repository':'https://github.com/Sunny1004-7/xuemai-ai-platform',
+             'verification':facts['delivery'],'real_ai':facts['real_ai']['round10'],
+             'preferred_video':'学脉XueMai-演示视频-含旁白.mp4','files':release_files}
+    release_content=json.dumps(release,ensure_ascii=False,indent=2)+'\n'
+    for relative in ['最终参赛提交材料/release-manifest.json','docs/deliverables/release-manifest.json']:
+        (ROOT/relative).write_text(release_content,encoding='utf8',newline='\n')
     result={'experiment_files_verified':len(manifest['files']),'artifacts_verified':len(facts['artifacts']),
             'formal_copies_identical':True,'pdf_pages':len(pdf),'pdf_links':links,'fonts_embedded':len(embedded),
             'abstract_paragraphs':3,'abstract_independent_page':True,'two_heading_levels':True,
             'ui_image_sources':images,'token_rows':len(ledger['rows']),'tokens':ledger['charged_or_reserved'],
-            'all_tokens_settled':True,'human_listening_review':False}
+            'all_tokens_settled':True,'human_listening_review':False,
+            'current_release_manifest_files':len(release_files),'release_manifest_copies_identical':True}
     (ROOT/'docs/rounds/第十轮交付一致性核验.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8',newline='\n')
     print(json.dumps({k:v for k,v in result.items() if k!='ui_image_sources'},ensure_ascii=False))
 

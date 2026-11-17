@@ -26,8 +26,11 @@
 .venv/Scripts/python.exe scripts/assemble_demo_audio.py
 .venv/Scripts/python.exe scripts/audit_demo_audio.py
 .venv/Scripts/python.exe scripts/audit_round10_media.py
+.venv/Scripts/python.exe scripts/audit_round10_delivery.py
 ```
 
 剪辑器优先使用已交付连续素材。重新采集画板时启动docs静态服务至8010，再运行 `node frontend/scripts/record-round10-materials.mjs`。可选 `--framework-only` 补录框架。实际节点边界决定高亮与放大位置，语音边界决定切换时间。整段配音缓存已提供，重新合成需要语音服务网络。
 
 音轨完整解码和本地Whisper回验已完成，具体媒体参数见[验收结果](demo/验收结果.json)，转写见[语音回验](demo/第十轮语音转写回验.json)。人工听审尚未进行。
+
+交付一致性工具同时核对实验、PDF、视频、字幕及Token，按当前事实表生成[发布清单](deliverables/release-manifest.json)，与正式目录保留相同副本。

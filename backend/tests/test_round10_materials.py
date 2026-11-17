@@ -1,5 +1,6 @@
 """新材料入口的回归，防止旧结果、局部截图或付费调用重新进入构建。"""
 import ast
+import json
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -26,3 +27,11 @@ def test_material_aggregation_does_not_call_paid_service():
     assert 'AIService' not in source and 'httpx' not in source
     assert "read('end-to-end.json')" in source
     assert 'source_commit' in source
+    facts=json.loads((ROOT/'docs/submission-facts.json').read_text('utf8'))
+    release=json.loads((ROOT/'docs/deliverables/release-manifest.json').read_text('utf8'))
+    assert release['round']==10
+    assert release['verification']==facts['delivery']
+    assert release['real_ai']==facts['real_ai']['round10']
+    files={entry['name']:entry for entry in release['files']}
+    assert files['学脉XueMai-技术文档.pdf']['sha256']==facts['artifacts']['docs/deliverables/xuemai-technical-report.pdf']
+    assert files['学脉XueMai-演示视频-含旁白.mp4']['sha256']==facts['artifacts']['docs/deliverables/xuemai-demo-1080p.mp4']

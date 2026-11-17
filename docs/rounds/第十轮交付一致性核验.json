@@ -117,5 +117,7 @@
   "token_rows": 202,
   "tokens": 371304,
   "all_tokens_settled": true,
-  "human_listening_review": false
+  "human_listening_review": false,
+  "current_release_manifest_files": 4,
+  "release_manifest_copies_identical": true
 }
