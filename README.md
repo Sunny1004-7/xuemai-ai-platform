@@ -13,7 +13,13 @@
 
 当前以数据结构与算法、Python程序设计展示课程学习，分别提供31个与27个知识点、完整资料与题目、班级历史及六段原创教学视频。教师还可通过正常课程建设流程接入新单元，本次“信息素养微单元”已完成资料入库、学生辅导、练习、任务和教师反馈验证。演示账号与班级记录为合成教学数据，真实DeepSeek会话保留请求用量及教学结果。
 
-技术文档、连续演示与可运行验证共同展示作品。学生端采用宋瓷青绿，教师端采用茶烟米褐，支持Flash/Pro、私有附件和本地语音输入。阅读[技术文档](docs/deliverables/xuemai-technical-report.pdf)，观看[1080p演示视频](docs/deliverables/xuemai-demo-1080p.mp4)，查看[方法与对照实验](docs/ALGORITHMS_V7.md)、[实际验证记录](docs/VALIDATION.md)和[框架图可编辑母版](docs/technical-report/figures/overall-framework.tex)。
+技术文档、连续演示与可运行验证共同展示作品。学生端采用宋瓷青绿，教师端采用茶烟米褐，支持Flash/Pro、私有附件和本地语音输入。阅读[技术文档](docs/deliverables/xuemai-technical-report.pdf)，观看[1080p演示视频](docs/deliverables/xuemai-demo-1080p.mp4)，查看[方法与对照实验](docs/ALGORITHMS_V10.md)、[实际验证记录](docs/VALIDATION.md)和[框架图可编辑母版](docs/technical-report/figures/overall-framework.tex)。
+
+## 方法与系统验证
+
+本地实验采用开发与评测分离的固定数据。1200条学习轨迹比较知识追踪修正，180个独立图形成720种路径场景，48个班级检查分层，三课程180个问题检查检索。PATH-G在评测场景中先修与预算违规均为0，相对同约束可行贪心的平均效用提高2.80%，按独立图重采样的95%区间为2.15%—3.48%。逐例为456胜、209平、55负，原始输入与结果随源码提供。
+
+真实DeepSeek验证包括80个独立任务的160次配对响应、12次试运行、20个业务场景及后续独立复核和语音链路，共202次请求、371,304 Token。原编排和单步提示的初次业务完成分别为77/80与80/80，共享业务工具使两个条件均具备课程证据与受控执行基础。教学草稿包裹格式的问题修复后，8个新主题任务全部形成有效方案并保存。教师发布、学生作答与结果回流在隔离数据库实际执行。[实验协议、逐例记录与Token账本](docs/experiments/round10/README.md)
 
 ## 核心方法
 
@@ -102,7 +108,7 @@ $env:DEEPSEEK_API_KEY = '<仅本机设置，不写入代码>'
 
 `.env.example` 是变量清单，启动器不会自动解析 `.env`。密钥只在后端读取。模型、输出上限、超时与每分钟请求数均集中配置，默认不重试。模型依据 [DeepSeek 官方接口](https://api-docs.deepseek.com/zh-cn/)选择 `deepseek-flash`，结构化生成按 [JSON Output 规范](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)校验。
 
-常规测试、CI、浏览器回归均 **0 次真实请求**。历史烟测3次、220 Tokens和第三轮辅导、出题、备课、量规评阅4次抽样账本保留；后者输入3744、输出724 Tokens，零重试。第四、第五轮未新增真实API调用。第六轮实际调用13次，Flash 10次、Pro 3次，输入16527、输出2540 Tokens，覆盖师生双角色、文档、图片、语音、出题、备课与评阅，全部成功。第七轮另保留两次Flash教学请求，第八、九轮材料制作复用这些响应，新增DeepSeek请求均为0次。见[第六轮真实联调](docs/rounds/第六轮DeepSeek真实联调.json)。已有联调账本时脚本阻止重复执行；正式产品按正常教学请求调用，开发联调的次数上限不作为产品永久额度。历史结果见 [DeepSeek联调记录](docs/rounds/第三轮DeepSeek联调.json)。
+常规测试、CI、浏览器回归均使用Mock。本次真实实验采用统一的1,000,000 Token上限，调用前预留输入与输出，跨进程累计在途请求，返回后按官方usage结算，未取得官方用量的故障保留全部预留。累计输入297,521、输出73,783，实际合计371,304 Token。Flash 183次、Pro 19次，全部请求和费用估算保存在[统一账本](docs/experiments/round10/token-ledger.json)。试运行与正式评测分开，脚本读取已完成结果恢复。历史专项的次数账本及用量继续保留。[早期联调记录](docs/rounds/第三轮DeepSeek联调.json)
 
 ## 结构与验证
 

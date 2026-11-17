@@ -1,0 +1,11 @@
+{
+  "system": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.1",
+  "node": "v20.18.0",
+  "cpu": "Intel Core i7-13700H",
+  "physical_cores": 14,
+  "logical_processors": 20,
+  "experiment_seed": 101711,
+  "experiment_config": "docs/experiments/round10/protocol.json",
+  "runtime_note": "每场景计算用时随本机负载变化，效用与约束结果可确定性复算"
+}

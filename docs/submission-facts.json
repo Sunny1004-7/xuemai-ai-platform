@@ -25,49 +25,71 @@
     "round8_new_requests": 0,
     "reused_round7_requests": 2,
     "source": "docs/rounds/第七轮真实API用量.json",
-    "round9_new_requests": 0
+    "round9_new_requests": 0,
+    "round10": {
+      "requests": 202,
+      "prompt_tokens": 297521,
+      "completion_tokens": 73783,
+      "total_tokens": 371304,
+      "budget": 1000000,
+      "source": "docs/experiments/round10/token-ledger.json"
+    }
   },
-  "baseline_commit": "4fa0fa6064f82abb931b4b9dd84d541f1e28753d",
+  "baseline_commit": "04b2ec164558cff12892821b4a72147ceaf8dbce",
   "evidence": {
-    "method_source": "docs/rounds/第七轮方法实验.json",
-    "fixed_seed": 7011,
-    "path_cases": 48,
+    "current_source": "docs/experiments/round10/summary.json",
+    "method_source": "docs/experiments/round10/summary.json",
+    "fixed_seed": 101711,
+    "path_cases": 720,
+    "independent_graphs": 180,
     "path_vs_feasible_greedy": {
-      "win": 36,
-      "tie": 9,
-      "loss": 3,
-      "mean_utility_gain_percent": 3.49
+      "win": 456,
+      "tie": 209,
+      "loss": 55,
+      "mean_utility_gain_percent": 2.8
     },
-    "round8_ordering_queries": 6,
-    "new_content_flow": "docs/rounds/第八轮新增内容教学验证.json"
+    "history_round7": {
+      "method_source": "docs/rounds/第七轮方法实验.json",
+      "fixed_seed": 7011,
+      "path_cases": 48,
+      "path_vs_feasible_greedy": {
+        "win": 36,
+        "tie": 9,
+        "loss": 3,
+        "mean_utility_gain_percent": 3.49
+      },
+      "round8_ordering_queries": 6,
+      "new_content_flow": "docs/rounds/第八轮新增内容教学验证.json"
+    }
   },
   "delivery": {
     "pdf_pages": 29,
-    "video_seconds": 473.47,
+    "video_seconds": 460.47,
     "resolution": "1920x1080",
     "fps": 30,
     "development_seconds": 135,
-    "system_ui_seconds": 259.5,
-    "voice_paragraphs": 20,
-    "subtitles": 72,
+    "system_ui_seconds": 247.5,
+    "voice_paragraphs": 21,
+    "subtitles": 70,
     "screenshots": 480,
-    "backend_tests": 162,
+    "backend_tests": 175,
     "browser_tests": 34,
-    "screenshot_directory": "交付审阅包/界面截图_20261112_195005",
-    "figures_tikz": 12,
-    "references": 17,
-    "visual_review_frames": 43,
-    "whisper_character_similarity": 0.9223
+    "screenshot_directory": "交付审阅包/界面截图_20261117_173816",
+    "figures_tikz": 11,
+    "references": 20,
+    "visual_review_frames": 60,
+    "whisper_character_similarity": 0.9639
   },
   "artifacts": {
-    "docs/deliverables/xuemai-technical-report.pdf": "2efea5d310725fdbf389bd8a9595f5b4444d109b1922744f396f2b46b1b67d3e",
-    "docs/deliverables/xuemai-demo-1080p.mp4": "26f56d681f110674cdd1f68e7a8597b513d7b99308d4298a5da2627f5ea23ae2",
+    "docs/deliverables/xuemai-technical-report.pdf": "f5eb43ae8b52dee489151c89dc4afb59ef018127b40b5b5e185aeffa874fc1f3",
+    "docs/deliverables/xuemai-demo-1080p.mp4": "d33eda0946066c7995f113704f3f87bc57bb936ae89dce2f09a804d5f11ba603",
     "docs/figures/xuemai-framework.png": "2c9e1d16c1fc77c8c6a693b9bcc1aa036e4ea18da3eaaea8659beed95bc11092",
-    "docs/figures/xuemai-framework.pdf": "0a0854332d7d9fdeb84350fc577efce40af7a9fe1e9f1be8922ff36747359df5",
+    "docs/figures/xuemai-framework.pdf": "9b80f9ff8717d577246181cfa2081eead1fdbe6235ec8b04db02d891b23049c9",
     "docs/figures/xuemai-framework.svg": "eff638407f8e824199c11c80e0ee2657c3e6f61240c6dceca2c6d1196e31212c",
     "docs/figures/xuemai-framework-regions.json": "21fe4dbba6349652108ca261539af4b8e15a2ca23d42463ffca8008e52a03eab",
-    "docs/demo/第九轮演示源/subtitles.srt": "7d918697036f3acf128c1cb6d1215cebbceaeb5d6535119c5425baf642818583",
-    "docs/demo/第九轮演示源/subtitles.ass": "6a7e08b2aafd236d6f3d6e90c2de50b188743f245ce51add0fc531a1a32d1d27"
+    "docs/demo/第十轮演示源/subtitles.srt": "3099109128367e91dc3c87039bebc3f293616def06fe5946e5a7215fb2adaafc",
+    "docs/demo/第十轮演示源/subtitles.ass": "f37f3e7f7b2654b618d8e1cf63885ec37751ab1b36a5a335de5270e330b9c4c9",
+    "docs/experiments/round10/token-ledger.json": "9173b2e63ea83be5e1b0d19793348a193d8038426e5f88cb67e4e06a23a0327c"
   },
   "method_definitions": [
     {
@@ -102,7 +124,7 @@
     }
   ],
   "validation_sources": {
-    "backend": "docs/rounds/第九轮后端完整回归.txt",
-    "browser": "docs/rounds/第九轮浏览器完整回归.txt"
+    "backend": "docs/rounds/第十轮后端完整回归.txt",
+    "browser": "docs/rounds/第十轮浏览器完整回归.txt"
   }
 }

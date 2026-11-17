@@ -1,0 +1,121 @@
+{
+  "experiment_files_verified": 232,
+  "artifacts_verified": 9,
+  "formal_copies_identical": true,
+  "pdf_pages": 29,
+  "pdf_links": 78,
+  "fonts_embedded": 24,
+  "abstract_paragraphs": 3,
+  "abstract_independent_page": true,
+  "two_heading_levels": true,
+  "ui_image_sources": [
+    {
+      "name": "graph-overview",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "student-dashboard",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "practice",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "video",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "teacher-dashboard",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "teacher-matrix",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "teacher-groups",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "resources",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "tutor",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "login",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "python-plan",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "stack-experiment",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    },
+    {
+      "name": "teacher-ai",
+      "size": [
+        1440,
+        900
+      ],
+      "full_pixels_preserved": true
+    }
+  ],
+  "token_rows": 202,
+  "tokens": 371304,
+  "all_tokens_settled": true,
+  "human_listening_review": false
+}

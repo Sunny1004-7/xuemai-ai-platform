@@ -1,38 +1,33 @@
 # 技术文档与演示复现
 
-当前正式报告为[29页技术文档](deliverables/xuemai-technical-report.pdf)，系统版本0.6.0。可编辑LaTeX源为[main.tex](technical-report/main.tex)，包含12幅TikZ、10张应用图（8张完整应用、2张细节子图）与17条参考文献。正文与标题黑色，小四宋体、英文Times New Roman、段首两字、居中页码，二级目录一页。完整界面按100%版心宽度排版，局部子图另行标明。
+正式报告为[技术文档PDF](deliverables/xuemai-technical-report.pdf)，可编辑入口为[main.tex](technical-report/main.tex)。封面保留学校、专业和作者，摘要三段独立成页，正文仅使用两级标题。小四宋体、英文Times New Roman、黑色正文和标题，段首两字，底部居中页码。八张应用图均保留完整导航、课程栏与工作区，按100%版心宽度放置。
 
-报告围绕课程学习、个性化辅导与教学协作组织，解释五项方法、产品入口、架构、意图控制和实际开发链。保留同约束路径基线、分层扰动与教师编排验证，新增顺序术语回归和正常接口的新内容流程。作者信息由[统一事实配置](submission-facts.json)维护。
+总框架沿用[统一母版](technical-report/figures/overall-framework.tex)。其余图形按机制改为事件曲线、先修网络与活动序列、辅导时序、约束矩阵、错因热图、复习日历和对象关联，统计图从逐例结果生成。当前实验入口、任务、原始结果和Token账本见[实验目录](experiments/round10/README.md)。
 
-## 统一总框架与报告
+## 重建报告
 
-[总框架可编辑母版](technical-report/figures/overall-framework.tex)通过同一脚本导出PDF、SVG、PNG，共用于报告、README与视频。
+准备XeLaTeX、宋体、Times New Roman和工具依赖，再安装 `scripts/requirements-experiments.txt`。审阅包将480张截图置于“界面截图”，重建时复制至下列截图目录并保留全部索引。
 
 ```powershell
-.venv/Scripts/python.exe scripts/build_framework.py
-.venv/Scripts/python.exe scripts/build_technical_report.py --screenshots 交付审阅包/界面截图_20261112_195005 --record docs/rounds/2026-11-12-第九轮视觉与材料精修.md
+.venv/Scripts/python.exe scripts/build_technical_report.py --screenshots 交付审阅包/界面截图_20261117_173816 --record docs/rounds/2026-11-17-第十轮实验与参赛材料重编.md
 ```
 
-安装XeLaTeX、pdftocairo、宋体、Times New Roman及scripts/requirements-tools.txt中的工具依赖。审阅ZIP将本轮480张截图放在“界面截图”，重建时复制为上述完整截图目录，保留三份索引。工具验证覆盖、源码指纹、尺寸与摘要，三遍编译并渲染全部页面，校验页数、字体和文字颜色。报告中的实验表格从原始JSON生成，组合图来源及像素范围另存JSON。
+构建器读取当前实验清单和回归结果，生成摘要数字、方法图、统计图与验证汇总，验证截图覆盖和源码指纹，执行三遍编译并渲染全部页面。实验数据在构建时直接读取，真实模型实验需另行显式执行。
 
 ## 连续教学演示
 
-[正式成片](deliverables/xuemai-demo-1080p.mp4)为473.47秒，1920×1080、30fps、H.264/AAC。问候介绍、痛点、框架、界面、真实开发档案与总结依次展开。界面259.5秒，开发135秒，片长符合5—8分钟要求。
+[正式成片](deliverables/xuemai-demo-1080p.mp4)约460.47秒，1920×1080、30fps、H.264/AAC。问候后交代教学背景，再引出学脉。师生连续界面约247.5秒，三条开发档案回放135秒。作者在封面和结尾署名。字幕采用透明背景与轻描边，21个完整语段由同次WordBoundary对齐到70条单行字幕。
 
-界面采用Chromium原生标签页媒体流采集，保留真实操作、流式回复、图谱和实验变化。教学过程共用课程、学生和任务，涵盖错误、路径、个人辅导、理解检查、班级证据、教师方案、审核发布、学生完成与教师反馈。复用两次已有官方Flash响应，本轮新增DeepSeek请求0次。新单元流程使用正常接口与Mock完成。
-
-可编辑源位于[第九轮演示源](demo/第九轮演示源/)，包含连续MP4、原始WebM、事件、画板HTML、实际Git差异、剪辑时间轴、20个语段音轨、边界和72条语义单行字幕。既有真实教学和开发素材引用第七、八轮演示源/media，正式包一并收录。当前入口由demo/current.json明确指定。
+当前入口为[demo/current.json](demo/current.json)，源目录为[第十轮演示源](demo/第十轮演示源/)。工程包含画板HTML、原始连续WebM与MP4、教学素材引用、实际Git差异、剪辑时间轴、音轨、语音边界、字幕和验收帧。界面继续使用此前已取得的真实师生会话，实验用量单列于本轮账本。
 
 ```powershell
-.venv/Scripts/python.exe scripts/assemble_round9_video.py
-.venv/Scripts/python.exe scripts/generate_demo_narration.py --round 9
-$env:XUEMAI_VIDEO_ROUND='9'
+.venv/Scripts/python.exe scripts/assemble_round10_video.py
+.venv/Scripts/python.exe scripts/generate_demo_narration.py --round 10
 .venv/Scripts/python.exe scripts/assemble_demo_audio.py
 .venv/Scripts/python.exe scripts/audit_demo_audio.py
+.venv/Scripts/python.exe scripts/audit_round10_media.py
 ```
 
-剪辑可直接使用交付的media文件重建。云希中文神经合成人声按完整语段生成，缓存已提供，重新合成需要网络语音服务。底部字幕按同次WordBoundary换算，透明背景、轻描边。最大拟合倍率1.04965，语段无重叠，最大间隔6.816秒。完整解码、音量、43帧视觉检查和本地Whisper回验已完成，字符相似度0.9223。尚未人工听审，具体记录见[视频验收](demo/验收结果.json)和[语音回验](demo/第八轮语音转写回验.json)。
+剪辑器优先使用已交付连续素材。重新采集画板时启动docs静态服务至8010，再运行 `node frontend/scripts/record-round10-materials.mjs`。可选 `--framework-only` 补录框架。实际节点边界决定高亮与放大位置，语音边界决定切换时间。整段配音缓存已提供，重新合成需要语音服务网络。
 
-原生录制使用独立目录，在首块校验WebM签名，记录100%缩放和实际采集视口。连续教学录制工具在frontend/scripts下，作品与开发档案分别由record-round8-tour.mjs和record-round8-boards.mjs组织。采集使用专用服务与数据库，普通回归保持Mock。
-
-七个框架分组由TikZ实际节点锚点导出，坐标见figures/xuemai-framework-regions.json。高亮计算包含图像等比缩放、居中留白与8像素外边距，字幕使用实际字体宽度测量。正文引用采用自动编号的可点击小号上标，代码框与正文的间距另有几何核验。
+音轨完整解码和本地Whisper回验已完成，具体媒体参数见[验收结果](demo/验收结果.json)，转写见[语音回验](demo/第十轮语音转写回验.json)。人工听审尚未进行。

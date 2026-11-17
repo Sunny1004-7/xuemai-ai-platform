@@ -1,0 +1,313 @@
+{
+  "source_sha256": "d33eda0946066c7995f113704f3f87bc57bb936ae89dce2f09a804d5f11ba603",
+  "frames": 60,
+  "frame_points": [
+    {
+      "name": "问候与介绍",
+      "at": 7.0,
+      "file": "01-问候与介绍.png"
+    },
+    {
+      "name": "真实教学痛点",
+      "at": 22.0,
+      "file": "02-真实教学痛点.png"
+    },
+    {
+      "name": "总体方法框架",
+      "at": 42.0,
+      "file": "03-总体方法框架.png"
+    },
+    {
+      "name": "双角色入口",
+      "at": 58.2,
+      "file": "04-双角色入口.png"
+    },
+    {
+      "name": "从错题到学习路径",
+      "at": 71.933,
+      "file": "05-从错题到学习路径.png"
+    },
+    {
+      "name": "知识网络与操作实验",
+      "at": 91.067,
+      "file": "06-知识网络与操作实验.png"
+    },
+    {
+      "name": "真实辅导与理解检查",
+      "at": 110.867,
+      "file": "07-真实辅导与理解检查.png"
+    },
+    {
+      "name": "学生辅导结果",
+      "at": 130.167,
+      "file": "08-学生辅导结果.png"
+    },
+    {
+      "name": "会话与证据延续",
+      "at": 144.767,
+      "file": "09-会话与证据延续.png"
+    },
+    {
+      "name": "教师分析与教学规划",
+      "at": 165.5,
+      "file": "10-教师分析与教学规划.png"
+    },
+    {
+      "name": "教师方案结果",
+      "at": 190.533,
+      "file": "11-教师方案结果.png"
+    },
+    {
+      "name": "审核发布",
+      "at": 205.767,
+      "file": "12-审核发布.png"
+    },
+    {
+      "name": "学生完成与教师反馈",
+      "at": 226.5,
+      "file": "13-学生完成与教师反馈.png"
+    },
+    {
+      "name": "学生回应与教师回看",
+      "at": 253.6,
+      "file": "14-学生回应与教师回看.png"
+    },
+    {
+      "name": "正常接入新内容",
+      "at": 276.8,
+      "file": "15-正常接入新内容.png"
+    },
+    {
+      "name": "另一门课程与方法验证",
+      "at": 294.867,
+      "file": "16-另一门课程与方法验证.png"
+    },
+    {
+      "name": "同约束方法验证",
+      "at": 307.5,
+      "file": "17-同约束方法验证.png"
+    },
+    {
+      "name": "真实开发链1",
+      "at": 336.0,
+      "file": "18-真实开发链1.png"
+    },
+    {
+      "name": "真实开发链2",
+      "at": 381.0,
+      "file": "19-真实开发链2.png"
+    },
+    {
+      "name": "真实开发链3",
+      "at": 426.0,
+      "file": "20-真实开发链3.png"
+    },
+    {
+      "name": "总结与感谢",
+      "at": 454.5,
+      "file": "21-总结与感谢.png"
+    },
+    {
+      "name": "inputs-开始",
+      "at": 30.8,
+      "file": "22-inputs-开始.png"
+    },
+    {
+      "name": "inputs-淡入",
+      "at": 30.9,
+      "file": "23-inputs-淡入.png"
+    },
+    {
+      "name": "inputs-稳定",
+      "at": 31.4,
+      "file": "24-inputs-稳定.png"
+    },
+    {
+      "name": "shared-evidence-开始",
+      "at": 31.7,
+      "file": "25-shared-evidence-开始.png"
+    },
+    {
+      "name": "shared-evidence-淡入",
+      "at": 31.8,
+      "file": "26-shared-evidence-淡入.png"
+    },
+    {
+      "name": "shared-evidence-稳定",
+      "at": 32.3,
+      "file": "27-shared-evidence-稳定.png"
+    },
+    {
+      "name": "student-methods-开始",
+      "at": 35.433,
+      "file": "28-student-methods-开始.png"
+    },
+    {
+      "name": "student-methods-淡入",
+      "at": 35.533,
+      "file": "29-student-methods-淡入.png"
+    },
+    {
+      "name": "student-methods-稳定",
+      "at": 36.067,
+      "file": "30-student-methods-稳定.png"
+    },
+    {
+      "name": "teacher-methods-开始",
+      "at": 42.467,
+      "file": "31-teacher-methods-开始.png"
+    },
+    {
+      "name": "teacher-methods-淡入",
+      "at": 42.567,
+      "file": "32-teacher-methods-淡入.png"
+    },
+    {
+      "name": "teacher-methods-稳定",
+      "at": 43.067,
+      "file": "33-teacher-methods-稳定.png"
+    },
+    {
+      "name": "services-开始",
+      "at": 46.7,
+      "file": "34-services-开始.png"
+    },
+    {
+      "name": "services-淡入",
+      "at": 46.8,
+      "file": "35-services-淡入.png"
+    },
+    {
+      "name": "services-稳定",
+      "at": 47.3,
+      "file": "36-services-稳定.png"
+    },
+    {
+      "name": "workspaces-开始",
+      "at": 48.9,
+      "file": "37-workspaces-开始.png"
+    },
+    {
+      "name": "workspaces-淡入",
+      "at": 49.0,
+      "file": "38-workspaces-淡入.png"
+    },
+    {
+      "name": "workspaces-稳定",
+      "at": 49.533,
+      "file": "39-workspaces-稳定.png"
+    },
+    {
+      "name": "feedback-开始",
+      "at": 50.0,
+      "file": "40-feedback-开始.png"
+    },
+    {
+      "name": "feedback-淡入",
+      "at": 50.1,
+      "file": "41-feedback-淡入.png"
+    },
+    {
+      "name": "feedback-稳定",
+      "at": 50.6,
+      "file": "42-feedback-稳定.png"
+    },
+    {
+      "name": "开发原始记录15",
+      "at": 316.5,
+      "file": "43-开发原始记录15.png"
+    },
+    {
+      "name": "开发原始记录16",
+      "at": 324.0,
+      "file": "44-开发原始记录16.png"
+    },
+    {
+      "name": "开发原始记录17",
+      "at": 331.5,
+      "file": "45-开发原始记录17.png"
+    },
+    {
+      "name": "开发原始记录18",
+      "at": 339.0,
+      "file": "46-开发原始记录18.png"
+    },
+    {
+      "name": "开发原始记录19",
+      "at": 346.5,
+      "file": "47-开发原始记录19.png"
+    },
+    {
+      "name": "开发原始记录20",
+      "at": 354.0,
+      "file": "48-开发原始记录20.png"
+    },
+    {
+      "name": "开发原始记录21",
+      "at": 361.5,
+      "file": "49-开发原始记录21.png"
+    },
+    {
+      "name": "开发原始记录22",
+      "at": 369.0,
+      "file": "50-开发原始记录22.png"
+    },
+    {
+      "name": "开发原始记录23",
+      "at": 376.5,
+      "file": "51-开发原始记录23.png"
+    },
+    {
+      "name": "开发原始记录24",
+      "at": 384.0,
+      "file": "52-开发原始记录24.png"
+    },
+    {
+      "name": "开发原始记录25",
+      "at": 391.5,
+      "file": "53-开发原始记录25.png"
+    },
+    {
+      "name": "开发原始记录26",
+      "at": 399.0,
+      "file": "54-开发原始记录26.png"
+    },
+    {
+      "name": "开发原始记录27",
+      "at": 406.5,
+      "file": "55-开发原始记录27.png"
+    },
+    {
+      "name": "开发原始记录28",
+      "at": 414.0,
+      "file": "56-开发原始记录28.png"
+    },
+    {
+      "name": "开发原始记录29",
+      "at": 421.5,
+      "file": "57-开发原始记录29.png"
+    },
+    {
+      "name": "开发原始记录30",
+      "at": 429.0,
+      "file": "58-开发原始记录30.png"
+    },
+    {
+      "name": "开发原始记录31",
+      "at": 436.5,
+      "file": "59-开发原始记录31.png"
+    },
+    {
+      "name": "开发原始记录32",
+      "at": 444.0,
+      "file": "60-开发原始记录32.png"
+    }
+  ],
+  "highlight_groups": 7,
+  "all_targets_contained": true,
+  "subtitle_cues": 70,
+  "max_subtitle_width": 1280.0,
+  "min_subtitle_seconds": 1.5175000000000003,
+  "current_copies_identical": true,
+  "human_listening_review": false
+}

@@ -1,0 +1,31 @@
+{
+  "backend": "http://127.0.0.1:8006",
+  "frontend": "http://127.0.0.1:5180",
+  "health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "proxy_health": {
+    "status": "ok",
+    "service": "学脉",
+    "synthetic_data": true,
+    "ai_mode": "real"
+  },
+  "sqlite_integrity": "ok",
+  "courses": [
+    {
+      "course_id": 1,
+      "knowledge": 31,
+      "questions": 39
+    },
+    {
+      "course_id": 2,
+      "knowledge": 27,
+      "questions": 34
+    }
+  ],
+  "new_ai_requests": 0,
+  "port_note": "默认8000与5173由另一赛道工程占用，本轮使用空闲审阅端口"
+}
