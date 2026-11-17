@@ -1,5 +1,5 @@
 {
-  "source_bytes": 13750890,
+  "source_bytes": 13837634,
   "frames": 70,
   "frame_points": [
     {
@@ -64,32 +64,32 @@
     },
     {
       "name": "student-tutor",
-      "at": 185.5,
+      "at": 184.5,
       "file": "13-student-tutor.png"
     },
     {
       "name": "student-classroom",
-      "at": 201.0,
+      "at": 199.0,
       "file": "14-student-classroom.png"
     },
     {
       "name": "teacher-login",
-      "at": 209.0,
+      "at": 207.0,
       "file": "15-teacher-login.png"
     },
     {
       "name": "teacher-dashboard",
-      "at": 217.5,
+      "at": 215.5,
       "file": "16-teacher-dashboard.png"
     },
     {
       "name": "teacher-manage",
-      "at": 228.5,
+      "at": 226.5,
       "file": "17-teacher-manage.png"
     },
     {
       "name": "teacher-resources",
-      "at": 241.0,
+      "at": 239.0,
       "file": "18-teacher-resources.png"
     },
     {
@@ -99,122 +99,122 @@
     },
     {
       "name": "teacher-video",
-      "at": 260.5,
+      "at": 262.5,
       "file": "20-teacher-video.png"
     },
     {
       "name": "teacher-practice",
-      "at": 277.0,
+      "at": 279.0,
       "file": "21-teacher-practice.png"
     },
     {
       "name": "teacher-classroom",
-      "at": 293.5,
+      "at": 295.5,
       "file": "22-teacher-classroom.png"
     },
     {
       "name": "teacher-analytics",
-      "at": 308.5,
+      "at": 310.5,
       "file": "23-teacher-analytics.png"
     },
     {
       "name": "teacher-teacher-ai",
-      "at": 330.5,
+      "at": 332.0,
       "file": "24-teacher-teacher-ai.png"
     },
     {
       "name": "contract-prompt",
-      "at": 345.5,
+      "at": 346.5,
       "file": "25-contract-prompt.png"
     },
     {
       "name": "contract-feedback",
-      "at": 352.5,
+      "at": 353.5,
       "file": "26-contract-feedback.png"
     },
     {
       "name": "contract-failure",
-      "at": 359.5,
+      "at": 360.5,
       "file": "27-contract-failure.png"
     },
     {
       "name": "contract-diff",
-      "at": 366.5,
+      "at": 367.5,
       "file": "28-contract-diff.png"
     },
     {
       "name": "contract-verification",
-      "at": 373.5,
+      "at": 374.5,
       "file": "29-contract-verification.png"
     },
     {
       "name": "contract-commit",
-      "at": 380.5,
+      "at": 381.5,
       "file": "30-contract-commit.png"
     },
     {
       "name": "graph-prompt",
-      "at": 387.5,
+      "at": 388.5,
       "file": "31-graph-prompt.png"
     },
     {
       "name": "graph-failure",
-      "at": 394.5,
+      "at": 395.5,
       "file": "32-graph-failure.png"
     },
     {
       "name": "graph-diff",
-      "at": 401.5,
+      "at": 402.5,
       "file": "33-graph-diff.png"
     },
     {
       "name": "graph-inputs",
-      "at": 408.5,
+      "at": 409.5,
       "file": "34-graph-inputs.png"
     },
     {
       "name": "graph-verification",
-      "at": 415.5,
+      "at": 416.5,
       "file": "35-graph-verification.png"
     },
     {
       "name": "graph-commit",
-      "at": 422.5,
+      "at": 423.5,
       "file": "36-graph-commit.png"
     },
     {
       "name": "teacher-prompt",
-      "at": 429.5,
+      "at": 430.5,
       "file": "37-teacher-prompt.png"
     },
     {
       "name": "teacher-failure",
-      "at": 436.5,
+      "at": 437.5,
       "file": "38-teacher-failure.png"
     },
     {
       "name": "teacher-diff",
-      "at": 443.5,
+      "at": 444.5,
       "file": "39-teacher-diff.png"
     },
     {
       "name": "teacher-verification",
-      "at": 450.5,
+      "at": 451.5,
       "file": "40-teacher-verification.png"
     },
     {
       "name": "teacher-regression",
-      "at": 457.5,
+      "at": 458.5,
       "file": "41-teacher-regression.png"
     },
     {
       "name": "teacher-commit",
-      "at": 464.5,
+      "at": 465.5,
       "file": "42-teacher-commit.png"
     },
     {
       "name": "outro",
-      "at": 472.5,
+      "at": 473.5,
       "file": "43-outro.png"
     },
     {
@@ -259,57 +259,57 @@
     },
     {
       "name": "student-tutor-结果",
-      "at": 196.0,
+      "at": 194.0,
       "file": "52-student-tutor-结果.png"
     },
     {
       "name": "student-classroom-结果",
-      "at": 204.0,
+      "at": 202.0,
       "file": "53-student-classroom-结果.png"
     },
     {
       "name": "teacher-dashboard-结果",
-      "at": 221.0,
+      "at": 219.0,
       "file": "54-teacher-dashboard-结果.png"
     },
     {
       "name": "teacher-manage-结果",
-      "at": 234.0,
+      "at": 232.0,
       "file": "55-teacher-manage-结果.png"
     },
     {
       "name": "teacher-resources-结果",
-      "at": 246.0,
+      "at": 244.0,
       "file": "56-teacher-resources-结果.png"
     },
     {
       "name": "teacher-graph-结果",
-      "at": 255.0,
+      "at": 257.0,
       "file": "57-teacher-graph-结果.png"
     },
     {
       "name": "teacher-video-结果",
-      "at": 264.0,
+      "at": 266.0,
       "file": "58-teacher-video-结果.png"
     },
     {
       "name": "teacher-practice-结果",
-      "at": 288.0,
+      "at": 290.0,
       "file": "59-teacher-practice-结果.png"
     },
     {
       "name": "teacher-classroom-结果",
-      "at": 297.0,
+      "at": 299.0,
       "file": "60-teacher-classroom-结果.png"
     },
     {
       "name": "teacher-analytics-结果",
-      "at": 318.0,
+      "at": 320.0,
       "file": "61-teacher-analytics-结果.png"
     },
     {
       "name": "teacher-teacher-ai-结果",
-      "at": 341.0,
+      "at": 342.0,
       "file": "62-teacher-teacher-ai-结果.png"
     },
     {
@@ -349,7 +349,7 @@
     },
     {
       "name": "teacher-login-入场",
-      "at": 205.1,
+      "at": 203.1,
       "file": "70-teacher-login-入场.png"
     }
   ],
@@ -766,7 +766,7 @@
     {
       "index": 35,
       "text": "课堂互动承接即时提问与回答，让学生解释进入教师的课堂观察。",
-      "at": 200.46666666666667,
+      "at": 198.46666666666667,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -776,7 +776,7 @@
     {
       "index": 36,
       "text": "学生端介绍完毕。",
-      "at": 206.43333333333334,
+      "at": 204.43333333333334,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -786,7 +786,7 @@
     {
       "index": 37,
       "text": "现在从登录页进入教师端。",
-      "at": 208.76666666666668,
+      "at": 206.76666666666668,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -796,7 +796,7 @@
     {
       "index": 38,
       "text": "教师进入教学工作台后，可以集中查看当前课程、教学任务和待办事项。",
-      "at": 216.73333333333332,
+      "at": 214.73333333333332,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -806,7 +806,7 @@
     {
       "index": 39,
       "text": "课程与班级用于组织章节、知识和学生。",
-      "at": 224.5,
+      "at": 222.5,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -816,7 +816,7 @@
     {
       "index": 40,
       "text": "教师可以查看课程结构与班级成员，为后续资料和任务确定对象。",
-      "at": 229.36666666666667,
+      "at": 227.36666666666667,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -826,7 +826,7 @@
     {
       "index": 41,
       "text": "AI备课与资料集中保存讲义和教案。",
-      "at": 237.33333333333334,
+      "at": 235.33333333333334,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -836,7 +836,7 @@
     {
       "index": 42,
       "text": "教师可以查看课程内容与版本，围绕教学目标组织学习材料。",
-      "at": 242.0,
+      "at": 240.0,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -846,7 +846,7 @@
     {
       "index": 43,
       "text": "教师知识图谱沿用同一课程网络，并提供知识和先修关系的编辑入口。",
-      "at": 250.5,
+      "at": 248.5,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -856,7 +856,7 @@
     {
       "index": 44,
       "text": "视频教学管理课程片段、字幕与检查题，使观看内容能够连接具体知识。",
-      "at": 259.8,
+      "at": 261.8,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -866,7 +866,7 @@
     {
       "index": 45,
       "text": "题库与作业负责审核题目和发布任务。",
-      "at": 267.26666666666665,
+      "at": 269.26666666666665,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -876,7 +876,7 @@
     {
       "index": 46,
       "text": "先查看学生刚刚完成的检查，结果与前面的作答对应。",
-      "at": 271.23333333333335,
+      "at": 273.23333333333335,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -886,7 +886,7 @@
     {
       "index": 47,
       "text": "教师随后选择题目，发布新的巩固任务。",
-      "at": 275.3333333333333,
+      "at": 277.3333333333333,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -896,7 +896,7 @@
     {
       "index": 48,
       "text": "新任务的后续作答将另行统计，便于继续跟进。",
-      "at": 279.3333333333333,
+      "at": 281.3333333333333,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -906,7 +906,7 @@
     {
       "index": 49,
       "text": "教师课堂互动展示学生回答，教师可以查看不同解释，并给出后续反馈。",
-      "at": 292.73333333333335,
+      "at": 294.73333333333335,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -916,7 +916,7 @@
     {
       "index": 50,
       "text": "下面重点看学情与分层。",
-      "at": 299.8666666666667,
+      "at": 301.8666666666667,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -926,7 +926,7 @@
     {
       "index": 51,
       "text": "知识矩阵可以追溯具体作答，错因分组则把相近困难连接到针对性题目。",
-      "at": 304.43333333333334,
+      "at": 306.43333333333334,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -936,7 +936,7 @@
     {
       "index": 52,
       "text": "教师根据证据选择教学对象，确认后形成可发布任务。",
-      "at": 310.23333333333335,
+      "at": 312.23333333333335,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -946,7 +946,7 @@
     {
       "index": 53,
       "text": "最后是独立的AI教学助手。",
-      "at": 320.96666666666664,
+      "at": 322.96666666666664,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -956,7 +956,7 @@
     {
       "index": 54,
       "text": "这里回看真实生成的讲评课方案，助手读取班级证据和教师目标，组织教学环节与分组练习。",
-      "at": 326.56666666666666,
+      "at": 328.56666666666666,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -966,17 +966,17 @@
     {
       "index": 55,
       "text": "教师能够编辑并保存教案，再确认具体任务，使建议进入教学。",
-      "at": 333.4,
+      "at": 335.4,
       "top": 1001,
-      "bottom": 1025,
-      "center": 1012.5,
+      "bottom": 1024,
+      "center": 1012.0,
       "target_center": 1011.5,
-      "error": 1.0
+      "error": 0.5
     },
     {
       "index": 56,
       "text": "下面回看AI协同开发，先看师生课程如何接通。",
-      "at": 345.1,
+      "at": 346.1,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -986,7 +986,7 @@
     {
       "index": 57,
       "text": "我先说明登录和课程接口，AI据此连接页面、辅导和后端。",
-      "at": 352.1666666666667,
+      "at": 353.1666666666667,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -996,7 +996,7 @@
     {
       "index": 58,
       "text": "运行测试时，三项接口检查失败，发现演示数据写入出错。",
-      "at": 359.1666666666667,
+      "at": 360.1666666666667,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1006,7 +1006,7 @@
     {
       "index": 59,
       "text": "AI根据报错检查写入语句，删去多出的一个占位符。",
-      "at": 365.9,
+      "at": 366.9,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1016,7 +1016,7 @@
     {
       "index": 60,
       "text": "再次运行登录、图谱和作答，接口都返回了正常结果。",
-      "at": 372.8666666666667,
+      "at": 373.8666666666667,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1026,7 +1026,7 @@
     {
       "index": 61,
       "text": "最后按功能提交代码，师生两端开始共用同一份课程记录。",
-      "at": 380.03333333333336,
+      "at": 381.03333333333336,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1036,7 +1036,7 @@
     {
       "index": 62,
       "text": "第二个例子是知识图谱。",
-      "at": 385.7,
+      "at": 386.7,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1046,7 +1046,7 @@
     {
       "index": 63,
       "text": "我希望节点清楚，连线也能看清。",
-      "at": 388.3,
+      "at": 389.3,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1056,7 +1056,7 @@
     {
       "index": 64,
       "text": "先运行几何检查，发现数据结构课程有九处连线遮挡。",
-      "at": 394.1333333333333,
+      "at": 395.1333333333333,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1066,7 +1066,7 @@
     {
       "index": 65,
       "text": "AI补充绕行搜索，让受阻的连线从节点之间的空隙通过。",
-      "at": 401.06666666666666,
+      "at": 402.06666666666666,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1076,7 +1076,7 @@
     {
       "index": 66,
       "text": "接着用两门课程和三组不同规模的网络重新检查。",
-      "at": 407.8,
+      "at": 408.8,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1086,7 +1086,7 @@
     {
       "index": 67,
       "text": "五组结果中，节点碰撞和连线遮挡都降到了零。",
-      "at": 414.6333333333333,
+      "at": 415.6333333333333,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1096,7 +1096,7 @@
     {
       "index": 68,
       "text": "再检查页面里的拖动、搜索和全屏，随后保存这次修改。",
-      "at": 421.9,
+      "at": 422.9,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1106,7 +1106,7 @@
     {
       "index": 69,
       "text": "第三个例子，教师希望根据班级错题设计一节讲评课。",
-      "at": 429.03333333333336,
+      "at": 430.03333333333336,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1116,7 +1116,7 @@
     {
       "index": 70,
       "text": "专项测试发现，系统只分析错误，却没有给出要求的教案。",
-      "at": 435.8333333333333,
+      "at": 436.8333333333333,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1126,7 +1126,7 @@
     {
       "index": 71,
       "text": "AI调整判断顺序，先识别要写教案，再读取班级错题。",
-      "at": 443.1333333333333,
+      "at": 444.1333333333333,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1136,7 +1136,7 @@
     {
       "index": 72,
       "text": "用原来的教师要求再次测试，两项专项检查全部通过。",
-      "at": 450.0,
+      "at": 451.0,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1146,7 +1146,7 @@
     {
       "index": 73,
       "text": "随后运行原有业务和浏览器测试，继续核对师生操作。",
-      "at": 456.76666666666665,
+      "at": 457.76666666666665,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1156,7 +1156,7 @@
     {
       "index": 74,
       "text": "保存代码后，再核对教案编辑、任务发布和学生反馈。",
-      "at": 463.9,
+      "at": 464.9,
       "top": 1001,
       "bottom": 1025,
       "center": 1012.5,
@@ -1166,7 +1166,7 @@
     {
       "index": 75,
       "text": "以上是学脉的主要功能与AI协同开发过程。",
-      "at": 470.56666666666666,
+      "at": 471.56666666666666,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1176,7 +1176,7 @@
     {
       "index": 76,
       "text": "感谢各位评委老师的观看与指导。",
-      "at": 474.1,
+      "at": 475.1,
       "top": 1001,
       "bottom": 1024,
       "center": 1012.0,
@@ -1206,15 +1206,15 @@
     {
       "scene": "context",
       "at": 25.6,
-      "expected_error": 1.451,
-      "best_error": 1.451,
+      "expected_error": 1.452,
+      "best_error": 1.452,
       "safe_guard_seconds": 1.009
     },
     {
       "scene": "context",
       "at": 25.933333333333334,
-      "expected_error": 1.451,
-      "best_error": 1.451,
+      "expected_error": 1.452,
+      "best_error": 1.452,
       "safe_guard_seconds": 1.009
     },
     {
@@ -1233,266 +1233,266 @@
     },
     {
       "scene": "contract-prompt",
-      "at": 348.6,
+      "at": 349.6,
       "expected_error": 2.411,
       "best_error": 2.411,
       "safe_guard_seconds": 1.014
     },
     {
       "scene": "contract-prompt",
-      "at": 348.93333333333334,
+      "at": 349.93333333333334,
       "expected_error": 2.411,
       "best_error": 2.411,
       "safe_guard_seconds": 1.014
     },
     {
       "scene": "contract-feedback",
-      "at": 355.6,
+      "at": 356.6,
       "expected_error": 2.219,
       "best_error": 2.219,
       "safe_guard_seconds": 1.019
     },
     {
       "scene": "contract-feedback",
-      "at": 355.93333333333334,
-      "expected_error": 2.219,
-      "best_error": 2.219,
+      "at": 356.93333333333334,
+      "expected_error": 2.217,
+      "best_error": 2.217,
       "safe_guard_seconds": 1.019
     },
     {
       "scene": "contract-failure",
-      "at": 362.6,
+      "at": 363.6,
       "expected_error": 2.203,
       "best_error": 2.203,
       "safe_guard_seconds": 1.027
     },
     {
       "scene": "contract-failure",
-      "at": 362.93333333333334,
-      "expected_error": 2.201,
-      "best_error": 2.201,
+      "at": 363.93333333333334,
+      "expected_error": 2.204,
+      "best_error": 2.204,
       "safe_guard_seconds": 1.027
     },
     {
       "scene": "contract-diff",
-      "at": 369.6,
+      "at": 370.6,
       "expected_error": 2.115,
       "best_error": 2.115,
       "safe_guard_seconds": 1.012
     },
     {
       "scene": "contract-diff",
-      "at": 369.93333333333334,
-      "expected_error": 2.11,
-      "best_error": 2.11,
+      "at": 370.93333333333334,
+      "expected_error": 2.111,
+      "best_error": 2.111,
       "safe_guard_seconds": 1.012
     },
     {
       "scene": "contract-verification",
-      "at": 376.6,
+      "at": 377.6,
       "expected_error": 2.336,
       "best_error": 2.336,
       "safe_guard_seconds": 1.029
     },
     {
       "scene": "contract-verification",
-      "at": 376.93333333333334,
+      "at": 377.93333333333334,
       "expected_error": 2.333,
       "best_error": 2.333,
       "safe_guard_seconds": 1.029
     },
     {
       "scene": "contract-commit",
-      "at": 383.6,
+      "at": 384.6,
       "expected_error": 1.994,
       "best_error": 1.994,
       "safe_guard_seconds": 1.028
     },
     {
       "scene": "contract-commit",
-      "at": 383.93333333333334,
-      "expected_error": 1.995,
-      "best_error": 1.995,
+      "at": 384.93333333333334,
+      "expected_error": 1.994,
+      "best_error": 1.994,
       "safe_guard_seconds": 1.028
     },
     {
       "scene": "graph-prompt",
-      "at": 390.6,
+      "at": 391.6,
       "expected_error": 2.284,
       "best_error": 2.284,
       "safe_guard_seconds": 1.012
     },
     {
       "scene": "graph-prompt",
-      "at": 390.93333333333334,
-      "expected_error": 2.281,
-      "best_error": 2.281,
+      "at": 391.93333333333334,
+      "expected_error": 2.279,
+      "best_error": 2.279,
       "safe_guard_seconds": 1.012
     },
     {
       "scene": "graph-failure",
-      "at": 397.6,
-      "expected_error": 2.28,
-      "best_error": 2.28,
+      "at": 398.6,
+      "expected_error": 2.279,
+      "best_error": 2.279,
       "safe_guard_seconds": 1.015
     },
     {
       "scene": "graph-failure",
-      "at": 397.93333333333334,
+      "at": 398.93333333333334,
       "expected_error": 2.279,
       "best_error": 2.279,
       "safe_guard_seconds": 1.015
     },
     {
       "scene": "graph-diff",
-      "at": 404.6,
+      "at": 405.6,
       "expected_error": 2.216,
       "best_error": 2.216,
       "safe_guard_seconds": 1.01
     },
     {
       "scene": "graph-diff",
-      "at": 404.93333333333334,
+      "at": 405.93333333333334,
       "expected_error": 2.216,
       "best_error": 2.216,
       "safe_guard_seconds": 1.01
     },
     {
       "scene": "graph-inputs",
-      "at": 411.6,
+      "at": 412.6,
       "expected_error": 2.164,
       "best_error": 2.164,
       "safe_guard_seconds": 1.018
     },
     {
       "scene": "graph-inputs",
-      "at": 411.93333333333334,
+      "at": 412.93333333333334,
       "expected_error": 2.164,
       "best_error": 2.164,
       "safe_guard_seconds": 1.018
     },
     {
       "scene": "graph-verification",
-      "at": 418.6,
+      "at": 419.6,
       "expected_error": 2.193,
       "best_error": 2.193,
       "safe_guard_seconds": 1.016
     },
     {
       "scene": "graph-verification",
-      "at": 418.93333333333334,
-      "expected_error": 2.192,
-      "best_error": 2.192,
+      "at": 419.93333333333334,
+      "expected_error": 2.193,
+      "best_error": 2.193,
       "safe_guard_seconds": 1.016
     },
     {
       "scene": "graph-commit",
-      "at": 425.6,
+      "at": 426.6,
       "expected_error": 2.165,
       "best_error": 2.165,
       "safe_guard_seconds": 1.029
     },
     {
       "scene": "graph-commit",
-      "at": 425.93333333333334,
-      "expected_error": 2.166,
-      "best_error": 2.166,
+      "at": 426.93333333333334,
+      "expected_error": 2.167,
+      "best_error": 2.167,
       "safe_guard_seconds": 1.029
     },
     {
       "scene": "teacher-prompt",
-      "at": 432.6,
+      "at": 433.6,
       "expected_error": 2.307,
       "best_error": 2.307,
       "safe_guard_seconds": 1.013
     },
     {
       "scene": "teacher-prompt",
-      "at": 432.93333333333334,
-      "expected_error": 2.304,
-      "best_error": 2.304,
+      "at": 433.93333333333334,
+      "expected_error": 2.305,
+      "best_error": 2.305,
       "safe_guard_seconds": 1.013
     },
     {
       "scene": "teacher-failure",
-      "at": 439.6,
+      "at": 440.6,
       "expected_error": 2.256,
       "best_error": 2.256,
       "safe_guard_seconds": 1.03
     },
     {
       "scene": "teacher-failure",
-      "at": 439.93333333333334,
+      "at": 440.93333333333334,
       "expected_error": 2.255,
       "best_error": 2.255,
       "safe_guard_seconds": 1.03
     },
     {
       "scene": "teacher-diff",
-      "at": 446.6,
+      "at": 447.6,
       "expected_error": 2.313,
       "best_error": 2.313,
       "safe_guard_seconds": 1.015
     },
     {
       "scene": "teacher-diff",
-      "at": 446.93333333333334,
-      "expected_error": 2.305,
-      "best_error": 2.305,
+      "at": 447.93333333333334,
+      "expected_error": 2.306,
+      "best_error": 2.306,
       "safe_guard_seconds": 1.015
     },
     {
       "scene": "teacher-verification",
-      "at": 453.6,
+      "at": 454.6,
       "expected_error": 2.091,
       "best_error": 2.091,
       "safe_guard_seconds": 1.016
     },
     {
       "scene": "teacher-verification",
-      "at": 453.93333333333334,
-      "expected_error": 2.091,
-      "best_error": 2.091,
+      "at": 454.93333333333334,
+      "expected_error": 2.089,
+      "best_error": 2.089,
       "safe_guard_seconds": 1.016
     },
     {
       "scene": "teacher-regression",
-      "at": 460.6,
+      "at": 461.6,
       "expected_error": 2.003,
       "best_error": 2.003,
       "safe_guard_seconds": 1.022
     },
     {
       "scene": "teacher-regression",
-      "at": 460.93333333333334,
-      "expected_error": 2.003,
-      "best_error": 2.003,
+      "at": 461.93333333333334,
+      "expected_error": 2.001,
+      "best_error": 2.001,
       "safe_guard_seconds": 1.022
     },
     {
       "scene": "teacher-commit",
-      "at": 467.6,
+      "at": 468.6,
       "expected_error": 2.307,
       "best_error": 2.307,
       "safe_guard_seconds": 1.018
     },
     {
       "scene": "teacher-commit",
-      "at": 467.93333333333334,
+      "at": 468.93333333333334,
       "expected_error": 2.307,
       "best_error": 2.307,
       "safe_guard_seconds": 1.018
     },
     {
       "scene": "outro",
-      "at": 476.6,
+      "at": 477.6,
       "expected_error": 0.775,
       "best_error": 0.775,
       "safe_guard_seconds": 1.013
     },
     {
       "scene": "outro",
-      "at": 476.93333333333334,
+      "at": 477.93333333333334,
       "expected_error": 0.775,
       "best_error": 0.775,
       "safe_guard_seconds": 1.013
